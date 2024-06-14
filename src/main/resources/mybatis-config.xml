@@ -12,6 +12,7 @@
     <typeAliases>
         <typeAlias type="com.travel.withtrip.entity.BoardImage" alias="boardImage" />
         <typeAlias type="com.travel.withtrip.dto.request.FeedFindAllDto" alias="feed" />
+        <typeAlias type="com.travel.withtrip.entity.Board" alias="board" />
     </typeAliases>
 
     <!--  SQL을 적어놓은 ...Mapper.xml 파일들을 사용등록하는 영역  -->

@@ -17,7 +17,7 @@ public interface FeedMapper {
     FeedFindAllDto findFeedById(int boardId);
 
     // 피드 생성
-    boolean saveFeed(Board board);
+    int saveFeed(Board board);
 
     // 피드 수정
     boolean modifyFeed(int boardId);
@@ -30,7 +30,6 @@ public interface FeedMapper {
 
     // 피드 총 조회수
     int sumViewCount(int boardId);
-
 
 
 }

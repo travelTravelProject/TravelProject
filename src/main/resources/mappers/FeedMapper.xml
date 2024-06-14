@@ -14,26 +14,36 @@
             content,
             view_count,
             created_at,
-            updated_at,
-            status
+            updated_at
         FROM tbl_board
         WHERE status = 'A'
             AND category_id = 2
         ORDER BY board_id DESC
     </select>
 
-    <select id="findFeedById" resultType="feed">
+    <select id="findFeedById" resultType="board">
         SELECT *
         FROM tbl_board
         WHERE category_id = 2
             AND board_id = #{boardId}
     </select>
 
-    <insert id="saveFeed">
+    <insert id="saveFeed" parameterType="board"
+            useGeneratedKeys="true" keyProperty="boardId">
         INSERT INTO tbl_board
-            (account, categoryId, title, content)
+        (
+            account,
+            categoryId,
+            title,
+            content
+        )
         VALUES
-            (#{account}, 2, #{title}, #{content})
+        (
+            #{account},
+            2,
+            #{title},
+            #{content}
+        )
     </insert>
 
     <select id="findAllImage" resultType="boardImage">
@@ -55,27 +65,8 @@
         WHERE board_id = #{boardId}
     </select>
 
-<!--    &lt;!&ndash; 동적 SQL 조건을 분리 &ndash;&gt;-->
-<!--    <sql id="search">-->
-<!--        <if test="type == 'title'">-->
-<!--            WHERE title LIKE CONCAT('%', #{keyword}, '%')-->
-<!--        </if>-->
-<!--        <if test="type == 'content'">-->
-<!--            WHERE content LIKE CONCAT('%', #{keyword}, '%')-->
-<!--        </if>-->
-<!--        <if test="type == 'writer'">-->
-<!--            WHERE writer LIKE CONCAT('%', #{keyword}, '%')-->
-<!--        </if>-->
-<!--        <if test="type == 'tc'">-->
-<!--            WHERE title LIKE CONCAT('%', #{keyword}, '%')-->
-<!--            OR content  LIKE CONCAT('%', #{keyword}, '%')-->
-<!--        </if>-->
-<!--    </sql>-->
-
-<!--    <select id="count" resultType="int">-->
-<!--        SELECT COUNT(*)-->
-<!--        FROM tbl_board-->
-<!--        <include refid="search" />-->
-<!--    </select>-->
-
+    <select id="getNewBoardId" resultType="int">
+        SELECT MAX(board_id)
+        FROM tbl_board
+    </select>
 </mapper>

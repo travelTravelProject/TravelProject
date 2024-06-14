@@ -14,4 +14,7 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/feed")
+    public String feed() { return "feed-list"; }
+
 }
