@@ -16,7 +16,7 @@ public class FeedFindAllDto {
 
     private LocalDateTime createdAt; // 생성일 - 자동 타임스탬프
     private LocalDateTime updatedAt; // 수정일 - 자동 타임스탬프
-    private Status status; // 디폴트 A, 삭제시 D로 수정 필요
+//    private Status status; // 디폴트 A, 삭제시 D로 수정 필요
 
     private List<BoardImage> feedImageList; // 게시글 이미지
     // 좋아요 수, 북마크 수, 댓글 수
