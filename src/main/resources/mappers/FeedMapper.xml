@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.withtrip.mapper.FeedMapper">
+
+    <select id="findAllFeeds" resultType="feed">
+        SELECT
+            board_id,
+            account,
+            category_id,
+            title,
+            content,
+            view_count,
+            created_at,
+            updated_at,
+            status
+        FROM tbl_board
+        WHERE status = 'A'
+            AND category_id = 2
+        ORDER BY board_id DESC
+    </select>
+
+    <select id="findFeedById" resultType="feed">
+        SELECT *
+        FROM tbl_board
+        WHERE category_id = 2
+            AND board_id = #{boardId}
+    </select>
+
+    <insert id="saveFeed">
+        INSERT INTO tbl_board
+            (account, categoryId, title, content)
+        VALUES
+            (#{account}, 2, #{title}, #{content})
+    </insert>
+
+    <select id="findAllImage" resultType="boardImage">
+        SELECT *
+        FROM tbl_board_image
+        WHERE board_id = #{boardId}
+        ORDER BY order
+    </select>
+
+    <update id="upViewCount">
+        UPDATE tbl_board
+        SET view_count = view_count + 1
+        WHERE board_id = #{boardId}
+    </update>
+
+    <select id="sumViewCount" resultType="int">
+        SELECT view_count
+        FROM tbl_board
+        WHERE board_id = #{boardId}
+    </select>
+
+<!--    &lt;!&ndash; 동적 SQL 조건을 분리 &ndash;&gt;-->
+<!--    <sql id="search">-->
+<!--        <if test="type == 'title'">-->
+<!--            WHERE title LIKE CONCAT('%', #{keyword}, '%')-->
+<!--        </if>-->
+<!--        <if test="type == 'content'">-->
+<!--            WHERE content LIKE CONCAT('%', #{keyword}, '%')-->
+<!--        </if>-->
+<!--        <if test="type == 'writer'">-->
+<!--            WHERE writer LIKE CONCAT('%', #{keyword}, '%')-->
+<!--        </if>-->
+<!--        <if test="type == 'tc'">-->
+<!--            WHERE title LIKE CONCAT('%', #{keyword}, '%')-->
+<!--            OR content  LIKE CONCAT('%', #{keyword}, '%')-->
+<!--        </if>-->
+<!--    </sql>-->
+
+<!--    <select id="count" resultType="int">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM tbl_board-->
+<!--        <include refid="search" />-->
+<!--    </select>-->
+
+</mapper>

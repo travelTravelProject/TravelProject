@@ -1,7 +1,6 @@
 package com.travel.withtrip.dto.request;
 
 import com.travel.withtrip.entity.BoardImage;
-import com.travel.withtrip.entity.Status;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,4 +19,5 @@ public class FeedFindAllDto {
     private Status status; // 디폴트 A, 삭제시 D로 수정 필요
 
     private List<BoardImage> feedImageList; // 게시글 이미지
+    // 좋아요 수, 북마크 수, 댓글 수
 }
