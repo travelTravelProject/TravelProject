@@ -14,22 +14,22 @@ public interface FeedMapper {
     List<FeedFindAllDto> findAllFeeds();
 
     // 피드 하나 조회
-    FeedFindAllDto findFeedById(int boardId);
+    Board findFeedById(long boardId);
 
     // 피드 생성
     int saveFeed(Board board);
 
     // 피드 수정
-    boolean modifyFeed(int boardId);
+    boolean modifyFeed(long boardId);
 
     // 피드 삭제
-    boolean deleteFeed(int boardId);
+    boolean deleteFeed(long boardId);
 
     // 피드 조회수 갱신 (모달 띄우면 조회수 +1)
-    boolean upViewCount(int boardId);
+    boolean upViewCount(long boardId);
 
     // 피드 총 조회수
-    int sumViewCount(int boardId);
+//    int sumViewCount(long boardId);
 
 
 }
