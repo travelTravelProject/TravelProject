@@ -66,4 +66,36 @@ public class ReplyController {
                 .ok()
                 .body(replyListDto);
     }
+
+    // 대댓글 목록 전체조회 요청
+    // URL : /api/v1/nested/부모댓글번호   -  GET -> 목록조회
+    @GetMapping("/nested/{parentReplyId}")
+    public ResponseEntity<?> listNestedReplies(@PathVariable long parentReplyId) {
+        List<ReplyResponseDetailDto> replies = replyService.getNestedReplies(parentReplyId);
+        return ResponseEntity.ok().body(replies);
+    }
+
+    // 대댓글 생성
+    @PostMapping("/nested")
+    public ResponseEntity<?> postNestedReply(@RequestBody ReplyRequestPostDto dto) {
+        replyService.registerNestedReply(dto);
+        return ResponseEntity.ok().body(replyService.getNestedReplies(dto.getParentReplyId()));
+    }
+
+    // 대댓글 삭제
+    @DeleteMapping("/nested/{replyId}")
+    public ResponseEntity<?> deleteNestedReply(@PathVariable long replyId) {
+        List<ReplyResponseDetailDto> dtoList = replyService.removeNestedReply(replyId);
+        return ResponseEntity.ok().body(dtoList);
+    }
+
+    // 대댓글 수정
+    @RequestMapping(path = "/nested", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    public ResponseEntity<?> modifyNestedReply(@RequestBody ReplyRequestModifyDto dto) {
+        // 댓글이 수정된 후의 댓글 목록
+        List<ReplyResponseDetailDto> replyListDto = replyService.modifyNestedReply(dto);
+        return ResponseEntity
+                .ok()
+                .body(replyListDto);
+    }
 }

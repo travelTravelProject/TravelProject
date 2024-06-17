@@ -62,7 +62,40 @@ public class ReplyService {
         return getReplies(dto.getBoardId());
     }
 
+    // 대댓글 목록 전체조회
+    public List<ReplyResponseDetailDto> getNestedReplies(long parentReplyId) {
+        List<Reply> replies = replyMapper.findAllNestedReply(parentReplyId);
+        return replies.stream()
+                .map(reply -> new ReplyResponseDetailDto(reply))
+                .collect(Collectors.toList());
+    }
 
+    // 대댓글 입력
+    public boolean registerNestedReply(ReplyRequestPostDto dto) {
 
+        Reply reply = Reply.builder()
+                .replyText(dto.getText())
+                .replyWriter(dto.getAuthor())
+                .boardId(dto.getBoardId())
+                .parentReplyId(dto.getParentReplyId())
+                .build();
+        boolean flag = replyMapper.save(reply);
+        return flag;
+    }
 
+    // 대댓글 삭제
+    @Transactional
+    public List<ReplyResponseDetailDto> removeNestedReply(long replyId) {
+        // 부모 댓글 번호 찾기
+        long parentReplyId = replyMapper.findParentReplyId(replyId);
+        boolean flag = replyMapper.delete(replyId);
+        return flag ? getNestedReplies(parentReplyId) : Collections.emptyList();
+    }
+
+    // 대댓글 수정
+    public List<ReplyResponseDetailDto> modifyNestedReply(ReplyRequestModifyDto dto) {
+        // dto -> entity
+        replyMapper.modify(dto.toEntity());
+        return getNestedReplies(dto.getParentReplyId());
+    }
 }

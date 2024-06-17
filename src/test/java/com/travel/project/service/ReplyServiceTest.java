@@ -42,30 +42,28 @@ class ReplyServiceTest {
         assertThat(response.size()).isEqualTo(replyMapper.count(boardId));
     }
 
-//    @Test
-//    @DisplayName("댓글 등록(입력) 테스트")
-//    void registerTest() {
-//        //given
-//        ReplyRequestPostDto dto = new ReplyRequestPostDto();
-//        dto.setText("ReplyService 댓글 등록 테스트 성공입니다.");
-//        dto.setAuthor("김요한");
-//        dto.setBoardId(24L);
-//
-//        Reply expectedReply = Reply.builder()
-//                .replyText(dto.getText())
-//                .replyWriter(dto.getAuthor())
-//                .boardId(dto.getBoardId())
-//                .account("testuser")  // account 데이터를 설정
-//                .parentReplyId(null)  // parentReplyId 데이터를 설정
-//                .build();
-//
-//        when(replyMapper.save(any(Reply.class))).thenReturn(true);
-//        //when
-//        boolean flag = replyService.register(dto);
-//        //then
-//        assertThat(flag).isTrue();
-//
-//
-//    }
+    @Test
+    @DisplayName("댓글 등록(입력) 테스트")
+    void registerTest() {
+        //given
+        ReplyRequestPostDto dto = new ReplyRequestPostDto();
+        dto.setText("ReplyService 댓글 등록 테스트 성공입니다.");
+        dto.setAuthor("김요한");
+        dto.setBoardId(24L);
+        dto.setParentReplyId(1L);
+
+        Reply expectedReply = Reply.builder()
+                .replyText(dto.getText())
+                .boardId(dto.getBoardId())
+                .account(dto.getAuthor())  // account 데이터를 설정
+                .parentReplyId(dto.getParentReplyId())  // parentReplyId 데이터를 설정
+                .build();
+
+        when(replyMapper.save(any(Reply.class))).thenReturn(true);
+        //when
+        boolean flag = replyService.register(dto);
+        //then
+        assertThat(flag).isTrue();
+    }
 
 }

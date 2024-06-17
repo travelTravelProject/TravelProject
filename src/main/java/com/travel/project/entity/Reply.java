@@ -11,7 +11,6 @@ package com.travel.project.entity;
         `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         `status` ENUM('A', 'D') NULL DEFAULT 'A',
         `parent_reply_id` INT NULL,
-        `reply_writer` VARCHAR(20) NULL,
         PRIMARY KEY (`reply_id`),
         FOREIGN KEY (`board_id`) REFERENCES `tbl_board` (`board_id`),
         FOREIGN KEY (`account`) REFERENCES `tbl_user` (`account`)
@@ -38,6 +37,6 @@ public class Reply {
     private LocalDateTime createdAt; // 댓글 작성일
     private LocalDateTime updatedAt; // 댓글 수정일
     private Status status; // 댓글의 상태
-    private String replyWriter; // 댓글 작성자
     private Long parentReplyId; // 부모 댓글번호
+    private String replyWriter; // 댓글 작성자
 }
