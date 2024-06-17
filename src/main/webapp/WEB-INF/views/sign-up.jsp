@@ -9,7 +9,7 @@
 <%--    <%@ include file="../include/static-head.jsp" %>--%>
 
     <!-- 외부 스타일시트 링크 추가 -->
-    <link rel="stylesheet" href="/resources/css/user.css" />
+    <link rel="stylesheet" href="/css/user.css" />
 </head>
 
 <body>
@@ -35,8 +35,7 @@
                             <tr>
                                 <td class="text-left">
                                     <p>
-                                        <strong>아이디를 입력해주세요.</strong
-                                        >&nbsp;&nbsp;&nbsp;
+                                        <strong>아이디를 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
                                         <span id="idChk"></span>
                                     </p>
                                 </td>
@@ -81,8 +80,8 @@
                             <tr>
                                 <td class="text-left">
                                     <p>
-                                        <strong>비밀번호를 재확인해주세요.</strong
-                                        >&nbsp;&nbsp;&nbsp;<span id="pwChk2"></span>
+                                        <strong>비밀번호를 재확인해주세요.</strong>
+                                        <span id="pwChk2"></span>
                                     </p>
                                 </td>
                             </tr>
@@ -104,8 +103,8 @@
                             <tr>
                                 <td class="text-left">
                                     <p>
-                                        <strong>이름을 입력해주세요.</strong
-                                        >&nbsp;&nbsp;&nbsp;<span id="nameChk"></span>
+                                        <strong>이름을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
+                                        <span id="nameChk"></span>
                                     </p>
                                 </td>
                             </tr>
@@ -126,8 +125,8 @@
                             <tr>
                                 <td class="text-left">
                                     <p>
-                                        <strong>닉네임을 입력해주세요.</strong
-                                        >&nbsp;&nbsp;&nbsp;<span id="nicknameChk"></span>
+                                        <strong>닉네임을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
+                                        <span id="nicknameChk"></span>
                                     </p>
                                 </td>
                             </tr>
@@ -140,6 +139,7 @@
                                             class="form-control tooltipstered"
                                             required="required"
                                             aria-required="true"
+                                            placeholder="최대 8자"
                                     />
                                 </td>
                             </tr>
@@ -147,8 +147,8 @@
                             <tr>
                                 <td class="text-left">
                                     <p>
-                                        <strong>이메일을 입력해주세요.</strong
-                                        >&nbsp;&nbsp;&nbsp;<span id="emailChk"></span>
+                                        <strong>이메일을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
+                                        <span id="emailChk"></span>
                                     </p>
                                 </td>
                             </tr>
@@ -168,8 +168,8 @@
                             <tr>
                                 <td class="text-left">
                                     <p>
-                                        <strong>생년월일을 입력해주세요.</strong
-                                        >&nbsp;&nbsp;&nbsp;<span id="birthdayChk"></span>
+                                        <strong>생년월일을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
+                                        <span id="birthdayChk"></span>
                                     </p>
                                 </td>
                             </tr>
@@ -189,8 +189,8 @@
                             <tr>
                                 <td class="text-left">
                                     <p>
-                                        <strong>성별을 입력해주세요.</strong
-                                        >&nbsp;&nbsp;&nbsp;<span id="genderChk"></span>
+                                        <strong>성별을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
+                                        <span id="genderChk"></span>
                                     </p>
                                 </td>
                             </tr>
@@ -209,9 +209,7 @@
                             </tr>
                                 <td class="text-center">
                                     <p>
-                                        <strong
-                                        >회원가입하셔서 더 많은 서비스를 사용하세요!</strong
-                                        >
+                                        <strong>회원가입하셔서 더 많은 서비스를 사용하세요!</strong>
                                     </p>
                                 </td>
                             </tr>
@@ -233,7 +231,7 @@
     </div>
 </div>
 
-<script type="module" src="/js/signUp.js"></script>
+<script type="module" src="/resources/js/signUp.js"></script>
 
 </body>
 </html>

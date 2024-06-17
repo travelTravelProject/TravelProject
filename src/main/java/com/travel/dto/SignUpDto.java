@@ -18,7 +18,7 @@ public class SignUpDto {
     private String name;
     private String email;
     private String nickname;
-    private Date birthday;
+    private String birthday;
     private Gender gender;
 
     public User toEntity() {
