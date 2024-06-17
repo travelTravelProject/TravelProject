@@ -156,3 +156,5 @@ CREATE TABLE `tbl_user_detail` (
                                    PRIMARY KEY (`user_detail_id`),
                                    FOREIGN KEY (`account`) REFERENCES `tbl_user` (`account`)
 );
+
+SELECT * FROM tbl_user;
