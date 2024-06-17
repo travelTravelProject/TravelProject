@@ -17,10 +17,10 @@ public interface FeedMapper {
     Board findFeedById(long boardId);
 
     // 피드 생성
-    int saveFeed(Board board);
+    long saveFeed(Board newBoard);
 
-    // 피드 수정
-    boolean modifyFeed(long boardId);
+    // 피드 내용 수정
+    boolean modifyFeed(Board newBoard);
 
     // 피드 삭제
     boolean deleteFeed(long boardId);

@@ -16,8 +16,10 @@ public class FeedFindAllDto {
     private long boardId; // 게시글 id
 
     private String account; // 게시글 작성자 계정
+    private String nickname; // 게시글 작성자 닉네임
+    private String profileImage; // 게시글 작성자 프사
     private int categoryId; // 게시글 카테고리 id(동행 1, 피드 2) 번호
-    private String title; // 게시글 제목
+//    private String title; // 게시글 제목
     private String content; // 게시글 내용
     private int viewCount; // 조회수
 

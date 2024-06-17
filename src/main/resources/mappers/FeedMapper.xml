@@ -7,24 +7,43 @@
 
     <select id="findAllFeeds" resultType="feed">
         SELECT
-            board_id,
-            account,
-            category_id,
-            title,
-            content,
-            view_count,
-            created_at,
-            updated_at
-        FROM tbl_board
+            B.board_id,
+            B.account,
+            U.nickname,
+            D.profile_image,
+            B.category_id,
+            B.content,
+            B.view_count,
+            B.created_at,
+            B.updated_at
+        FROM tbl_board B
+        JOIN tbl_user U
+            ON B.account = U.account
+        JOIN tbl_user_detail D
+            ON B.account = D.account
         WHERE status = 'A'
             AND category_id = 2
         ORDER BY board_id DESC
     </select>
 
     <select id="findFeedById" resultType="board">
-        SELECT *
-        FROM tbl_board
-        WHERE category_id = 2
+        SELECT
+            B.board_id,
+            B.account,
+            U.nickname,
+            D.profile_image,
+            B.category_id,
+            B.content,
+            B.view_count,
+            B.created_at,
+            B.updated_at
+        FROM tbl_board B
+        JOIN tbl_user U
+            ON B.account = U.account
+        JOIN tbl_user_detail D
+            ON B.account = D.account
+        WHERE status = 'A'
+            AND category_id = 2
             AND board_id = #{boardId}
     </select>
 
@@ -34,14 +53,12 @@
         (
             account,
             categoryId,
-            title,
             content
         )
         VALUES
         (
             #{account},
             2,
-            #{title},
             #{content}
         )
     </insert>
@@ -52,6 +69,20 @@
         WHERE board_id = #{boardId}
         ORDER BY order
     </select>
+
+    <update id="modifyFeed">
+        UPDATE tbl_board
+        SET content = #{content}
+        WHERE status = 'A'
+            AND board_id = #{boardId}
+    </update>
+
+    <update id="deleteFeed">
+        UPDATE tbl_board
+        SET status = 'D'
+        WHERE status = 'A'
+            AND board_id = #{boardId}
+    </update>
 
     <update id="upViewCount">
         UPDATE tbl_board
@@ -69,4 +100,5 @@
         SELECT MAX(board_id)
         FROM tbl_board
     </select>
+
 </mapper>
