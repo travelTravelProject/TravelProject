@@ -1,0 +1,16 @@
+package com.travel.project.dto.request;
+
+import lombok.*;
+
+@Getter @Setter @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
+// 댓글 입력시 클라이언트에서 서버로 보낼 때 필요한 데이터들을 포장한 객체
+public class ReplyRequestPostDto {
+
+    private String text; // 댓글 내용
+    private String author; // 댓글 작성자
+    private Long boardId; // 원본 글번호
+}
