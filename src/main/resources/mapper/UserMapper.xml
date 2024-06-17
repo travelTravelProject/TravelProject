@@ -22,4 +22,15 @@
         WHERE account = #{account}
     </select>
 
+    <select id="existById" resultType="boolean">
+        SELECT COUNT(*)
+        FROM tbl_user
+        <if test="type == 'account'">
+            WHERE account = #{keyword}
+        </if>
+        <if test="type == 'email'">
+            WHERE email = #{keyword}
+        </if>
+    </select>
+
 </mapper>

@@ -19,7 +19,6 @@ public class UserService {
     public boolean join(SignUpDto dto) {
 
         User user = dto.toEntity();
-
         return userMapper.save(user);
     }
 

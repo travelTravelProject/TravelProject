@@ -57,8 +57,8 @@
                             <tr>
                                 <td class="text-left">
                                     <p>
-                                        <strong>비밀번호를 입력해주세요.</strong
-                                        >&nbsp;&nbsp;&nbsp;<span id="pwChk"></span>
+                                        <strong>비밀번호를 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
+                                        <span id="pwChk"></span>
                                     </p>
                                 </td>
                             </tr>
@@ -231,7 +231,7 @@
     </div>
 </div>
 
-<script type="module" src="/resources/js/signUp.js"></script>
+<script type="module" src="/js/signUp.js"></script>
 
 </body>
 </html>

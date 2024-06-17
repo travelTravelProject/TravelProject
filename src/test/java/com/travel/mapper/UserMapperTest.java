@@ -15,19 +15,18 @@ class UserMapperTest {
     @Autowired
     UserMapper userMapper;
 
-
     @Test
     @DisplayName("회원가입 성공")
     void saveTest() {
         //given
         User member = User.builder()
-                .account("kuromi")
-                .password("abc1234!")
-                .name("쿠로미")
-                .email("kuromi@gmail.com")
-                .nickname("쿠로쿠로")
-                .birthday("2020-06-17")
-                .gender(Gender.valueOf("F"))
+                .account("haha")
+                .password("haha123!")
+                .name("하하하")
+                .email("haha@gmail.com")
+                .nickname("하이하이")
+                .birthday("1995-12-15")
+                .gender(Gender.valueOf("M"))
                 .build();
         //when
         boolean flag = userMapper.save(member);

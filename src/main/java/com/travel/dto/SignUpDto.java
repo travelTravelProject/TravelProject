@@ -4,6 +4,8 @@ import com.travel.entity.Gender;
 import com.travel.entity.User;
 import lombok.*;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Setter @Getter @ToString
@@ -13,12 +15,20 @@ import java.util.Date;
 @Builder
 public class SignUpDto {
 
+    @NotBlank
     private String account;
+    @NotBlank
     private String password;
+    @NotBlank
     private String name;
+    @NotBlank
+    @Email
     private String email;
+    @NotBlank
     private String nickname;
+    @NotBlank
     private String birthday;
+    @NotBlank
     private Gender gender;
 
     public User toEntity() {
