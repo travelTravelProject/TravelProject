@@ -1,5 +1,11 @@
 package com.travel.withtrip.entity;
 
+import lombok.*;
+
+@Getter @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BoardImage {
 
     private long imageId; // 이미지 인덱스 번호

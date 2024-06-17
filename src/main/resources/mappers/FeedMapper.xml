@@ -75,6 +75,7 @@
         SET content = #{content}
         WHERE status = 'A'
             AND board_id = #{boardId}
+            AND account = #{account}
     </update>
 
     <update id="deleteFeed">

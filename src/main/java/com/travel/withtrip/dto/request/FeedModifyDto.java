@@ -19,7 +19,7 @@ public class FeedModifyDto {
         return Board.builder()
                 .boardId(boardId)
                 .account(account)
-                .categoryId(categoryId)
+                .categoryId(2)
                 .content(content)
                 .build();
     }
