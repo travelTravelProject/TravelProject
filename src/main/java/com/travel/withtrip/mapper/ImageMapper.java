@@ -12,7 +12,7 @@ public interface ImageMapper {
     List<BoardImage> findAllImages(int boardId);
 
     // 이미지 추가
-    boolean insertImage(BoardImage image);
+    long insertImage(BoardImage image);
 
     // 이미지 삭제
     boolean deleteImage(int imageId);

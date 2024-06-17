@@ -5,6 +5,7 @@ import com.travel.withtrip.dto.request.FeedModifyDto;
 import com.travel.withtrip.dto.request.FeedPostDto;
 import com.travel.withtrip.dto.response.FeedDetailResponseDto;
 import com.travel.withtrip.service.FeedService;
+import com.travel.withtrip.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.List;
 public class FeedController {
 
     private final FeedService feedService;
+
 
     // 피드 전체 조회 요청
     @GetMapping("/list")
@@ -44,8 +46,7 @@ public class FeedController {
     // 피드 생성 요청
     @PostMapping("/list")
     public ResponseEntity<?> makeNewFeed(
-            @Validated @RequestPart(value="json") FeedPostDto dto
-            , @RequestPart(value="file") MultipartFile file // 이미지
+            @Validated FeedPostDto dto
             , BindingResult bindingResult
             , HttpSession session
     ) {
@@ -54,6 +55,7 @@ public class FeedController {
             // 에러 메세지 Map 필요
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
+
 
         long newBoardId = feedService.insertFeed(dto, session);
         if(newBoardId < 0) return ResponseEntity
@@ -68,7 +70,7 @@ public class FeedController {
     // 수정 - 수정한 내용을 JSON으로 받도록 수정해야 함
     @RequestMapping(value="/list", method= {RequestMethod.PUT, RequestMethod.PATCH})
     public String updateFeed(
-            @RequestPart(value="json") FeedModifyDto dto
+            @RequestPart(value="requestDto") FeedModifyDto dto
             , @RequestPart(value="file") MultipartFile file // 이미지
     ) {
 

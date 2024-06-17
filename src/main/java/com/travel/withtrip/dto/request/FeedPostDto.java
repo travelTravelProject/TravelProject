@@ -1,10 +1,12 @@
 package com.travel.withtrip.dto.request;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter @ToString
 @NoArgsConstructor
@@ -19,5 +21,8 @@ public class FeedPostDto {
 
     @NotNull
     private Long boardId;
+
+    // 피드 이미지 데이터
+    private List<MultipartFile> files;
 
 }

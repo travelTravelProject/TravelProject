@@ -12,7 +12,8 @@
         ORDER BY order
     </select>
 
-    <insert id="insertImage">
+    <insert id="insertImage" parameterType="boardImage"
+        useGeneratedKeys="true" keyProperty="imageId">
         INSERT INTO tbl_board_image
             (board_id, image_path, 'order')
         VALUES
