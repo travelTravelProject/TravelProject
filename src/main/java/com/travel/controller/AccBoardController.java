@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -71,14 +73,16 @@ public class AccBoardController {
 
     // 5. 게시글 상세 조회 요청 (/detail : GET)
     @GetMapping("/detail")
-    public String detail(int boardId, Model model) {
-        System.out.println("boardId: " + boardId);
-
-        // 데이터베이스로부터 글번호 데이터 조회
+    public String detail(@RequestParam("bno") int boardId, Model model, HttpServletRequest req) {
+        System.out.println("/acc-board/acc-detail GET");
+        // 글번호 조회
         AccBoardDetailDto dto = service.detail(boardId);
+        // JSP 에 전송
+        model.addAttribute("abd", dto);
 
-        // JSP파일에 조회한 데이터 보내기
-        model.addAttribute("ab", dto);
+        // 이전 페이지 주소
+        String ref = req.getHeader("referer");
+        model.addAttribute("ref", ref);
 
         return "acc-board/acc-detail";
     }

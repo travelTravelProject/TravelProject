@@ -214,7 +214,7 @@
             // section태그에 붙은 글번호 읽기
             const bno = e.target.closest('section.card').dataset.bno;
             // 요청 보내기
-            window.location.href= '/board/detail?bno=' + bno;
+            window.location.href= '/acc-board/detail?bno=' + bno;
         }
     });
 
