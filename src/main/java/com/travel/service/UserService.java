@@ -21,12 +21,15 @@ public class UserService {
     public boolean join(SignUpDto dto) {
 
         User user = dto.toEntity();
+        log.info("Attempting to join user: {}", user);
 
         // 비밀번호 인코딩
         String encodedPassword = encoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
 
-        return userMapper.save(user);
+        boolean isSaved = userMapper.save(user);
+        log.info("User saved status: {}", isSaved);
+        return isSaved;
     }
 
     // 아이디, 이메일 중복검사

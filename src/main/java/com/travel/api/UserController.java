@@ -31,6 +31,8 @@ public class UserController {
         log.info("sign-up POST : forwarding to sign-up.jsp");
 
         boolean flag = userService.join(dto);
+        log.info("sign-up POST: join result: {}", flag);
+
         return flag ? "redirect:/" : "redirect:/sign-up";
     }
 

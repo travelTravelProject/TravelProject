@@ -39,7 +39,7 @@ public class SignUpDto {
     private String nickname;
 
     @NotNull
-    private LocalDate birthday;
+    private String birthday;
 
     @NotBlank
     private Gender gender;

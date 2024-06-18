@@ -4,17 +4,10 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Insert title here</title>
-
-<%--    <%@ include file="./include/static-head.jsp" %>--%>
-
-    <!-- 외부 스타일시트 링크 추가 -->
+    <title>WithTravel 회원 가입</title>
     <link rel="stylesheet" href="/assets/css/user.css" />
 </head>
-
 <body>
-<%--<%@ include file="./include/header.jsp" %>--%>
-
 <div class="container wrap">
     <div class="row">
         <div class="offset-md-2 col-md-4">
@@ -30,7 +23,6 @@
                             method="post"
                             enctype="multipart/form-data"
                     >
-
                         <table class="table">
                             <tr>
                                 <td class="text-left">
@@ -144,7 +136,6 @@
                                 </td>
                             </tr>
                             <tr>
-                            <tr>
                                 <td class="text-left">
                                     <p>
                                         <strong>이메일을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
@@ -208,6 +199,7 @@
                                     </select>
                                 </td>
                             </tr>
+                            <tr>
                                 <td class="text-center">
                                     <p>
                                         <strong>회원가입하셔서 더 많은 서비스를 사용하세요!</strong>
@@ -231,8 +223,6 @@
         </div>
     </div>
 </div>
-
 <script type="module" src="/assets/js/signUp.js" defer></script>
-
 </body>
 </html>

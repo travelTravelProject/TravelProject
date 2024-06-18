@@ -1,4 +1,4 @@
-// 서버에 중복확인 비동기 요청
+// // 서버에 중복확인 비동기 요청
 export const checkAvailability = async (type, keyword) => {
     const response = await fetch(`http://localhost:8181/check?type=${type}&keyword=${keyword}`);
     const flag = await response.json();
@@ -105,3 +105,5 @@ export const validateInput = {
     //     return {valid: true} ;
     // }
 };
+
+
