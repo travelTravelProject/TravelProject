@@ -26,7 +26,7 @@
         ORDER BY board_id DESC
     </select>
 
-    <select id="findFeedById" resultType="board">
+    <select id="findFeedById" resultType="com.travel.withtrip.dto.request.FeedFindOneDto">
         SELECT
             B.board_id,
             B.account,

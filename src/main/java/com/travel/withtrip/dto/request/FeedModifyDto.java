@@ -1,6 +1,8 @@
 package com.travel.withtrip.dto.request;
 
 import com.travel.withtrip.entity.Board;
+import com.travel.withtrip.entity.BoardImage;
+import com.travel.withtrip.util.FileUtil;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,13 +23,20 @@ public class FeedModifyDto {
     // 수정일이 생성일과 다를 경우 이미지는 다른 폴더에 저장됨...
     // 그럼 기존 폴더껀 지우고 수정일에 해당하는 경로에 이미지 새로 저장하는게 맞는건가?
 
-    public Board toEntity() {
+    public Board toBoardEntity() {
 
         return Board.builder()
                 .boardId(boardId)
                 .account(account)
                 .categoryId(2)
                 .content(content)
+                .build();
+    }
+    public BoardImage toImageEntity(long boardId, MultipartFile file, int index) {
+        return BoardImage.builder()
+                .boardId(boardId)
+                .imagePath(FileUtil.uploadFile(file))
+                .order(index)
                 .build();
     }
 }

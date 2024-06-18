@@ -15,7 +15,10 @@ public interface ImageMapper {
     long insertImage(BoardImage image);
 
     // 이미지 삭제
-    boolean deleteImage(int imageId);
+    boolean deleteImage(long imageId);
+
+    // 한 게시글의 모든 이미지 삭제
+    boolean deleteImagesByBoardId(long boardId);
 
 
 }

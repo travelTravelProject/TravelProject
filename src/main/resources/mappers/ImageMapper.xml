@@ -21,8 +21,19 @@
     </insert>
 
     <delete id="deleteImage">
-        DELETE tbl_board_image
+        DELETE FROM tbl_board_image
         WHERE image_id = #{imageId}
+    </delete>
+
+    <delete id="deleteImagesByBoardId">
+        DELETE FROM tbl_board_image
+        WHERE image_id IN (
+            SELECT image_id
+            from (
+                SELECT * FROM tbl_board_image
+                WHERE board_id = #{board_id}
+            ) AS Result
+        )
     </delete>
 
 </mapper>
