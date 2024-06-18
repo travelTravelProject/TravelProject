@@ -9,7 +9,7 @@ import java.util.List;
 public interface ImageMapper {
 
     // 게시글 이미지(최대 10개) 조회
-    List<BoardImage> findAllImages(int boardId);
+    List<BoardImage> findAllImages(long boardId);
 
     // 이미지 추가
     long insertImage(BoardImage image);

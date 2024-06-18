@@ -6,7 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +16,13 @@ public class ImageService {
 
     private final ImageMapper imageMapper;
 
-    // 이미지 수정 시 순서(order 컬럼) 주의
-    // 1 2 3 4 중 2를 삭제하고 다른 이미지 추가하면 1 3 4 5 or 1 5 3 4 ?
+    // 하나의 피드가 갖는 이미지 전체 조회(최대 10개)
+    public List<BoardImage> getFeedImages(long boardId) {
+        return imageMapper.findAllImages(boardId);
+    }
 
+    // 이미지 수정 시 순서(order 컬럼) 어떻게 할지?
+    // 1 2 3 4 중 2를 삭제하고 다른 이미지 추가하면 1 3 4 5 or 1 5 3 4 ?
 
     // BoardImage 로 이미지 추가
     // 추가 성공하면 새로 추가된 이미지 id 리턴

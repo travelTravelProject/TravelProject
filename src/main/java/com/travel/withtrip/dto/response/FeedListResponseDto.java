@@ -1,11 +1,17 @@
 package com.travel.withtrip.dto.response;
 
+import com.travel.withtrip.dto.request.FeedFindAllDto;
 import com.travel.withtrip.entity.BoardImage;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@Getter @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FeedListResponseDto {
 
     private long boardId; // 게시글 id
@@ -23,5 +29,19 @@ public class FeedListResponseDto {
     private LocalDateTime updatedAt; // 수정일 - 타임스탬프
 
     @Setter
-    private List<BoardImage> feedImageList; // 게시글 이미지
+    private List<BoardImage> feedImageList; // 게시글에 등록된 모든 이미지
+    // 댓글 수, 좋아요 수, 북마크 수 추가
+
+    public FeedListResponseDto(FeedFindAllDto feedList) {
+        this.account = feedList.getAccount();
+        this.nickname = feedList.getNickname();
+        this.profileImage = feedList.getProfileImage();
+        this.categoryId = feedList.getCategoryId();
+        this.content = feedList.getContent();
+        this.viewCount = feedList.getViewCount();
+        this.createdAt = feedList.getCreatedAt();
+        this.updatedAt = feedList.getUpdatedAt();
+//        this.feedImageList = new ArrayList<>(); // imageService 조회 결과로 setter
+
+    }
 }

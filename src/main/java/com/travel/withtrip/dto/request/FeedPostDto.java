@@ -20,7 +20,10 @@ public class FeedPostDto {
     private String content; // 피드 내용
 
     @NotNull
-    private Long boardId;
+    private String account; // 피드 작성자 계정
+
+//    @NotNull
+//    private Long boardId; // DB에 등록될 때 생성되므로 처음 전달받을 땐 boardId 정보가 없음
 
     // 피드 이미지 데이터
     private List<MultipartFile> files;

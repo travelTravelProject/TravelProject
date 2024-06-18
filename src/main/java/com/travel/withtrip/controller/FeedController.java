@@ -1,9 +1,9 @@
 package com.travel.withtrip.controller;
 
-import com.travel.withtrip.dto.request.FeedFindAllDto;
 import com.travel.withtrip.dto.request.FeedModifyDto;
 import com.travel.withtrip.dto.request.FeedPostDto;
 import com.travel.withtrip.dto.response.FeedDetailResponseDto;
+import com.travel.withtrip.dto.response.FeedListResponseDto;
 import com.travel.withtrip.service.FeedService;
 import com.travel.withtrip.util.FileUtil;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,11 @@ public class FeedController {
     @GetMapping("/list")
     public ResponseEntity<?> list() {
 
-        List<FeedFindAllDto> feeds = feedService.findAll();
+        List<FeedListResponseDto> feeds = feedService.findAll();
+
+        if(feeds.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
 
         return ResponseEntity.ok().body(feeds);
     }
@@ -39,6 +43,10 @@ public class FeedController {
     public ResponseEntity<?> findById(@PathVariable long boardId) {
 
         FeedDetailResponseDto foundFeed = feedService.findById(boardId);
+
+        if(foundFeed == null) {
+            return ResponseEntity.noContent().build();
+        }
 
         return ResponseEntity.ok().body(foundFeed);
     }
@@ -55,8 +63,10 @@ public class FeedController {
             // 에러 메세지 Map 필요
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
+        // 받아온 계정과 세션 계정 일치하는지 검증 필요
+        // 일치하면 Board 작성 아니면 에러메세지 리턴
 
-
+        // tbl_board 생성된 데이터의 boardId를 가져옴 (실패 시 -1 리턴)
         long newBoardId = feedService.insertFeed(dto, session);
         if(newBoardId < 0) return ResponseEntity
                 .internalServerError()
@@ -75,7 +85,7 @@ public class FeedController {
     ) {
 
         boolean flag = feedService.updateFeed(dto);
-        if(flag) return "redirect:/feed/"+ dto.getBoardId();
+        if(flag) return "redirect:/feed/"+ dto.getBoardId(); // 수정한 피드 상세조회
         else return "error";
     }
 

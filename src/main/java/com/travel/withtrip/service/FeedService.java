@@ -4,6 +4,7 @@ import com.travel.withtrip.dto.request.FeedFindAllDto;
 import com.travel.withtrip.dto.request.FeedModifyDto;
 import com.travel.withtrip.dto.request.FeedPostDto;
 import com.travel.withtrip.dto.response.FeedDetailResponseDto;
+import com.travel.withtrip.dto.response.FeedListResponseDto;
 import com.travel.withtrip.entity.Board;
 import com.travel.withtrip.entity.BoardImage;
 import com.travel.withtrip.mapper.FeedMapper;
@@ -25,13 +26,23 @@ public class FeedService {
     private final FeedMapper feedMapper;
     private final ImageService imageService;
 
-    public List<FeedFindAllDto> findAll() {
+    public List<FeedListResponseDto> findAll() {
         List<FeedFindAllDto> feedList = feedMapper.findAllFeeds();
-
+        if(feedList.isEmpty()) {
+            return null;
+        }
         // 각 피드마다 이미지 리스트를 추가
         // 각 피드마다 댓글 수, 좋아요 수, 북마크 수 추가
 
-        return feedList;
+        // Feed 전체조회 응답객체에 map()으로 담기
+        // feedImageList imageService 조회 결과를 setter로 추가
+        return feedList.stream()
+                .map(f -> {
+                    FeedListResponseDto responseDto = new FeedListResponseDto(f);
+                    responseDto.setFeedImageList(imageService.getFeedImages(f.getBoardId()));
+                    return responseDto;
+                })
+                .collect(Collectors.toList());
     }
 
     public FeedDetailResponseDto findById(long boardId) {
@@ -43,9 +54,12 @@ public class FeedService {
         return new FeedDetailResponseDto(feedById);
 
     }
-    // 피드 등록 성공하면 새로운 boardId 리턴
-    // 피드 등록 실패하면 -1 리턴
+    // 새로운 피드(post DTO)를 tbl_board insert 시도
+    // 성공하면 새로운 boardId로 tbl_board_image 이미지 등록
+    // 피드 & 이미지 insert 성공하면 새로운 boardId 리턴
+    // 피드 & 이미지 insert 실패하면 -1 리턴
     public long insertFeed(FeedPostDto newFeed, HttpSession session) {
+
 
         Board board = Board.builder()
                 .content(newFeed.getContent())
