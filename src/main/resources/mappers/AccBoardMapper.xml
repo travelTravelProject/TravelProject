@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.mapper.AccBoardMapper">
+
+    <select id="findAll" resultType="accBoard">
+        SELECT * FROM tbl_board
+<!--        WHERE category_id = 'acc'-->
+        ORDER BY board_id DESC
+    </select>
+
+    <select id="findOne" resultType="accBoard">
+        SELECT * FROM tbl_board
+        WHERE board_id = #{boardId}
+    </select>
+
+    <insert id="save">
+        INSERT INTO tbl_board
+            (account, category_id, title, content, writer, location, start_date, end_date)
+        VALUES
+        (#{account}, #{categoryId}, #{title}, #{content}, #{writer}, #{location}, #{startDate}, #{endDate})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM tbl_board
+        WHERE board_id = #{boardId}
+    </delete>
+
+    <update id="upViewCount">
+        UPDATE tbl_board
+        SET view_count = view_count + 1
+        WHERE board_id = #{boardId}
+    </update>
+
+
+</mapper>

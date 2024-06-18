@@ -4,4 +4,16 @@
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <!--  카멜케이스와 스네이크케이스 자동 변환 설정  -->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.travel.entity.AccBoard" alias="accBoard" />
+    </typeAliases>
+
+    <mappers>
+        <mapper resource="mappers/AccBoardMapper.xml" />
+    </mappers>
 </configuration>
