@@ -16,8 +16,8 @@
 
     <select id="findOne" resultType="user">
         SELECT
-            (account, password, name, email, nickname, birthday, gender
-             createdAt, updatedAt, status, auth)
+            account, password, name, email, nickname, birthday, gender
+            createdAt, updatedAt, status, auth
         FROM tbl_user
         WHERE account = #{account}
     </select>

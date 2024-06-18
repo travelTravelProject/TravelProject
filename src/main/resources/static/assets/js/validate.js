@@ -1,6 +1,6 @@
 // 서버에 중복확인 비동기 요청
 export const checkAvailability = async (type, keyword) => {
-    const response = await fetch(`http://localhost:8181/users/check?type=${type}&keyword=${keyword}`);
+    const response = await fetch(`http://localhost:8181/check?type=${type}&keyword=${keyword}`);
     const flag = await response.json();
     return !flag;
 };
@@ -19,13 +19,13 @@ const namePattern = /^[가-힣]+$/;
 const emailPattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
 // 닉네임 패턴: 최대 8글자, 영문 대소문자, 숫자, 밑줄(_), 하이픈(-)을 허용
-const nicknamePattern = /^[a-zA-Z0-9_-]{1,8}$/;
+const nicknamePattern = /^[a-zA-Z0-9가-힣_-]{1,8}$/;
 
 // 생년월일 패턴: YYYY-MM-DD 형식의 날짜
 const birthdatePattern = /^\d{4}-\d{2}-\d{2}$/;
 
 // 성별 패턴: M OR F
-const genderPattern = /^[MF]$/i;
+// const genderPattern = /^[MF]$/i;
 
 // validateInput
 export const validateInput = {
@@ -96,12 +96,12 @@ export const validateInput = {
         return {valid: true} ;
     },
     // 성별 유효성 검사 함수
-    gender: (value) => {
-        // 빈 값 검사
-        if (!value.trim()) return {valid: false, message: '성별은 필수입니다.'};
-        // 정규표현식 검사
-        if(!genderPattern.test(value)) return {valid: false, message: '성별은 M 또는 F로 입력해주세요.'};
-
-        return {valid: true} ;
-    }
+    // gender: (value) => {
+    //     // 빈 값 검사
+    //     if (!value.trim()) return {valid: false, message: '성별은 필수입니다.'};
+    //     // 정규표현식 검사
+    //     if(!genderPattern.test(value)) return {valid: false, message: '성별은 M 또는 F로 입력해주세요.'};
+    //
+    //     return {valid: true} ;
+    // }
 };

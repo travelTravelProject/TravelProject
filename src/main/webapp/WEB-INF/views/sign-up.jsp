@@ -6,14 +6,14 @@
     <meta charset="UTF-8" />
     <title>Insert title here</title>
 
-<%--    <%@ include file="../include/static-head.jsp" %>--%>
+<%--    <%@ include file="./include/static-head.jsp" %>--%>
 
     <!-- 외부 스타일시트 링크 추가 -->
-    <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/assets/css/user.css" />
 </head>
 
 <body>
-<%--<%@ include file="../include/header.jsp" %>--%>
+<%--<%@ include file="./include/header.jsp" %>--%>
 
 <div class="container wrap">
     <div class="row">
@@ -196,15 +196,16 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input
-                                            type="text"
+                                    <select
                                             name="gender"
                                             id="user_gender"
                                             class="form-control tooltipstered"
                                             required="required"
                                             aria-required="true"
-                                            placeholder="M OR F"
-                                    />
+                                    >
+                                        <option value="M">남성</option>
+                                        <option value="F">여성</option>
+                                    </select>
                                 </td>
                             </tr>
                                 <td class="text-center">
@@ -216,7 +217,7 @@
                             <tr>
                                 <td class="text-center" colspan="2">
                                     <input
-                                            type="button"
+                                            type="submit"
                                             value="회원가입"
                                             class="btn form-control tooltipstered"
                                             id="signup-btn"
@@ -231,7 +232,7 @@
     </div>
 </div>
 
-<script type="module" src="/js/signUp.js"></script>
+<script type="module" src="/assets/js/signUp.js" defer></script>
 
 </body>
 </html>

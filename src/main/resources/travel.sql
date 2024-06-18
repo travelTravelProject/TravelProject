@@ -158,3 +158,6 @@ CREATE TABLE `tbl_user_detail` (
 );
 
 SELECT * FROM tbl_user;
+
+DELETE FROM tbl_user
+WHERE account = 'hahahoho';
