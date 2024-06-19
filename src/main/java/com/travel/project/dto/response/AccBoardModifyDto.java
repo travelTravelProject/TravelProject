@@ -1,6 +1,6 @@
-package com.travel.dto.response;
+package com.travel.project.dto.response;
 
-import com.travel.entity.AccBoard;
+import com.travel.project.entity.AccBoard;
 import lombok.*;
 
 import java.time.LocalDate;

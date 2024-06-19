@@ -10,7 +10,7 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="com.travel.entity.AccBoard" alias="accBoard" />
+        <typeAlias type="com.travel.project.entity.AccBoard" alias="accBoard" />
     </typeAliases>
 
     <mappers>

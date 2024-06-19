@@ -1,11 +1,10 @@
-package com.travel.service;
+package com.travel.project.service;
 
-import com.travel.dto.request.AccBoardWriteDto;
-import com.travel.dto.response.AccBoardDetailDto;
-import com.travel.dto.response.AccBoardListDto;
-import com.travel.dto.response.AccBoardModifyDto;
-import com.travel.entity.AccBoard;
-import com.travel.mapper.AccBoardMapper;
+import com.travel.project.dto.request.AccBoardWriteDto;
+import com.travel.project.dto.response.AccBoardDetailDto;
+import com.travel.project.dto.response.AccBoardListDto;
+import com.travel.project.entity.AccBoard;
+import com.travel.project.mapper.AccBoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

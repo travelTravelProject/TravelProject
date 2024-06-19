@@ -1,4 +1,4 @@
-package com.travel;
+package com.travel.project;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

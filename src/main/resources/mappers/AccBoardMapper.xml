@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.travel.mapper.AccBoardMapper">
+<mapper namespace="com.travel.project.mapper.AccBoardMapper">
 
     <select id="findAll" resultType="accBoard">
         SELECT * FROM tbl_board
@@ -30,7 +30,7 @@
         WHERE board_id = #{boardId}
     </delete>
 
-    <update id="update" parameterType="com.travel.entity.AccBoard">
+    <update id="update" parameterType="com.travel.project.entity.AccBoard">
         UPDATE tbl_board
         SET
             title = #{title},

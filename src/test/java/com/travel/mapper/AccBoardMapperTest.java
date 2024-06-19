@@ -1,14 +1,13 @@
 package com.travel.mapper;
 
-import com.travel.entity.AccBoard;
+import com.travel.project.entity.AccBoard;
+import com.travel.project.mapper.AccBoardMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AccBoardMapperTest {

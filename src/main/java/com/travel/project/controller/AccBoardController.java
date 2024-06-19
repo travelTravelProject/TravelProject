@@ -1,10 +1,9 @@
-package com.travel.controller;
+package com.travel.project.controller;
 
-import com.travel.dto.request.AccBoardWriteDto;
-import com.travel.dto.response.AccBoardDetailDto;
-import com.travel.dto.response.AccBoardListDto;
-import com.travel.dto.response.AccBoardModifyDto;
-import com.travel.service.AccBoardService;
+import com.travel.project.dto.request.AccBoardWriteDto;
+import com.travel.project.dto.response.AccBoardDetailDto;
+import com.travel.project.dto.response.AccBoardListDto;
+import com.travel.project.service.AccBoardService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
