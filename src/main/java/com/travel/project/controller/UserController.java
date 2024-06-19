@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -41,7 +42,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> check(String type, String keyword) {
         boolean flag = userService.checkIdentifier(type, keyword);
-        log.debug("{} check result : {} " , type, flag);
+//        log.debug("{} check result : {} " , type, flag);
         return ResponseEntity.ok().body(flag);
     }
 

@@ -90,7 +90,10 @@ export const validateInput = {
     birthday: (value) => {
 
         // 빈 값 검사
-        if (!value.trim()) return {valid: false, message: '생년월일은 필수입니다.'};
+        if (!value.trim()) {
+            console.log('생년월일 빈칸')
+            return {valid: false, message: '생년월일은 필수입니다.'};
+        }
         // 정규표현식 검사
         if(!birthdatePattern.test(value)) return {valid: false, message: '생년월일은 YYYY-MM-DD 형식의 날짜로 입력해주세요.'};
 

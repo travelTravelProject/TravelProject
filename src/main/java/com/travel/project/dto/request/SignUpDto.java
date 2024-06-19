@@ -3,6 +3,7 @@ package com.travel.project.dto.request;
 import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -33,7 +34,7 @@ public class SignUpDto {
     private String nickname;
 
     @NotNull
-    @Past(message = "생년월일은 과거 날짜여야 합니다")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     @NotBlank
