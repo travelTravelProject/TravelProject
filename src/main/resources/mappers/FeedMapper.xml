@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.project.mapper.FeedMapper">
+
+    <select id="findAllFeeds" resultType="feed">
+        SELECT
+            B.board_id,
+            B.account,
+            U.nickname,
+            D.profile_image,
+            B.category_id,
+            B.content,
+            B.view_count,
+            B.created_at,
+            B.updated_at
+        FROM tbl_board B
+        JOIN tbl_user U
+            ON B.account = U.account
+        JOIN tbl_user_detail D
+            ON B.account = D.account
+        WHERE status = 'A'
+            AND category_id = 2
+        ORDER BY board_id DESC
+    </select>
+
+    <select id="findFeedById" resultType="com.travel.project.dto.request.FeedFindOneDto">
+        SELECT
+            B.board_id,
+            B.account,
+            U.nickname,
+            D.profile_image,
+            B.category_id,
+            B.content,
+            B.view_count,
+            B.created_at,
+            B.updated_at
+        FROM tbl_board B
+        JOIN tbl_user U
+            ON B.account = U.account
+        JOIN tbl_user_detail D
+            ON B.account = D.account
+        WHERE status = 'A'
+            AND category_id = 2
+            AND board_id = #{boardId}
+    </select>
+
+    <insert id="saveFeed" parameterType="board"
+            useGeneratedKeys="true" keyProperty="boardId">
+        INSERT INTO tbl_board
+        (
+            account,
+            category_id,
+            content
+        )
+        VALUES
+        (
+            #{account},
+            2,
+            #{content}
+        )
+    </insert>
+
+    <select id="findAllImage" resultType="boardImage">
+        SELECT *
+        FROM tbl_board_image
+        WHERE board_id = #{boardId}
+        ORDER BY order
+    </select>
+
+    <update id="modifyFeed">
+        UPDATE tbl_board
+        SET content = #{content}
+        WHERE status = 'A'
+            AND board_id = #{boardId}
+            AND account = #{account}
+    </update>
+
+    <update id="deleteFeed">
+        UPDATE tbl_board
+        SET status = 'D'
+        WHERE status = 'A'
+            AND board_id = #{boardId}
+    </update>
+
+    <update id="upViewCount">
+        UPDATE tbl_board
+        SET view_count = view_count + 1
+        WHERE board_id = #{boardId}
+    </update>
+
+    <select id="sumViewCount" resultType="int">
+        SELECT view_count
+        FROM tbl_board
+        WHERE board_id = #{boardId}
+    </select>
+
+    <select id="getNewBoardId" resultType="int">
+        SELECT MAX(board_id)
+        FROM tbl_board
+    </select>
+
+</mapper>
