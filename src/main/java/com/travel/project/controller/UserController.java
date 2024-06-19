@@ -46,4 +46,11 @@ public class UserController {
         return ResponseEntity.ok().body(flag);
     }
 
+    // 마이페이지 열기
+    @GetMapping("/mypage")
+    public String myPage() {
+        log.info("mypage GET : forwarding to mypage.jsp");
+        return "/mypage";
+    }
+
 }
