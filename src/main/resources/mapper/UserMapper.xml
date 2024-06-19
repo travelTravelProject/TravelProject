@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace에는 연결할 인터페이스의 풀네임 -->
+<!-- 설정파일에 매퍼 등록 -->
+<mapper namespace="com.travel.project.mapper.UserMapper">
+
+    <insert id="save">
+        INSERT INTO tbl_user
+            (account, password, name, email, nickname, birthday, gender)
+        VALUES
+            (#{account}, #{password}, #{name}, #{email}, #{nickname}, #{birthday}, #{gender})
+    </insert>
+
+    <select id="findOne" resultType="user">
+        SELECT
+            account, password, name, email, nickname, birthday, gender
+            createdAt, updatedAt, status, auth
+        FROM tbl_user
+        WHERE account = #{account}
+    </select>
+
+    <select id="existById" resultType="boolean">
+        SELECT COUNT(*)
+        FROM tbl_user
+        <if test="type == 'account'">
+            WHERE account = #{keyword}
+        </if>
+        <if test="type == 'email'">
+            WHERE email = #{keyword}
+        </if>
+    </select>
+
+</mapper>
