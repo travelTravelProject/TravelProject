@@ -1,6 +1,6 @@
-package com.travel.withtrip.mapper;
+package com.travel.project.mapper;
 
-import com.travel.withtrip.entity.BoardImage;
+import com.travel.project.entity.BoardImage;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
