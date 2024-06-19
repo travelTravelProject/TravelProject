@@ -7,7 +7,8 @@
 
     <select id="findAll" resultType="accBoard">
         SELECT * FROM tbl_board
-<!--        WHERE category_id = 'acc'-->
+        WHERE status = 'A'
+<!--        WHERE category_id = '???'-->
         ORDER BY board_id DESC
     </select>
 
@@ -24,9 +25,21 @@
     </insert>
 
     <delete id="delete">
-        DELETE FROM tbl_board
+        UPDATE tbl_board
+        SET status = 'D'
         WHERE board_id = #{boardId}
     </delete>
+
+    <update id="update" parameterType="com.travel.entity.AccBoard">
+        UPDATE tbl_board
+        SET
+            title = #{title},
+            content = #{content},
+            start_date = #{startDate},
+            end_date = #{endDate},
+            updated_at = NOW()
+        WHERE board_id = #{boardId}
+    </update>
 
     <update id="upViewCount">
         UPDATE tbl_board

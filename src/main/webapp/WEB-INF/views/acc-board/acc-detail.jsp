@@ -44,10 +44,12 @@
                 </button>
             </div>
 
+            <button class="edit-btn" type="button" onclick="window.location.href='/acc-board/modify?bno=${abd.boardId}'">수정</button>
+
             <button
                     class="list-btn"
                     type="button"
-                    onclick="window.location.href='${ref}'"
+                    onclick="window.location.href=${ref}"
             >
                 목록
             </button>

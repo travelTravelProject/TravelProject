@@ -3,9 +3,9 @@ package com.travel.controller;
 import com.travel.dto.request.AccBoardWriteDto;
 import com.travel.dto.response.AccBoardDetailDto;
 import com.travel.dto.response.AccBoardListDto;
+import com.travel.dto.response.AccBoardModifyDto;
 import com.travel.service.AccBoardService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -73,7 +73,7 @@ public class AccBoardController {
 
     // 5. 게시글 상세 조회 요청 (/detail : GET)
     @GetMapping("/detail")
-    public String detail(@RequestParam("bno") int boardId, Model model, HttpServletRequest req) {
+    public String detail(@RequestParam("bno") Integer boardId, Model model, HttpServletRequest req) {
         System.out.println("/acc-board/acc-detail GET");
         // 글번호 조회
         AccBoardDetailDto dto = service.detail(boardId);
@@ -86,5 +86,28 @@ public class AccBoardController {
 
         return "acc-board/acc-detail";
     }
+
+//    // 6. 수정 화면 요청 (/modify : GET)
+//    @GetMapping("/modify")
+//    public String modify(@RequestParam("bno") Integer boardId, Model model) {
+//        System.out.println("/acc-board/modify GET");
+//
+//        // 글번호 조회
+//        AccBoardModifyDto dto = service.getModifyForm(boardId);
+//        // JSP 에 전송
+//        model.addAttribute("abm", dto);
+//
+//        return "acc-board/acc-modify";
+//    }
+//
+//    // 7. 게시글 수정 요청 (/modify : POST)
+//    @PostMapping("/modify")
+//    public String modify(AccBoardModifyDto dto) {
+//        System.out.println("/acc-board/modify POST");
+//
+//        service.modify(dto);
+//
+//        return "redirect:/acc-board/detail?bno=" + dto.getBoardId();
+//    }
 
 }

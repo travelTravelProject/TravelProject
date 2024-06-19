@@ -101,13 +101,11 @@
                     </section>
 <%--                    <!-- 관리자이거나 본인이 쓴 글에만 렌더링 되도록 -->--%>
 <%--                    <c:if test="${login.auth == 'ADMIN' || login.account == b.account}">--%>
-<%--                        <div class="card-btn-group">--%>
-<%--                            <button class="del-btn" data-href="--%>
-<%--                            /board/delete?bno=${b.boardNo}--%>
-">
-<%--                                <i class="fas fa-times"></i>--%>
-<%--                            </button>--%>
-<%--                        </div>--%>
+                    <div class="card-btn-group">
+                        <button class="del-btn" data-href="/acc-board/delete?boardId=${ab.boardId}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
 <%--                    </c:if>--%>
                 </div>
                 <%-- .end card-wrapper --%>

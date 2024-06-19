@@ -20,6 +20,9 @@ public interface AccBoardMapper {
     // 게시물 삭제
     boolean delete(int boardId);
 
+    // 게시물 수정
+    boolean modify(AccBoard accBoard);
+
     // 조회수 상승
     void upViewCount(int boardId);
 
