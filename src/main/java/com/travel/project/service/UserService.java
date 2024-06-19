@@ -1,8 +1,8 @@
-package com.travel.service;
+package com.travel.project.service;
 
-import com.travel.dto.request.SignUpDto;
-import com.travel.entity.User;
-import com.travel.mapper.UserMapper;
+import com.travel.project.dto.request.SignUpDto;
+import com.travel.project.entity.User;
+import com.travel.project.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -22,8 +22,12 @@ body {
     justify-content: center;
 }
 
+/*.offset-md-2 col-md-4 {*/
+/*    width: auto;*/
+/*}*/
+
 .card {
-    width: 100%;
+    width: 800px;
     border: none;
     border-radius: 8px;
     overflow: hidden;
@@ -60,7 +64,7 @@ body {
 }
 
 .table input.form-control {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: 1px solid #ced4da;
     border-radius: 4px;

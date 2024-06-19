@@ -1,7 +1,8 @@
-package com.travel.mapper;
+package com.travel.project.mapper;
 
-import com.travel.entity.Gender;
-import com.travel.entity.User;
+import com.travel.project.entity.Gender;
+import com.travel.project.entity.User;
+import com.travel.project.mapper.UserMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ class UserMapperTest {
                 .name("하하하")
                 .email("haha@gmail.com")
                 .nickname("하이하이")
-                .birthday("1995-12-15")
+                .birthday(LocalDate.of(1995, 12, 15))
                 .gender(Gender.valueOf("M"))
                 .build();
         //when

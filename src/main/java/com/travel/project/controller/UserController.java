@@ -1,7 +1,7 @@
-package com.travel.api;
+package com.travel.project.controller;
 
-import com.travel.dto.request.SignUpDto;
-import com.travel.service.UserService;
+import com.travel.project.dto.request.SignUpDto;
+import com.travel.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class UserController {
         log.info("sign-up POST : forwarding to sign-up.jsp");
 
         boolean flag = userService.join(dto);
-        log.info("sign-up POST: join result: {}", flag);
+//        log.info("sign-up POST: join result: {}", flag);
 
         return flag ? "redirect:/" : "redirect:/sign-up";
     }

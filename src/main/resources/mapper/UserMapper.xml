@@ -5,7 +5,7 @@
 
 <!-- namespace에는 연결할 인터페이스의 풀네임 -->
 <!-- 설정파일에 매퍼 등록 -->
-<mapper namespace="com.travel.mapper.UserMapper">
+<mapper namespace="com.travel.project.mapper.UserMapper">
 
     <insert id="save">
         INSERT INTO tbl_user

@@ -88,10 +88,26 @@ export const validateInput = {
     },
     // 생년월일 유효성 검사 함수
     birthday: (value) => {
+
         // 빈 값 검사
         if (!value.trim()) return {valid: false, message: '생년월일은 필수입니다.'};
         // 정규표현식 검사
         if(!birthdatePattern.test(value)) return {valid: false, message: '생년월일은 YYYY-MM-DD 형식의 날짜로 입력해주세요.'};
+
+        // 날짜 유효성 검사 (예: 윤년 등)
+        const parts = value.split('-');
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // JavaScript에서 월은 0부터 시작
+        const day = parseInt(parts[2], 10);
+        const date = new Date(year, month, day);
+
+        if (
+            date.getFullYear() !== year ||
+            date.getMonth() !== month ||
+            date.getDate() !== day
+        ) {
+            return { valid: false, message: '올바른 날짜를 입력해주세요.' };
+        }
 
         return {valid: true} ;
     },

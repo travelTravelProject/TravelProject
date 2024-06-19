@@ -36,12 +36,15 @@ const validateField = async (field) => {
     if (isValid.valid) {
         $input.style.borderColor = 'blue';
         $errorSpan.innerHTML = '<b class="success">[사용 가능합니다.]</b>';
+        $errorSpan.style.color = 'gray';
         field.valid = true;
     } else {
         $input.style.borderColor = 'red';
         $errorSpan.innerHTML = `<b class="warning">[${isValid.message}]</b>`;
+        $errorSpan.style.color = 'gray';
         field.valid = false;
     }
+    console.log('생년월일: ', $input.value);
     updateButtonState();
 };
 
@@ -53,7 +56,7 @@ fields.forEach(field => {
             const passwordCheckField = fields.find(f => f.id === 'password_check');
             validateField(passwordCheckField);
         }
-    }, 500));
+    }, 1000));
 });
 
 form.addEventListener('submit', (event) => {
@@ -65,3 +68,7 @@ form.addEventListener('submit', (event) => {
     });
     updateButtonState();
 });
+
+// 초기 버튼 상태로 업데이트
+updateButtonState();
+// 생년월일

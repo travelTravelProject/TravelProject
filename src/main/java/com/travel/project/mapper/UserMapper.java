@@ -1,6 +1,6 @@
-package com.travel.mapper;
+package com.travel.project.mapper;
 
-import com.travel.entity.User;
+import com.travel.project.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

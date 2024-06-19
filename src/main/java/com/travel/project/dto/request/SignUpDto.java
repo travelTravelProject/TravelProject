@@ -1,17 +1,11 @@
-package com.travel.dto.request;
+package com.travel.project.dto.request;
 
-import com.travel.entity.Gender;
-import com.travel.entity.User;
+import com.travel.project.entity.Gender;
+import com.travel.project.entity.User;
 import lombok.*;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.text.SimpleDateFormat;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Setter @Getter @ToString
 @AllArgsConstructor
@@ -39,7 +33,8 @@ public class SignUpDto {
     private String nickname;
 
     @NotNull
-    private String birthday;
+    @Past(message = "생년월일은 과거 날짜여야 합니다")
+    private LocalDate birthday;
 
     @NotBlank
     private Gender gender;

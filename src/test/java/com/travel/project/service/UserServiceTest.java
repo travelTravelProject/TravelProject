@@ -1,7 +1,8 @@
-package com.travel.service;
+package com.travel.project.service;
 
-import com.travel.dto.request.SignUpDto;
-import com.travel.entity.Gender;
+import com.travel.project.dto.request.SignUpDto;
+import com.travel.project.entity.Gender;
+import com.travel.project.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ class UserServiceTest {
                 .email("kitty@gmail.com")
                 .name("헬로키티")
                 .nickname("키티키티")
-                .birthday("1998-12-07")
+                .birthday(LocalDate.of(1998, 12, 07))
                 .gender(Gender.valueOf("F"))
                 .build();
         //when
