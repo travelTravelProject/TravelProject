@@ -1,9 +1,8 @@
-package com.travel.withtrip.mapper;
+package com.travel.project.mapper;
 
-import com.travel.withtrip.dto.request.FeedFindAllDto;
-import com.travel.withtrip.dto.request.FeedFindOneDto;
-import com.travel.withtrip.entity.Board;
-import com.travel.withtrip.entity.BoardImage;
+import com.travel.project.dto.request.FeedFindAllDto;
+import com.travel.project.dto.request.FeedFindOneDto;
+import com.travel.project.entity.Board;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

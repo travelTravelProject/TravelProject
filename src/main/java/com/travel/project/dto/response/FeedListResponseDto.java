@@ -1,11 +1,10 @@
-package com.travel.withtrip.dto.response;
+package com.travel.project.dto.response;
 
-import com.travel.withtrip.dto.request.FeedFindAllDto;
-import com.travel.withtrip.entity.BoardImage;
+import com.travel.project.dto.request.FeedFindAllDto;
+import com.travel.project.entity.BoardImage;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter @ToString

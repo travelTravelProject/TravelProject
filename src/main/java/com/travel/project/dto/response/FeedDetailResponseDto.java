@@ -1,8 +1,7 @@
-package com.travel.withtrip.dto.response;
+package com.travel.project.dto.response;
 
-import com.travel.withtrip.dto.request.FeedFindOneDto;
-import com.travel.withtrip.entity.Board;
-import com.travel.withtrip.entity.BoardImage;
+import com.travel.project.dto.request.FeedFindOneDto;
+import com.travel.project.entity.BoardImage;
 import lombok.Setter;
 
 import java.time.LocalDateTime;

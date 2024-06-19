@@ -1,8 +1,8 @@
-package com.travel.withtrip.dto.request;
+package com.travel.project.dto.request;
 
-import com.travel.withtrip.entity.Board;
-import com.travel.withtrip.entity.BoardImage;
-import com.travel.withtrip.util.FileUtil;
+import com.travel.project.entity.Board;
+import com.travel.project.entity.BoardImage;
+import com.travel.project.util.FileUtil;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 

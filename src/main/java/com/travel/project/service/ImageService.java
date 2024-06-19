@@ -1,7 +1,7 @@
-package com.travel.withtrip.service;
+package com.travel.project.service;
 
-import com.travel.withtrip.entity.BoardImage;
-import com.travel.withtrip.mapper.ImageMapper;
+import com.travel.project.entity.BoardImage;
+import com.travel.project.mapper.ImageMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

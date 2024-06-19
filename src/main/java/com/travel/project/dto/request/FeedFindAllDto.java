@@ -1,10 +1,8 @@
-package com.travel.withtrip.dto.request;
+package com.travel.project.dto.request;
 
-import com.travel.withtrip.entity.BoardImage;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter @ToString
 @NoArgsConstructor

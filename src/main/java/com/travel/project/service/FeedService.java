@@ -1,15 +1,15 @@
-package com.travel.withtrip.service;
+package com.travel.project.service;
 
-import com.travel.withtrip.dto.request.FeedFindAllDto;
-import com.travel.withtrip.dto.request.FeedFindOneDto;
-import com.travel.withtrip.dto.request.FeedModifyDto;
-import com.travel.withtrip.dto.request.FeedPostDto;
-import com.travel.withtrip.dto.response.FeedDetailResponseDto;
-import com.travel.withtrip.dto.response.FeedListResponseDto;
-import com.travel.withtrip.entity.Board;
-import com.travel.withtrip.entity.BoardImage;
-import com.travel.withtrip.mapper.FeedMapper;
-import com.travel.withtrip.util.FileUtil;
+import com.travel.project.dto.request.FeedFindAllDto;
+import com.travel.project.dto.request.FeedFindOneDto;
+import com.travel.project.dto.request.FeedModifyDto;
+import com.travel.project.dto.request.FeedPostDto;
+import com.travel.project.dto.response.FeedDetailResponseDto;
+import com.travel.project.dto.response.FeedListResponseDto;
+import com.travel.project.entity.Board;
+import com.travel.project.entity.BoardImage;
+import com.travel.project.mapper.FeedMapper;
+import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 

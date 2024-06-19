@@ -1,4 +1,4 @@
-package com.travel.withtrip.entity;
+package com.travel.project.entity;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.travel.withtrip.util;
+package com.travel.project.util;
 
 import org.springframework.web.multipart.MultipartFile;
 

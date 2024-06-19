@@ -1,11 +1,10 @@
-package com.travel.withtrip.controller;
+package com.travel.project.controller;
 
-import com.travel.withtrip.dto.request.FeedModifyDto;
-import com.travel.withtrip.dto.request.FeedPostDto;
-import com.travel.withtrip.dto.response.FeedDetailResponseDto;
-import com.travel.withtrip.dto.response.FeedListResponseDto;
-import com.travel.withtrip.service.FeedService;
-import com.travel.withtrip.util.FileUtil;
+import com.travel.project.dto.request.FeedModifyDto;
+import com.travel.project.dto.request.FeedPostDto;
+import com.travel.project.dto.response.FeedDetailResponseDto;
+import com.travel.project.dto.response.FeedListResponseDto;
+import com.travel.project.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

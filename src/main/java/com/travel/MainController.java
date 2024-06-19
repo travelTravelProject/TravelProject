@@ -15,6 +15,12 @@ public class MainController {
     }
 
     @GetMapping("/feed")
-    public String feed() { return "feed-list"; }
+    public String feed() {
+        System.out.println(System.getProperty("user.dir"));
+        return "feed-list";
+    }
+
+//    @GetMapping("/feed")
+//    public String feed() { return "feedList"; }
 
 }

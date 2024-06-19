@@ -1,4 +1,4 @@
-package com.travel.withtrip.dto.request;
+package com.travel.project.dto.request;
 
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
