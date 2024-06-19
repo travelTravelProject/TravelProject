@@ -1,5 +1,6 @@
 package com.travel.project.service;
 
+import com.travel.project.common.Search;
 import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.dto.request.FeedModifyDto;
@@ -28,8 +29,8 @@ public class FeedService {
     private final FeedMapper feedMapper;
     private final ImageService imageService;
 
-    public List<FeedListResponseDto> findAll() {
-        List<FeedFindAllDto> feedList = feedMapper.findAllFeeds();
+    public List<FeedListResponseDto> findAll(Search search) {
+        List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
         if(feedList.isEmpty()) {
             return null;
         }

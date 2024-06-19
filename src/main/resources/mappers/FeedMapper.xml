@@ -24,6 +24,7 @@
         WHERE status = 'A'
             AND category_id = 2
         ORDER BY board_id DESC
+        LIMIT #{pageStart}, #{amount}
     </select>
 
     <select id="findFeedById" resultType="com.travel.project.dto.request.FeedFindOneDto">

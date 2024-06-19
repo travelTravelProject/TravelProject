@@ -9,6 +9,10 @@
 </head>
 <body>
 <div class="feed-container">
+  <div class="btn-container">
+    <button id="createFeedBtn">새 피드 작성</button>
+    <button id="editFeedBtn">피드 수정</button>
+  </div>
   <div class="feed-item">
     <div class="profile-section">
       <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
@@ -17,6 +21,9 @@
     <div class="image-carousel">
       <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">
       <!-- Add more images here for carousel -->
+    </div>
+    <div class="content-section">
+      <span>너무 더워</span>
     </div>
     <div class="interaction-section">
       <span class="comments">💬 10</span>
@@ -30,13 +37,15 @@
 <div id="createFeedModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <form id="createFeedForm">
-      <label for="postImage">이미지 업로드:</label>
-      <input type="file" id="postImage" name="postImage" accept="image/*" required>
+    <div id="createFeedForm">
       <label for="nickname">닉네임:</label>
       <input type="text" id="nickname" name="nickname" required>
-      <button type="submit">게시</button>
-    </form>
+      <label for="content">내용:</label>
+      <input type="text" id="content" name="nickname" required>
+      <label for="postImage">이미지 업로드:</label>
+      <input type="file" id="postImage" name="postImage" accept="image/*" required>
+      <button type="submit" id="feed-post-Btn">게시</button>
+    </div>
   </div>
 </div>
 
@@ -44,13 +53,15 @@
 <div id="editFeedModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <form id="editFeedForm">
-      <label for="editPostImage">이미지 업로드:</label>
-      <input type="file" id="editPostImage" name="postImage" accept="image/*">
+    <div id="editFeedForm">
       <label for="editNickname">닉네임:</label>
       <input type="text" id="editNickname" name="nickname" required>
-      <button type="submit">수정</button>
-    </form>
+      <label for="editContent">내용:</label>
+      <input type="text" id="editContent" name="nickname" required>
+      <label for="editPostImage">이미지 업로드:</label>
+      <input type="file" id="editPostImage" name="postImage" accept="image/*">
+      <button type="submit" id="feed-modify-Btn">수정</button>
+    </div>
   </div>
 </div>
 

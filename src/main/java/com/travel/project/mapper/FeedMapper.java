@@ -1,5 +1,6 @@
 package com.travel.project.mapper;
 
+import com.travel.project.common.Search;
 import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.entity.Board;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface FeedMapper {
 
     // 전체 피드 조회
-    List<FeedFindAllDto> findAllFeeds();
+    List<FeedFindAllDto> findAllFeeds(Search s);
 
     // 피드 하나 조회
     FeedFindOneDto findFeedById(long boardId);

@@ -14,13 +14,4 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/feed")
-    public String feed() {
-        System.out.println(System.getProperty("user.dir"));
-        return "feed-list";
-    }
-
-//    @GetMapping("/feed")
-//    public String feed() { return "feedList"; }
-
 }

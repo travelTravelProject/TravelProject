@@ -1,5 +1,7 @@
 package com.travel.project.controller;
 
+import com.travel.project.common.Page;
+import com.travel.project.common.Search;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
 import com.travel.project.dto.response.FeedDetailResponseDto;
@@ -26,10 +28,12 @@ public class FeedController {
 
 
     // 피드 전체 조회 요청
-    @GetMapping("/list")
-    public ResponseEntity<?> list() {
-
-        List<FeedListResponseDto> feeds = feedService.findAll();
+    @GetMapping("/list/{pageNo}")
+    public ResponseEntity<?> list(
+            @PathVariable int pageNo
+    ) {
+        // Search type, keyword 확인 필요
+        List<FeedListResponseDto> feeds = feedService.findAll((Search) new Page(pageNo, 5));
 
         if(feeds.isEmpty()) {
             return ResponseEntity.noContent().build();
