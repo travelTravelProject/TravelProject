@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
-@Getter
-@ToString
+@Getter @ToString
 @AllArgsConstructor
+// 댓글의 상태
 public enum STATUS {
-
-    A, D
-
+    A, D;
 }

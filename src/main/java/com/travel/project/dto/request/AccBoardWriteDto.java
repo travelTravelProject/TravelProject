@@ -1,10 +1,9 @@
-package com.travel.dto.request;
+package com.travel.project.dto.request;
 
-import com.travel.entity.AccBoard;
+import com.travel.project.entity.AccBoard;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Setter @Getter @ToString

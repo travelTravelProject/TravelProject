@@ -1,8 +1,7 @@
-package com.travel.dto.response;
+package com.travel.project.dto.response;
 
-import com.travel.entity.AccBoard;
+import com.travel.project.entity.AccBoard;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.format.DateTimeFormatter;
 

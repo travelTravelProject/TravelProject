@@ -1,6 +1,6 @@
-package com.travel.mapper;
+package com.travel.project.mapper;
 
-import com.travel.entity.AccBoard;
+import com.travel.project.entity.AccBoard;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
