@@ -3,7 +3,7 @@ package com.travel.project.dto.request;
 import com.travel.project.entity.Reply;
 import lombok.*;
 
-@Getter @ToString
+@Getter @Setter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

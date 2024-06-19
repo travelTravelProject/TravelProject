@@ -1,7 +1,10 @@
 package com.travel.project.service;
 
+import com.travel.project.common.Page;
+import com.travel.project.common.PageMaker;
 import com.travel.project.dto.request.ReplyRequestModifyDto;
 import com.travel.project.dto.request.ReplyRequestPostDto;
+import com.travel.project.dto.response.ReplyListDto;
 import com.travel.project.dto.response.ReplyResponseDetailDto;
 import com.travel.project.entity.Reply;
 import com.travel.project.mapper.ReplyMapper;
@@ -23,9 +26,8 @@ public class ReplyService {
     // 댓글 목록 전체조회
     public List<ReplyResponseDetailDto> getReplies(long boardId) {
         List<Reply> replies = replyMapper.findAll(boardId);
-        // 댓글 목록의 형식을 DTO처럼 변환
         return replies.stream()
-                .map(reply -> new ReplyResponseDetailDto(reply))
+                .map(r -> new ReplyResponseDetailDto(r))
                 .collect(Collectors.toList());
     }
 
@@ -34,7 +36,9 @@ public class ReplyService {
         Reply reply = Reply.builder()
                 .replyText(dto.getText())
                 .replyWriter(dto.getAuthor())
-                .boardId(dto.getBoardId())
+                .boardId(2L)
+                .parentReplyId(dto.getParentReplyId())
+                .account("testuser") // 나중에는 로그인한 유저로 교체(세션)
                 .build();
 
         boolean flag = replyMapper.save(reply);
@@ -63,6 +67,7 @@ public class ReplyService {
     }
 
     // 대댓글 목록 전체조회
+    // 대댓글도 ReplyListDto로 바꿔야되나? (페이징 적용해야하나?)
     public List<ReplyResponseDetailDto> getNestedReplies(long parentReplyId) {
         List<Reply> replies = replyMapper.findAllNestedReply(parentReplyId);
         return replies.stream()

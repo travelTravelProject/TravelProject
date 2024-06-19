@@ -1,8 +1,10 @@
 package com.travel.project.controller;
 
 
+import com.travel.project.common.Page;
 import com.travel.project.dto.request.ReplyRequestModifyDto;
 import com.travel.project.dto.request.ReplyRequestPostDto;
+import com.travel.project.dto.response.ReplyListDto;
 import com.travel.project.dto.response.ReplyResponseDetailDto;
 import com.travel.project.service.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,8 @@ public class ReplyController {
     // URL : /api/v1/replies/원본글번호   -  GET -> 목록조회
     // @PathVariable : URL에 있는 변수값을 읽어줌
     @GetMapping("/{boardId}")
-    public ResponseEntity<?> list(@PathVariable long boardId) {
+    public ResponseEntity<?> list(
+            @PathVariable long boardId) {
 
         List<ReplyResponseDetailDto> replies = replyService.getReplies(boardId);
 
@@ -41,7 +44,7 @@ public class ReplyController {
         // 댓글을 생성한 이후 게시물의 댓글 목록을 불러옴
         return ResponseEntity
                 .ok()
-                .body(replyService.getReplies(dto.getBoardId()));
+                .body(replyService.getReplies(2L));
     }
 
     // 댓글 삭제 요청
@@ -98,4 +101,6 @@ public class ReplyController {
                 .ok()
                 .body(replyListDto);
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.travel.project.mapper;
 
+import com.travel.project.common.Page;
 import com.travel.project.entity.Reply;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ class ReplyMapperTest {
     void bulk() {
         for (int i = 1; i <= 10; i++) {
             Reply reply = Reply.builder()
-                    .boardId(i)
+                    .boardId(2)
                     .account("testuser")
                     .replyText("하하호호댓글" + i)
                     .replyWriter("꾸러긔" + i)

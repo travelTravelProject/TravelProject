@@ -47,4 +47,10 @@
         WHERE parent_reply_id = #{parentReplyId}
         ORDER BY reply_id
     </select>
+
+    <select id="findParentReplyId" resultType="long">
+        SELECT parent_reply_id
+        FROM tbl_reply
+        WHERE reply_id = #{replyId}
+    </select>
 </mapper>
