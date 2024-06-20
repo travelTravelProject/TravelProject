@@ -41,30 +41,12 @@
             <p>Gender: ${user.gender}</p>
 
 
-    <h2>Edit Information</h2>
-    <form action="/updateProfile" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="${user.name}" required>
+        <button class="update">프로필 수정</button>
+        </form>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="${user.email}" required>
-
-        <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" name="nickname" value="${user.nickname}" required>
-
-        <label for="birthday">Birthday:</label>
-        <input type="date" id="birthday" name="birthday" value="${user.birthday}" required>
-
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender" required>
-            <option value="M" ${user.gender == 'M' ? 'selected' : ''}>Male</option>
-            <option value="F" ${user.gender == 'F' ? 'selected' : ''}>Female</option>
-        </select>
-
-        <button type="submit">Update</button>
-    </form>
+    </div>
 </div>
-
 <script type="module" src="/assets/js/myPage.js" defer></script>
+
 </body>
 </html>

@@ -21,3 +21,11 @@ $fileInput.addEventListener('change', e => {
         $img.src = reader.result;
     };
 });
+
+const $updateButton = document.querySelector('.update');
+
+$updateButton.addEventListener('click', e => {
+    e.preventDefault();
+    console.log('수정 클릭');
+    window.location.href = '/mypage/update';
+});
