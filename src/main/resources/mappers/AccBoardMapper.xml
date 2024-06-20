@@ -10,6 +10,7 @@
         WHERE status = 'A'
 <!--        WHERE category_id = '???'-->
         ORDER BY board_id DESC
+        LIMIT #{pageStart}, #{amount}
     </select>
 
     <select id="findOne" resultType="accBoard">

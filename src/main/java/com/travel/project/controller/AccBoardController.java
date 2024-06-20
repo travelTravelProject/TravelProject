@@ -1,5 +1,6 @@
 package com.travel.project.controller;
 
+import com.travel.project.common.Page;
 import com.travel.project.dto.request.AccBoardWriteDto;
 import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
@@ -25,11 +26,11 @@ public class AccBoardController {
 
     // 1. 목록 조회 요청 (/list : GET)
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Page page, Model model) {
         System.out.println("/acc-board/acc-list GET");
 
         // 목록 조회 요청 위임
-        List<AccBoardListDto> abList = service.findList();
+        List<AccBoardListDto> abList = service.findList(page);
 
         // JSP파일에 해당 목록 데이터를 전송
         model.addAttribute("abList", abList);

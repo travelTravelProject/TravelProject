@@ -57,6 +57,6 @@ public class AccBoardListDto {
     }
 
     private String makeShortTitle(String title) {
-        return title.length() > 15 ? title.substring(0, 15) + "..." : title;
+        return title.length() > 10 ? title.substring(0, 10) + "..." : title;
     }
 }
