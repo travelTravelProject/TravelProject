@@ -99,7 +99,6 @@
 <!-- 피드 수정 모달 끝 -->
 
 <%-- 스크립트 --%>
-<script type="module" src="/assets/js/feed-list.js"></script>
 <script>
   // 모달 열고 닫는 이벤트
   document.addEventListener('DOMContentLoaded', (event) => {
@@ -141,5 +140,6 @@
   });
 
 </script>
+<script type="module" src="/assets/js/feed-list.js"></script>
 </body>
 </html>

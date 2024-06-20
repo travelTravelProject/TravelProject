@@ -10,6 +10,8 @@ import com.travel.project.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +20,16 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/feed")
+@RequestMapping("/feed/v1")
 @Slf4j
 @RequiredArgsConstructor
 public class FeedController {
 
     private final FeedService feedService;
 
-
     // 피드 전체 조회 요청
     @GetMapping("/list") // 페이지, 검색 쿼리스트링
+    @ResponseBody
     public ResponseEntity<?> list(
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             @RequestParam(name = "type", defaultValue = "content", required = false) String type,

@@ -9,6 +9,9 @@ let loadedFeeds = 0;  // 로딩된 게시글 수
 // 피드 목록 렌더링
 // spring FeedListDto 필드명 참고
 function appendFeeds({ feeds }) {
+
+  console.log("appendFeeds 실행중: ", feeds);
+
   let tag = '';
   // 게시글이 존재하면
   if(feeds && feeds.length > 0) {
@@ -50,9 +53,9 @@ function appendFeeds({ feeds }) {
 }
 
 // 서버에서 피드 목록 가져오는 비동기 요청 함수
-async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') {
+export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') {
 
-  const url = `${FEED_URL}/list?pageNo=${pageNo}&type=${type}&keyword=${keyword}`;
+  const url = `${FEED_URL}/v1/list?pageNo=${pageNo}&type=${type}&keyword=${keyword}`;
   console.log('fetchFeedList 실행: ', pageNo);
 
   const res = await fetch(url);
