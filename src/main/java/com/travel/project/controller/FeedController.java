@@ -1,6 +1,6 @@
 package com.travel.project.controller;
 
-import com.travel.project.common.PageMaker;
+import com.travel.project.common.Page;
 import com.travel.project.common.Search;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
@@ -10,8 +10,6 @@ import com.travel.project.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @RequestMapping("/feed")
 @Slf4j
 @RequiredArgsConstructor
@@ -30,21 +28,23 @@ public class FeedController {
 
     // 피드 전체 조회 요청
     @GetMapping("/list") // 페이지, 검색 쿼리스트링
-    public String list(
-            @ModelAttribute("s") Search page
-            , Model model
+    public ResponseEntity<?> list(
+            @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+            @RequestParam(name = "type", defaultValue = "content", required = false) String type,
+            @RequestParam(name = "keyword", defaultValue = "", required = false) String keyword
     ) {
+        log.debug("겟: " + pageNo + "-" + type + "-" + keyword);
+        Search page = new Search(new Page(pageNo, 10));
+        page.setKeyword(keyword);
+        page.setType(type);
         // Search type, keyword 확인 필요
         FeedListDto feeds = feedService.findAll(page);
 
-        // 페이지 정보를 생성하여 JSP에게 전송
-        PageMaker maker = new PageMaker(page, feedService.getCount(page));
+        log.debug("FeedListDto: {}", feeds);
 
-        model.addAttribute("feeds", feeds);
-        model.addAttribute("maker", maker);
-
-        return "feed-list";
+        return ResponseEntity.ok(feeds);
     }
+
     // 피드 상세 조회 요청
     @GetMapping("/{boardId}")
     @ResponseBody

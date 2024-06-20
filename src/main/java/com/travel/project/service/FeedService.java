@@ -33,6 +33,7 @@ public class FeedService {
 
     public FeedListDto findAll(Search search) {
         List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
+        log.debug("서비스 findAll: {}", feedList);
         if(feedList.isEmpty()) {
             return null;
         }
@@ -44,7 +45,12 @@ public class FeedService {
         List<FeedDetailResponseDto> detailDto = feedList.stream()
                 .map(f -> {
                     FeedDetailResponseDto responseDto = f.toDetailResponseDto();
-                    responseDto.setFeedImageList(imageService.getFeedImages(f.getBoardId()));
+                    log.debug("피드서비스 f: {}", f);
+                    log.debug("f 글번호: {}", f.getBoardId());
+                    List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());
+                    if(feedImages != null) {
+                        responseDto.setFeedImageList(feedImages);
+                    }
                     return responseDto;
                 })
                 .collect(Collectors.toList());
@@ -67,7 +73,7 @@ public class FeedService {
 
         // 이미지 모두 조회하여 추가
         responseDto
-                .setFeedImageList(imageService.getFeedImages(feedById.getBoardId()));
+                .setFeedImageList(imageService.findFeedImages(feedById.getBoardId()));
         return responseDto;
 
     }

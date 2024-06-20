@@ -24,6 +24,7 @@
     <!--  SQL을 적어놓은 ...Mapper.xml 파일들을 사용등록하는 영역  -->
     <mappers>
         <mapper resource="mappers/FeedMapper.xml" />
+        <mapper resource="mappers/ImageMapper.xml" />
         <mapper resource="mappers/AccBoardMapper.xml" />
         <mapper resource="mappers/ReplyMapper.xml" />
         <mapper resource="mappers/UserMapper.xml"/>

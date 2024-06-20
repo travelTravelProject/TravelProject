@@ -24,7 +24,7 @@
             B.board_id,
             B.account,
             U.nickname,
-            D.profile_image,
+<!--            D.profile_image,-->
             B.category_id,
             B.content,
             B.view_count,
@@ -33,8 +33,8 @@
         FROM tbl_board B
         JOIN tbl_user U
             ON B.account = U.account
-        JOIN tbl_user_detail D
-            ON B.account = D.account
+<!--        JOIN tbl_user_detail D-->
+<!--            ON B.account = D.account-->
         WHERE B.status = 'A'
             AND B.category_id = 2
         <include refid="search" />

@@ -50,13 +50,15 @@ function appendFeeds({ feeds }) {
 }
 
 // 서버에서 피드 목록 가져오는 비동기 요청 함수
-export async function fetchFeedList(pageNo=1) {
-  console.log('fetchFeedList 실행: ', pageNo);
-  const requestInfo = {
-    method: 'GET',
-  }
+async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') {
 
-  const res = await fetch(`${FEED_URL}/list?pageNo=${pageNo}`, requestInfo);
+  const url = `${FEED_URL}/list?pageNo=${pageNo}&type=${type}&keyword=${keyword}`;
+  console.log('fetchFeedList 실행: ', pageNo);
+
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`HTTP error! Status: ${res.status}`);
+  }
   const feedListDto = await res.json();
   console.log(feedListDto);
 
