@@ -1,4 +1,5 @@
 import { FEED_URL } from "./feed-list.js";
+import {debounce} from "./util.js";
 
 let currentFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetching = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
@@ -50,14 +51,14 @@ function appendFeeds({ feeds }) {
 
 // 서버에서 피드 목록 가져오는 비동기 요청 함수
 export async function fetchFeedList(pageNo=1) {
-
+  console.log('fetchFeedList 실행: ', pageNo);
   const requestInfo = {
     method: 'GET',
   }
 
-  const res = await fetch(`${FEED_URL}/list/${pageNo}`, requestInfo);
+  const res = await fetch(`${FEED_URL}/list?pageNo=${pageNo}`, requestInfo);
   const feedListDto = await res.json();
-  console.log(feedList);
+  console.log(feedListDto);
 
   if(pageNo === 1) {
     totalFeeds = feedList.pageInfo.totalCount;
@@ -93,7 +94,7 @@ const debouncedScrollHandler = debounce(async function(e) {
     console.log("스크롤 이벤트 핸들러 함수 실행");
     // showSpinner();
     await new Promise(resolve => setTimeout(resolve, 500));
-    fetchFeedList(currentPage + 1);
+    fetchFeedList(currentFeedPage + 1);
   }
 }, 500);
 

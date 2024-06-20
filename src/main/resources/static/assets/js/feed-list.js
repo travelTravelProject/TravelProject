@@ -1,4 +1,4 @@
-import {fetchFeedList} from "./feed-getList";
+import {fetchFeedList} from "./feed-getList.js";
 
 console.log('feed-list.js 실행');
 //===== 전역 변수 =====
@@ -23,7 +23,7 @@ function fixSearchOption() {
 // 피드 목록 서버에서 불러오기
 fetchFeedList(); // 초기 피드 - 1페이지
 
-fixSearchOption();
+// fixSearchOption();
 
 
 
