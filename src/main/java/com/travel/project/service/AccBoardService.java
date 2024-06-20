@@ -42,7 +42,13 @@ public class AccBoardService {
     // 상세 조회 요청 중간처리
     public AccBoardDetailDto detail(int boardId) {
         AccBoard ab = accBoardMapper.findOne(boardId);
-        if(ab != null) accBoardMapper.upViewCount(boardId);
+        if(ab != null) {
+//            accBoardMapper.upViewCount(boardId);
+            // 조회수 증가
+            accBoardMapper.upViewCount(boardId);
+            // 조회수 증가 후 게시글을 다시 조회하여 업데이트된 조회수를 가져옵니다.
+            ab = accBoardMapper.findOne(boardId);
+        }
         return new AccBoardDetailDto(ab);
     }
 

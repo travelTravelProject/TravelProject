@@ -6,8 +6,6 @@ import com.travel.project.dto.response.AccBoardListDto;
 import com.travel.project.dto.response.AccBoardModifyDto;
 import com.travel.project.service.AccBoardService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccBoardController {
 
-    private static final Logger log = LoggerFactory.getLogger(AccBoardController.class);
     private final AccBoardService service;
 
     // 1. 목록 조회 요청 (/list : GET)

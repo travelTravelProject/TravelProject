@@ -2,6 +2,7 @@ package com.travel.project.mapper;
 
 import com.travel.project.entity.AccBoard;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 

@@ -11,16 +11,6 @@
 </head>
 <body>
 
-<%--    <h2>${abd.title}</h2>--%>
-<%--    <p>${abd.content}</p>--%>
-<%--    <p>Writer: ${abd.writer}</p>--%>
-<%--    --%>
-<%--    <p>작성일자: ${abd.createdAt}</p>--%>
-<%--    <p>수정일자: ${abd.updatedAt}</p>--%>
-<%--    <p>동행시작일 : ${abd.startDate}</p>--%>
-<%--    <p>동행종료일: ${abd.endDate}</p>--%>
-<%--    <p>Views: ${abd.viewCount}</p>--%>
-
     <div id="wrap" class="form-container" data-bno="${abd.boardId}">
         <h1>${abd.boardId}번 게시물</h1>
         <h2># 작성일자: ${abd.createdAt}</h2>
@@ -40,7 +30,6 @@
             <div class="reaction-buttons">
                 <button id="like-btn">
                     <i class="fas fa-thumbs-up"></i> 좋아요
-<%--                    <span id="like-count">${abd.likeCount}</span>--%>
                 </button>
             </div>
 
@@ -49,7 +38,7 @@
             <button
                     class="list-btn"
                     type="button"
-                    onclick="window.location.href=${ref}"
+                    onclick="window.location.href='/acc-board/list'"
             >
                 목록
             </button>
@@ -114,11 +103,6 @@
             sendReaction('like');
         });
 
-        // 싫어요 클릭 이벤트
-        document.getElementById('dislike-btn').addEventListener('click', e => {
-            console.log('dislike!');
-            sendReaction('dislike');
-        });
     </script>
 
 
