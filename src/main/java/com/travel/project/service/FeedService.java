@@ -105,7 +105,7 @@ public class FeedService {
                         // DB insert 성공 ? 등록한 이미지 id : -1
                         long imageId = imageService.addImage(b);
                         if (imageId < 0) {
-                            log.debug("file 추가 실패: ", imageId < 0 ? file : "");
+                            log.debug("file 추가 실패: ",file);
                             return;
                         }
                 });
