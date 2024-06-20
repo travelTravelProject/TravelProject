@@ -1,12 +1,18 @@
 package com.travel.project.dto.response;
 
+import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.entity.BoardImage;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter @ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FeedDetailResponseDto {
     private long boardId; // 게시글 id
 
@@ -37,5 +43,11 @@ public class FeedDetailResponseDto {
         this.viewCount = feedById.getViewCount();
         this.createdAt = feedById.getCreatedAt();
         this.updatedAt = feedById.getUpdatedAt();
+    }
+
+    public FeedDetailResponseDto(FeedFindAllDto feeds) {
+        this.boardId = feeds.getBoardId();
+        this.account = feeds.getAccount();
+        this.nickname = feeds.getNickname();
     }
 }

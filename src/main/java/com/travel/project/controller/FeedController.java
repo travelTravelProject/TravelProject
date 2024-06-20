@@ -1,24 +1,25 @@
 package com.travel.project.controller;
 
-import com.travel.project.common.Page;
+import com.travel.project.common.PageMaker;
 import com.travel.project.common.Search;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
 import com.travel.project.dto.response.FeedDetailResponseDto;
-import com.travel.project.dto.response.FeedListResponseDto;
+import com.travel.project.dto.response.FeedListDto;
 import com.travel.project.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/feed")
 @Slf4j
 @RequiredArgsConstructor
@@ -28,21 +29,25 @@ public class FeedController {
 
 
     // 피드 전체 조회 요청
-    @GetMapping("/list/{pageNo}")
-    public ResponseEntity<?> list(
-            @PathVariable int pageNo
+    @GetMapping("/list") // 페이지, 검색 쿼리스트링
+    public String list(
+            @ModelAttribute("s") Search page, Model model
     ) {
         // Search type, keyword 확인 필요
-        List<FeedListResponseDto> feeds = feedService.findAll((Search) new Page(pageNo, 5));
+        FeedListDto feeds = feedService.findAll(page);
 
-        if(feeds.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+        // 페이지 정보를 생성하여 JSP에게 전송
+        PageMaker maker = new PageMaker(page, feedService.getCount(page));
+//        System.out.println("maker = " + maker);
 
-        return ResponseEntity.ok().body(feeds);
+        model.addAttribute("feeds", feeds);
+        model.addAttribute("maker", maker);
+
+        return "feed/list";
     }
     // 피드 상세 조회 요청
     @GetMapping("/{boardId}")
+    @ResponseBody
     public ResponseEntity<?> findById(@PathVariable long boardId) {
 
         FeedDetailResponseDto foundFeed = feedService.findById(boardId);
@@ -54,8 +59,9 @@ public class FeedController {
         return ResponseEntity.ok().body(foundFeed);
     }
 
-    // 피드 생성 요청
+    // 생성 요청
     @PostMapping("/list")
+    @ResponseBody
     public ResponseEntity<?> makeNewFeed(
             @Validated FeedPostDto dto
             , BindingResult bindingResult
@@ -81,7 +87,7 @@ public class FeedController {
     }
 
     // 수정 - 수정한 내용을 JSON으로 받도록 수정해야 함
-    @RequestMapping(value="/list", method= {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value="/{boardId}", method= {RequestMethod.PUT, RequestMethod.PATCH})
     public String updateFeed(
             @RequestPart(value="requestDto") FeedModifyDto dto
             , @RequestPart(value="file") MultipartFile file // 이미지
@@ -92,6 +98,14 @@ public class FeedController {
         else return "error";
     }
 
+    // 삭제 - boardId를 받아서 status D로 변경
+    @DeleteMapping("/{boardId}")
+    @ResponseBody
+    public ResponseEntity<?> delete(@PathVariable long boardId) {
 
+        FeedListDto feeds = feedService.deleteFeed(boardId);
+
+        return ResponseEntity.ok().body(feeds);
+    }
 
 }

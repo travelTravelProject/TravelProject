@@ -29,6 +29,9 @@ public interface FeedMapper {
     // 피드 조회수 갱신 (모달 띄우면 조회수 +1)
     boolean upViewCount(long boardId);
 
+    // 총 피드 수
+    int countFeeds(Search search);
+
     // 피드 총 조회수
 //    int sumViewCount(long boardId);
 

@@ -1,12 +1,14 @@
 package com.travel.project.service;
 
+import com.travel.project.common.Page;
+import com.travel.project.common.PageMaker;
 import com.travel.project.common.Search;
 import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
 import com.travel.project.dto.response.FeedDetailResponseDto;
-import com.travel.project.dto.response.FeedListResponseDto;
+import com.travel.project.dto.response.FeedListDto;
 import com.travel.project.entity.Board;
 import com.travel.project.entity.BoardImage;
 import com.travel.project.mapper.FeedMapper;
@@ -29,7 +31,7 @@ public class FeedService {
     private final FeedMapper feedMapper;
     private final ImageService imageService;
 
-    public List<FeedListResponseDto> findAll(Search search) {
+    public FeedListDto findAll(Search search) {
         List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
         if(feedList.isEmpty()) {
             return null;
@@ -37,15 +39,23 @@ public class FeedService {
         // 각 피드마다 이미지 리스트를 추가
         // 각 피드마다 댓글 수, 좋아요 수, 북마크 수 추가
 
-        // Feed 전체조회 응답객체에 map()으로 담기
-        // feedImageList imageService 조회 결과를 setter로 추가
-        return feedList.stream()
+        // Feed 디테일 응답객체에 이미지 담기
+        // imageService 조회 결과를 setter로 추가
+        List<FeedDetailResponseDto> detailDto = feedList.stream()
                 .map(f -> {
-                    FeedListResponseDto responseDto = new FeedListResponseDto(f);
+                    FeedDetailResponseDto responseDto = f.toDetailResponseDto();
                     responseDto.setFeedImageList(imageService.getFeedImages(f.getBoardId()));
                     return responseDto;
                 })
                 .collect(Collectors.toList());
+
+        Page page = new Page(search.getPageNo(), search.getAmount());
+
+        return FeedListDto.builder()
+                .pageInfo(new PageMaker(page, getCount(search)))
+                .feedDetails(detailDto)
+                .build();
+
     }
 
     public FeedDetailResponseDto findById(long boardId) {
@@ -105,9 +115,14 @@ public class FeedService {
         return -1; // 피드 등록 실패
     }
 
+    // 피드 수정
     public boolean updateFeed(FeedModifyDto dto) {
+        // tbl_board 수정
         Board newBoard = dto.toBoardEntity();
+
+        // tbl_board_image 수정 (삭제 후 추가 )
         List<MultipartFile> files = dto.getFiles();
+
         AtomicInteger count = new AtomicInteger(0);
         files.stream().forEach(file -> {
             BoardImage imageEntity
@@ -121,11 +136,19 @@ public class FeedService {
         return feedMapper.modifyFeed(newBoard);
     }
 
-    public boolean deleteFeed(long boardId) {
-        return feedMapper.deleteFeed(boardId);
+    // 피드 삭제
+    public FeedListDto deleteFeed(long boardId) {
+
+        boolean flag = feedMapper.deleteFeed(boardId);
+
+        return flag ? findAll(new Search(new Page(1, 5))) : null;
     }
     public boolean addViewCount(long boardId) {
         return feedMapper.upViewCount(boardId);
     }
 
+    // 총 피드 개수
+    public int getCount(Search search) {
+        return feedMapper.countFeeds(search);
+    }
 }

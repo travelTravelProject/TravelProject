@@ -8,6 +8,30 @@
   <link rel="stylesheet" href="/assets/css/feed-list.css">
 </head>
 <body>
+
+<div class="top-section">
+  <!-- 검색창 영역 -->
+  <div class="search">
+    <form action="/feed/list" method="get">
+
+      <select class="form-select" name="type" id="search-type">
+
+        <option value="content">내용</option>
+        <option value="writer">작성자</option>
+        <option value="cw">내용+작성자</option>
+      </select>
+
+      <input type="text" class="form-control" name="keyword" value="${s.keyword}">
+
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+
+    </form>
+  </div>
+
+</div>
+
 <div class="feed-container">
   <div class="btn-container">
     <button id="createFeedBtn">새 피드 작성</button>
@@ -65,7 +89,7 @@
   </div>
 </div>
 
-
+<script type="module" src="/assets/js/feed-list.js"></script>
 <script>
   // 모달 열고 닫는 이벤트
   document.addEventListener('DOMContentLoaded', (event) => {
