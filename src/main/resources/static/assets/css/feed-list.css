@@ -6,6 +6,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    position: relative;
 }
 
 .feed-container {
@@ -131,4 +132,43 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+body div.top-section{
+    position: fixed;
+    top: 0;
+    width: 70%;
+    margin: auto;
+}
+body div.top-section form {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+}
+body div.top-section form input {
+    /*width: 50%;*/
+    amrgin: 5px 20px;
+}
+
+#search-type {
+    width: 100px;
+    height: 80%;
+}
+form .btn.btn-primary {
+    width: 100px;
+    color: #ffffff;
+}
+
+body div.btn-container {
+    position: fixed;
+    top: 60px;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.btn-container #createFeedBtn {
+    width: 150px;
+}
+.btn-container #editFeedBtn {
+    width: 150px;
 }

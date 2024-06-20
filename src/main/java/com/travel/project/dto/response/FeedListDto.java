@@ -14,6 +14,6 @@ public class FeedListDto {
 
 //    private LoginUserInfoDto loginUser;
     private PageMaker pageInfo;
-    private List<FeedDetailResponseDto> feedDetails;
+    private List<FeedDetailResponseDto> feeds;
 
 }

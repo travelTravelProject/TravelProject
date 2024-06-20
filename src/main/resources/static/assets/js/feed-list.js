@@ -20,7 +20,7 @@ function fixSearchOption() {
 //===== 실행 코드 =====
 
 // 피드 목록 서버에서 불러오기
-fetchFeedList(); // 기본 1페이지
+fetchFeedList(); // 초기 피드 - 1페이지
 
 fixSearchOption();
 

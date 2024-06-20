@@ -53,7 +53,7 @@ public class FeedService {
 
         return FeedListDto.builder()
                 .pageInfo(new PageMaker(page, getCount(search)))
-                .feedDetails(detailDto)
+                .feeds(detailDto)
                 .build();
 
     }

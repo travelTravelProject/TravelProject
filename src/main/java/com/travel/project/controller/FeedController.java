@@ -43,7 +43,7 @@ public class FeedController {
         model.addAttribute("feeds", feeds);
         model.addAttribute("maker", maker);
 
-        return "feed/list";
+        return "feed-list";
     }
     // 피드 상세 조회 요청
     @GetMapping("/{boardId}")

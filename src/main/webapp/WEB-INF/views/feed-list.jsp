@@ -24,7 +24,8 @@
       <input type="text" class="form-control" name="keyword" value="${s.keyword}">
 
       <button class="btn btn-primary" type="submit">
-        <i class="fas fa-search"></i>
+<%--        <i class="fas fa-search"></i>--%>
+        검색
       </button>
 
     </form>
@@ -32,11 +33,11 @@
 
 </div>
 
-<div class="feed-container">
   <div class="btn-container">
     <button id="createFeedBtn">새 피드 작성</button>
     <button id="editFeedBtn">피드 수정</button>
   </div>
+<div class="feed-container" id="feedData">
   <div class="feed-item">
     <div class="profile-section">
       <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
