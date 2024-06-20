@@ -66,7 +66,6 @@ form.addEventListener('submit', (event) => {
             validateField(field);
         }
     });
-    updateButtonState();
 });
 
 // 초기 버튼 상태로 업데이트
