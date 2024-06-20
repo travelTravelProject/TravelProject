@@ -3,6 +3,7 @@ package com.travel.project.service;
 import com.travel.project.dto.request.AccBoardWriteDto;
 import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
+import com.travel.project.dto.response.AccBoardModifyDto;
 import com.travel.project.entity.AccBoard;
 import com.travel.project.mapper.AccBoardMapper;
 import lombok.RequiredArgsConstructor;
@@ -45,18 +46,23 @@ public class AccBoardService {
         return new AccBoardDetailDto(ab);
     }
 
-//    // 게시글 수정 화면 요청 처리
-//    public AccBoardModifyDto getModifyForm(int boardId) {
-//        // 수정할 게시글 조회
-//        AccBoard ab = accBoardMapper.save();
-//        return new AccBoardModifyDto(ab);
-//    }
-//
-//    // 게시글 수정 요청 처리
-//    public boolean modify(AccBoardModifyDto dto) {
-//        AccBoard ab = dto.toEntity();
-//        return accBoardMapper.modify(ab);
-//    }
+    // 게시글 수정 화면 요청 처리
+    public AccBoardModifyDto getModifyForm(int boardId) {
+        // 수정할 게시글 조회
+        AccBoard ab = accBoardMapper.findOne(boardId);
+//        if (ab == null) {
+//            throw new IllegalArgumentException("Invalid board ID: " + boardId);
+//        }
+        AccBoardModifyDto dto = new AccBoardModifyDto();
+        dto.setFromEntity(ab); // 필드를 개별적으로 설정
+        return dto;
+    }
+
+    // 게시글 수정 요청 처리
+    public boolean modify(AccBoardModifyDto dto) {
+        AccBoard ab = dto.toEntity();
+        return accBoardMapper.modify(ab);
+    }
 
 
 }

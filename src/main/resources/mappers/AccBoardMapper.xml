@@ -30,7 +30,7 @@
         WHERE board_id = #{boardId}
     </delete>
 
-    <update id="update" parameterType="com.travel.project.entity.AccBoard">
+    <update id="modify" parameterType="com.travel.project.entity.AccBoard">
         UPDATE tbl_board
         SET
             title = #{title},
