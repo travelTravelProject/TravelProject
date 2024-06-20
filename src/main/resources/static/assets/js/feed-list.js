@@ -1,5 +1,6 @@
 import {fetchFeedList} from "./feed-getList";
 
+console.log('feed-list.js 실행');
 //===== 전역 변수 =====
 export const FEED_URL = 'http://localhost:8181/feed';
 

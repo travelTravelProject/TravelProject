@@ -30,7 +30,7 @@ public class FeedController {
 
     // 피드 전체 조회 요청
     @GetMapping("/list") // 페이지, 검색 쿼리스트링
-    public String list(
+    public ResponseEntity<?> list(
             @ModelAttribute("s") Search page, Model model
     ) {
         // Search type, keyword 확인 필요
@@ -38,12 +38,11 @@ public class FeedController {
 
         // 페이지 정보를 생성하여 JSP에게 전송
         PageMaker maker = new PageMaker(page, feedService.getCount(page));
-//        System.out.println("maker = " + maker);
 
         model.addAttribute("feeds", feeds);
         model.addAttribute("maker", maker);
 
-        return "feed-list";
+        return ResponseEntity.ok().body(feeds);
     }
     // 피드 상세 조회 요청
     @GetMapping("/{boardId}")

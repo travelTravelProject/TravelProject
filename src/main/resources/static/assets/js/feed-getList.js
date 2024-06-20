@@ -55,7 +55,7 @@ export async function fetchFeedList(pageNo=1) {
     method: 'GET',
   }
 
-  const res = await fetch(`${FEED_URL}/list?pageNo`, requestInfo);
+  const res = await fetch(`${FEED_URL}/list/${pageNo}`, requestInfo);
   const feedListDto = await res.json();
   console.log(feedList);
 

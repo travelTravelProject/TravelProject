@@ -45,9 +45,4 @@ public class FeedDetailResponseDto {
         this.updatedAt = feedById.getUpdatedAt();
     }
 
-    public FeedDetailResponseDto(FeedFindAllDto feeds) {
-        this.boardId = feeds.getBoardId();
-        this.account = feeds.getAccount();
-        this.nickname = feeds.getNickname();
-    }
 }

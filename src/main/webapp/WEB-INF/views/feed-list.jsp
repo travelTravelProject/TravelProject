@@ -9,56 +9,63 @@
 </head>
 <body>
 
-<div class="top-section">
-  <!-- 검색창 영역 -->
-  <div class="search">
-    <form action="/feed/list" method="get">
+<section id="feed-header">
+  <div class="top-section">
+    <!-- 검색창 영역 -->
+    <div class="search">
+      <form action="/feed/list" method="get">
 
-      <select class="form-select" name="type" id="search-type">
+        <select class="form-select" name="type" id="search-type">
 
-        <option value="content">내용</option>
-        <option value="writer">작성자</option>
-        <option value="cw">내용+작성자</option>
-      </select>
+          <option value="content">내용</option>
+          <option value="writer">작성자</option>
+          <option value="cw">내용+작성자</option>
+        </select>
 
-      <input type="text" class="form-control" name="keyword" value="${s.keyword}">
+        <input type="text" class="form-control" name="keyword" value="${s.keyword}">
 
-      <button class="btn btn-primary" type="submit">
-<%--        <i class="fas fa-search"></i>--%>
-        검색
-      </button>
+        <button class="btn btn-primary" type="submit">
+  <%--        <i class="fas fa-search"></i>--%>
+          검색
+        </button>
 
-    </form>
+      </form>
+    </div>
+
   </div>
-
-</div>
 
   <div class="btn-container">
     <button id="createFeedBtn">새 피드 작성</button>
     <button id="editFeedBtn">피드 수정</button>
   </div>
-<div class="feed-container" id="feedData">
-  <div class="feed-item">
-    <div class="profile-section">
-      <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
-      <span class="nickname">nickname123</span>
-    </div>
-    <div class="image-carousel">
-      <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">
-      <!-- Add more images here for carousel -->
-    </div>
-    <div class="content-section">
-      <span>너무 더워</span>
-    </div>
-    <div class="interaction-section">
-      <span class="comments">💬 10</span>
-      <span class="hearts">❤️ 25</span>
-      <span class="bookmarks">🔖 5</span>
+
+</section>
+<%-- 피드 헤더 끝 --%>
+<%-- 피드 목록 시작 --%>
+<section id="feed-list">
+  <div class="feed-container" id="feedData">
+    <div class="feed-item">
+      <div class="profile-section">
+        <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+        <span class="nickname">nickname123</span>
+      </div>
+      <div class="image-carousel">
+        <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">
+        <!-- Add more images here for carousel -->
+      </div>
+      <div class="content-section">
+        <span>너무 더워</span>
+      </div>
+      <div class="interaction-section">
+        <span class="comments">💬 10</span>
+        <span class="hearts">❤️ 25</span>
+        <span class="bookmarks">🔖 5</span>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- Feed 작성 모달 -->
+</section>
+<%-- 피드 목록 끝 --%>
+<!-- 피드 작성 모달 -->
 <div id="createFeedModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -66,15 +73,15 @@
       <label for="nickname">닉네임:</label>
       <input type="text" id="nickname" name="nickname" required>
       <label for="content">내용:</label>
-      <input type="text" id="content" name="nickname" required>
+      <input type="text" id="content" name="content" required>
       <label for="postImage">이미지 업로드:</label>
       <input type="file" id="postImage" name="postImage" accept="image/*" required>
       <button type="submit" id="feed-post-Btn">게시</button>
     </div>
   </div>
 </div>
-
-<!-- Feed 수정 모달 -->
+<!-- 피드 작성 모달 끝 -->
+<!-- 피드 수정 모달 -->
 <div id="editFeedModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -89,7 +96,9 @@
     </div>
   </div>
 </div>
+<!-- 피드 수정 모달 끝 -->
 
+<%-- 스크립트 --%>
 <script type="module" src="/assets/js/feed-list.js"></script>
 <script>
   // 모달 열고 닫는 이벤트
