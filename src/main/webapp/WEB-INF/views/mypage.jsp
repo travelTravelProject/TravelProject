@@ -10,14 +10,36 @@
 <body>
 <div class="container">
     <h1>My Page</h1>
-    <div class="profile">
-        <img src="${user.profileImage}" alt="Profile Image" class="profile-img">
-        <h2>${user.name}</h2>
-        <p>Email: ${user.email}</p>
-        <p>Nickname: ${user.nickname}</p>
-        <p>Birthday: ${user.birthday}</p>
-        <p>Gender: ${user.gender}</p>
-    </div>
+    <div class="profile-form ">
+        <form
+                action="/mypage"
+                name="mypage"
+                id="mypageForm"
+                method="post"
+                enctype="multipart/form-data"
+        >
+
+            <div class="profile">
+                <div class="thumbnail-box">
+                    <img src="/assets/img/image-add.png" alt="Profile Image" class="profile-image">
+                </div>
+
+                <label>프로필 이미지 추가</label>
+
+                <input type="file"
+                       id="profile-img"
+                       accept="image/*"
+                       style="display: none;"
+                       name="profileImage"
+                >
+            </div>
+
+            <h2>${user.name}</h2>
+            <p>Email: ${user.email}</p>
+            <p>Nickname: ${user.nickname}</p>
+            <p>Birthday: ${user.birthday}</p>
+            <p>Gender: ${user.gender}</p>
+
 
     <h2>Edit Information</h2>
     <form action="/updateProfile" method="post">

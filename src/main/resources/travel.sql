@@ -161,3 +161,6 @@ SELECT * FROM tbl_user;
 
 DELETE FROM tbl_user
 WHERE account = 'hahahoho';
+
+ALTER TABLE tbl_user
+ADD (profile_image VARCHAR(200));

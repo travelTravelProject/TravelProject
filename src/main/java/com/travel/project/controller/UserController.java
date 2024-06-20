@@ -4,6 +4,7 @@ import com.travel.project.dto.request.SignUpDto;
 import com.travel.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 @RequiredArgsConstructor
 public class UserController {
+
+    @Value("${file.upload.root-path}")
+    private String rootPath;
 
     private final UserService userService;
 
