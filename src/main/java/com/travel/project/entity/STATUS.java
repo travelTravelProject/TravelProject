@@ -8,5 +8,5 @@ import lombok.ToString;
 @AllArgsConstructor
 // 댓글의 상태
 public enum STATUS {
-    A, D;
+    A, D
 }
