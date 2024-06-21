@@ -29,7 +29,7 @@ public class FeedController {
 
     // 피드 전체 조회 요청
     @GetMapping("/list") // 페이지, 검색 쿼리스트링
-    @ResponseBody
+//    @ResponseBody
     public ResponseEntity<?> list(
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             @RequestParam(name = "type", defaultValue = "content", required = false) String type,
