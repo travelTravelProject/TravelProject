@@ -68,3 +68,27 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.profile {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.profile label {
+    font-weight: 700;
+    font-size: 1.0em;
+    cursor: pointer;
+    color: rgb(140, 217, 248);
+}
+.profile .thumbnail-box {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 30px auto 10px;
+    cursor: pointer;
+}
+
+.profile .thumbnail-box img {
+    width: 200px;
+    height: 200px;
+}
