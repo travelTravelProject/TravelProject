@@ -28,6 +28,7 @@ public interface UserMapper {
     void updateAutoLogin(AutoLoginDto dto); // AutoLoginDto 로 정의 함
 
 
-
+    // 세션아이디로 회원정보 조회
+    User findMemberBySessionId(String sessionId);
 
 }

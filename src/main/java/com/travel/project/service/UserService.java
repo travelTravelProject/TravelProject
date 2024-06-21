@@ -93,6 +93,12 @@ public class UserService {
         }
 
         //일반 로그인
+        maintainLoginState(session, foundMember);
+
+        return SUCCESS;
+    }
+
+    public static void maintainLoginState(HttpSession session, User foundMember) {
         log.info("{} 님 로그인 성공 ", foundMember.getName());
 
         //세션 수명 : 설정된 시간 및 브라우져 닫기 전까지
@@ -104,7 +110,5 @@ public class UserService {
         //session.setAttribute("loginUserName",foundMember.getName());
         session.setAttribute("login", new LoginUserInfoDto(foundMember));
         System.out.println("foundMember = " + foundMember);
-
-        return SUCCESS;
     }
 }

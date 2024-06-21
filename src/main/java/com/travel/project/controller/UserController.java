@@ -124,6 +124,7 @@ public class UserController {
         //RedirectAttributes : 리다이렉트된 페이지에 데이터를 전달
         log.info("/sign-in POST");
         log.debug("param {}", dto);
+        System.out.println("!!!! dto = " + dto);
         System.out.println("로그인 페이지 버튼!");
 
         //세션 얻기

@@ -25,6 +25,10 @@ public class User {
     private LocalDateTime createdAt; // 생성일
     private LocalDateTime updatedAt; // 수정일
     private STATUS status; // 상태
-    private Auth auth; // 권한
+    private Auth auth; // 권한.
+
+   
+    private String sessionId;
+    private LocalDateTime limitTime;
 
 }
