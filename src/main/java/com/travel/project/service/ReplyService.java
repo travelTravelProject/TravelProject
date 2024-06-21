@@ -36,7 +36,7 @@ public class ReplyService {
         Reply reply = Reply.builder()
                 .replyText(dto.getText())
                 .replyWriter(dto.getAuthor())
-                .boardId(2L)
+                .boardId(dto.getBoardId())
                 .parentReplyId(dto.getParentReplyId())
                 .account("testuser") // 나중에는 로그인한 유저로 교체(세션)
                 .build();

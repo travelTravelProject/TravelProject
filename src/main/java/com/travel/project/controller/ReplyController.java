@@ -16,6 +16,7 @@ import java.util.List;
 @RestController // Controller + 반환시 JSON형식으로 변환
 @RequestMapping("/api/v1/replies")
 @RequiredArgsConstructor
+@CrossOrigin // CORS 정책 허용범위 설정, 나머지는 다 차단
 public class ReplyController {
 
     private final ReplyService replyService;
@@ -44,7 +45,7 @@ public class ReplyController {
         // 댓글을 생성한 이후 게시물의 댓글 목록을 불러옴
         return ResponseEntity
                 .ok()
-                .body(replyService.getReplies(2L));
+                .body(replyService.getReplies(dto.getBoardId()));
     }
 
     // 댓글 삭제 요청

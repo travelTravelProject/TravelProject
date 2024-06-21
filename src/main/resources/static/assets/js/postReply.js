@@ -9,8 +9,8 @@ export const fetchReplyPost = async () => {
 
   // 서버로 보낼 데이터
   const payload = {
-    text: textInput.value,
-    author: writerInput.value,
+    text: textInput.value.trim(),
+    author: writerInput.value.trim(),
     bno: document.getElementById("wrap").dataset.bno
   }
   console.log(payload);
