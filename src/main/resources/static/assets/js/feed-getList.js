@@ -11,7 +11,7 @@ let loadedFeeds = 0;  // 로딩된 게시글 수
 function appendFeeds({ feeds, pageInfo }) {
 
   console.log("appendFeeds 실행중: ", feeds);
-  console.log("pageInfo : ", pageInfo);
+  console.log("pageInfo : ", pageInfo.pageInfo);
 
   let tag = '';
   // 게시글이 존재하면
@@ -101,10 +101,10 @@ const debouncedScrollHandler = debounce(async function(e) {
     // 2초의 대기열이 생성되면 다음 대기열 생성까지 2초를 기다려야 함
     console.log("스크롤 이벤트 핸들러 함수 실행");
     // showSpinner();
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    fetchFeedList(currentFeedPage + 1);
+    await new Promise(resolve => setTimeout(resolve, 700));
+    await fetchFeedList(currentFeedPage + 1);
   }
-}, 1000);
+}, 700);
 
 // 무한 스크롤 이벤트 생성 함수
 export function setupInfiniteScroll() {
