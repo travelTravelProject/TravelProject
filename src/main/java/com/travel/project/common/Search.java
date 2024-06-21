@@ -21,5 +21,12 @@ public class Search extends Page {
     public Search(Page page) {
         super(page.getPageNo(), page.getAmount());
         this.keyword = "";
+        this.type = "content";
+    }
+
+    public Search(Page page, String keyword, String type) {
+        super(page.getPageNo(), page.getAmount());
+        this.keyword = keyword;
+        this.type = type;
     }
 }

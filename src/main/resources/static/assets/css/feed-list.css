@@ -8,6 +8,21 @@ body {
     margin: 0;
     position: relative;
 }
+#feed-header{
+    position: fixed;
+    top: 0;
+    width: 60%;
+    height: 10%;
+    background: #fafafa;
+    z-index: 1;
+    display: block;
+    border: 1px solid blue;
+}
+#feed-list {
+    margin-top: 150px;
+    position: relative;
+    top: 600px;
+}
 
 .feed-container {
     width: 400px;
@@ -19,6 +34,9 @@ body {
     border-radius: 3px;
     margin-bottom: 20px;
     padding: 10px;
+}
+.feed-item .created-at {
+    padding-left: 20px ;
 }
 
 .profile-section {

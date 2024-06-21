@@ -35,8 +35,8 @@ public class FeedController {
             @RequestParam(name = "type", defaultValue = "content", required = false) String type,
             @RequestParam(name = "keyword", defaultValue = "", required = false) String keyword
     ) {
-        log.debug("겟: " + pageNo + "-" + type + "-" + keyword);
-        Search page = new Search(new Page(pageNo, 10));
+//        log.debug("겟: " + pageNo + "-" + type + "-" + keyword);
+        Search page = new Search(new Page(pageNo, 5), type, keyword);
         page.setKeyword(keyword);
         page.setType(type);
         // Search type, keyword 확인 필요

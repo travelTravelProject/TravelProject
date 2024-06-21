@@ -127,7 +127,6 @@
         AND B.category_id = 2
         <include refid="search" />
         ORDER BY B.board_id DESC
-        LIMIT #{pageStart}, #{amount}
     </select>
 
 </mapper>
