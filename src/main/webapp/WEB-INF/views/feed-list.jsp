@@ -140,6 +140,6 @@
   });
 
 </script>
-<script type="module" src="/assets/js/feed-list.js"></script>
+<script type="module" src="/assets/js/feed-list.js?ver=123"></script>
 </body>
 </html>

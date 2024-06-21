@@ -66,7 +66,7 @@ export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') 
   console.log(feedListDto);
 
   if(pageNo === 1) {
-    totalFeeds = feedList.pageInfo.totalCount;
+    totalFeeds = feedListDto.pageInfo.totalCount;
     loadedFeeds = 0;
 
     document.getElementById('feedData').innerHTML = '';
