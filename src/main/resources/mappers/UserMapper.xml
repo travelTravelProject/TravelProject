@@ -3,21 +3,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- namespace에는 연결할 인터페이스의 풀네임 -->
-<!-- 설정파일에 매퍼 등록 -->
 <mapper namespace="com.travel.project.mapper.UserMapper">
 
     <insert id="save">
         INSERT INTO tbl_user
-            (account, password, name, email, nickname, birthday, gender)
+        (
+        account,
+        password,
+        name,
+        email,
+        nickname,
+        birthday,
+        gender,
+        created_at,
+        updated_at,
+        status,
+        auth
+        )
         VALUES
-            (#{account}, #{password}, #{name}, #{email}, #{nickname}, #{birthday}, #{gender})
+        (#{account}, #{password}, #{name}, #{email}, #{nickname}, #{birthday}, #{gender}, #{createdAt}, #{updatedAt}, #{status}, #{auth})
     </insert>
 
-    <select id="findOne" resultType="user">
+    <select id="findOne" resultType="com.travel.project.entity.User">
         SELECT
-            account, password, name, email, nickname, birthday, gender
-            createdAt, updatedAt, status, auth
+        account,
+        password,
+        name,
+        email,
+        nickname,
+        birthday,
+        gender,
+        created_at as createdAt,
+        updated_at as updatedAt,
+        status,
+        auth
         FROM tbl_user
         WHERE account = #{account}
     </select>
