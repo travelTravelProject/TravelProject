@@ -27,7 +27,7 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
 
-            <!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+            <link rel="stylesheet" href="/assets/css/main.css">
 
 
             <style>
@@ -140,7 +140,8 @@
         </head>
 
         <body>
-            <div id="wrap" class="form-container" data-bno=2>
+            <!-- data-bno -> board쪽에서 게시물번호 받아와서 넣으면 됨 -->
+            <div id="wrap" class="form-container" data-bno= 4>
 
 
                 <!-- 댓글 영역 -->
