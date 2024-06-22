@@ -96,7 +96,7 @@ public class FeedService {
         // tbl_board insert 성공하면 tbl_board_image 추가
         if (newBoardId > 0) {
 
-            List<MultipartFile> files = newFeed.getFiles();
+            List<MultipartFile> files = newFeed.getImages();
 
             // file 존재하면 DB에 insert
             if(!files.isEmpty()) {

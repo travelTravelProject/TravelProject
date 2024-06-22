@@ -65,7 +65,7 @@ public class FeedController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseEntity<?> makeNewFeed(
-            @Validated FeedPostDto dto
+            @ModelAttribute FeedPostDto dto
             , BindingResult bindingResult
             , HttpSession session
     ) {

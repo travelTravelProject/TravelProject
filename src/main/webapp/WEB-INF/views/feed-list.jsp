@@ -70,12 +70,13 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <div id="createFeedForm">
-      <label for="nickname">닉네임:</label>
-      <input type="text" id="nickname" name="nickname" required>
-      <label for="content">내용:</label>
-      <input type="text" id="content" name="content" required>
+      <label for="cr-nickname">닉네임:</label>
+      <input type="text" id="cr-nickname" name="nickname" required>
+      <label for="cr-content">내용:</label>
+      <input type="text" id="cr-content" name="content" required>
       <label for="postImage">이미지 업로드:</label>
       <input type="file" id="postImage" name="postImage" accept="image/*" required>
+      <div class="dropbox"></div>
       <button type="submit" id="feed-post-Btn">게시</button>
     </div>
   </div>
@@ -113,6 +114,7 @@
     if (createBtn) {
       createBtn.onclick = function() {
         createModal.style.display = "block";
+        // 작성 모달 열 때 로그인한 회원의 닉네임 표시
       };
     }
 
