@@ -16,14 +16,14 @@ const fetchFeedPost = async (payload) => {
     try {
         const res
             = await fetch(FEED_URL + '/list', payload);
-        if (response.ok) {
-            const result = await response.json();
+        if (res.ok) {
+            const result = await res.json();
             alert('게시글이 성공적으로 등록되었습니다.');
             document.getElementById('createFeedModal').style.display = 'none';
             // formData = new FormData(); // FormData 초기화
             imageFiles = []; // 파일 리스트 초기화
             document.getElementById('createFeedForm').reset();
-            document.querySelector('.dropbox').innerHTML = '';
+            $imageBox.innerHTML = '';
         } else {
             throw new Error('서버 응답이 올바르지 않습니다.');
         }
@@ -43,10 +43,9 @@ $feedPostBtn.addEventListener('click', e => {
     // 입력값 누락 있는지 확인 필요
 
     // fetch payload에 담아서 POST 요청
-    const formData = dataToFormData({content}, imageFiles);
     const payload = {
         method: 'POST',
-        body: formData
+        body: dataToFormData({content}, imageFiles)
     };
 
     fetchFeedPost(payload);
