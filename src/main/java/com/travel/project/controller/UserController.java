@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,14 +48,14 @@ public class UserController {
 
     // 회원가입 요청 처리
     @PostMapping("/sign-up")
-    public String signUp(SignUpDto dto) {
+    public String signUp(@Validated SignUpDto dto) {
 
         log.info("sign-up POST : forwarding to sign-up.jsp");
 
         boolean flag = userService.join(dto);
 //        log.info("sign-up POST: join result: {}", flag);
 
-        return flag ? "redirect:/" : "redirect:/sign-up";
+        return flag ? "redirect:/sign-in" : "redirect:/sign-up";
     }
 
     // 아이디, 이메일 중복검사 비동기 요청 처리
