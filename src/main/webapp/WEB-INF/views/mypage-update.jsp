@@ -22,14 +22,14 @@
                 <label for="nickname">Nickname:</label>
                 <input type="text" id="nickname" name="nickname" value="${user.nickname}" required>
 
-                <label for="birthday">Birthday:</label>
-                <input type="date" id="birthday" name="birthday" value="${user.birthday}" required>
+<%--                <label for="birthday">Birthday:</label>--%>
+<%--                <input type="date" id="birthday" name="birthday" value="${user.birthday}" required>--%>
 
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                    <option value="M" ${user.gender == 'M' ? 'selected' : ''}>Male</option>
-                    <option value="F" ${user.gender == 'F' ? 'selected' : ''}>Female</option>
-                </select>
+<%--                <label for="gender">Gender:</label>--%>
+<%--                <select id="gender" name="gender" required>--%>
+<%--                    <option value="M" ${user.gender == 'M' ? 'selected' : ''}>Male</option>--%>
+<%--                    <option value="F" ${user.gender == 'F' ? 'selected' : ''}>Female</option>--%>
+<%--                </select>--%>
 
                 <button type="submit">Update</button>
             </form>

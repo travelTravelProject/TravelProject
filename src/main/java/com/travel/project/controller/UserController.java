@@ -68,8 +68,10 @@ public class UserController {
 
     // 마이페이지 열기
     @GetMapping("/mypage")
-    public String myPage() {
-        log.info("mypage GET : forwarding to mypage.jsp");
+    public String myPage(LoginUserInfoDto dto, Model model) {
+        log.info("mypage GET : forwarding to mypage-update.jsp");
+
+        model.addAttribute("login", dto);
         return "/mypage";
     }
 

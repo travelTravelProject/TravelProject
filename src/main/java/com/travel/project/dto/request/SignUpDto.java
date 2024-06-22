@@ -55,7 +55,7 @@ public class SignUpDto {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .status(STATUS.A) // 기본값 설정
-                .auth(Auth.common) // 기본값 설정
+                .auth(Auth.COMMON) // 기본값 설정
                 .build();
     }
 

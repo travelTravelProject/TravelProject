@@ -34,11 +34,15 @@
                 >
             </div>
 
-            <h2>${user.name}</h2>
-            <p>Email: ${user.email}</p>
-            <p>Nickname: ${user.nickname}</p>
-            <p>Birthday: ${user.birthday}</p>
-            <p>Gender: ${user.gender}</p>
+            <%--            mbti, 소개글, 평점--%>
+            <h2>${login.name}</h2>
+            <div>
+                MBTI:
+            </div>
+            <p>Email: ${login.email}</p>
+            <p>Nickname: ${login.nickname}</p>
+            <p>Birthday: ${login.birthday}</p>
+            <p>Gender: ${login.gender}</p>
 
 
         <button class="update">프로필 수정</button>
