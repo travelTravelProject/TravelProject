@@ -35,7 +35,7 @@
             </div>
 
             <%--            mbti, 소개글, 평점--%>
-            <h2>${login.name}</h2>
+            <h2>${sessionScope.login.name}</h2>
             <div>
                 MBTI:
             </div>

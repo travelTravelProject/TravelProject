@@ -16,10 +16,15 @@
 <h3>웨르컴 <span style="font-size: 40px; color: #000;">${login.nickname}</span></h3>
 <ul>
     <li><a href="/">메인홈</a></li>
+
+    <c:if test="${login == null}">
     <li><a href="/sign-in">로그인</a></li>
     <li><a href="/sign-up">회원가입</a></li>
+    </c:if>
+    <c:if test="${login != null}">
     <li><a href="/sign-out">로그아웃</a></li>
     <li><a href="/mypage">마이페이지</a></li>
+    </c:if>
 </ul>
 
 
