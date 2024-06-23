@@ -11,9 +11,11 @@
 
     <typeAliases>
         <typeAlias type="com.travel.project.entity.AccBoard" alias="accBoard" />
+        <typeAlias type="com.travel.project.entity.Like" alias="like" />
     </typeAliases>
 
     <mappers>
         <mapper resource="mappers/AccBoardMapper.xml" />
+        <mapper resource="mappers/LikeMapper.xml" />
     </mappers>
 </configuration>

@@ -6,24 +6,28 @@ import com.travel.project.dto.request.AccBoardWriteDto;
 import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
 import com.travel.project.dto.response.AccBoardModifyDto;
+import com.travel.project.dto.response.LikeDto;
 import com.travel.project.service.AccBoardService;
+import com.travel.project.service.LikeService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 @RequestMapping("/acc-board/*")
 @RequiredArgsConstructor
+@Slf4j
 public class AccBoardController {
 
-    private final AccBoardService service;
+    private final AccBoardService boardService;
+    private final LikeService likeService;
 
     // 1. 목록 조회 요청 (/list : GET)
     @GetMapping("/list")
@@ -31,10 +35,10 @@ public class AccBoardController {
         System.out.println("/acc-board/acc-list GET");
 
         // 목록 조회 요청 위임
-        List<AccBoardListDto> abList = service.findList(page);
+        List<AccBoardListDto> abList = boardService.findList(page);
 
         // 페이지 정보
-        PageMaker maker = new PageMaker(page, service.getCount(page));
+        PageMaker maker = new PageMaker(page, boardService.getCount(page));
 
         // JSP파일에 해당 목록 데이터를 전송
         model.addAttribute("abList", abList);
@@ -59,7 +63,7 @@ public class AccBoardController {
         // 1. 브라우저가 전달한 게시글 내용 읽기
         System.out.println("dto: " + dto);
 
-        service.insert(dto);
+        boardService.insert(dto);
 
         return "redirect:/acc-board/list";
     }
@@ -69,7 +73,7 @@ public class AccBoardController {
     public String delete(int boardId) {
         System.out.println("/acc-board/acc-delete GET");
 
-        service.remove(boardId);
+        boardService.remove(boardId);
 
         return "redirect:/acc-board/list";
     }
@@ -79,7 +83,7 @@ public class AccBoardController {
     public String detail(@RequestParam("bno") Integer boardId, Model model, HttpServletRequest req) {
         System.out.println("/acc-board/acc-detail GET");
         // 글번호 조회
-        AccBoardDetailDto dto = service.detail(boardId);
+        AccBoardDetailDto dto = boardService.detail(boardId);
         // JSP 에 전송
         model.addAttribute("abd", dto);
 
@@ -96,7 +100,7 @@ public class AccBoardController {
         System.out.println("/acc-board/modify GET");
 
         // 글번호 조회
-        AccBoardModifyDto dto = service.getModifyForm(boardId);
+        AccBoardModifyDto dto = boardService.getModifyForm(boardId);
         // JSP 에 전송
         model.addAttribute("abm", dto);
 
@@ -108,9 +112,27 @@ public class AccBoardController {
     public String modify(AccBoardModifyDto dto) {
         System.out.println("/acc-board/modify POST");
 
-        service.modify(dto);
+        boardService.modify(dto);
 
         return "redirect:/acc-board/detail?bno=" + dto.getBoardId();
     }
 
+    // 좋아요 요청 비동기 처리
+    @GetMapping("/like")
+    @ResponseBody
+    public ResponseEntity<?> like(int boardId, HttpSession session) {
+
+//        log.info("like async request!");
+//        // 로그인 검증
+//        if (!LoginUtil.isLoggedIn(session)) {
+//            return ResponseEntity.status(403).body("로그인이 필요합니다.");
+//        }
+//
+//        String account = LoginUtil.getLoggedInUserAccount(session);
+//
+//        LikeDto dto = likeService.like(account, boardId); // 좋아요 요청 처리
+//
+//        return ResponseEntity.ok().body(dto);
+        return null;
+    }
 }
