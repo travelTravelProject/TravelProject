@@ -190,3 +190,23 @@ body div.btn-container {
 .btn-container #editFeedBtn {
     width: 150px;
 }
+
+/* 모달 속 이미지 미리보기 */
+.dropbox {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.image-frame {
+
+    padding: 1px;
+
+}
+.image-item {
+    width: 90px;
+    height: 90px;
+
+    object-fit: cover;
+}

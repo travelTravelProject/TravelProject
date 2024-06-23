@@ -1,5 +1,5 @@
-import { FEED_URL } from "./feed-list.js";
-import {debounce} from "./util.js";
+import { FEED_URL } from "../feed-list.js";
+import {debounce} from "../util.js";
 
 let currentFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetching = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
@@ -23,7 +23,7 @@ function appendFeeds({ feeds, pageInfo }) {
       tag += `
         <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>
           <div class="profile-section">
-            <img src="${profile ? profile : '/assets/img/mimo.png' }" alt="Profile Picture" class="profile-pic">
+            <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">
             <span class="nickname">${nickname}</span>
             <span class="created-at">${createdAt}</span>
           </div>

@@ -1,28 +1,15 @@
-import {fetchFeedList} from "./feed-getList.js";
+import {fetchFeedList} from "./feed/feed-getList.js";
+import {initFeedFormEvents} from "./feed/feed-event.js";
 
 console.log('feed-list.js 실행');
 //===== 전역 변수 =====
 export const FEED_URL = 'http://localhost:8181/feed';
 
-// 기존 검색 조건 option 태그 고정하기
-// function fixSearchOption() {
-//     // 1. 방금 전 어떤 조건으로 검색했는지 값을 알아옴
-//     const type = '${s.type}';
-//     // console.log('type: '+type);
-//
-//     // 2. 해당 조건을 가진 option 태그를 검색
-//     const $option = document.querySelector(`#search-type option[value='\${type}']`);
-//
-//     // 3. 해당 태그에 selected 속성 부여
-//     $option?.setAttribute('selected', 'selected');
-//
-// }
-const $feedPostBtn = document.getElementById('feed-post-Btn');
-$feedPostBtn.addEventListener('click', e => {
-    e.preventDefault();
-    const content = document.getElementById('cr-content').value;
-    fetchFeedPost();
+//===== 피드 이벤트 ====
+document.addEventListener('DOMContentLoaded', () => {
+    initFeedFormEvents();
 });
+
 
 //===== 실행 코드 =====
 

@@ -1,5 +1,5 @@
 // 이미지
-
+export let imageFiles = [];
 
 // 미리보기 이미지 렌더링 함수
 // imageBox는 미리보기 이미지가 렌더링될 DOM
@@ -23,7 +23,6 @@ export function previewImages(files, imageBox) {
 }
 
 // 이미지 input(e) 변경 시 미리보기 및 이미지 배열 생성
-// dropbox : 미리보기 렌더링 될 부모 태그
 export function handleFileInputChange(e, imageFiles, imageBox) {
     const newFiles = Array.from(e.target.files);
     imageFiles.push(...newFiles);
@@ -34,7 +33,7 @@ export function handleFileInputChange(e, imageFiles, imageBox) {
 
 // 게시글 작성, 수정(이미지 포함) FormData에 담는 함수
 // data: FormData에 담아야 할 객체 (ex. title, content)
-export function dataToFormData(data, imageFiles) {
+export function dataToFormData(data) {
     const formData = new FormData();
     for (const key in data) {
         formData.append(key, data[key]);

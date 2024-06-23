@@ -1,18 +1,13 @@
-import {FEED_URL} from "./feed-list.js";
-import {dataToFormData, handleFileInputChange} from "./image.js";
+import {FEED_URL} from "../feed-list.js";
+import {dataToFormData, handleFileInputChange,  imageFiles as importedImageFiles } from "../image.js";
 
 const $feedPostBtn = document.getElementById('feed-post-Btn')
 const $imageInput = document.getElementById('postImage');
 const $imageBox = document.querySelector('.dropbox');
-let imageFiles = [];
-
-// 이미지 input 변경 시 발생 이벤트
-$imageInput.addEventListener('change', e => {
-    imageFiles = handleFileInputChange(e, imageFiles, $imageBox);
-});
+let imageFiles = importedImageFiles; // 다른 변수에 할당하여 재할당 가능
 
 // 미리보기 확인 후 fetch
-const fetchFeedPost = async (payload) => {
+export const fetchFeedPost = async (payload) => {
     try {
         const res
             = await fetch(FEED_URL + '/list', payload);
@@ -32,6 +27,11 @@ const fetchFeedPost = async (payload) => {
     }
 };
 
+// 이미지 input 변경 시 발생 이벤트
+$imageInput.addEventListener('change', e => {
+    imageFiles = handleFileInputChange(e, imageFiles, $imageBox);
+});
+
 // 모달 작성 완료 버튼 클릭 시 이벤트
 $feedPostBtn.addEventListener('click', e => {
     e.preventDefault();
@@ -45,10 +45,10 @@ $feedPostBtn.addEventListener('click', e => {
     // fetch payload에 담아서 POST 요청
     const payload = {
         method: 'POST',
-        body: dataToFormData({content}, imageFiles)
+        body: dataToFormData({content:feedContent}, imageFiles)
     };
-
-    fetchFeedPost(payload);
-
+    console.log(payload)
+    console.log(payload.body.get('images[0]'))
+    // fetchFeedPost(payload);
 
 });
