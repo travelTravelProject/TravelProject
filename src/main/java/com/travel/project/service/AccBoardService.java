@@ -72,4 +72,7 @@ public class AccBoardService {
     }
 
 
+    public int getCount(Page page) {
+        return accBoardMapper.count();
+    }
 }

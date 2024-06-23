@@ -1,6 +1,7 @@
 package com.travel.project.controller;
 
 import com.travel.project.common.Page;
+import com.travel.project.common.PageMaker;
 import com.travel.project.dto.request.AccBoardWriteDto;
 import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
@@ -32,8 +33,12 @@ public class AccBoardController {
         // 목록 조회 요청 위임
         List<AccBoardListDto> abList = service.findList(page);
 
+        // 페이지 정보
+        PageMaker maker = new PageMaker(page, service.getCount(page));
+
         // JSP파일에 해당 목록 데이터를 전송
         model.addAttribute("abList", abList);
+        model.addAttribute("maker", maker);
 
         return "acc-board/acc-list";
     }

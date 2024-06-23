@@ -15,6 +15,7 @@ public class Page {
         this.amount = 6;
     }
 
+    // 페이지 범위
     public void setPageNo(int pageNo) {
         if (pageNo < 1 || pageNo > Integer.MAX_VALUE) {
             this.pageNo = 1;
@@ -23,6 +24,7 @@ public class Page {
         this.pageNo = pageNo;
     }
 
+    // 페이지당 게시물 갯수 범위
     public void setAmount(int amount) {
         if (amount < 6 || amount > 60) {
             this.amount = 6;

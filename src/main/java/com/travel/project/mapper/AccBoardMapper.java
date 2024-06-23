@@ -28,4 +28,6 @@ public interface AccBoardMapper {
     // 조회수 상승
     void upViewCount(int boardId);
 
+    // 총 게시물 수 조회
+    int count();
 }
