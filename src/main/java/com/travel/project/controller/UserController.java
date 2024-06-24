@@ -3,6 +3,7 @@ package com.travel.project.controller;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
 
+import com.travel.project.dto.request.UpdateProfileDto;
 import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 
@@ -17,10 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,28 +67,37 @@ public class UserController {
 
     // 마이페이지 열기
     @GetMapping("/mypage")
-    public String myPage(LoginUserInfoDto dto, Model model) {
-        log.info("mypage GET : forwarding to mypage-update.jsp");
+    public String myPage(HttpSession session, Model model) {
+        log.info("mypage GET : forwarding to mypage.jsp");
 
-        model.addAttribute("login", dto);
+        // 세션에서 로그인된 사용자 정보 가져오기
+        LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
+//        log.debug("\"User information retrieved from session: {}\", user");
+
+        System.out.println("user = " + user);
+
+        if(user == null) {
+            // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
+            return "redirect:/sign-in";
+        }
+
+        // 모델에 사용자 정보 추가
+        model.addAttribute("user", user);
         return "/mypage";
     }
 
+    // 마이페이지 프로필 수정
+    @PostMapping("/mypage/update")
+    public String myPageUpdate(@Validated UpdateProfileDto dto,
+                               HttpSession session,
+                               RedirectAttributes ra) {
+        log.info("updateProfile POST: {}", dto);
 
-    // 마이페이지 테스트
-    @GetMapping("/mypage/update")
-    public String myPage(Model model) {
-        log.info("mypage GET : forwarding to mypage-update.jsp");
+        User updatedUser = userService.getUserByAccount(dto.getAccount());
+        session.setAttribute("user", new LoginUserInfoDto(updatedUser));
+        System.out.println("updatedUser = " + updatedUser);
 
-//        User user = new User();
-//        user.setName("John Doe");
-//        user.setEmail("john.doe@example.com");
-//        user.setNickname("johnny");
-//        user.setBirthday(LocalDate.parse("1990-01-01"));
-//        user.setGender(Gender.valueOf("M"));
-
-//        model.addAttribute("user", user);
-        return "/mypage-update";
+        return "redirect:/mypage";
     }
 
 

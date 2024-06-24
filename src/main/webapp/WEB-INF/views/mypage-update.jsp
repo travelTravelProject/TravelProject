@@ -12,7 +12,7 @@
     <h1>프로필 수정</h1>
     <div class="update-form">
 
-            <form action="/updateProfile" method="post">
+            <form action="/mypage/update" method="post" id="mypageUpdateForm">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="${user.name}" required>
 
@@ -31,7 +31,7 @@
 <%--                    <option value="F" ${user.gender == 'F' ? 'selected' : ''}>Female</option>--%>
 <%--                </select>--%>
 
-                <button type="submit">Update</button>
+                <button type="submit" class="update">Update</button>
             </form>
     </div>
 </div>

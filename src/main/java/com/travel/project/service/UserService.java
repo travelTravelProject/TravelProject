@@ -48,6 +48,9 @@ public class UserService {
         return userMapper.existById(type, keyword);
     }
 
+    public User getUserByAccount(String account) {
+        return userMapper.findOne(account);
+    }
 
 //    =================================== yj ========================================
 
@@ -102,9 +105,12 @@ public class UserService {
 
         //ra 가 model 이랑 같은거임 리다이렉트에서만 사용하는거
         //session.setAttribute("loginUserName",foundMember.getName());
-        session.setAttribute("login", new LoginUserInfoDto(foundMember));
+
+        // login => user로 수정
+        session.setAttribute("user", new LoginUserInfoDto(foundMember));
         System.out.println("foundMember = " + foundMember);
 
         return SUCCESS;
     }
+
 }

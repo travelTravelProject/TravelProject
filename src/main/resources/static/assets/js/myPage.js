@@ -27,5 +27,7 @@ const $updateButton = document.querySelector('.update');
 $updateButton.addEventListener('click', e => {
     e.preventDefault();
     console.log('수정 클릭');
-    window.location.href = '/mypage/update';
+
+    const $form = document.getElementById('mypageUpdateForm');
+    $form.submit();
 });
