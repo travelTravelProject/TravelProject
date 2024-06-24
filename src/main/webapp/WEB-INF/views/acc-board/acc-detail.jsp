@@ -38,7 +38,9 @@
             <button
                     class="list-btn"
                     type="button"
-                    onclick="window.location.href='/acc-board/list'"
+<%--                    onclick="window.location.href='/acc-board/list'"--%>
+                    onclick="window.location.href='${ref}'"
+
             >
                 목록
             </button>

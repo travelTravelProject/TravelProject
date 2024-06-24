@@ -2,6 +2,7 @@ package com.travel.project.controller;
 
 import com.travel.project.common.Page;
 import com.travel.project.common.PageMaker;
+import com.travel.project.common.Search;
 import com.travel.project.dto.request.AccBoardWriteDto;
 import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
@@ -31,8 +32,8 @@ public class AccBoardController {
 
     // 1. 목록 조회 요청 (/list : GET)
     @GetMapping("/list")
-    public String list(Page page, Model model) {
-        System.out.println("/acc-board/acc-list GET");
+    public String list(@ModelAttribute("s") Search page, Model model) {
+        System.out.println("/acc-board/list GET");
 
         // 목록 조회 요청 위임
         List<AccBoardListDto> abList = boardService.findList(page);
@@ -44,7 +45,7 @@ public class AccBoardController {
         model.addAttribute("abList", abList);
         model.addAttribute("maker", maker);
 
-        return "acc-board/acc-list";
+        return "acc-board/list";
     }
 
     // 2. 게시글 쓰기 양식 화면 열기 요청 (/write : GET)
@@ -89,6 +90,32 @@ public class AccBoardController {
 
         // 이전 페이지 주소
         String ref = req.getHeader("referer");
+
+        // 최근 'acc-board/list' URL을 찾기 위한 조건문
+        if (ref != null && !ref.contains("acc-board/list")) {
+            // 세션이 존재하는지 확인
+            HttpSession session = req.getSession(false);
+            if (session != null) {
+                // 세션에서 이전 referer 값을 가져옴
+                String prevRef = (String) session.getAttribute("prevReferer");
+                // 이전 referer가 존재하고, 'acc-board/list'를 포함하는지 확인
+                if (prevRef != null && prevRef.contains("acc-board/list")) {
+                    // 조건을 만족하면 이전 referer를 현재 referer로 설정
+                    ref = prevRef;
+                } else {
+                    // 조건을 만족하지 않으면 기본 referer를 '/acc-board/list'로 설정
+                    ref = "/acc-board/list";
+                }
+            } else {
+                // 세션이 없으면 기본 referer를 '/acc-board/list'로 설정
+                ref = "/acc-board/list";
+            }
+        } else if (ref != null) {
+            // 현재 referer가 'acc-board/list'를 포함하면, 세션에 저장
+            HttpSession session = req.getSession();
+            session.setAttribute("prevReferer", ref);
+        }
+
         model.addAttribute("ref", ref);
 
         return "acc-board/acc-detail";

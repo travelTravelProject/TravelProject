@@ -1,6 +1,7 @@
 package com.travel.project.service;
 
 import com.travel.project.common.Page;
+import com.travel.project.common.Search;
 import com.travel.project.dto.request.AccBoardWriteDto;
 import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
@@ -20,7 +21,7 @@ public class AccBoardService {
     private final AccBoardMapper accBoardMapper;
 
     // 목록 조회 요청 중간처리
-    public List<AccBoardListDto> findList(Page page) {
+    public List<AccBoardListDto> findList(Search page) {
 
         List<AccBoard> accBoardList = accBoardMapper.findAll(page);
         return accBoardList.stream()
@@ -72,7 +73,7 @@ public class AccBoardService {
     }
 
 
-    public int getCount(Page page) {
-        return accBoardMapper.count();
+    public int getCount(Search search) {
+        return accBoardMapper.count(search);
     }
 }

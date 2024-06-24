@@ -5,10 +5,31 @@
 
 <mapper namespace="com.travel.project.mapper.AccBoardMapper">
 
+    <!-- 동적 SQL 조건 분리 -->
+    <sql id="search">
+        <if test="type != null and type != ''">
+            <choose>
+                <when test="type == 'title'">
+                    AND title LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="type == 'content'">
+                    AND content LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="type == 'writer'">
+                    AND writer LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="type == 'tc'">
+                    AND (title LIKE CONCAT('%', #{keyword}, '%')
+                    OR content LIKE CONCAT('%', #{keyword}, '%'))
+                </when>
+            </choose>
+        </if>
+    </sql>
+
     <select id="findAll" resultType="accBoard">
         SELECT * FROM tbl_board
         WHERE status = 'A'
-<!--        WHERE category_id = '???'-->
+        <include refid="search" />
         ORDER BY board_id DESC
         LIMIT #{pageStart}, #{amount}
     </select>
@@ -20,7 +41,7 @@
 
     <insert id="save">
         INSERT INTO tbl_board
-            (account, category_id, title, content, writer, location, start_date, end_date)
+        (account, category_id, title, content, writer, location, start_date, end_date)
         VALUES
         (#{account}, #{categoryId}, #{title}, #{content}, #{writer}, #{location}, #{startDate}, #{endDate})
     </insert>
@@ -34,11 +55,11 @@
     <update id="modify" parameterType="com.travel.project.entity.AccBoard">
         UPDATE tbl_board
         SET
-            title = #{title},
-            content = #{content},
-            start_date = #{startDate},
-            end_date = #{endDate},
-            updated_at = NOW()
+        title = #{title},
+        content = #{content},
+        start_date = #{startDate},
+        end_date = #{endDate},
+        updated_at = NOW()
         WHERE board_id = #{boardId}
     </update>
 
@@ -51,7 +72,8 @@
     <select id="count" resultType="int">
         SELECT COUNT(*)
         FROM tbl_board
-<!--        WHERE category_id = '???'-->
+        WHERE status = 'A'
+        <include refid="search" />
     </select>
 
 </mapper>

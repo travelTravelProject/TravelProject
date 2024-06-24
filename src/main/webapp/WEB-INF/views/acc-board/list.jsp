@@ -34,7 +34,7 @@
     <div class="top-section">
         <!-- 검색창 영역 -->
         <div class="search">
-            <form action="/acc-board/acc-list" method="get">
+            <form action="/acc-board/list" method="get">
 
                 <select class="form-select" name="type" id="search-type">
                     <option value="title">제목</option>
@@ -289,7 +289,6 @@
 
         // 1. 어떤 조건을 검색했는지 값을 알아 옴
         const type = '${s.type}';
-        // console.log('type: ' + type)
 
         // 2. 해당 조건을 가진 option 태그를 검색
         const $option = document.querySelector(`#search-type option[value='\${type}']`);
@@ -299,7 +298,7 @@
 
     }
 
-    // appendActivePage();
+    appendActivePage();
     fixSearchOption();
 
 </script>
