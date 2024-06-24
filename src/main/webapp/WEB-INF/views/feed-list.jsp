@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <title>Web Study</title>
   <link rel="stylesheet" href="/assets/css/feed-list.css">
+  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
 </head>
 <body>
 

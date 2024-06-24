@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/feed/v1")
@@ -65,10 +66,18 @@ public class FeedController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseEntity<?> makeNewFeed(
-            @ModelAttribute FeedPostDto dto
+            @RequestPart("content") String content,
+            @RequestPart("account") String account,
+            @RequestPart("images") List<MultipartFile> images
             , BindingResult bindingResult
             , HttpSession session
     ) {
+        log.debug("POST 컨트롤러 계정: {}", account);
+        FeedPostDto dto = FeedPostDto.builder()
+                .account(account)
+                .content(content)
+                .images(images)
+                .build();
 
         if (bindingResult.hasErrors()) {
             // 에러 메세지 Map 필요

@@ -15,9 +15,9 @@
     <insert id="insertImage" parameterType="boardImage"
         useGeneratedKeys="true" keyProperty="imageId">
         INSERT INTO tbl_board_image
-            (board_id, image_path, 'order')
+            (board_id, image_path, image_order)
         VALUES
-            (#{boardId}, #{imagePath}, #{order})
+            (#{boardId}, #{imagePath}, #{imageOrder})
     </insert>
 
     <delete id="deleteImage">

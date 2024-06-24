@@ -8,11 +8,15 @@ let imageFiles = importedImageFiles; // 다른 변수에 할당하여 재할당 
 
 // 미리보기 확인 후 fetch
 export const fetchFeedPost = async (payload) => {
+    console.log("fetchFeedPost 실행!")
     try {
         const res
-            = await fetch(FEED_URL + '/list', payload);
+            = await fetch(FEED_URL + '/v1/list', payload);
         if (res.ok) {
             const result = await res.json();
+
+            console.log('fetch 이후: ', result)
+
             alert('게시글이 성공적으로 등록되었습니다.');
             document.getElementById('createFeedModal').style.display = 'none';
             // formData = new FormData(); // FormData 초기화
@@ -23,32 +27,9 @@ export const fetchFeedPost = async (payload) => {
             throw new Error('서버 응답이 올바르지 않습니다.');
         }
     } catch (e) {
-        console.log('fetchFeedPost 에러: ', error);
+        console.log('fetchFeedPost 에러: ', e);
     }
 };
 
-// 이미지 input 변경 시 발생 이벤트
-$imageInput.addEventListener('change', e => {
-    imageFiles = handleFileInputChange(e, imageFiles, $imageBox);
-});
 
-// 모달 작성 완료 버튼 클릭 시 이벤트
-$feedPostBtn.addEventListener('click', e => {
-    e.preventDefault();
 
-    // 태그들 value, 이미지 파일명 가져오기
-    // 로그인한 회원 정보 가져오기
-    const feedContent = document.getElementById('cr-content').value;
-
-    // 입력값 누락 있는지 확인 필요
-
-    // fetch payload에 담아서 POST 요청
-    const payload = {
-        method: 'POST',
-        body: dataToFormData({content:feedContent}, imageFiles)
-    };
-    console.log(payload)
-    console.log(payload.body.get('images[0]'))
-    // fetchFeedPost(payload);
-
-});

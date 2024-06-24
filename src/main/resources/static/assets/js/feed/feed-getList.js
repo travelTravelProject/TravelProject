@@ -16,11 +16,13 @@ function appendFeeds({ feeds, pageInfo }) {
   let tag = '';
   // 게시글이 존재하면
   if(feeds && feeds.length > 0) {
+    let animationTiming = 1;
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
          , profileImage: profile}) => {
 
       tag += `
+<!--        <div class="feed-item scroll-spy animate__animated animate__slideInUp animate__delay-${animationTiming++}s" data-feed-id='${boardId}' data-feed-account='${account}'>-->
         <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>
           <div class="profile-section">
             <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">

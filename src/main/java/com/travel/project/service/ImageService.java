@@ -20,7 +20,7 @@ public class ImageService {
     // 하나의 피드에 첨부된 이미지 전체 조회(최대 10개)
     public List<BoardImage> findFeedImages(long boardId) {
         List<BoardImage> allImages = imageMapper.findAllImages(boardId);
-        return allImages.size() > 0 ? allImages : null;
+        return !allImages.isEmpty() ? allImages : null;
     }
 
     // 이미지 수정 시 순서(order 컬럼) 어떻게 할지?

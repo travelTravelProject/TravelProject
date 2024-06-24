@@ -1,4 +1,4 @@
-import {handleFileInputChange} from "../image.js";
+import {dataToFormData, handleFileInputChange, imageFiles} from "../image.js";
 import {fetchFeedPost} from "./feed-post.js";
 
 export function initFeedFormEvents() {
@@ -19,13 +19,17 @@ export function initFeedFormEvents() {
         // 태그들 value, 이미지 파일명 가져오기
         const $createContent = document.getElementById('cr-content').value;
 
-        if (!$createContent || imageFiles.length === 0) {
-            alert('모든 필드를 채워주세요.');
-            return;
-        }
+        // if (!$createContent || imageFiles.length === 0) {
+        //     alert('모든 필드를 채워주세요.');
+        //     return;
+        // }
 
         // fetch payload에 담아서 POST 요청
-        const formData = dataToFormData({content: $createContent}, imageFiles);
+        const data = {
+            content: $createContent,
+            account: 'tester1',
+        }
+        const formData = dataToFormData(data, imageFiles);
         const payload = {
             method: 'POST',
             body: formData

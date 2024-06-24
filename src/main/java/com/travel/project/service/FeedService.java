@@ -67,13 +67,17 @@ public class FeedService {
     public FeedDetailResponseDto findById(long boardId) {
         // DB에서 FeedFindOneDto 받아와서 response dto에 담기
         FeedFindOneDto feedById = feedMapper.findFeedById(boardId);
+        log.debug("개별조회: {}", feedById);
 
         // 피드 상세조회 응답 DTO를 생성
         FeedDetailResponseDto responseDto = new FeedDetailResponseDto(feedById);
 
         // 이미지 모두 조회하여 추가
-        responseDto
-                .setFeedImageList(imageService.findFeedImages(feedById.getBoardId()));
+        List<BoardImage> feedImages = imageService.findFeedImages(feedById.getBoardId());
+        if(!feedImages.isEmpty()) {
+            responseDto.setFeedImageList(feedImages);
+        }
+        // 조회된 이미지 없으면 바로 리턴
         return responseDto;
 
     }
@@ -87,11 +91,11 @@ public class FeedService {
 
         Board board = Board.builder()
                 .content(newFeed.getContent())
-                .account("admin")
+                .account(newFeed.getAccount())
                 .build();
 
         // 피드 insert 성공 시 등록된 피드 boardId를 리턴
-        long newBoardId = feedMapper.saveFeed(new Board());
+        long newBoardId = feedMapper.saveFeed(board);
 
         // tbl_board insert 성공하면 tbl_board_image 추가
         if (newBoardId > 0) {
@@ -102,19 +106,20 @@ public class FeedService {
             if(!files.isEmpty()) {
                 // 이미지 추가 성공하면 등록한 BoardId를 리턴
                 // forEach 중 이미지 추가 실패하면 수정으로 유도
-                files.forEach((file) -> {
-                        BoardImage b = BoardImage.builder()
-                                .boardId(newBoardId)
-                                .imagePath(FileUtil.uploadFile(file))
-                                .order(files.indexOf(file)) // 첫번째 이미지 인덱스 0
-                                .build();
-                        // DB insert 성공 ? 등록한 이미지 id : -1
-                        long imageId = imageService.addImage(b);
-                        if (imageId < 0) {
-                            log.debug("file 추가 실패: ",file);
-                            return;
-                        }
-                });
+                for (int i = 0; i < files.size(); i++) {
+                    MultipartFile file = files.get(i);
+                    BoardImage b = BoardImage.builder()
+                            .boardId(newBoardId)
+                            .imagePath(FileUtil.uploadFile(file))
+                            .imageOrder(i) // 인덱스 설정
+                            .build();
+                    // DB insert 성공 ? 등록한 이미지 id : -1
+                    long imageId = imageService.addImage(b);
+                    if (imageId < 0) {
+                        log.debug("file 추가 실패: ", file);
+                        return -1; // 이미지 추가 실패 시 -1 리턴
+                    }
+                }
             }
             return newBoardId; // 피드 등록 완료 (첨부파일 없음)
         }

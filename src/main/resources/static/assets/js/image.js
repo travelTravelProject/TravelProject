@@ -33,13 +33,14 @@ export function handleFileInputChange(e, imageFiles, imageBox) {
 
 // 게시글 작성, 수정(이미지 포함) FormData에 담는 함수
 // data: FormData에 담아야 할 객체 (ex. title, content)
-export function dataToFormData(data) {
+export function dataToFormData(data,  imageFiles) {
     const formData = new FormData();
     for (const key in data) {
         formData.append(key, data[key]);
     }
     imageFiles.forEach((file, index)=>{
-       formData.append(`images[${index}]`, file);
+       formData.append(`images`, file);
+        console.log(index,' : ',file);
     });
     return formData;
 }
