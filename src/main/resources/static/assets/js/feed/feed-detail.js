@@ -1,5 +1,5 @@
-import {FEED_URL} from "../feed-list";
-import {renderCarousel} from "../image";
+import {FEED_URL} from "../feed-list.js";
+import {renderCarousel} from "../image.js";
 
 function updateDetailModal(dto) {
   console.log("디테일모달 업데이트 실행!");
@@ -11,6 +11,14 @@ function updateDetailModal(dto) {
   // 프로필 사진 적용
   const $profile = document.querySelector('.feed-right-side .profile-pic');
   $profile.src = profileImage;
+
+  // 닉네임 적용
+  const $nickname = document.querySelector('.feed-right-side .nickname');
+  $nickname.textContent = nickname;
+
+  // 날짜 적용
+  const $created = document.querySelector('.feed-right-side .created-at');
+  $created.textContent = createdAt;
 
   // content 적용
   const $content = document.querySelector('.detail-content');
