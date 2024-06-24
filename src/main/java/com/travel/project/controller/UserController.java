@@ -86,7 +86,22 @@ public class UserController {
         return "/mypage";
     }
 
-    // 마이페이지 프로필 수정
+    // 마이페이지 프로필 수정페이지 열기
+    @GetMapping("/mypage/update")
+    public String showUpdatePage(HttpSession session, Model model) {
+        log.info("mypage GET : forwarding to mypage-update.jsp");
+
+        LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
+        if(user == null) {
+            // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
+            return "redirect:/sign-in";
+        }
+
+        model.addAttribute("user", user);
+        return "mypage-update";
+    }
+
+    // 마이페이지 프로필 수정하기
     @PostMapping("/mypage/update")
     public String myPageUpdate(@Validated UpdateProfileDto dto,
                                HttpSession session,

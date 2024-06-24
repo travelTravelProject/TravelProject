@@ -47,7 +47,7 @@
             <p>Gender: ${user.gender}</p>
 
 
-        <button class="update">프로필 수정</button>
+        <button type="button" class="update">프로필 수정</button>
         </form>
 
     </div>
