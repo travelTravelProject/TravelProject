@@ -16,18 +16,19 @@ function appendFeeds({ feeds, pageInfo }) {
   let tag = '';
   // 게시글이 존재하면
   if(feeds && feeds.length > 0) {
-    let animationTiming = 1;
+    let animationTiming = 0.5;
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
          , profileImage: profile}) => {
 
       tag += `
-<!--        <div class="feed-item scroll-spy animate__animated animate__slideInUp animate__delay-${animationTiming++}s" data-feed-id='${boardId}' data-feed-account='${account}'>-->
-        <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>
+        <div class="feed-item scroll-spy animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
+<!--        <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>-->
           <div class="profile-section">
             <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">
             <span class="nickname">${nickname}</span>
             <span class="created-at">${createdAt}</span>
+            <button class="edit-feed" id="editFeedBtn">피드 수정</button>
           </div>
           <div class="image-carousel">
             <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">
@@ -35,9 +36,11 @@ function appendFeeds({ feeds, pageInfo }) {
           </div>
           <div class="content-section">
             <span>${content}</span>
+            <br>
+            <span class="show-detail">더보기</span>
           </div>
           <div class="interaction-section">
-            <span class="comments">💬 ${pageInfo.totalCount}</span>
+            <span class="comments show-detail">💬 ${pageInfo.totalCount}</span>
             <span class="hearts">❤️ 25</span>
             <span class="bookmarks">🔖 5</span>
           </div>

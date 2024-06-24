@@ -1,11 +1,45 @@
 import {dataToFormData, handleFileInputChange, imageFiles} from "../image.js";
 import {fetchFeedPost} from "./feed-post.js";
+import {fetchFeedDetail} from "./feed-detail";
 
 export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
     const $imageInput = document.getElementById('postImage');
     const $imageBox = document.querySelector('.dropbox');
     let imageFiles = [];
+
+    // 모달 및 모달 닫기 버튼 처리
+    document.addEventListener('click', function(e) {
+        const createModal = document.getElementById("createFeedModal");
+        const editModal = document.getElementById("editFeedModal");
+        const detailModal = document.getElementById("detailFeedModal");
+
+        // 모달 열기 버튼 처리
+        if (e.target.id === "createFeedBtn") {
+            createModal.style.display = "block";
+
+        } else if (e.target.id === "editFeedBtn") {
+            editModal.style.display = "block";
+            const boardId = e.target.closest('.feed-item').dataset.feedId;
+            editModal.setAttribute("data-board-id", boardId );
+        } else if (e.target.classList.contains("show-detail")) {
+            detailModal.style.display = "block";
+            const boardId = e.target.closest('.feed-item').dataset.feedId;
+            // detailModal.setAttribute("data-board-id", boardId);
+            fetchFeedDetail(boardId);
+        }
+
+
+        // 모달 닫기 버튼 처리
+        if (e.target.classList.contains("close")
+          || e.target === createModal
+          || e.target === editModal
+          || e.target === detailModal) {
+            createModal.style.display = "none";
+            editModal.style.display = "none";
+            detailModal.style.display = "none";
+        }
+    });
 
     // 이미지 input 변경 시 발생 이벤트
     $imageInput.addEventListener('change', e => {

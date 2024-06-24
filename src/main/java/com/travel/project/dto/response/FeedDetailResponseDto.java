@@ -32,7 +32,6 @@ public class FeedDetailResponseDto {
     private List<BoardImage> feedImageList; // 게시글에 등록된 모든 이미지
     // 댓글 수, 좋아요 수, 북마크 수 추가
 
-    // 메서드냐 생성자냐...
     public FeedDetailResponseDto(FeedFindOneDto feedById) {
         this.boardId = feedById.getBoardId();
         this.account = feedById.getAccount();

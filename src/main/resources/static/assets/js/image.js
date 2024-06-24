@@ -45,4 +45,19 @@ export function dataToFormData(data,  imageFiles) {
     return formData;
 }
 
+export function renderCarousel(images, $carousel, className) {
+    if(images.length === 0) {
+        // 디폴트 이미지를 추가해줘야할 듯
+    } else {
+        // 이미지캐러셀에 img 태그 추가
+        images.forEach(el => {
+              const $img = document.createElement('img');
+              $img.setAttribute("src", el.imagePath);
+              $img.setAttribute("alt", 'image');
+              $img.classList.add(className);
+              $carousel.append($img);
+          }
+        )
+    }
+}
 
