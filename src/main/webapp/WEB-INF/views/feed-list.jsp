@@ -38,7 +38,7 @@
 
   <div class="btn-container">
     <button id="createFeedBtn">새 피드 작성</button>
-    <button id="editFeedBtn">피드 수정</button>
+<%--    <button id="editFeedBtn">피드 수정</button>--%>
   </div>
 
 </section>
@@ -95,55 +95,49 @@
       <input type="text" id="editContent" name="nickname" required>
       <label for="editPostImage">이미지 업로드:</label>
       <input type="file" id="editPostImage" name="postImage" accept="image/*">
-      <button type="submit" id="feed-modify-Btn">수정</button>
+      <button type="submit" id="feed-modify-Btn">수정 적용</button>
     </div>
   </div>
 </div>
 <!-- 피드 수정 모달 끝 -->
+<!-- 피드 상세조회 모달 -->
+<div id="detailFeedModal" class="detail-modal">
+  <div class="detail-modal-content">
+    <div class="feed-left-side">
+      <div class="image-carousel">
+        <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">
+        <!-- Add more images here for carousel -->
+      </div>
+    </div>
+    <div class="feed-right-side">
+      <div class="profile-section">
+        <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+        <span class="nickname">nickname</span>
+        <span class="created-at">createdAt</span>
+        <button class="edit-feed" id="editFeedBtn">수정</button>
+        <button class="delete-feed" id="deleteFeedBtn">삭제</button>
+      </div>
+      <div class="detail-content">
+<%--        <h2>Title</h2>--%>
+        <p>Some description or content goes here...</p>
+      </div>
+      <div class="feed-comments">
+        <h3>댓글</h3>
+        <div class="comment">
+          <p><strong>User1:</strong> This is a comment.</p>
+        </div>
+        <div class="comment">
+          <p><strong>User2:</strong> Another comment.</p>
+        </div>
+        <!-- Add more comments here -->
+      </div>
+    </div>
+    <span class="close">&times;</span>
+  </div>
+</div>
+<%-- 피드 상세조회 모달 끝 --%>
 
 <%-- 스크립트 --%>
-<script>
-  // 모달 열고 닫는 이벤트
-  document.addEventListener('DOMContentLoaded', (event) => {
-    const createModal = document.getElementById("createFeedModal");
-    const editModal = document.getElementById("editFeedModal");
-
-    const createBtn = document.getElementById("createFeedBtn");
-    const editBtn = document.getElementById("editFeedBtn");
-
-    const closeButtons = document.getElementsByClassName("close");
-
-    if (createBtn) {
-      createBtn.onclick = function() {
-        createModal.style.display = "block";
-        // 작성 모달 열 때 로그인한 회원의 닉네임 표시
-      };
-    }
-
-    if (editBtn) {
-      editBtn.onclick = function() {
-        editModal.style.display = "block";
-      };
-    }
-
-    for (let i = 0; i < closeButtons.length; i++) {
-      closeButtons[i].onclick = function() {
-        createModal.style.display = "none";
-        editModal.style.display = "none";
-      };
-    }
-
-    window.onclick = function(event) {
-      if (event.target == createModal) {
-        createModal.style.display = "none";
-      }
-      if (event.target == editModal) {
-        editModal.style.display = "none";
-      }
-    }
-  });
-
-</script>
 <script type="module" src="/assets/js/feed-list.js"></script>
 </body>
 </html>

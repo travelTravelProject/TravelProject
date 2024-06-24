@@ -12,20 +12,23 @@ body {
     position: fixed;
     top: 0;
     width: 60%;
-    height: 10%;
+    height: 60px;
     background: #fafafa;
     z-index: 1;
     display: block;
     border: 1px solid blue;
 }
 #feed-list {
-    margin-top: 150px;
-    position: relative;
-    top: 600px;
+    margin-top: 80px;
+    /*position: relative;*/
+    /*top: 600px;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 시작 부분에서부터 배치 */
 }
 
 .feed-container {
-    width: 400px;
+    width: 600px;
 }
 
 .feed-item {
@@ -34,6 +37,7 @@ body {
     border-radius: 3px;
     margin-bottom: 20px;
     padding: 10px;
+
 }
 .feed-item .created-at {
     padding-left: 20px ;
@@ -86,7 +90,7 @@ body {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%;
@@ -209,4 +213,80 @@ body div.btn-container {
     height: 90px;
 
     object-fit: cover;
+}
+/* 모달 속 이미지 미리보기 끝 */
+
+/* 피드 상세조회 모달 스타일 */
+.detail-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.detail-modal-content {
+    display: flex;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    width: 70%;
+    height: 70%; /* 모달의 높이 설정 */
+    max-height: 80vh; /* 최대 높이 설정 */
+    margin: 80px auto auto;
+    background-color: white;
+    border: 3px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.feed-left-side {
+    flex: 2;
+}
+
+.feed-left-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feed-right-side {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.detail-content {
+    flex: 1;
+}
+
+.feed-comments {
+    flex: 2;
+    overflow-y: auto;
+}
+
+.feed-comments h3 {
+    margin-top: 0;
+}
+
+.comment {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.comment p {
+    margin: 0;
+}
+#createFeedModal,
+#editFeedModal,
+#detailFeedModal {
+    display: none;
 }
