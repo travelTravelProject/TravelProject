@@ -61,9 +61,22 @@
 
     <select id="findMemberBySessionId" resultType="com.travel.project.entity.User">
         SELECT
-        account, name, email, auth, limit_time
+        account,
+        password,
+        name,
+        email,
+        nickname,
+        birthday,
+        gender,
+        created_at as createdAt,
+        updated_at as updatedAt,
+        status,
+        auth,
+        session_id as sessionId,
+        limit_time as limitTime
         FROM tbl_user
         WHERE session_id = #{sessionId}
     </select>
+
 
 </mapper>

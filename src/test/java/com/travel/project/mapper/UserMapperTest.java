@@ -65,6 +65,15 @@ class UserMapperTest {
 
     }
 
+    @Test
+    public void testFindOne() {
+        User user = userMapper.findOne("kitty");
+        System.out.println(user);
+        assertNotNull(user);
+        assertEquals("kitty", user.getAccount());
+        // 추가적인 필드 값 확인
+    }
+
 
 }
 

@@ -7,6 +7,7 @@ import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 
 import com.travel.project.dto.response.LoginUserInfoDto;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.service.LoginResult;
 
 import com.travel.project.service.UserService;
@@ -16,10 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,10 +94,12 @@ public class UserController {
 //===============================================================================
 
     @GetMapping("/sign-in")
-    public String signIn(HttpSession session){
+    public String signIn(HttpSession session
+            , @RequestParam(required = false) String redirect
+    ) {
         log.info("/sign-in GET : forwarding to sign-in jsp");
         System.out.println("로그인 페이지 111111111111");
-        //return "/members/sign-up";
+        //return "/sign-up";
 
 
         //로그인 한사람이 이 요청 보내믄 돌려보내버려
@@ -107,23 +107,38 @@ public class UserController {
         LoginUserInfoDto login =  //로그인 한 사람이면 login 값을 가졌을 것이거 아니면 null 이다.
                 (LoginUserInfoDto) session.getAttribute("login");
 
-        if(login != null){ //로그인 한 사람
-            System.out.println("로그인 한 사람은 홈으로 돌려보내기 ");
-            return "redirect:/"; //다시 홈으로 돌려보내버린다요
-        }
+//        if(login != null){ //로그인 한 사람
+//            System.out.println("로그인 한 사람은 홈으로 돌려보내기 ");
+//            return "redirect:/"; //다시 홈으로 돌려보내버린다요
+//        }
+
+//        if(LoginUtil.isLoggedIn(session)){ //로그인 한 사람
+//            System.out.println("LoginUtil 사용하요 로그인 한 사람은 홈으로 돌려보내기 ");
+//            return "redirect:/"; //다시 홈으로 돌려보내버린다요
+//        }
 
         /* // 아래 조건문을 LoginUtil 로 빼서 작업함
 
          */
+        //return "/sign-in";
+
+        session.setAttribute("redirect", redirect);
+
+        log.info("/sign-in GET : forwarding to sign-in.jsp");
         return "/sign-in";
     }
 
     //로그인 요청 처리
     @PostMapping("/sign-in")
-    public String signIn(LoginDto dto, RedirectAttributes ra, HttpServletRequest request, HttpServletResponse response){ // (LoginDto dto, Model model) Model model : 사용 xx
+    public String signIn(LoginDto dto,
+                         RedirectAttributes ra,
+                         HttpServletRequest request,
+                         HttpServletResponse response){ // (LoginDto dto, Model model) Model model : 사용 xx
         //RedirectAttributes : 리다이렉트된 페이지에 데이터를 전달
+
+
         log.info("/sign-in POST");
-        log.debug("param {}", dto);
+        log.debug("parameter {}", dto);
         System.out.println("!!!! dto = " + dto);
         System.out.println("로그인 페이지 버튼!");
 
@@ -131,22 +146,45 @@ public class UserController {
         HttpSession session = request.getSession(); //사용자 기억 해 줄
 
         LoginResult result = userService.authenticate(dto,session,response);
+
         System.out.println("result = " + result);
+
         //로그인 검증 결과를 jsp 한테 보내는거임
         //리다이렉트시 리다이렉트 된 페이지에 데이터를 보낼 땐 model 객체 사용 xx
         //request 객체는 한번 요청이 끝나면 메모리에서 제거댐유
         //model.addAttribute("result", result); // 리다이렉트시에는 model 을 사용하면 안된다.
         ra.addFlashAttribute("result", result);
-        if(result == LoginResult.SUCCESS){
-            return "redirect:/"; //로그인 성공시 index 페이지로 이동
+//        if(result == LoginResult.SUCCESS){
+//            return "redirect:/"; //로그인 성공시 index 페이지로 이동
+//        }
+//        return "redirect:/sign-in";
+
+        if (result == LoginResult.SUCCESS) {
+
+            // 혹시 세션에 리다이렉트 URL이 있다면
+            String redirect = (String) session.getAttribute("redirect");
+            if (redirect != null) {
+                session.removeAttribute("redirect");
+                return "redirect:" + redirect;
+            }
+
+            return "redirect:/"; // 로그인 성공시
         }
+
         return "redirect:/sign-in";
     }
 
     @GetMapping("/sign-out")
-    public String signOut(HttpSession session, HttpServletRequest request){
+    public String signOut(HttpServletRequest request, HttpServletResponse response) {
+
         // 세션 구하기
-        //HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
+
+        // 자동로그인 상태인지 확인
+        if (LoginUtil.isAutoLogin(request)) {
+            // 쿠키를 제거하고, DB에도 자동로그인 관련데이터를 원래대로 해놓음
+            userService.autoLoginClear(request, response);
+        }
 
         // 세션에서 로그인 기록 삭제
         session.removeAttribute("login");

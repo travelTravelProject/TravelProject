@@ -14,7 +14,7 @@ public class LoginUserInfoDto {
 
     private String account; // 계정
     private String name; // 계정
-    private String nickName; // 닉네임
+    private String nickname; // 닉네임
     private String email; // 이메일
     private String auth; // 권한
 
@@ -22,7 +22,7 @@ public class LoginUserInfoDto {
     public LoginUserInfoDto(User user){
         this.account = user.getAccount();
         this.name = user.getName();
-        this.nickName = user.getNickname();
+        this.nickname = user.getNickname();
         this.email = user.getEmail();
         this.auth = user.getAuth().toString();
 
