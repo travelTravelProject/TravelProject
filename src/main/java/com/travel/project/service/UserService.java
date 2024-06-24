@@ -52,6 +52,10 @@ public class UserService {
         return userMapper.findOne(account);
     }
 
+    public void saveUpdateUser(User user) {
+        userMapper.updateUser(user);
+    }
+
 //    =================================== yj ========================================
 
     //로그인 검증 처리

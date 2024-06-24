@@ -31,5 +31,5 @@ public interface UserMapper {
     User findBySessionId(String sessionId);
 
 
-
+    void updateUser(User user);
 }

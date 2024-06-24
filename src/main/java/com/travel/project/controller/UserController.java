@@ -8,6 +8,7 @@ import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 
 import com.travel.project.dto.response.LoginUserInfoDto;
+import com.travel.project.mapper.UserMapper;
 import com.travel.project.service.LoginResult;
 
 import com.travel.project.service.UserService;
@@ -32,6 +33,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final UserMapper userMapper;
     @Value("${file.upload.root-path}")
     private String rootPath;
 
@@ -108,9 +110,32 @@ public class UserController {
                                RedirectAttributes ra) {
         log.info("updateProfile POST: {}", dto);
 
-        User updatedUser = userService.getUserByAccount(dto.getAccount());
+        LoginUserInfoDto loginUser = (LoginUserInfoDto)session.getAttribute("user");
+        log.info("loginUser = " + loginUser);
+        log.info("loginUser.getAccount() = " + loginUser.getAccount());
+        log.info("dto.getAccount() = " + dto.getAccount());
+
+        if(!dto.getAccount().equals(loginUser.getAccount())) {
+            return "redirect:/sign-in";
+        }
+
+        User updatedUser = User.builder()
+                .account(dto.getAccount())
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .nickname(dto.getNickname())
+                .build();
+
+        // 데이터베이스에 업데이트된 사용자 정보 저장
+        userService.saveUpdateUser(updatedUser);
+
+        // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", new LoginUserInfoDto(updatedUser));
         System.out.println("updatedUser = " + updatedUser);
+        log.info("Updated user profile: {}", updatedUser);
+
+        // 사용자에게 알림 메시지
+        ra.addFlashAttribute("successMessage", "프로필이 성공적으로 업데이트 되었습니다.");
 
         return "redirect:/mypage";
     }

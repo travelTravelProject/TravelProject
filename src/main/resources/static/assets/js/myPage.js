@@ -22,9 +22,9 @@ $fileInput.addEventListener('change', e => {
     };
 });
 
-const $updateButton = document.querySelector('.update');
+const $modifyButton = document.querySelector('.modify');
 
-$updateButton.addEventListener('click', e => {
+$modifyButton.addEventListener('click', e => {
     e.preventDefault();
     console.log('수정 클릭');
     window.location.href = '/mypage/update';

@@ -12,7 +12,11 @@
     <h1>프로필 수정</h1>
     <div class="update-form">
 
+<%--        <p>account: ${user.account}</p>--%>
+
             <form action="/mypage/update" method="post" id="mypageUpdateForm">
+                <input type="hidden" name="account" value="${user.account}">
+
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="${user.name}" required>
 
@@ -31,10 +35,10 @@
 <%--                    <option value="F" ${user.gender == 'F' ? 'selected' : ''}>Female</option>--%>
 <%--                </select>--%>
 
-                <button type="submit" class="update">Update</button>
+                <button type="submit" class="update-button">Update</button>
             </form>
     </div>
 </div>
-<script type="module" src="/assets/js/myPage.js" defer></script>
+<script type="module" src="/assets/js/myPageUpdate.js" defer></script>
 </body>
 </html>

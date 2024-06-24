@@ -52,4 +52,14 @@
         </if>
     </select>
 
+    <update id="updateUser" parameterType="com.travel.project.entity.User">
+        UPDATE tbl_user
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="nickname != null">nickname = #{nickname}</if>
+        </set>
+        WHERE account = #{account}
+    </update>
+
 </mapper>
