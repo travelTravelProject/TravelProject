@@ -58,7 +58,7 @@
             console.log();
 
             const bno = document.getElementById('wrap').dataset.bno;
-            const res = await fetch(`/acc-board/\$like?bno=\${bno}`);
+            const res = await fetch(`/acc-board/like?bno=\${bno}`);
 
             if (res.status === 403) {
                 const msg = await res.text();
@@ -67,7 +67,10 @@
             }
 
             const { likeCount, userReaction } = await res.json();
-            document.getElementById('like-count').textContent = likeCount;
+            const likeCountElement = document.getElementById('like-count');
+            if (likeCountElement) {
+                likeCountElement.textContent = likeCount;
+            }
 
             // 버튼 활성화 스타일 처리
             updateReactionButtons(userReaction);
@@ -87,9 +90,7 @@
         }
 
         // 좋아요 클릭 이벤트
-        document.getElementById('like-btn').addEventListener('click', e => {
-            sendReaction('like');
-        });
+        document.getElementById('like-btn').addEventListener('click', sendLike);
 
     </script>
 
