@@ -133,6 +133,7 @@ public class FeedService {
     }
 
     // 피드 수정
+    @Transactional
     public boolean updateFeed(FeedModifyDto dto) {
         // tbl_board 수정
         Board newBoard = dto.toBoardEntity();

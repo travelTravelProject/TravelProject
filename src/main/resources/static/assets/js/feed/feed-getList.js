@@ -1,5 +1,6 @@
 import { FEED_URL } from "../feed-list.js";
 import {debounce} from "../util.js";
+import {renderCarousel} from "../image.js";
 
 let currentFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetching = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
@@ -19,7 +20,7 @@ function appendFeeds({ feeds, pageInfo }) {
     let animationTiming = 0.5;
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
-         , profileImage: profile}) => {
+         , profileImage: profile, feedImageList}) => {
 
       tag += `
         <div class="feed-item scroll-spy animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
@@ -29,10 +30,12 @@ function appendFeeds({ feeds, pageInfo }) {
             <span class="nickname">${nickname}</span>
             <span class="created-at">${createdAt}</span>
           </div>
-          <div class="image-carousel">
-            <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">
-            <!-- Add more images here for carousel -->
-          </div>
+          <div class="image-carousel">`;
+
+      // 캐러셀에 이미지 추가
+      tag += renderCarousel(feedImageList, 'post-image');
+
+      tag += `</div>
           <div class="content-section">
             <span>${content}</span>
             <br>
@@ -52,6 +55,8 @@ function appendFeeds({ feeds, pageInfo }) {
   }
   // 게시글 컨테이너에 태그 추가
   document.getElementById('feedData').innerHTML += tag;
+
+  renderCarousel()
 
   // 로드된 게시글 수 업데이트
   loadedFeeds += feeds.length;

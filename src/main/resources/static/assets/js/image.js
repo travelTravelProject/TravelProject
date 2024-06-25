@@ -47,27 +47,26 @@ export function dataToFormData(data, imageFiles) {
 
 // 이미지 태그 만드는 함수
 function makeImgTag(imagePath, className) {
-  const $img = document.createElement('img');
-  $img.setAttribute("src", imagePath);
-  $img.setAttribute("alt", 'image');
-  $img.classList.add(className);
-  return $img;
+  const path = imagePath && imagePath.length !== 0 ? imagePath : '/assets/img/floating.jpg';
+  const tag = `<img src="${path}" class="${className}" alt="image">`
+  return tag;
 }
 
-export function renderCarousel(images, $carousel, className) {
-  console.log(images)
+// 캐러셀 DOM 에 추가할 이미지 태그를 문자열로 반환
+export function renderCarousel(images, className) {
+  let tag = '';
+  console.log('렌더캐러셀: ',images);
   if (!images || images.length === 0) {
     // 디폴트 이미지를 추가해줘야할 듯
-    const $img = makeImgTag('/assets/img/floating.jpg', 'post-id');
-    $carousel.append($img);
+    tag = makeImgTag('/assets/img/floating.jpg', 'post-image');
 
   } else {
     // 이미지캐러셀에 img 태그 추가
     images.forEach(el => {
-        const $img = makeImgTag(el.imagePath, 'post-image');
-        $carousel.append($img);
+       tag += makeImgTag(el.imagePath, 'post-image');
       }
     )
   }
+  return tag;
 }
 
