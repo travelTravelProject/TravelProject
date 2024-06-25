@@ -28,7 +28,6 @@ function appendFeeds({ feeds, pageInfo }) {
             <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">
             <span class="nickname">${nickname}</span>
             <span class="created-at">${createdAt}</span>
-            <button class="edit-feed" id="editFeedBtn">피드 수정</button>
           </div>
           <div class="image-carousel">
             <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">

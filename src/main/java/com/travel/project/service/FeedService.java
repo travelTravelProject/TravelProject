@@ -65,16 +65,18 @@ public class FeedService {
     }
 
     public FeedDetailResponseDto findById(long boardId) {
+        log.debug("글번호: {}", boardId);
+
         // DB에서 FeedFindOneDto 받아와서 response dto에 담기
         FeedFindOneDto feedById = feedMapper.findFeedById(boardId);
         log.debug("개별조회: {}", feedById);
 
         // 피드 상세조회 응답 DTO를 생성
-        FeedDetailResponseDto responseDto = new FeedDetailResponseDto(feedById);
+        FeedDetailResponseDto responseDto = feedById.toDetailDto();
 
         // 이미지 모두 조회하여 추가
         List<BoardImage> feedImages = imageService.findFeedImages(feedById.getBoardId());
-        if(!feedImages.isEmpty()) {
+        if(feedImages != null && !feedImages.isEmpty()) {
             responseDto.setFeedImageList(feedImages);
         }
         // 조회된 이미지 없으면 바로 리턴

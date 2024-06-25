@@ -1,5 +1,6 @@
 package com.travel.project.dto.request;
 
+import com.travel.project.dto.response.FeedDetailResponseDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,4 +25,16 @@ public class FeedFindOneDto {
     private LocalDateTime updatedAt; // 수정일 - 타임스탬프
 //    private Status status; // 디폴트 A, 삭제시 D로 수정 필요
 
+    public FeedDetailResponseDto toDetailDto () {
+        return FeedDetailResponseDto.builder()
+                .account(this.account)
+                .nickname(this.nickname)
+                .profileImage(this.profileImage)
+                .categoryId(this.categoryId)
+                .content(this.content)
+                .viewCount(this.viewCount)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt)
+                .build();
+    }
 }

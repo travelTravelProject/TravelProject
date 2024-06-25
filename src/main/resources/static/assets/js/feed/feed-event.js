@@ -1,6 +1,6 @@
 import {dataToFormData, handleFileInputChange, imageFiles} from "../image.js";
 import {fetchFeedPost} from "./feed-post.js";
-import {fetchFeedDetail} from "./feed-detail";
+import {fetchFeedDetail} from "./feed-detail.js";
 
 export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
@@ -24,6 +24,7 @@ export function initFeedFormEvents() {
             editModal.setAttribute("data-board-id", boardId );
         } else if (e.target.classList.contains("show-detail")) {
             detailModal.style.display = "block";
+            console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             // detailModal.setAttribute("data-board-id", boardId);
             fetchFeedDetail(boardId);

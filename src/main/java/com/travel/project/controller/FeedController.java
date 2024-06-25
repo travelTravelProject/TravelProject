@@ -51,7 +51,9 @@ public class FeedController {
     // 피드 상세 조회 요청
     @GetMapping("/{boardId}")
     @ResponseBody
-    public ResponseEntity<?> findById(@PathVariable long boardId) {
+    public ResponseEntity<?> findOne(@PathVariable long boardId) {
+
+        log.debug("컨트롤러 글번호: {}", boardId);
 
         FeedDetailResponseDto foundFeed = feedService.findById(boardId);
 
@@ -105,7 +107,7 @@ public class FeedController {
     ) {
 
         boolean flag = feedService.updateFeed(dto);
-        if(flag) return "redirect:/feed/"+ dto.getBoardId(); // 수정한 피드 상세조회
+        if(flag) return "redirect:/feed/v1/"+ dto.getBoardId(); // 수정한 피드 상세조회
         else return "error";
     }
 
@@ -116,7 +118,7 @@ public class FeedController {
 
         FeedListDto feeds = feedService.deleteFeed(boardId);
 
-        return ResponseEntity.ok().body(feeds);
+        return ResponseEntity.ok().body(feeds); // list로 리다이렉트?
     }
 
 }

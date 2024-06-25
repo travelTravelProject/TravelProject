@@ -1,8 +1,8 @@
 import {FEED_URL} from "../feed-list.js";
 import {dataToFormData, handleFileInputChange,  imageFiles as importedImageFiles } from "../image.js";
 
-const $feedPostBtn = document.getElementById('feed-post-Btn')
-const $imageInput = document.getElementById('postImage');
+// const $feedPostBtn = document.getElementById('feed-post-Btn')
+// const $imageInput = document.getElementById('postImage');
 const $imageBox = document.querySelector('.dropbox');
 let imageFiles = importedImageFiles; // 다른 변수에 할당하여 재할당 가능
 
