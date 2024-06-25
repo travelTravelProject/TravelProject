@@ -46,20 +46,20 @@ export function dataToFormData(data, imageFiles) {
 }
 
 // 캐러셀 템플릿에 추가
-function addToCarousel(tagBtn, tagImg) {
+function addToCarousel(tagBtn, tagImg, boardId) {
   return `
-  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div id="carousel${boardId}" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       ${tagBtn}
     </div>
     <div class="carousel-inner">
       ${tagImg}
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel${boardId}" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel${boardId}" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -68,10 +68,10 @@ function addToCarousel(tagBtn, tagImg) {
 }
 
 // 캐러셀 인디케이터 만드는 함수
-function makeIndicateBtn(index) {
+function makeIndicateBtn(index, boardId) {
   const firstSet = index === 0 ? 'class="active" aria-current="true"' : '';
   return `
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" aria-label="Slide ${index+1}" ${firstSet}></button>
+    <button type="button" data-bs-target="#carousel${boardId}" data-bs-slide-to="${index}" aria-label="Slide ${index+1}" ${firstSet}></button>
   `;
 }
 
@@ -86,21 +86,22 @@ function makeImgTag(imagePath, className, index) {
 }
 
 // 캐러셀에 추가할 이미지 태그를 문자열로 반환
-export function renderCarousel(images, className) {
+export function renderCarousel(images, className, boardId) {
   let tagImg = '';
   let tagBtn = '';
   console.log('렌더캐러셀: ', images);
   if (!images || images.length === 0) {
     // 디폴트 이미지를 추가해줘야할 듯
-    tagImg = makeImgTag('/assets/img/floating.jpg', 'post-image');
+    tagImg = makeImgTag('/assets/img/floating.jpg', 'post-image', 0);
+    tagBtn = makeIndicateBtn(0, boardId);
   } else {
     // 개별 이미지 img 태그 추가
     images.forEach((el, index) => {
           tagImg += makeImgTag(el.imagePath, className, index);
-          tagBtn += makeIndicateBtn(index);
+          tagBtn += makeIndicateBtn(index, boardId);
         }
     );
   }
-  return addToCarousel(tagBtn, tagImg);
+  return addToCarousel(tagBtn, tagImg, boardId);
 }
 
