@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter
+@Getter @Setter
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -36,5 +36,13 @@ public class LoginUserInfoDto {
         this.birthday = user.getBirthday();
         this.gender = user.getGender();
 
+    }
+
+    // 필요한 필드만 초기화하는 생성자
+    public LoginUserInfoDto(String account, String name, String nickname, String email) {
+        this.account = account;
+        this.name = name;
+        this.nickname = nickname;
+        this.email = email;
     }
 }

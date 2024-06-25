@@ -40,7 +40,7 @@ public class SignUpDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
-    @NotBlank
+    @NotNull
     private Gender gender;
 
     public User toEntity() {

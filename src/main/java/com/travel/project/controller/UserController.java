@@ -129,8 +129,14 @@ public class UserController {
         // 데이터베이스에 업데이트된 사용자 정보 저장
         userService.saveUpdateUser(updatedUser);
 
+        // 세션의 기존 LoginUserInfoDto 객체 업데이트
+        loginUser.setName(dto.getName());
+        loginUser.setEmail(dto.getEmail());
+        loginUser.setNickname(dto.getNickname());
+
         // 세션에 업데이트된 사용자 정보 저장
-        session.setAttribute("user", new LoginUserInfoDto(updatedUser));
+        session.setAttribute("user", loginUser);
+//        session.setAttribute("user", new LoginUserInfoDto(updatedUser));
         System.out.println("updatedUser = " + updatedUser);
         log.info("Updated user profile: {}", updatedUser);
 
