@@ -63,8 +63,9 @@
             AND B.board_id = #{boardId}
     </select>
 
-    <insert id="saveFeed" parameterType="board"
-            useGeneratedKeys="true" keyProperty="boardId">
+<!--    <insert id="saveFeed" parameterType="com.travel.project.entity.Board"-->
+<!--            useGeneratedKeys="true" keyProperty="boardId">-->
+    <insert id="saveFeed">
         INSERT INTO tbl_board
         (
             account,
@@ -114,8 +115,9 @@
     </select>
 
     <select id="getNewBoardId" resultType="int">
-        SELECT MAX(board_id)
+        SELECT board_id
         FROM tbl_board
+        WHERE board_id = last_insert_id()
     </select>
 
     <select id="countFeeds" resultType="int">

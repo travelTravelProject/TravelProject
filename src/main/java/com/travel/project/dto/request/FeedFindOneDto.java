@@ -27,6 +27,7 @@ public class FeedFindOneDto {
 
     public FeedDetailResponseDto toDetailDto () {
         return FeedDetailResponseDto.builder()
+                .boardId(this.boardId)
                 .account(this.account)
                 .nickname(this.nickname)
                 .profileImage(this.profileImage)

@@ -90,13 +90,14 @@ public class FeedController {
 
         // tbl_board 생성된 데이터의 boardId를 가져옴 (실패 시 -1 리턴)
         long newBoardId = feedService.insertFeed(dto, session);
-        if(newBoardId < 0) return ResponseEntity
-                .internalServerError()
-                .body("피드 등록 실패!");
+        if(newBoardId < 0) {
+            return ResponseEntity
+                    .internalServerError()
+                    .body("피드 등록 실패!");
+        }
 
         return ResponseEntity
-                .ok()
-                .body(feedService.findById(newBoardId));
+                .ok().body(feedService.findById(newBoardId));
     }
 
     // 수정 - 수정한 내용을 JSON으로 받도록 수정해야 함

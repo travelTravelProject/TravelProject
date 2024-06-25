@@ -9,15 +9,16 @@
         SELECT *
         FROM tbl_board_image
         WHERE board_id = #{boardId}
-        ORDER BY 'order'
+        ORDER BY image_order
     </select>
 
-    <insert id="insertImage" parameterType="boardImage"
-        useGeneratedKeys="true" keyProperty="imageId">
+<!--    <insert id="insertImage" parameterType="boardImage"-->
+<!--        useGeneratedKeys="true" keyProperty="imageId">-->
+    <insert id="insertImage">
         INSERT INTO tbl_board_image
             (board_id, image_path, image_order)
         VALUES
-            (#{boardId}, #{imagePath}, #{imageOrder})
+            (last_insert_id(), #{imagePath}, #{imageOrder})
     </insert>
 
     <delete id="deleteImage">

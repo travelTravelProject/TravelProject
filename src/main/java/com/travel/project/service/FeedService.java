@@ -16,6 +16,7 @@ import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -87,6 +88,7 @@ public class FeedService {
     // 성공하면 새로운 boardId로 tbl_board_image 이미지 등록
     // 피드 & 이미지 insert 성공하면 새로운 boardId 리턴
     // 피드 & 이미지 insert 실패하면 -1 리턴
+    @Transactional
     public long insertFeed(FeedPostDto newFeed, HttpSession session) {
 
         // 로그인 유틸에서 세션으로 계정 정보 가져오기
@@ -96,34 +98,36 @@ public class FeedService {
                 .account(newFeed.getAccount())
                 .build();
 
-        // 피드 insert 성공 시 등록된 피드 boardId를 리턴
-        long newBoardId = feedMapper.saveFeed(board);
+        // 피드 insert 성공 시 1, 실패 시 0 리턴
+        int res = feedMapper.saveFeed(board);
+//        log.debug("새로 저장한 피드id: {}", res);
 
         // tbl_board insert 성공하면 tbl_board_image 추가
-        if (newBoardId > 0) {
+        if (res > 0) {
+            long newBoardId = feedMapper.getNewBoardId();
+            log.debug("새 피드 번호: {}",newBoardId);
 
             List<MultipartFile> files = newFeed.getImages();
 
             // file 존재하면 DB에 insert
-            if(!files.isEmpty()) {
+            if(files != null && !files.isEmpty()) {
                 // 이미지 추가 성공하면 등록한 BoardId를 리턴
-                // forEach 중 이미지 추가 실패하면 수정으로 유도
+                // 이미지 추가 실패하면 수정으로 유도 --------???
                 for (int i = 0; i < files.size(); i++) {
                     MultipartFile file = files.get(i);
                     BoardImage b = BoardImage.builder()
-                            .boardId(newBoardId)
                             .imagePath(FileUtil.uploadFile(file))
                             .imageOrder(i) // 인덱스 설정
                             .build();
                     // DB insert 성공 ? 등록한 이미지 id : -1
-                    long imageId = imageService.addImage(b);
-                    if (imageId < 0) {
+                    int result = imageService.addImage(b);
+                    if (result < 0) {
                         log.debug("file 추가 실패: ", file);
                         return -1; // 이미지 추가 실패 시 -1 리턴
                     }
                 }
             }
-            return newBoardId; // 피드 등록 완료 (첨부파일 없음)
+            return newBoardId; // 피드 등록 완료
         }
         return -1; // 피드 등록 실패
     }

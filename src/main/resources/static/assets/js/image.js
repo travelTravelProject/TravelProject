@@ -55,7 +55,8 @@ function makeImgTag(imagePath, className) {
 }
 
 export function renderCarousel(images, $carousel, className) {
-  if (images.length === 0) {
+  console.log(images)
+  if (!images || images.length === 0) {
     // 디폴트 이미지를 추가해줘야할 듯
     const $img = makeImgTag('/assets/img/floating.jpg', 'post-id');
     $carousel.append($img);

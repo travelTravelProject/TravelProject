@@ -111,11 +111,17 @@
     </div>
     <div class="feed-right-side">
       <div class="profile-section">
-        <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
-        <span class="nickname">nickname</span>
-        <span class="created-at">createdAt</span>
-        <button class="edit-feed" id="editFeedBtn">수정</button>
-        <button class="delete-feed" id="deleteFeedBtn">삭제</button>
+        <div class="profile-row">
+          <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+          <div class="profile-column">
+            <span class="nickname">nickname</span>
+            <span class="created-at">createdAt</span>
+          </div>
+        </div>
+        <div class="profile-row">
+          <button class="edit-feed detail-set-btn" id="editFeedBtn">수정</button>
+          <button class="delete-feed detail-set-btn" id="deleteFeedBtn">삭제</button>
+        </div>
       </div>
       <div class="detail-content">
 <%--        <h2>Title</h2>--%>

@@ -18,7 +18,7 @@ public interface FeedMapper {
     FeedFindOneDto findFeedById(long boardId);
 
     // 피드 생성
-    long saveFeed(Board newBoard);
+    int saveFeed(Board newBoard);
 
     // 피드 내용 수정
     boolean modifyFeed(Board newBoard);
@@ -34,6 +34,7 @@ public interface FeedMapper {
 
     // 피드 총 조회수
 //    int sumViewCount(long boardId);
-
+    // 새로운 피드 id 조회
+    int getNewBoardId();
 
 }
