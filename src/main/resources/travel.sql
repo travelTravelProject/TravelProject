@@ -307,9 +307,12 @@ VALUES
     (5, 'tester2', '대댓글 - 글번호 5 by user 2', 9),
     (6, 'tester2', '대댓글 - 글번호 6 by user 2', 12);
 
-
+-- user detail 데이터 추가
+INSERT INTO tbl_user_detail (mbti, one_liner, rating, account)
+VALUES ('ISFJ', '테스트테스트', 50, 'kitty');
 
 SELECT * FROM tbl_user;
+SELECT * FROM tbl_user_detail;
 
 DELETE FROM tbl_user
 WHERE account = 'hahahoho';

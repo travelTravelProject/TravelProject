@@ -25,6 +25,7 @@ public class LoginUserInfoDto {
     private LocalDate birthday; // 생년월일
     private Gender gender; // 성별
 
+
     //생성자
     public LoginUserInfoDto(User user){
         this.account = user.getAccount();

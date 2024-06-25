@@ -5,6 +5,8 @@ import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.entity.User;
+import com.travel.project.entity.UserDetail;
+import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ import static com.travel.project.service.LoginResult.*;
 public class UserService {
 
     private final UserMapper userMapper;
+    private final UserDetailMapper userDetailMapper;
     private final PasswordEncoder encoder;
 //    private final UserService userService;
 
@@ -55,6 +58,12 @@ public class UserService {
     public void saveUpdateUser(User user) {
         userMapper.updateUser(user);
     }
+
+    // 사용자 상세 정보 조회
+    public UserDetail getUserDetailByAccount(String account) {
+        return userDetailMapper.findUserDetailByAccount(account);
+    }
+
 
 //    =================================== yj ========================================
 
@@ -116,5 +125,6 @@ public class UserService {
 
         return SUCCESS;
     }
+
 
 }

@@ -37,10 +37,10 @@
             <%--            mbti, 소개글, 평점--%>
             <h2>${user.name}</h2>
             <div>
-                <p>소개글</p>
-                <p>MBTI:  </p>
-                <p>나의 점수: </p>
+                <p>소개글: <span id="oneLinerText">${userDetail.oneLiner}</span> <button type="button" class="modify" data-modal="oneLinerModal">수정</button></p>
+                <p>MBTI: <span id="mbtiText">${userDetail.mbti}</span> <button type="button" class="modify" data-modal="mbtiModal">수정</button></p>
             </div>
+            <p>나의 점수: ${userDetail.rating}</p>
             <p>Email: ${user.email}</p>
             <p>Nickname: ${user.nickname}</p>
             <p>Birthday: ${user.birthday}</p>
@@ -52,6 +52,29 @@
 
     </div>
 </div>
+
+<%--<!-- 소개글 모달 -->--%>
+<%--<div id="oneLinerModal" class="modal">--%>
+<%--    <div class="modal-content">--%>
+<%--        <span class="close" data-modal="oneLinerModal">&times;</span>--%>
+<%--        <h2>소개글 수정</h2>--%>
+<%--        <textarea id="oneLinerInput">${userDetail.oneLiner}</textarea>--%>
+<%--        <button type="button" class="saveButton" data-modal="oneLinerModal">저장</button>--%>
+<%--    </div>--%>
+<%--</div>--%>
+
+<%--&lt;%&ndash;<!-- MBTI 모달 -->&ndash;%&gt;--%>
+<%--<div id="mbtiModal" class="modal">--%>
+<%--    <div class="modal-content">--%>
+<%--        <span class="close" data-modal="mbtiModal">&times;</span>--%>
+<%--        <h2>MBTI 수정</h2>--%>
+<%--        <input type="text" id="mbtiInput" value="${user.mbti}">--%>
+<%--        <button type="button" class="saveButton" data-modal="mbtiModal">저장</button>--%>
+<%--    </div>--%>
+<%--</div>--%>
+
+
+
 <script type="module" src="/assets/js/myPage.js" defer></script>
 
 </body>

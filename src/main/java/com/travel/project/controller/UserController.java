@@ -8,6 +8,7 @@ import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 
 import com.travel.project.dto.response.LoginUserInfoDto;
+import com.travel.project.entity.UserDetail;
 import com.travel.project.mapper.UserMapper;
 import com.travel.project.service.LoginResult;
 
@@ -83,9 +84,19 @@ public class UserController {
             return "redirect:/sign-in";
         }
 
+        // 사용자 계정 정보를 기반으로 UserDetail 객체 가져오기
+        UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
+        System.out.println("userDetail = " + userDetail);
+
         // 모델에 사용자 정보 추가
+        if (userDetail == null) {
+            model.addAttribute("userDetail", new UserDetail());
+        } else {
+            model.addAttribute("userDetail", userDetail);
+        }
         model.addAttribute("user", user);
-        return "/mypage";
+
+        return "mypage";
     }
 
     // 마이페이지 프로필 수정페이지 열기
