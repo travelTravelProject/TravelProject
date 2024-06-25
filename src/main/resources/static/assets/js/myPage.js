@@ -31,10 +31,11 @@ $modifyButton.addEventListener('click', e => {
 });
 
 
-//  모달
+//  모달창 (비동기 / 등록 및 수정한 내용 DB에 저장해야함)
+
 document.addEventListener('DOMContentLoaded', (event) => {
     const modals = document.querySelectorAll('.modal');
-    const openButtons = document.querySelectorAll('.modify');
+    const openButtons = document.querySelectorAll('.registerModify');
     const closeButtons = document.querySelectorAll('.close');
     const saveButtons = document.querySelectorAll('.saveButton');
 
@@ -63,10 +64,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const mbtiInput = document.getElementById('mbtiInput').value;
                 document.getElementById('mbtiText').innerText = mbtiInput;
                 addOrUpdateHiddenInput('mbti', mbtiInput);
-            } else if (modalId === 'ratingModal') {
-                const ratingInput = document.getElementById('ratingInput').value;
-                document.getElementById('ratingText').innerText = ratingInput;
-                addOrUpdateHiddenInput('rating', scoreInput);
             }
             document.getElementById(modalId).style.display = "none";
         }
