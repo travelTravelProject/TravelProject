@@ -18,7 +18,7 @@
         INSERT INTO tbl_board_image
             (board_id, image_path, image_order)
         VALUES
-            (last_insert_id(), #{imagePath}, #{imageOrder})
+            (#{boardId}, #{imagePath}, #{imageOrder})
     </insert>
 
     <delete id="deleteImage">

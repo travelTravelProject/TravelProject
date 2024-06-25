@@ -25,7 +25,7 @@ function updateDetailModal(dto) {
   $content.firstElementChild.textContent = content;
 
   // 상세조회 캐러설에 이미지 추가
-  $imgCarousel.innerHTML = renderCarousel(feedImageList, 'post-image');
+  $imgCarousel.innerHTML = renderCarousel(feedImageList, 'post-image d-block w-100');
 
 }
 

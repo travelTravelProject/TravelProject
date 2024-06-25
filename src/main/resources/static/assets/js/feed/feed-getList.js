@@ -17,14 +17,14 @@ function appendFeeds({ feeds, pageInfo }) {
   let tag = '';
   // 게시글이 존재하면
   if(feeds && feeds.length > 0) {
-    let animationTiming = 0.5;
+    let animationTiming = 1;
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
          , profileImage: profile, feedImageList}) => {
 
       tag += `
         <div class="feed-item scroll-spy animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
-<!--        <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>-->
+        <!-- <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>-->
           <div class="profile-section">
             <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">
             <span class="nickname">${nickname}</span>
@@ -33,7 +33,7 @@ function appendFeeds({ feeds, pageInfo }) {
           <div class="image-carousel">`;
 
       // 캐러셀에 이미지 추가
-      tag += renderCarousel(feedImageList, 'post-image');
+      tag += renderCarousel(feedImageList, 'post-image d-block w-100');
 
       tag += `</div>
           <div class="content-section">
@@ -48,15 +48,13 @@ function appendFeeds({ feeds, pageInfo }) {
           </div>
         </div>
       `;
-    });
+    }); // feeads.forEach 종료
 
   } else{ // 게시글 없는 경우
 
   }
   // 게시글 컨테이너에 태그 추가
   document.getElementById('feedData').innerHTML += tag;
-
-  renderCarousel()
 
   // 로드된 게시글 수 업데이트
   loadedFeeds += feeds.length;

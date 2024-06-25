@@ -48,7 +48,7 @@ export function initFeedFormEvents() {
     });
 
     // 모달 작성 완료 버튼 클릭 시 이벤트
-    $feedPostBtn.addEventListener('click', e => {
+    $feedPostBtn.addEventListener('click', async (e) => {
         e.preventDefault();
 
         // 태그들 value, 이미지 파일명 가져오기
@@ -70,6 +70,6 @@ export function initFeedFormEvents() {
             body: formData
         };
 
-        fetchFeedPost(payload);
+        await fetchFeedPost(payload);
     });
 }

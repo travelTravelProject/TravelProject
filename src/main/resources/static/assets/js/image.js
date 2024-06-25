@@ -45,17 +45,69 @@ export function dataToFormData(data, imageFiles) {
   return formData;
 }
 
+const carouselTemplate = `
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+<!--  <div class="carousel-inner">-->
+<!--    <div class="carousel-item active">-->
+<!--      <img src="..." class="d-block w-100" alt="...">-->
+<!--    </div>-->
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+  <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
+  <div className="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active"
+            aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+  </div>
+  <div className="carousel-inner">
+    <!-- 이미지 carousel-item -->
+  </div>
+  <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev">
+    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Previous</span>
+  </button>
+  <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next">
+    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Next</span>
+  </button>
+    </div>
+`;
+
+
+
 // 이미지 태그 만드는 함수
 function makeImgTag(imagePath, className) {
-  const path = imagePath && imagePath.length !== 0 ? imagePath : '/assets/img/floating.jpg';
-  const tag = `<img src="${path}" class="${className}" alt="image">`
-  return tag;
+  const path = (imagePath && imagePath.length !== 0) ? imagePath : '/assets/img/floating.jpg';
+  return `
+    <div class="carousel-item">
+      <img src="${path}" class="${className} d-block w-100" alt="image">
+    </div>
+    `;
 }
 
 // 캐러셀 DOM 에 추가할 이미지 태그를 문자열로 반환
 export function renderCarousel(images, className) {
   let tag = '';
-  console.log('렌더캐러셀: ',images);
+  console.log('렌더캐러셀: ', images);
   if (!images || images.length === 0) {
     // 디폴트 이미지를 추가해줘야할 듯
     tag = makeImgTag('/assets/img/floating.jpg', 'post-image');
@@ -63,9 +115,9 @@ export function renderCarousel(images, className) {
   } else {
     // 이미지캐러셀에 img 태그 추가
     images.forEach(el => {
-       tag += makeImgTag(el.imagePath, 'post-image');
-      }
-    )
+          tag += makeImgTag(el.imagePath, className);
+        }
+    );
   }
   return tag;
 }

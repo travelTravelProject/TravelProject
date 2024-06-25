@@ -116,6 +116,7 @@ public class FeedService {
                 for (int i = 0; i < files.size(); i++) {
                     MultipartFile file = files.get(i);
                     BoardImage b = BoardImage.builder()
+                            .boardId(newBoardId)
                             .imagePath(FileUtil.uploadFile(file))
                             .imageOrder(i) // 인덱스 설정
                             .build();
