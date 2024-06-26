@@ -2,10 +2,10 @@ package com.travel.project.entity;
 
 import lombok.*;
 
-@Getter @ToString
+@Getter @ToString @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Builder
 public class UserDetail {
 
@@ -18,5 +18,10 @@ public class UserDetail {
 
     private String account; // 계정
 
-
+    // 기본 생성자
+    public UserDetail() {
+        this.oneLiner = "안녕하세요.";
+        this.mbti = "MBTI를 입력해주세요.";
+        this.rating = 0;
+    }
 }

@@ -1,12 +1,18 @@
 package com.travel.project.dto.response;
 
+import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.entity.BoardImage;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter @ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FeedDetailResponseDto {
     private long boardId; // 게시글 id
 
@@ -26,16 +32,6 @@ public class FeedDetailResponseDto {
     private List<BoardImage> feedImageList; // 게시글에 등록된 모든 이미지
     // 댓글 수, 좋아요 수, 북마크 수 추가
 
-    // 메서드냐 생성자냐...
-    public FeedDetailResponseDto(FeedFindOneDto feedById) {
-        this.boardId = feedById.getBoardId();
-        this.account = feedById.getAccount();
-        this.nickname = feedById.getNickname();
-        this.profileImage = feedById.getProfileImage();
-        this.categoryId = feedById.getCategoryId();
-        this.content = feedById.getContent();
-        this.viewCount = feedById.getViewCount();
-        this.createdAt = feedById.getCreatedAt();
-        this.updatedAt = feedById.getUpdatedAt();
-    }
+
+
 }

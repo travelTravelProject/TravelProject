@@ -6,6 +6,12 @@ import com.travel.project.dto.request.SignUpDto;
 
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.login.LoginUtil;
+import com.travel.project.dto.request.UpdateProfileDto;
+import com.travel.project.entity.Gender;
+import com.travel.project.entity.User;
+
+import com.travel.project.entity.UserDetail;
+import com.travel.project.mapper.UserMapper;
 import com.travel.project.service.LoginResult;
 
 import com.travel.project.service.UserService;
@@ -15,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,6 +34,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final UserMapper userMapper;
     @Value("${file.upload.root-path}")
     private String rootPath;
 
@@ -41,14 +49,14 @@ public class UserController {
 
     // 회원가입 요청 처리
     @PostMapping("/sign-up")
-    public String signUp(SignUpDto dto) {
+    public String signUp(@Validated SignUpDto dto) {
 
         log.info("sign-up POST : forwarding to sign-up.jsp");
 
         boolean flag = userService.join(dto);
 //        log.info("sign-up POST: join result: {}", flag);
 
-        return flag ? "redirect:/" : "redirect:/sign-up";
+        return flag ? "redirect:/sign-in" : "redirect:/sign-up";
     }
 
     // 아이디, 이메일 중복검사 비동기 요청 처리
@@ -62,26 +70,91 @@ public class UserController {
 
     // 마이페이지 열기
     @GetMapping("/mypage")
-    public String myPage() {
+    public String myPage(HttpSession session, Model model) {
         log.info("mypage GET : forwarding to mypage.jsp");
-        return "/mypage";
+
+        // 세션에서 로그인된 사용자 정보 가져오기
+        LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
+//        log.debug("\"User information retrieved from session: {}\", user");
+
+        System.out.println("user = " + user);
+
+        if(user == null) {
+            // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
+            return "redirect:/sign-in";
+        }
+
+        // 사용자 계정 정보를 기반으로 UserDetail 객체 가져오기
+        UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
+        System.out.println("userDetail = " + userDetail);
+
+        // 모델에 사용자 정보 추가
+        if (userDetail == null) {
+            model.addAttribute("userDetail", new UserDetail());
+        } else {
+            model.addAttribute("userDetail", userDetail);
+        }
+        model.addAttribute("user", user);
+
+        return "mypage";
     }
 
-
-    // 마이페이지 테스트
+    // 마이페이지 프로필 수정페이지 열기
     @GetMapping("/mypage/update")
-    public String myPage(Model model) {
+    public String showUpdatePage(HttpSession session, Model model) {
         log.info("mypage GET : forwarding to mypage-update.jsp");
 
-//        User user = new User();
-//        user.setName("John Doe");
-//        user.setEmail("john.doe@example.com");
-//        user.setNickname("johnny");
-//        user.setBirthday(LocalDate.parse("1990-01-01"));
-//        user.setGender(Gender.valueOf("M"));
+        LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
+        if(user == null) {
+            // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
+            return "redirect:/sign-in";
+        }
 
-//        model.addAttribute("user", user);
-        return "/mypage-update";
+        model.addAttribute("user", user);
+        return "mypage-update";
+    }
+
+    // 마이페이지 프로필 수정하기
+    @PostMapping("/mypage/update")
+    public String myPageUpdate(@Validated UpdateProfileDto dto,
+                               HttpSession session,
+                               RedirectAttributes ra) {
+        log.info("updateProfile POST: {}", dto);
+
+        LoginUserInfoDto loginUser = (LoginUserInfoDto)session.getAttribute("user");
+        log.info("loginUser = " + loginUser);
+        log.info("loginUser.getAccount() = " + loginUser.getAccount());
+        log.info("dto.getAccount() = " + dto.getAccount());
+
+        if(!dto.getAccount().equals(loginUser.getAccount())) {
+            return "redirect:/sign-in";
+        }
+
+        User updatedUser = User.builder()
+                .account(dto.getAccount())
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .nickname(dto.getNickname())
+                .build();
+
+        // 데이터베이스에 업데이트된 사용자 정보 저장
+        userService.saveUpdateUser(updatedUser);
+
+        // 세션의 기존 LoginUserInfoDto 객체 업데이트
+        loginUser.setName(dto.getName());
+        loginUser.setEmail(dto.getEmail());
+        loginUser.setNickname(dto.getNickname());
+
+        // 세션에 업데이트된 사용자 정보 저장
+        session.setAttribute("user", loginUser);
+//        session.setAttribute("user", new LoginUserInfoDto(updatedUser));
+        System.out.println("updatedUser = " + updatedUser);
+        log.info("Updated user profile: {}", updatedUser);
+
+        // 사용자에게 알림 메시지
+        ra.addFlashAttribute("successMessage", "프로필이 성공적으로 업데이트 되었습니다.");
+
+        return "redirect:/mypage";
     }
 
 

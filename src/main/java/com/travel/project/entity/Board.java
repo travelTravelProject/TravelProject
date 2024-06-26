@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter @ToString
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,7 +25,7 @@ public class Board {
 
     private LocalDateTime createdAt; // 생성일 - 자동 타임스탬프
     private LocalDateTime updatedAt; // 수정일 - 자동 타임스탬프
-//    private STATUS status; // 디폴트 A, 삭제시 D로 수정 필요,
+    private STATUS status; // 디폴트 A, 삭제시 D로 수정 필요,
 //    ENUM 없어서 주석처리
 
 

@@ -36,7 +36,7 @@ public class FeedModifyDto {
         return BoardImage.builder()
                 .boardId(boardId)
                 .imagePath(FileUtil.uploadFile(file))
-                .order(index)
+                .imageOrder(index)
                 .build();
     }
 }

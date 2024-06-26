@@ -1,5 +1,6 @@
 package com.travel.project.dto.request;
 
+import com.travel.project.dto.response.FeedDetailResponseDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -27,4 +28,19 @@ public class FeedFindAllDto {
 
 
     // 좋아요 수, 북마크 수, 댓글 수
+
+    // 피드 상세 DTO 에 담기
+    public FeedDetailResponseDto toDetailResponseDto() {
+        return FeedDetailResponseDto.builder()
+                .boardId(boardId)
+                .account(account)
+                .nickname(nickname)
+                .profileImage(profileImage)
+                .categoryId(categoryId)
+                .content(content)
+                .viewCount(viewCount)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .build();
+    }
 }

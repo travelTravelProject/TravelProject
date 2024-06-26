@@ -1,16 +1,45 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #fafafa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
     height: 100vh;
     margin: 0;
+    position: relative;
 }
+#feed-header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    margin: 0 auto;
+    background: #fafafa;
+    z-index: 1;
+    display: block;
+    border: 1px solid blue;
+}
+#feed-list {
+    margin-top: 80px;
+    overflow: auto;
+}
+/*#feed-list {*/
+/*    margin-top: 80px;*/
+/*    !*position: relative;*!*/
+/*    !*top: 600px;*!*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: flex-start; !* 시작 부분에서부터 배치 *!*/
+/*}*/
 
 .feed-container {
-    width: 400px;
+    width: 600px;
+    margin: 0 auto; /* 가운데 정렬 */
 }
+
+/*.feed-container {*/
+/*    width: 600px;*/
+/*}*/
 
 .feed-item {
     background-color: #fff;
@@ -18,6 +47,10 @@ body {
     border-radius: 3px;
     margin-bottom: 20px;
     padding: 10px;
+
+}
+.feed-item .created-at {
+    padding-left: 20px ;
 }
 
 .profile-section {
@@ -40,13 +73,14 @@ body {
 .image-carousel {
     position: relative;
     width: 100%;
+    height: 100%;
     overflow: hidden;
     border-radius: 3px;
 }
 
 .post-image {
     width: 100%;
-    height: auto;
+    /*height: auto;*/
 }
 
 .interaction-section {
@@ -67,7 +101,7 @@ body {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%;
@@ -131,4 +165,189 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+/* 검색창 */
+body div.top-section{
+    position: fixed;
+    top: 0;
+    left: 33%;
+    /*width: 70%;*/
+    /*margin: 0 auto;*/
+}
+body div.top-section form {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+}
+body div.top-section form input {
+    /*width: 50%;*/
+    margin: 5px 20px;
+}
+
+#search-type {
+    width: 100px;
+    height: 80%;
+}
+form .btn.btn-primary {
+    width: 100px;
+    color: #ffffff;
+}
+/* 피드 작성 버튼 */
+body div.btn-container {
+    position: fixed;
+    top: 60px;
+    left: 70%;
+    width: 100%;
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: space-evenly;*/
+}
+
+/*body div.btn-container {*/
+/*    position: fixed;*/
+/*    top: 60px;*/
+/*    width: 60%;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: space-evenly;*/
+/*}*/
+.btn-container #createFeedBtn {
+    width: 150px;
+}
+
+/* 모달 속 이미지 미리보기 */
+.dropbox {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.image-frame {
+
+    padding: 1px;
+
+}
+.image-item {
+    width: 90px;
+    height: 90px;
+
+    object-fit: cover;
+}
+/* 모달 속 이미지 미리보기 끝 */
+
+/* 피드 상세조회 모달 스타일 */
+.detail-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.detail-modal-content {
+    display: flex;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    width: 70%;
+    height: 70%; /* 모달의 높이 설정 */
+    max-height: 80vh; /* 최대 높이 설정 */
+    margin: 80px auto auto;
+    background-color: white;
+    border: 3px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.feed-left-side {
+    flex: 2;
+}
+
+.feed-left-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feed-right-side {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.detail-content {
+    flex: 1;
+}
+
+.feed-comments {
+    flex: 2;
+    overflow-y: auto;
+}
+
+.feed-comments h3 {
+    margin-top: 0;
+}
+
+.comment {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.feed-right-side .profile-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+}
+.profile-column {
+    display: flex;
+    flex-direction: column;
+}
+.profile-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.feed-right-side .created-at {
+    color: #aaaaaa;
+    font-size: 0.8rem;
+    padding-top: 1px;
+}
+/* 상세조회 수정삭제 버튼 */
+.detail-set-btn {
+    width: 50px;
+    height: 30px;
+    font-size: 0.7rem;
+    display: block;
+    padding: 3px;
+    background: #dcdcdc;
+}
+
+#createFeedModal,
+#editFeedModal,
+#detailFeedModal {
+    display: none;
+}
+/* 캐러셀 버튼 */
+/*.carousel.slide > button:after {*/
+/*    content: ●;*/
+/*    border-radius: 5px;*/
+/*}*/
+.carousel.slide > button:hover {
+    background: transparent;
+    /*border: 2px solid red;*/
+    /*box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);*/
 }
