@@ -38,6 +38,6 @@ export async function fetchFeedDetail(boardId) {
     throw new Error(`HTTP error! Status: ${res.status}`);
   }
   const feedDetailDto = await res.json();
-  console.log(feedDetailDto);
+  console.log("피드디테일 fetch 결과:",feedDetailDto);
   updateDetailModal(feedDetailDto);
 }

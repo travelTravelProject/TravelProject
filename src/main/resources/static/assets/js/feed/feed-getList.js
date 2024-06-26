@@ -1,6 +1,6 @@
 import { FEED_URL } from "../feed-list.js";
 import {debounce} from "../util.js";
-import {renderCarousel} from "../image.js";
+import {renderCarousel, setOneImgStyle} from "../image.js";
 
 let currentFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetching = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
@@ -55,7 +55,8 @@ function appendFeeds({ feeds, pageInfo }) {
   }
   // 게시글 컨테이너에 태그 추가
   document.getElementById('feedData').innerHTML += tag;
-
+  // 이미지 1장이면 캐러셀 ui 안보이게..
+  setOneImgStyle();
   // 로드된 게시글 수 업데이트
   loadedFeeds += feeds.length;
 }

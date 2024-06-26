@@ -49,17 +49,17 @@ export function dataToFormData(data, imageFiles) {
 function addToCarousel(tagBtn, tagImg, boardId) {
   return `
   <div id="carousel${boardId}" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
+    <div class="carousel-indicators carousel-one">
       ${tagBtn}
     </div>
     <div class="carousel-inner">
       ${tagImg}
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carousel${boardId}" data-bs-slide="prev">
+    <button class="carousel-control-prev carousel-one" type="button" data-bs-target="#carousel${boardId}" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carousel${boardId}" data-bs-slide="next">
+    <button class="carousel-control-next carousel-one" type="button" data-bs-target="#carousel${boardId}" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -105,3 +105,8 @@ export function renderCarousel(images, className, boardId) {
   return addToCarousel(tagBtn, tagImg, boardId);
 }
 
+// 캐러셀에 이미지 1장이면 <,>, 인디케이터 안보이게 설정
+export function setOneImgStyle() {
+  const oneImages = document.querySelectorAll('.carousel-one');
+  oneImages.forEach(el=>el.style.visiblity="hidden");
+}

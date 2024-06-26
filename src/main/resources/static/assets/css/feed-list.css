@@ -351,3 +351,42 @@ body div.btn-container {
     /*border: 2px solid red;*/
     /*box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);*/
 }
+.carousel-inner {
+    width: 570px;
+    height: 400px;
+    object-fit: cover;
+    /*border: 1px solid red;*/
+    overflow: hidden;
+}
+.carousel-control-prev,
+.carousel-control-next {
+    position: relative;
+}
+
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.2); /* 반투명한 검은색 */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1; /* 아이콘 뒤에 위치 */
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+.carousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-indicators button.active {
+    background-color: rgb(255, 255, 255);
+}
+
