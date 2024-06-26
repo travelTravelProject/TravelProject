@@ -1,6 +1,5 @@
 package com.travel.project.mapper;
 
-import com.travel.project.common.Page;
 import com.travel.project.common.Search;
 import com.travel.project.entity.AccBoard;
 import org.apache.ibatis.annotations.Mapper;

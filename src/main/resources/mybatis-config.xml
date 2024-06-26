@@ -3,19 +3,39 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
-    <!--  카멜케이스와 스네이크케이스 자동 변환 설정  -->
+    <!-- 카멜케이스와 스네이크케이스 자동 변환 설정 -->
     <settings>
-        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
 
+
+    <!--  카멜케이스와 스네이크케이스 자동 변환 설정  -->
+
+    <!-- SELECT 조회 결과를 담을 Entity 클래스 별칭 설정하기 -->
     <typeAliases>
+        <typeAlias type="com.travel.project.entity.BoardImage" alias="boardImage" />
+        <typeAlias type="com.travel.project.dto.request.FeedFindAllDto" alias="feed" />
+        <typeAlias type="com.travel.project.entity.Board" alias="board" />
+        <typeAlias type="com.travel.project.entity.Reply" alias="reply" />
+        <typeAlias type="com.travel.project.entity.User" alias="user"/>
+        <typeAlias type="com.travel.project.entity.UserDetail" alias="userDetail"/>
         <typeAlias type="com.travel.project.entity.AccBoard" alias="accBoard" />
+        <typeAlias type="com.travel.project.entity.testBoard" alias="testBoard" />
+        <typeAlias type="com.travel.project.entity.NestedReply" alias="nestedReply" />
         <typeAlias type="com.travel.project.entity.Like" alias="like" />
     </typeAliases>
 
+    <!--  SQL을 적어놓은 ...Mapper.xml 파일들을 사용등록하는 영역  -->
     <mappers>
+        <mapper resource="mappers/FeedMapper.xml" />
+        <mapper resource="mappers/ImageMapper.xml" />
         <mapper resource="mappers/AccBoardMapper.xml" />
+        <mapper resource="mappers/ReplyMapper.xml" />
+        <mapper resource="mappers/UserMapper.xml"/>
+        <mapper resource="mappers/TestMapper.xml"/>
+        <mapper resource="mappers/NestedReplyMapper.xml"/>
+        <mapper resource="mappers/UserDetailMapper.xml"/>
         <mapper resource="mappers/LikeMapper.xml" />
     </mappers>
+
 </configuration>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.project.mapper.FeedMapper">
+
+    <!-- 동적 SQL 조건을 분리 -->
+    <sql id="search">
+        <if test="type == 'content'">
+            AND B.content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="type == 'writer'">
+            AND U.nickname LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="type == 'cw'">
+            AND (U.nickname LIKE CONCAT('%', #{keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </sql>
+
+    <select id="findAllFeeds" resultType="feed">
+        SELECT
+            B.board_id,
+            B.account,
+            U.nickname,
+<!--            D.profile_image,-->
+            B.category_id,
+            B.content,
+            B.view_count,
+            B.created_at,
+            B.updated_at
+        FROM tbl_board B
+        JOIN tbl_user U
+            ON B.account = U.account
+<!--        JOIN tbl_user_detail D-->
+<!--            ON B.account = D.account-->
+        WHERE B.status = 'A'
+            AND B.category_id = 2
+        <include refid="search" />
+        ORDER BY B.board_id DESC
+        LIMIT #{pageStart}, #{amount}
+    </select>
+
+    <select id="findFeedById" resultType="com.travel.project.dto.request.FeedFindOneDto">
+        SELECT
+            B.board_id,
+            B.account,
+            U.nickname,
+<!--            D.profile_image,-->
+            B.category_id,
+            B.content,
+            B.view_count,
+            B.created_at,
+            B.updated_at
+        FROM tbl_board B
+        JOIN tbl_user U
+            ON B.account = U.account
+<!--        JOIN tbl_user_detail D-->
+<!--            ON B.account = D.account-->
+        WHERE B.status = 'A'
+            AND B.category_id = 2
+            AND B.board_id = #{boardId}
+    </select>
+
+<!--    <insert id="saveFeed" parameterType="com.travel.project.entity.Board"-->
+<!--            useGeneratedKeys="true" keyProperty="boardId">-->
+    <insert id="saveFeed">
+        INSERT INTO tbl_board
+        (
+            account,
+            category_id,
+            content
+        )
+        VALUES
+        (
+            #{account},
+            2,
+            #{content}
+        )
+    </insert>
+
+    <select id="findAllImage" resultType="boardImage">
+        SELECT *
+        FROM tbl_board_image
+        WHERE board_id = #{boardId}
+        ORDER BY order
+    </select>
+
+    <update id="modifyFeed">
+        UPDATE tbl_board
+        SET content = #{content}
+        WHERE status = 'A'
+            AND board_id = #{boardId}
+            AND account = #{account}
+    </update>
+
+    <update id="deleteFeed">
+        UPDATE tbl_board
+        SET status = 'D'
+        WHERE status = 'A'
+            AND board_id = #{boardId}
+    </update>
+
+    <update id="upViewCount">
+        UPDATE tbl_board
+        SET view_count = view_count + 1
+        WHERE board_id = #{boardId}
+    </update>
+
+    <select id="sumViewCount" resultType="int">
+        SELECT view_count
+        FROM tbl_board
+        WHERE board_id = #{boardId}
+    </select>
+
+    <select id="getNewBoardId" resultType="int">
+        SELECT board_id
+        FROM tbl_board
+        WHERE board_id = last_insert_id()
+    </select>
+
+    <select id="countFeeds" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_board B
+        JOIN tbl_user U
+        ON B.account = U.account
+        WHERE B.status = 'A'
+        AND B.category_id = 2
+        <include refid="search" />
+        ORDER BY B.board_id DESC
+    </select>
+
+</mapper>

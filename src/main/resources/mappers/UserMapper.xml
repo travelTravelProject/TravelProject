@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.travel.project.mapper.UserMapper">
+
+    <insert id="save">
+        INSERT INTO tbl_user
+        (
+        account,
+        password,
+        name,
+        email,
+        nickname,
+        birthday,
+        gender,
+        created_at,
+        updated_at,
+        status,
+        auth
+        )
+        VALUES
+        (#{account}, #{password}, #{name}, #{email}, #{nickname}, #{birthday}, #{gender}, #{createdAt}, #{updatedAt}, #{status}, #{auth})
+    </insert>
+
+    <select id="findOne" resultType="com.travel.project.entity.User">
+        SELECT
+        account,
+        password,
+        name,
+        email,
+        nickname,
+        birthday,
+        gender,
+        created_at as createdAt,
+        updated_at as updatedAt,
+        status,
+        auth
+        FROM tbl_user
+        WHERE account = #{account}
+    </select>
+
+    <select id="existById" resultType="boolean">
+        SELECT COUNT(*)
+        FROM tbl_user
+        <if test="type == 'account'">
+            WHERE account = #{keyword}
+        </if>
+        <if test="type == 'email'">
+            WHERE email = #{keyword}
+        </if>
+    </select>
+
+    <update id="updateAutoLogin">
+        UPDATE tbl_user
+        SET session_id = #{sessionId}, limit_time = #{limitTime}
+        WHERE account = #{account}
+    </update>
+
+
+    <select id="findMemberBySessionId" resultType="com.travel.project.entity.User">
+        SELECT
+            account,
+            password,
+            name,
+            email,
+            nickname,
+            birthday,
+            gender,
+            created_at as createdAt,
+            updated_at as updatedAt,
+            status,
+            auth,
+            session_id as sessionId,
+            limit_time as limitTime
+        FROM tbl_user
+        WHERE session_id = #{sessionId}
+    </select>
+
+    <select id="findIdByNameAndEmail" resultType="com.travel.project.entity.User">
+        SELECT account
+        FROM tbl_user
+        WHERE name = #{name} AND email = #{email}
+    </select>
+
+
+
+
+
+
+    <update id="updateUser" parameterType="com.travel.project.entity.User">
+        UPDATE tbl_user
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="nickname != null">nickname = #{nickname}</if>
+        </set>
+        WHERE account = #{account}
+    </update>
+
+</mapper>
