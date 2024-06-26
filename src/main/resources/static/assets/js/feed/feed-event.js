@@ -26,7 +26,7 @@ export function initFeedFormEvents() {
             detailModal.style.display = "block";
             console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
-            // detailModal.setAttribute("data-board-id", boardId);
+            detailModal.setAttribute("data-board-id", boardId);
             fetchFeedDetail(boardId);
         }
 
