@@ -1,6 +1,8 @@
 package com.travel.project.controller;
 
 import com.travel.project.dto.FindIdResponseDto;
+import com.travel.project.dto.PasswordChangeDto;
+import com.travel.project.dto.PasswordResetRequestDto;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
 
@@ -294,19 +296,57 @@ public class UserController {
 
 
     // 비밀번호 찾기 페이지 열기
-    @GetMapping("/find-pw")
-    public String findPw() {
-        System.out.println("비밀번호 찾기 페이지");
-        return "/find-pw";
+//    @GetMapping("/find-pw")
+//    public String findPw() {
+//        System.out.println("비밀번호 찾기 페이지");
+//        return "/find-pw";
+//    }
+
+    // 비밀번호 찾기 폼 열기
+    @GetMapping("/find-password")
+    public String showFindPasswordForm() {
+        return "/find-password";
     }
 
+    // 비밀번호 찾기 요청 처리
+    @PostMapping("/find-password")
+    public String verifyUserForPasswordReset(@ModelAttribute PasswordResetRequestDto dto, RedirectAttributes ra, HttpSession session) {
+        boolean verified = userService.verifyUserForPasswordReset(dto);
+        if (verified) {
+            session.setAttribute("account", dto.getAccount());
+            return "redirect:/change-password";
+        }
+        ra.addFlashAttribute("error", "User verification failed.");
+        return "redirect:/find-password";
+    }
 
+    @GetMapping("/change-password")
+    public String showChangePasswordForm() {
+        return "/change-password";
+    }
 
-
-
-
-
-
-
-
+    @PostMapping("/change-password")
+    public String changePassword(@ModelAttribute PasswordChangeDto dto, HttpSession session, RedirectAttributes ra) {
+        String account = (String) session.getAttribute("account");
+        if (account == null) {
+            ra.addFlashAttribute("error", "Session expired. Please try again.");
+            return "redirect:/find-password";
+        }
+        dto.setAccount(account);
+        boolean changed = userService.changePassword(dto);
+        if (changed) {
+            ra.addFlashAttribute("message", "Password changed successfully.");
+            session.removeAttribute("account");
+            return "redirect:/sign-in";
+        }
+        ra.addFlashAttribute("error", "Password change failed.");
+        return "redirect:/change-password";
+    }
 }
+
+
+
+
+
+
+
