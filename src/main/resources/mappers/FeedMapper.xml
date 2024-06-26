@@ -5,12 +5,26 @@
 
 <mapper namespace="com.travel.project.mapper.FeedMapper">
 
+    <!-- 동적 SQL 조건을 분리 -->
+    <sql id="search">
+        <if test="type == 'content'">
+            AND B.content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="type == 'writer'">
+            AND U.nickname LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="type == 'cw'">
+            AND (U.nickname LIKE CONCAT('%', #{keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </sql>
+
     <select id="findAllFeeds" resultType="feed">
         SELECT
             B.board_id,
             B.account,
             U.nickname,
-            D.profile_image,
+<!--            D.profile_image,-->
             B.category_id,
             B.content,
             B.view_count,
@@ -19,11 +33,13 @@
         FROM tbl_board B
         JOIN tbl_user U
             ON B.account = U.account
-        JOIN tbl_user_detail D
-            ON B.account = D.account
-        WHERE status = 'A'
-            AND category_id = 2
-        ORDER BY board_id DESC
+<!--        JOIN tbl_user_detail D-->
+<!--            ON B.account = D.account-->
+        WHERE B.status = 'A'
+            AND B.category_id = 2
+        <include refid="search" />
+        ORDER BY B.board_id DESC
+        LIMIT #{pageStart}, #{amount}
     </select>
 
     <select id="findFeedById" resultType="com.travel.project.dto.request.FeedFindOneDto">
@@ -31,7 +47,7 @@
             B.board_id,
             B.account,
             U.nickname,
-            D.profile_image,
+<!--            D.profile_image,-->
             B.category_id,
             B.content,
             B.view_count,
@@ -40,15 +56,16 @@
         FROM tbl_board B
         JOIN tbl_user U
             ON B.account = U.account
-        JOIN tbl_user_detail D
-            ON B.account = D.account
-        WHERE status = 'A'
-            AND category_id = 2
-            AND board_id = #{boardId}
+<!--        JOIN tbl_user_detail D-->
+<!--            ON B.account = D.account-->
+        WHERE B.status = 'A'
+            AND B.category_id = 2
+            AND B.board_id = #{boardId}
     </select>
 
-    <insert id="saveFeed" parameterType="board"
-            useGeneratedKeys="true" keyProperty="boardId">
+<!--    <insert id="saveFeed" parameterType="com.travel.project.entity.Board"-->
+<!--            useGeneratedKeys="true" keyProperty="boardId">-->
+    <insert id="saveFeed">
         INSERT INTO tbl_board
         (
             account,
@@ -98,8 +115,20 @@
     </select>
 
     <select id="getNewBoardId" resultType="int">
-        SELECT MAX(board_id)
+        SELECT board_id
         FROM tbl_board
+        WHERE board_id = last_insert_id()
+    </select>
+
+    <select id="countFeeds" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_board B
+        JOIN tbl_user U
+        ON B.account = U.account
+        WHERE B.status = 'A'
+        AND B.category_id = 2
+        <include refid="search" />
+        ORDER BY B.board_id DESC
     </select>
 
 </mapper>
