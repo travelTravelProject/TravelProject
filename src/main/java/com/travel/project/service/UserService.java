@@ -1,10 +1,12 @@
 package com.travel.project.service;
 
 import com.travel.project.dto.request.AutoLoginDto;
+import com.travel.project.dto.FindIdResponseDto;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.entity.User;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.entity.UserDetail;
 import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
@@ -12,8 +14,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -80,7 +84,7 @@ public class UserService {
         String inputPassword = dto.getPassword(); // 클라이언트에 입력한 비번
         String originPassword = foundMember.getPassword(); // 데이터베이스에 저장된 비번
 
-        // PasswordEncoder에서는 암호화된 비번을 내부적으로 비교해주는 기능을 제공
+        // PasswordEncoder 에서는 암호화된 비번을 내부적으로 비교해주는 기능을 제공
         if (!encoder.matches(inputPassword, originPassword)) { //비번이 일치 하지 않다면
             log.info("비밀번호가 일치하지 않습니다.");
             return NO_PW;
@@ -109,6 +113,12 @@ public class UserService {
         }
 
         //일반 로그인
+        maintainLoginState(session, foundMember);
+
+        return SUCCESS;
+    }
+
+    public static void maintainLoginState(HttpSession session, User foundMember) {
         log.info("{} 님 로그인 성공 ", foundMember.getName());
 
         //세션 수명 : 설정된 시간 및 브라우져 닫기 전까지
@@ -122,9 +132,50 @@ public class UserService {
         // login => user로 수정
         session.setAttribute("user", new LoginUserInfoDto(foundMember));
         System.out.println("foundMember = " + foundMember);
-
-        return SUCCESS;
     }
+
+
+
+//    =================================== yj ========================================
+
+
+    public void autoLoginClear(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+
+        // 1. 쿠키 제거하기
+        Cookie c = WebUtils.getCookie(request, AUTO_LOGIN_COOKIE);
+        if (c != null) {
+            c.setPath("/");
+            c.setMaxAge(0);
+            response.addCookie(c);
+        }
+
+        // 2. DB에 자동로그인 컬럼들을 원래대로 돌려놓음
+        userMapper.updateAutoLogin(
+                AutoLoginDto.builder()
+                        .sessionId("none")
+                        .limitTime(LocalDateTime.now())
+                        .account(LoginUtil.getLoggedInUserAccount(request.getSession()))
+                        .build()
+        );
+    }
+
+
+
+
+
+    public FindIdResponseDto findIdByNameAndEmail(String name, String email) {
+        User user = userMapper.findIdByNameAndEmail(name, email);
+
+        if (user != null) {
+            return new FindIdResponseDto(user.getAccount());
+        }
+
+        return null;
+    }
+
 
 
 }

@@ -51,6 +51,43 @@
         </if>
     </select>
 
+    <update id="updateAutoLogin">
+        UPDATE tbl_user
+        SET session_id = #{sessionId}, limit_time = #{limitTime}
+        WHERE account = #{account}
+    </update>
+
+
+    <select id="findMemberBySessionId" resultType="com.travel.project.entity.User">
+        SELECT
+            account,
+            password,
+            name,
+            email,
+            nickname,
+            birthday,
+            gender,
+            created_at as createdAt,
+            updated_at as updatedAt,
+            status,
+            auth,
+            session_id as sessionId,
+            limit_time as limitTime
+        FROM tbl_user
+        WHERE session_id = #{sessionId}
+    </select>
+
+    <select id="findIdByNameAndEmail" resultType="com.travel.project.entity.User">
+        SELECT account
+        FROM tbl_user
+        WHERE name = #{name} AND email = #{email}
+    </select>
+
+
+
+
+
+
     <update id="updateUser" parameterType="com.travel.project.entity.User">
         UPDATE tbl_user
         <set>

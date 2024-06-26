@@ -13,10 +13,12 @@ import java.time.LocalDateTime;
 @Setter
 public class User {
 
+    @Setter
     private String account; // 계정
 
     @Setter
     private String password; // 비밀번호
+
     private String name; // 이름
     private String email; // 이메일
     private String nickname; // 닉네임
@@ -25,6 +27,10 @@ public class User {
     private LocalDateTime createdAt; // 생성일
     private LocalDateTime updatedAt; // 수정일
     private STATUS status; // 상태
-    private Auth auth; // 권한
+    private Auth auth; // 권한.
+
+//   =========================================================
+    private String sessionId;
+    private LocalDateTime limitTime;
 
 }

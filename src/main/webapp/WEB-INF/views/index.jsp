@@ -13,6 +13,19 @@
 <body>
 
 <h1>index</h1>
+<h3>웨르컴 <span style="font-size: 40px; color: #000;">${login.nickname}</span></h3>
+<h4>${User.foundMember}</h4>
+<ul>
+    <li><a href="/">메인홈</a></li>
+    <c:if test="${login == null}">
+        <li><a href="/sign-in">로그인</a></li>
+        <li><a href="/sign-up">회원가입</a></li>
+        <li><a href="/find-id">아이디 찾기</a></li>
+        <li><a href="/find-pw">비밀번호 찾기? 변경?</a></li>
+    </c:if>
+    <c:if test="${login != null}">
+        <li><a href="/my-page">마이페이지</a></li>
+        <li><a href="/sign-out">로그아웃</a></li>
 <h3>웨르컴 <span style="font-size: 40px; color: #000;">${user.nickname}</span></h3>
 <ul>
     <li><a href="/">메인홈</a></li>
