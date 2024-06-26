@@ -1,4 +1,4 @@
-import { renderReplies } from "./getReply.js";
+import { fetchInfScrollReplies  } from "./getReply.js";
 import { BASE_URL } from "./reply.js"
 
 // 서버에 댓글 등록을 요청하는 비동기 함수
@@ -8,10 +8,11 @@ export const fetchReplyPost = async () => {
   const writerInput = document.getElementById('newReplyWriter');
 
   // 서버로 보낼 데이터
+  // 댓글 요청dto인 ReplyRequestPostDto의 필드와 이름이 같아야함
   const payload = {
     text: textInput.value.trim(),
     author: writerInput.value.trim(),
-    bno: document.getElementById("wrap").dataset.bno
+    boardId: document.getElementById("wrap").dataset.bno
   }
   console.log(payload);
 
@@ -23,6 +24,8 @@ export const fetchReplyPost = async () => {
     body: JSON.stringify(payload)
 });
 
+console.log('res: ', res);
+
 
 const replies = await res.json();
 
@@ -30,5 +33,6 @@ const replies = await res.json();
 textInput.value = '';
 writerInput.value = '';
 
-renderReplies(replies);
+// renderReplies(replies);
+await fetchInfScrollReplies(1, true);
 };

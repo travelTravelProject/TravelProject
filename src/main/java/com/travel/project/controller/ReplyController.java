@@ -24,11 +24,13 @@ public class ReplyController {
     // 댓글 목록 전체조회 요청
     // URL : /api/v1/replies/원본글번호   -  GET -> 목록조회
     // @PathVariable : URL에 있는 변수값을 읽어줌
-    @GetMapping("/{boardId}")
+    @GetMapping("/{boardId}/page/{pageNo}")
     public ResponseEntity<?> list(
-            @PathVariable long boardId) {
+            @PathVariable long boardId
+            , @PathVariable int pageNo
+    ) {
 
-        List<ReplyResponseDetailDto> replies = replyService.getReplies(boardId);
+        ReplyListDto replies = replyService.getReplies(boardId, new Page(pageNo, 10 ));
 
         return ResponseEntity
                 .ok()
@@ -45,14 +47,14 @@ public class ReplyController {
         // 댓글을 생성한 이후 게시물의 댓글 목록을 불러옴
         return ResponseEntity
                 .ok()
-                .body(replyService.getReplies(dto.getBoardId()));
+                .body(replyService.getReplies(dto.getBoardId(), new Page(1, 10)));
     }
 
     // 댓글 삭제 요청
     @DeleteMapping("/{replyId}")
     public ResponseEntity<?> delete(@PathVariable long replyId) {
 
-        List<ReplyResponseDetailDto> dtoList = replyService.remove(replyId);
+        ReplyListDto dtoList = replyService.remove(replyId);
 
         return ResponseEntity
                 .ok()
@@ -64,7 +66,7 @@ public class ReplyController {
     public ResponseEntity<?> modify(@RequestBody ReplyRequestModifyDto dto) {
 
         // 댓글이 수정된 후의 댓글 목록
-        List<ReplyResponseDetailDto> replyListDto = replyService.modify(dto);
+        ReplyListDto replyListDto = replyService.modify(dto);
 
         return ResponseEntity
                 .ok()
@@ -73,35 +75,35 @@ public class ReplyController {
 
     // 대댓글 목록 전체조회 요청
     // URL : /api/v1/nested/부모댓글번호   -  GET -> 목록조회
-    @GetMapping("/nested/{parentReplyId}")
-    public ResponseEntity<?> listNestedReplies(@PathVariable long parentReplyId) {
-        List<ReplyResponseDetailDto> replies = replyService.getNestedReplies(parentReplyId);
-        return ResponseEntity.ok().body(replies);
-    }
-
-    // 대댓글 생성
-    @PostMapping("/nested")
-    public ResponseEntity<?> postNestedReply(@RequestBody ReplyRequestPostDto dto) {
-        replyService.registerNestedReply(dto);
-        return ResponseEntity.ok().body(replyService.getNestedReplies(dto.getParentReplyId()));
-    }
-
-    // 대댓글 삭제
-    @DeleteMapping("/nested/{replyId}")
-    public ResponseEntity<?> deleteNestedReply(@PathVariable long replyId) {
-        List<ReplyResponseDetailDto> dtoList = replyService.removeNestedReply(replyId);
-        return ResponseEntity.ok().body(dtoList);
-    }
-
-    // 대댓글 수정
-    @RequestMapping(path = "/nested", method = {RequestMethod.PUT, RequestMethod.PATCH})
-    public ResponseEntity<?> modifyNestedReply(@RequestBody ReplyRequestModifyDto dto) {
-        // 댓글이 수정된 후의 댓글 목록
-        List<ReplyResponseDetailDto> replyListDto = replyService.modifyNestedReply(dto);
-        return ResponseEntity
-                .ok()
-                .body(replyListDto);
-    }
+//    @GetMapping("/nested/{parentReplyId}")
+//    public ResponseEntity<?> listNestedReplies(@PathVariable long parentReplyId) {
+//        List<ReplyResponseDetailDto> replies = replyService.getNestedReplies(parentReplyId);
+//        return ResponseEntity.ok().body(replies);
+//    }
+//
+//    // 대댓글 생성
+//    @PostMapping("/nested")
+//    public ResponseEntity<?> postNestedReply(@RequestBody ReplyRequestPostDto dto) {
+//        replyService.registerNestedReply(dto);
+//        return ResponseEntity.ok().body(replyService.getNestedReplies(dto.getParentReplyId()));
+//    }
+//
+//    // 대댓글 삭제
+//    @DeleteMapping("/nested/{replyId}")
+//    public ResponseEntity<?> deleteNestedReply(@PathVariable long replyId) {
+//        List<ReplyResponseDetailDto> dtoList = replyService.removeNestedReply(replyId);
+//        return ResponseEntity.ok().body(dtoList);
+//    }
+//
+//    // 대댓글 수정
+//    @RequestMapping(path = "/nested", method = {RequestMethod.PUT, RequestMethod.PATCH})
+//    public ResponseEntity<?> modifyNestedReply(@RequestBody ReplyRequestModifyDto dto) {
+//        // 댓글이 수정된 후의 댓글 목록
+//        List<ReplyResponseDetailDto> replyListDto = replyService.modifyNestedReply(dto);
+//        return ResponseEntity
+//                .ok()
+//                .body(replyListDto);
+//    }
 
 
 }
