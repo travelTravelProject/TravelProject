@@ -1,4 +1,4 @@
-// // 서버에 중복확인 비동기 요청
+// 서버에 중복확인 비동기 요청
 export const checkAvailability = async (type, keyword) => {
     const response = await fetch(`http://localhost:8181/check?type=${type}&keyword=${keyword}`);
     const flag = await response.json();
@@ -90,7 +90,10 @@ export const validateInput = {
     birthday: (value) => {
 
         // 빈 값 검사
-        if (!value.trim()) return {valid: false, message: '생년월일은 필수입니다.'};
+        if (!value.trim()) {
+            console.log('생년월일 빈칸')
+            return {valid: false, message: '생년월일은 필수입니다.'};
+        }
         // 정규표현식 검사
         if(!birthdatePattern.test(value)) return {valid: false, message: '생년월일은 YYYY-MM-DD 형식의 날짜로 입력해주세요.'};
 
@@ -107,6 +110,11 @@ export const validateInput = {
             date.getDate() !== day
         ) {
             return { valid: false, message: '올바른 날짜를 입력해주세요.' };
+        }
+
+        const today = new Date();
+        if(date > today) {
+            return {valid: false, message: '생년월일은 과거 날짜여야 합니다.'}
         }
 
         return {valid: true} ;

@@ -44,19 +44,19 @@ const validateField = async (field) => {
         $errorSpan.style.color = 'gray';
         field.valid = false;
     }
-    console.log('생년월일: ', $input.value);
+    // console.log('입력: ', $input.value);
     updateButtonState();
 };
 
 fields.forEach(field => {
     const $input = document.getElementById(field.id);
-    $input.addEventListener('keyup', debounce(() => {
+    $input.addEventListener('change', debounce(() => {
         validateField(field);
         if (field.id === 'password') {
             const passwordCheckField = fields.find(f => f.id === 'password_check');
             validateField(passwordCheckField);
         }
-    }, 1000));
+    }, 500));
 });
 
 form.addEventListener('submit', (event) => {
@@ -66,9 +66,7 @@ form.addEventListener('submit', (event) => {
             validateField(field);
         }
     });
-    updateButtonState();
 });
 
 // 초기 버튼 상태로 업데이트
 updateButtonState();
-// 생년월일
