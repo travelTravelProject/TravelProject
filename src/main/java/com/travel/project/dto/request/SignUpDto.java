@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Builder
 public class SignUpDto {
 
-    @NotBlank
+    @NotBlank(message = "아이디는 필수입니다.")
     @Size(min = 4, max = 14, message = "아이디는 4~14글자")
     private String account;
 
@@ -40,7 +40,7 @@ public class SignUpDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
-    @NotBlank
+    @NotNull
     private Gender gender;
 
     public User toEntity() {
@@ -55,7 +55,7 @@ public class SignUpDto {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .status(STATUS.A) // 기본값 설정
-                .auth(Auth.common) // 기본값 설정
+                .auth(Auth.COMMON) // 기본값 설정
                 .build();
     }
 

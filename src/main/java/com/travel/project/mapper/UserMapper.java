@@ -2,6 +2,7 @@ package com.travel.project.mapper;
 
 import com.travel.project.dto.request.AutoLoginDto;
 import com.travel.project.entity.User;
+import com.travel.project.entity.UserDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,7 +28,10 @@ public interface UserMapper {
     //자동 로그인 쿠키값, 만료시간 업데이트
     void updateAutoLogin(AutoLoginDto dto); // AutoLoginDto 로 정의 함
 
+    // 세션 아이디로 회원정보 조회
+    User findBySessionId(String sessionId);
 
+    void updateUser(User user);
 
 
 }

@@ -12,7 +12,11 @@
     <h1>프로필 수정</h1>
     <div class="update-form">
 
-            <form action="/updateProfile" method="post">
+<%--        <p>account: ${user.account}</p>--%>
+
+            <form action="/mypage/update" method="post" id="mypageUpdateForm">
+                <input type="hidden" name="account" value="${user.account}">
+
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="${user.name}" required>
 
@@ -22,19 +26,19 @@
                 <label for="nickname">Nickname:</label>
                 <input type="text" id="nickname" name="nickname" value="${user.nickname}" required>
 
-                <label for="birthday">Birthday:</label>
-                <input type="date" id="birthday" name="birthday" value="${user.birthday}" required>
+<%--                <label for="birthday">Birthday:</label>--%>
+<%--                <input type="date" id="birthday" name="birthday" value="${user.birthday}" required>--%>
 
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                    <option value="M" ${user.gender == 'M' ? 'selected' : ''}>Male</option>
-                    <option value="F" ${user.gender == 'F' ? 'selected' : ''}>Female</option>
-                </select>
+<%--                <label for="gender">Gender:</label>--%>
+<%--                <select id="gender" name="gender" required>--%>
+<%--                    <option value="M" ${user.gender == 'M' ? 'selected' : ''}>Male</option>--%>
+<%--                    <option value="F" ${user.gender == 'F' ? 'selected' : ''}>Female</option>--%>
+<%--                </select>--%>
 
-                <button type="submit">Update</button>
+                <button type="submit" class="update-button">Update</button>
             </form>
     </div>
 </div>
-<script type="module" src="/assets/js/myPage.js" defer></script>
+<script type="module" src="/assets/js/myPageUpdate.js" defer></script>
 </body>
 </html>

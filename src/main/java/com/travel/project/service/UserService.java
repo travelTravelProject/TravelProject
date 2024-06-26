@@ -5,6 +5,8 @@ import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.entity.User;
+import com.travel.project.entity.UserDetail;
+import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ import static com.travel.project.service.LoginResult.*;
 public class UserService {
 
     private final UserMapper userMapper;
+    private final UserDetailMapper userDetailMapper;
     private final PasswordEncoder encoder;
 //    private final UserService userService;
 
@@ -46,6 +49,19 @@ public class UserService {
     // 아이디, 이메일 중복검사
     public boolean checkIdentifier(String type, String keyword) {
         return userMapper.existById(type, keyword);
+    }
+
+    public User getUserByAccount(String account) {
+        return userMapper.findOne(account);
+    }
+
+    public void saveUpdateUser(User user) {
+        userMapper.updateUser(user);
+    }
+
+    // 사용자 상세 정보 조회
+    public UserDetail getUserDetailByAccount(String account) {
+        return userDetailMapper.findUserDetailByAccount(account);
     }
 
 
@@ -102,9 +118,13 @@ public class UserService {
 
         //ra 가 model 이랑 같은거임 리다이렉트에서만 사용하는거
         //session.setAttribute("loginUserName",foundMember.getName());
-        session.setAttribute("login", new LoginUserInfoDto(foundMember));
+
+        // login => user로 수정
+        session.setAttribute("user", new LoginUserInfoDto(foundMember));
         System.out.println("foundMember = " + foundMember);
 
         return SUCCESS;
     }
+
+
 }

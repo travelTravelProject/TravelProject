@@ -22,10 +22,70 @@ $fileInput.addEventListener('change', e => {
     };
 });
 
-const $updateButton = document.querySelector('.update');
+const $modifyButton = document.querySelector('.modify');
 
-$updateButton.addEventListener('click', e => {
+$modifyButton.addEventListener('click', e => {
     e.preventDefault();
     console.log('수정 클릭');
     window.location.href = '/mypage/update';
+});
+
+
+//  모달창 (비동기 / 등록 및 수정한 내용 DB에 저장해야함)
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const modals = document.querySelectorAll('.modal');
+    const openButtons = document.querySelectorAll('.registerModify');
+    const closeButtons = document.querySelectorAll('.close');
+    const saveButtons = document.querySelectorAll('.saveButton');
+
+    openButtons.forEach(button => {
+        button.onclick = function() {
+            const modalId = button.getAttribute('data-modal');
+            document.getElementById(modalId).style.display = "block";
+        }
+    });
+
+    closeButtons.forEach(button => {
+        button.onclick = function() {
+            const modalId = button.getAttribute('data-modal');
+            document.getElementById(modalId).style.display = "none";
+        }
+    });
+
+    saveButtons.forEach(button => {
+        button.onclick = function() {
+            const modalId = button.getAttribute('data-modal');
+            if (modalId === 'oneLinerModal') {
+                const oneLinerInput = document.getElementById('oneLinerInput').value;
+                document.getElementById('oneLinerText').innerText = oneLinerInput;
+                addOrUpdateHiddenInput('oneLiner', oneLinerInput);
+            } else if (modalId === 'mbtiModal') {
+                const mbtiInput = document.getElementById('mbtiInput').value;
+                document.getElementById('mbtiText').innerText = mbtiInput;
+                addOrUpdateHiddenInput('mbti', mbtiInput);
+            }
+            document.getElementById(modalId).style.display = "none";
+        }
+    });
+
+    window.onclick = function(event) {
+        modals.forEach(modal => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
+
+    function addOrUpdateHiddenInput(name, value) {
+        const form = document.getElementById('mypageForm');
+        let input = form.querySelector(`input[name=${name}]`);
+        if (!input) {
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            form.appendChild(input);
+        }
+        input.value = value;
+    }
 });
