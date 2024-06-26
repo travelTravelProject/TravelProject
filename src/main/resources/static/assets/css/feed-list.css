@@ -1,5 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
+    /*font-family: Arial, sans-serif;*/
+    font-family: "Noto Sans KR", sans-serif;
     background-color: #fafafa;
     /*display: flex;*/
     /*justify-content: center;*/
@@ -43,11 +44,11 @@ body {
 
 .feed-item {
     background-color: #fff;
-    border: 1px solid #dbdbdb;
-    border-radius: 3px;
-    margin-bottom: 20px;
-    padding: 10px;
-
+    border: 1px solid #d4d4d4;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    /*padding: 10px;*/
+    box-shadow: 1px 1px 1px rgba(113, 113, 113, 0.1);
 }
 .feed-item .created-at {
     padding-left: 20px ;
@@ -57,6 +58,7 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    padding: 10px;
 }
 
 .profile-pic {
@@ -74,7 +76,7 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     border-radius: 3px;
 }
 
@@ -82,11 +84,18 @@ body {
     width: 100%;
     /*height: auto;*/
 }
+.content-section {
+    padding: 12px;
+}
+.content-section .show-detail:hover {
+    color: #007bff;
+    text-decoration-line: underline;
+}
 
 .interaction-section {
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
+    padding: 10px 10px;
     border-top: 1px solid #dbdbdb;
     margin-top: 10px;
 }
@@ -342,22 +351,33 @@ body div.btn-container {
     display: none;
 }
 /* 캐러셀 버튼 */
-/*.carousel.slide > button:after {*/
-/*    content: ●;*/
-/*    border-radius: 5px;*/
-/*}*/
+
 .carousel.slide > button:hover {
     background: transparent;
     /*border: 2px solid red;*/
     /*box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);*/
 }
-.carousel-inner {
-    width: 570px;
-    height: 400px;
-    object-fit: cover;
-    /*border: 1px solid red;*/
-    overflow: hidden;
+.feed-container .carousel {
+    justify-content: center;
 }
+.feed-container .carousel-item {
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    background-color: #aaaaaa;
+    overflow: hidden;
+    position: relative;
+}
+
+.feed-container .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+}
+
 .carousel-control-prev,
 .carousel-control-next {
     position: relative;
@@ -381,12 +401,35 @@ body div.btn-container {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(204, 204, 204, 0.9);
+    /*border: 1px solid rgba(0, 0, 0, 0.4);*/
     border: none;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 .carousel-indicators button.active {
     background-color: rgb(255, 255, 255);
+    border: none
+}
+/* 상세조회 캐러셀 */
+/*.detail-modal .feed-left-side {*/
+/*    width: 700px;*/
+/*    height: 700px;*/
+/*}*/
+.detail-modal .carousel-item {
+    width: 850px;
+    height: 650px;
+    background-color: #aaaaaa;
+    overflow: hidden;
+    position: relative;
 }
 
+.detail-modal .carousel-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+}

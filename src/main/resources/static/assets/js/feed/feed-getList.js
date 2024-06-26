@@ -33,7 +33,7 @@ function appendFeeds({ feeds, pageInfo }) {
           <div class="image-carousel">`;
 
       // 캐러셀에 이미지 추가
-      tag += renderCarousel(feedImageList, 'post-image d-block w-100', boardId);
+      tag += renderCarousel(feedImageList, 'post-image d-block w-100', boardId,"List");
 
       tag += `</div>
           <div class="content-section">

@@ -1,11 +1,11 @@
 import {FEED_URL} from "../feed-list.js";
-import {renderCarousel} from "../image.js";
+import {renderCarousel, setOneImgStyle} from "../image.js";
 
-function updateDetailModal(dto) {
+function setDetailModal(dto) {
   console.log("디테일모달 업데이트 실행!");
-  const {account, nickname, profileImage, content, createdAt, feedImageList} = dto;
+  const {boardId, account, nickname, profileImage, content, createdAt, feedImageList} = dto;
 
-  const $imgCarousel = document.querySelector('.image-carousel');
+  const $imgCarousel = document.querySelector('.feed-left-side .image-carousel');
   $imgCarousel.innerHTML = '';
 
   // 프로필 사진 적용
@@ -25,8 +25,8 @@ function updateDetailModal(dto) {
   $content.firstElementChild.textContent = content;
 
   // 상세조회 캐러설에 이미지 추가
-  $imgCarousel.innerHTML = renderCarousel(feedImageList, 'post-image d-block w-100');
-
+  $imgCarousel.innerHTML = renderCarousel(feedImageList, 'post-image d-block w-100', boardId, "Detail");
+  setOneImgStyle();
 }
 
 // 서버로 boardId 보내서 fetch로 데이터 받아와서 모달에 뿌려줌
@@ -39,5 +39,5 @@ export async function fetchFeedDetail(boardId) {
   }
   const feedDetailDto = await res.json();
   console.log("피드디테일 fetch 결과:",feedDetailDto);
-  updateDetailModal(feedDetailDto);
+  setDetailModal(feedDetailDto);
 }
