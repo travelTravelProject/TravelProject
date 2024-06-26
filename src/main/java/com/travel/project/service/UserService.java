@@ -4,6 +4,7 @@ import com.travel.project.dto.request.AutoLoginDto;
 import com.travel.project.dto.FindIdResponseDto;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
+import com.travel.project.dto.request.UpdateProfileDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.entity.User;
 import com.travel.project.login.LoginUtil;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
@@ -59,8 +61,12 @@ public class UserService {
         return userMapper.findOne(account);
     }
 
-    public void saveUpdateUser(User user) {
-        userMapper.updateUser(user);
+    @Transactional
+    public void saveUpdateUser(UpdateProfileDto dto) {
+        // Update tbl_user
+        userMapper.updateUser(dto);
+        // Update tbl_user_detail
+        userDetailMapper.updateUserDetail(dto);
     }
 
     // 사용자 상세 정보 조회

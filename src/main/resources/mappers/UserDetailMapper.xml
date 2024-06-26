@@ -10,4 +10,14 @@
         WHERE account = #{account}
     </select>
 
+    <update id="updateUserDetail" parameterType="com.travel.project.dto.request.UpdateProfileDto">
+        UPDATE tbl_user_detail
+        <set>
+            <if test="mbti != null">mbti = #{mbti},</if>
+            <if test="oneLiner != null">one_liner = #{oneLiner},</if>
+            <if test="rating != null">rating = #{rating}</if>
+        </set>
+        WHERE account = #{account}
+    </update>
+
 </mapper>

@@ -57,7 +57,6 @@
         WHERE account = #{account}
     </update>
 
-
     <select id="findMemberBySessionId" resultType="com.travel.project.entity.User">
         SELECT
             account,
@@ -84,11 +83,7 @@
     </select>
 
 
-
-
-
-
-    <update id="updateUser" parameterType="com.travel.project.entity.User">
+    <update id="updateUser" parameterType="com.travel.project.dto.request.UpdateProfileDto">
         UPDATE tbl_user
         <set>
             <if test="name != null">name = #{name},</if>
@@ -97,5 +92,8 @@
         </set>
         WHERE account = #{account}
     </update>
+
+
+
 
 </mapper>

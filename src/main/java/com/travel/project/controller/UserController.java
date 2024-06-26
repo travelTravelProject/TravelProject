@@ -79,7 +79,7 @@ public class UserController {
 
         System.out.println("user = " + user);
 
-        if(user == null) {
+        if (user == null) {
             // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/sign-in";
         }
@@ -88,12 +88,7 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
-        // 모델에 사용자 정보 추가
-        if (userDetail == null) {
-            model.addAttribute("userDetail", new UserDetail());
-        } else {
-            model.addAttribute("userDetail", userDetail);
-        }
+
         model.addAttribute("user", user);
 
         return "mypage";
@@ -105,7 +100,7 @@ public class UserController {
         log.info("mypage GET : forwarding to mypage-update.jsp");
 
         LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
-        if(user == null) {
+        if (user == null) {
             // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/sign-in";
         }
@@ -121,20 +116,23 @@ public class UserController {
                                RedirectAttributes ra) {
         log.info("updateProfile POST: {}", dto);
 
-        LoginUserInfoDto loginUser = (LoginUserInfoDto)session.getAttribute("user");
+        LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
         log.info("loginUser = " + loginUser);
         log.info("loginUser.getAccount() = " + loginUser.getAccount());
         log.info("dto.getAccount() = " + dto.getAccount());
 
-        if(!dto.getAccount().equals(loginUser.getAccount())) {
+        if (!dto.getAccount().equals(loginUser.getAccount())) {
             return "redirect:/sign-in";
         }
 
-        User updatedUser = User.builder()
+        UpdateProfileDto updatedUser = UpdateProfileDto.builder()
                 .account(dto.getAccount())
                 .name(dto.getName())
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
+                .oneLiner(dto.getOneLiner())
+                .mbti(dto.getMbti())
+                .rating(dto.getRating())
                 .build();
 
         // 데이터베이스에 업데이트된 사용자 정보 저장
@@ -144,19 +142,23 @@ public class UserController {
         loginUser.setName(dto.getName());
         loginUser.setEmail(dto.getEmail());
         loginUser.setNickname(dto.getNickname());
+        loginUser.setMbti(dto.getMbti());
+        loginUser.setOneLiner(dto.getOneLiner());
+        loginUser.setRating(dto.getRating());
+
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
-//        session.setAttribute("user", new LoginUserInfoDto(updatedUser));
+//        session.setAttribute("updatedUser", updatedUser);
+//        session.setAttribute("updatedUser", new LoginUserInfoDto(updatedUser));
         System.out.println("updatedUser = " + updatedUser);
         log.info("Updated user profile: {}", updatedUser);
 
-        // 사용자에게 알림 메시지
-        ra.addFlashAttribute("successMessage", "프로필이 성공적으로 업데이트 되었습니다.");
+        // RedirectAttributes를 사용하여 사용자 정보 전달
+        ra.addFlashAttribute("updatedUser", updatedUser);
 
         return "redirect:/mypage";
     }
-
 
 
 //===============================================================================
@@ -202,7 +204,7 @@ public class UserController {
     public String signIn(LoginDto dto,
                          RedirectAttributes ra,
                          HttpServletRequest request,
-                         HttpServletResponse response){ // (LoginDto dto, Model model) Model model : 사용 xx
+                         HttpServletResponse response) { // (LoginDto dto, Model model) Model model : 사용 xx
         //RedirectAttributes : 리다이렉트된 페이지에 데이터를 전달
 
 
@@ -214,7 +216,7 @@ public class UserController {
         //세션 얻기
         HttpSession session = request.getSession(); //사용자 기억 해 줄
 
-        LoginResult result = userService.authenticate(dto,session,response);
+        LoginResult result = userService.authenticate(dto, session, response);
 
         System.out.println("result = " + result);
 
@@ -299,14 +301,6 @@ public class UserController {
         System.out.println("비밀번호 찾기 페이지");
         return "/find-pw";
     }
-
-
-
-
-
-
-
-
 
 
 }

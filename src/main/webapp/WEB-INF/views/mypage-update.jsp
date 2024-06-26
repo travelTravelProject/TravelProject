@@ -20,6 +20,34 @@
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="${user.name}" required>
 
+                <label for="oneLiner">소개글:</label>
+                <input type="text" id="oneLiner" name="oneLiner"
+                       value="${user.oneLiner}" placeholder="소개글을 입력해주세요." required>
+
+                    <label for="mbti">MBTI:</label>
+                    <select id="mbti" name="mbti" required>
+                        <option value="" disabled selected>Select your MBTI</option>
+                        <option value="ISTJ">ISTJ</option>
+                        <option value="ISFJ">ISFJ</option>
+                        <option value="INFJ">INFJ</option>
+                        <option value="INTJ">INTJ</option>
+                        <option value="ISTP">ISTP</option>
+                        <option value="ISFP">ISFP</option>
+                        <option value="INFP">INFP</option>
+                        <option value="INTP">INTP</option>
+                        <option value="ESTP">ESTP</option>
+                        <option value="ESFP">ESFP</option>
+                        <option value="ENFP">ENFP</option>
+                        <option value="ENTP">ENTP</option>
+                        <option value="ESTJ">ESTJ</option>
+                        <option value="ESFJ">ESFJ</option>
+                        <option value="ENFJ">ENFJ</option>
+                        <option value="ENTJ">ENTJ</option>
+                    </select>
+
+
+
+
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="${user.email}" required>
 
