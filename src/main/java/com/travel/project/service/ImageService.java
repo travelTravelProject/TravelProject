@@ -18,8 +18,10 @@ public class ImageService {
     private final ImageMapper imageMapper;
 
     // 하나의 피드에 첨부된 이미지 전체 조회(최대 10개)
-    public List<BoardImage> getFeedImages(long boardId) {
-        return imageMapper.findAllImages(boardId);
+    public List<BoardImage> findFeedImages(long boardId) {
+        List<BoardImage> allImages = imageMapper.findAllImages(boardId);
+        log.debug("{} 피드 이미지: {}",boardId, allImages);
+        return allImages != null ? allImages : List.of();
     }
 
     // 이미지 수정 시 순서(order 컬럼) 어떻게 할지?
@@ -28,12 +30,11 @@ public class ImageService {
     // BoardImage 로 이미지 추가
     // 추가 성공하면 새로 추가된 이미지 id 리턴
     // 추가 실패하면 -1 리턴
-    public long addImage(BoardImage image) {
+    public int addImage(BoardImage image) {
 
-        long b = imageMapper.insertImage(image);
+        int result = imageMapper.insertImage(image);
         // 넘버 포맷 익셉션 예외처리 필요
-        if(b > 0) { return b; }
-        else { return -1; }
+        return result > 0 ? result : -1;
     }
 
     // 이미지 id로 삭제
