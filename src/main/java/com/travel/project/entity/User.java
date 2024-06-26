@@ -13,10 +13,12 @@ import java.time.LocalDateTime;
 @Setter
 public class User {
 
+    @Setter
     private String account; // 계정
 
     @Setter
     private String password; // 비밀번호
+
     private String name; // 이름
     private String email; // 이메일
     private String nickname; // 닉네임

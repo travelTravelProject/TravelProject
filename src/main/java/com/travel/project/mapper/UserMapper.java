@@ -31,4 +31,12 @@ public interface UserMapper {
     // 세션아이디로 회원정보 조회
     User findMemberBySessionId(String sessionId);
 
+
+
+
+
+    // 이름과 이메일로 사용자 아이디 조회
+    User findIdByNameAndEmail(@Param("name") String name,
+                              @Param("email") String email);
+
 }

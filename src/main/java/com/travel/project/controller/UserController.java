@@ -1,10 +1,8 @@
 package com.travel.project.controller;
 
+import com.travel.project.dto.FindIdResponseDto;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
-
-import com.travel.project.entity.Gender;
-import com.travel.project.entity.User;
 
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.login.LoginUtil;
@@ -23,8 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import java.time.LocalDate;
 
 @Controller
 @Slf4j
@@ -107,7 +103,7 @@ public class UserController {
         LoginUserInfoDto login =  //로그인 한 사람이면 login 값을 가졌을 것이거 아니면 null 이다.
                 (LoginUserInfoDto) session.getAttribute("login");
 
-//        if(login != null){ //로그인 한 사람
+//        if(login != null){ //로그인 한 사람a
 //            System.out.println("로그인 한 사람은 홈으로 돌려보내기 ");
 //            return "redirect:/"; //다시 홈으로 돌려보내버린다요
 //        }
@@ -196,7 +192,40 @@ public class UserController {
         return "redirect:/";
     }
 
+//===============================================================================
+//===============================================================================
 
+    @GetMapping("/find-id")
+    public String findId() {
+        System.out.println("아이디 찾기 페이지");
+        return "/find-id"; // find-id.html 또는 find-id.jsp와 같은 뷰 이름 반환
+    }
+
+    @PostMapping("/find-id")
+    public String findId(@RequestParam String name,
+                         @RequestParam String email,
+                         Model model) {
+        // Call service method to find ID based on name and email
+        FindIdResponseDto result = userService.findIdByNameAndEmail(name, email);
+
+        if (result != null) {
+            // If ID is found, pass it to find-id-result.jsp
+            model.addAttribute("result", result);
+            return "find-id-result"; // Redirect to find-id-result.jsp
+        } else {
+            // If ID is not found, handle appropriately
+            model.addAttribute("error", "User not found");
+            return "find-id"; // Redirect back to find-id.jsp with an error message
+        }
+    }
+
+
+    // 비밀번호 찾기 페이지 열기
+    @GetMapping("/find-pw")
+    public String findPw() {
+        System.out.println("비밀번호 찾기 페이지");
+        return "/find-pw";
+    }
 
 
 

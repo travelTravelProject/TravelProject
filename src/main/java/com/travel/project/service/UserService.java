@@ -1,6 +1,7 @@
 package com.travel.project.service;
 
 import com.travel.project.dto.request.AutoLoginDto;
+import com.travel.project.dto.FindIdResponseDto;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
@@ -142,4 +143,21 @@ public class UserService {
                         .build()
         );
     }
+
+
+
+
+
+    public FindIdResponseDto findIdByNameAndEmail(String name, String email) {
+        User user = userMapper.findIdByNameAndEmail(name, email);
+
+        if (user != null) {
+            return new FindIdResponseDto(user.getAccount());
+        }
+
+        return null;
+    }
+
+
+
 }
