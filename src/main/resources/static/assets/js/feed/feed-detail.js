@@ -30,7 +30,7 @@ function setDetailModal(dto) {
 }
 
 // 서버로 boardId 보내서 fetch로 데이터 받아와서 모달에 뿌려줌
-export async function fetchFeedDetail(boardId) {
+export async function fetchFeedDetail(boardId, type) {
 
   const url = `${FEED_URL}/v1/${boardId}`
   const res = await fetch(url);
@@ -39,5 +39,10 @@ export async function fetchFeedDetail(boardId) {
   }
   const feedDetailDto = await res.json();
   console.log("피드디테일 fetch 결과:",feedDetailDto);
-  setDetailModal(feedDetailDto);
+  if(type === 'detail') {
+    setDetailModal(feedDetailDto);
+  }
+  // else if(type === 'edit') {
+  //   setEditModal(feedDetailDto);
+  // }
 }

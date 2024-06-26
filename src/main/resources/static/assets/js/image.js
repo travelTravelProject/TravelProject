@@ -1,7 +1,7 @@
 // 이미지
 export let imageFiles = [];
 
-// 미리보기 이미지 렌더링 함수
+// input 업로드된 파일 미리보기 렌더링 함수
 // imageBox는 미리보기 이미지가 렌더링될 DOM
 export function previewImages(files, imageBox) {
   imageBox.innerHTML = ''; // 기존 미리보기 초기화
@@ -10,11 +10,9 @@ export function previewImages(files, imageBox) {
     reader.onload = (e) => {
       const imgTag = `
                 <div class="image-frame"> 
-                    <img src="${e.target.result}" class="image-item" data-image-order="${index}" alt="이미지">
+                    <img src="${e.target.result}" class="image-item" data-image-order="${index}" alt="preview image">
                 </div>
             `;
-      // img.style.width = '100px'; css 처리 필요
-      // img.style.height = '100px';
       imageBox.innerHTML += imgTag;
     };
     // 파일을 Data URL로 읽기 완료하면 reader.onload 콜백함수 실행
@@ -24,8 +22,10 @@ export function previewImages(files, imageBox) {
 
 // 이미지 input(e) 변경 시 미리보기 및 이미지 배열 생성
 export function handleFileInputChange(e, imageFiles, imageBox) {
+  console.log('image.js 타입: ', typeof e.target.files, ' / 출력: ', e.target.files)
   const newFiles = Array.from(e.target.files);
   imageFiles.push(...newFiles);
+  console.log('image.js handle 이미지들 : ', imageFiles);
   previewImages(imageFiles, imageBox);
   e.target.value = '';
   return imageFiles;

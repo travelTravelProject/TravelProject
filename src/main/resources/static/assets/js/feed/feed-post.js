@@ -12,7 +12,7 @@ function openDetailModal(newBoardId) {
     const detailModal = document.getElementById("detailFeedModal");
     detailModal.style.display = "block";
     detailModal.setAttribute("data-board-id", newBoardId);
-    fetchFeedDetail(newBoardId);
+    // fetchFeedDetail(newBoardId);
 }
 
 

@@ -1,11 +1,14 @@
 import {dataToFormData, handleFileInputChange, imageFiles} from "../image.js";
 import {fetchFeedPost} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
+import {setEditModal} from "./feed-modify.js";
 
 export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
-    const $imageInput = document.getElementById('postImage');
-    const $imageBox = document.querySelector('.dropbox');
+    const $imageInputPost = document.getElementById('postImage');
+    const $imageInputEdit = document.getElementById('editPostImage');
+    const $imageBoxPost = document.getElementById('post-preview');
+    const $imageBoxEdit = document.getElementById('edit-preview');
     let imageFiles = [];
 
     // 모달 및 모달 닫기 버튼 처리
@@ -20,14 +23,17 @@ export function initFeedFormEvents() {
 
         } else if (e.target.id === "editFeedBtn") {
             editModal.style.display = "block";
-            const boardId = e.target.closest('.feed-item').dataset.feedId;
+            const boardId = e.target.closest('.detail-modal').dataset.boardId;
             editModal.setAttribute("data-board-id", boardId );
+            // fetchFeedDetail(boardId, 'edit');
+            setEditModal(); // 수정모달 초기값 렌더링
+
         } else if (e.target.classList.contains("show-detail")) {
             detailModal.style.display = "block";
             console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             detailModal.setAttribute("data-board-id", boardId);
-            fetchFeedDetail(boardId);
+            fetchFeedDetail(boardId, 'detail');
         }
 
 
@@ -43,8 +49,12 @@ export function initFeedFormEvents() {
     });
 
     // 이미지 input 변경 시 발생 이벤트
-    $imageInput.addEventListener('change', e => {
-        imageFiles = handleFileInputChange(e, imageFiles, $imageBox);
+    $imageInputPost.addEventListener('change', e => {
+        imageFiles = handleFileInputChange(e, imageFiles, $imageBoxPost);
+    });
+    $imageInputEdit.addEventListener('change', e => {
+        console.log("edit 모달 이벤트 실행!")
+        imageFiles = handleFileInputChange(e, imageFiles, $imageBoxEdit);
     });
 
     // 모달 작성 완료 버튼 클릭 시 이벤트

@@ -84,7 +84,7 @@
       <input type="text" id="cr-content" name="content" required>
       <label for="postImage">이미지 업로드:</label>
       <input type="file" id="postImage" name="postImage" accept="image/*" required>
-      <div class="dropbox"></div>
+      <div class="dropbox" id="post-preview"></div>
       <button type="submit" id="feed-post-Btn">게시</button>
     </div>
   </div>
@@ -101,6 +101,7 @@
       <input type="text" id="editContent" name="nickname" required>
       <label for="editPostImage">이미지 업로드:</label>
       <input type="file" id="editPostImage" name="postImage" accept="image/*">
+      <div class="dropbox" id="edit-preview"></div>
       <button type="submit" id="feed-modify-Btn">수정 적용</button>
     </div>
   </div>
