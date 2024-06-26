@@ -37,6 +37,5 @@ public class Reply {
     private LocalDateTime createdAt; // 댓글 작성일
     private LocalDateTime updatedAt; // 댓글 수정일
     private STATUS status; // 댓글의 상태
-    private Long parentReplyId; // 부모 댓글번호
     private String replyWriter; // 댓글 작성자
 }
