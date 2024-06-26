@@ -34,7 +34,7 @@
     <div class="top-section">
         <!-- 검색창 영역 -->
         <div class="search">
-            <form action="/acc-board/acc-list" method="get">
+            <form action="/acc-board/list" method="get">
 
                 <select class="form-select" name="type" id="search-type">
                     <option value="title">제목</option>
@@ -125,31 +125,32 @@
 
                 <c:if test="${maker.pageInfo.pageNo != 1}">
                     <li class="page-item">
-                        <a class="page-link" href="/board/list?pageNo=1&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a>
+                        <a class="page-link" href="/acc-board/list?pageNo=1&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a>
                     </li>
                 </c:if>
 
                 <c:if test="${maker.prev}">
                     <li class="page-item">
-                        <a class="page-link" href="/board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
+                        <a class="page-link" href="/acc-board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
                     </li>
                 </c:if>
 
                 <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
                     <li data-page-num="${i}" class="page-item">
-                        <a class="page-link" href="/board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
+                        <a class="page-link" href="/acc-board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
+
                     </li>
                 </c:forEach>
 
                 <c:if test="${maker.next}">
                     <li class="page-item">
-                        <a class="page-link" href="/board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
+                        <a class="page-link" href="/acc-board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
                     </li>
                 </c:if>
 
                 <c:if test="${maker.pageInfo.pageNo != maker.finalPage}">
                     <li class="page-item">
-                        <a class="page-link" href="/board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a>
+                        <a class="page-link" href="/acc-board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a>
                     </li>
                 </c:if>
 
@@ -275,20 +276,19 @@
         window.location.href = '/acc-board/write';
     };
 
-    <%--document.querySelector("[data-page-num='${maker.pageInfo.pageNo}']").classList.add('active');--%>
+    document.querySelector("[data-page-num='${maker.pageInfo.pageNo}']").classList.add('active');
 
-    <%--function appendActivePage () {--%>
-    <%--    const currentPage = ${maker.pageInfo.pageNo};--%>
-    <%--    const $li = document.querySelector(`li[data-page-num="\${currentPage}"]`);--%>
-    <%--    $li?.classList.add('active');--%>
-    <%--}--%>
+    function appendActivePage () {
+        const currentPage = ${maker.pageInfo.pageNo};
+        const $li = document.querySelector(`li[data-page-num="\${currentPage}"]`);
+        $li?.classList.add('active');
+    }
 
     // 기존 검색 조건 option태그 고정하기
     function fixSearchOption() {
 
         // 1. 어떤 조건을 검색했는지 값을 알아 옴
         const type = '${s.type}';
-        // console.log('type: ' + type)
 
         // 2. 해당 조건을 가진 option 태그를 검색
         const $option = document.querySelector(`#search-type option[value='\${type}']`);
@@ -298,7 +298,7 @@
 
     }
 
-    // appendActivePage();
+    appendActivePage();
     fixSearchOption();
 
 </script>

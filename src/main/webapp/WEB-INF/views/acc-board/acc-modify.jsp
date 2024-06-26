@@ -99,7 +99,7 @@
         <input type="date" id="endDate" name="endDate" value="${abm.endDate}" required>
 
         <div class="buttons">
-            <button class="list-btn" type="button" onclick="window.location.href='/acc-board/list'">목록</button>
+            <button class="list-btn" type="button" onclick="cancelModify(${abm.boardId})">취소</button>
             <button type="submit">수정하기</button>
         </div>
     </form>
@@ -107,6 +107,11 @@
 
 <script>
     CKEDITOR.replace('content');
+
+    // 취소버튼 클릭 시 돌아갈 url 주소
+    function cancelModify(boardId) {
+        window.location.href = '/acc-board/detail?bno=' + boardId;
+    }
 </script>
 
 </body>

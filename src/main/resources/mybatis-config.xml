@@ -22,6 +22,7 @@
         <typeAlias type="com.travel.project.entity.AccBoard" alias="accBoard" />
         <typeAlias type="com.travel.project.entity.testBoard" alias="testBoard" />
         <typeAlias type="com.travel.project.entity.NestedReply" alias="nestedReply" />
+        <typeAlias type="com.travel.project.entity.Like" alias="like" />
     </typeAliases>
 
     <!--  SQL을 적어놓은 ...Mapper.xml 파일들을 사용등록하는 영역  -->
@@ -34,7 +35,7 @@
         <mapper resource="mappers/TestMapper.xml"/>
         <mapper resource="mappers/NestedReplyMapper.xml"/>
         <mapper resource="mappers/UserDetailMapper.xml"/>
-
+        <mapper resource="mappers/LikeMapper.xml" />
     </mappers>
 
 </configuration>

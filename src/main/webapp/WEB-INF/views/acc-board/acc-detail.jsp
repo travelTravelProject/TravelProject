@@ -11,16 +11,6 @@
 </head>
 <body>
 
-<%--    <h2>${abd.title}</h2>--%>
-<%--    <p>${abd.content}</p>--%>
-<%--    <p>Writer: ${abd.writer}</p>--%>
-<%--    --%>
-<%--    <p>작성일자: ${abd.createdAt}</p>--%>
-<%--    <p>수정일자: ${abd.updatedAt}</p>--%>
-<%--    <p>동행시작일 : ${abd.startDate}</p>--%>
-<%--    <p>동행종료일: ${abd.endDate}</p>--%>
-<%--    <p>Views: ${abd.viewCount}</p>--%>
-
     <div id="wrap" class="form-container" data-bno="${abd.boardId}">
         <h1>${abd.boardId}번 게시물</h1>
         <h2># 작성일자: ${abd.createdAt}</h2>
@@ -40,7 +30,6 @@
             <div class="reaction-buttons">
                 <button id="like-btn">
                     <i class="fas fa-thumbs-up"></i> 좋아요
-<%--                    <span id="like-count">${abd.likeCount}</span>--%>
                 </button>
             </div>
 
@@ -49,7 +38,9 @@
             <button
                     class="list-btn"
                     type="button"
-                    onclick="window.location.href=${ref}"
+<%--                    onclick="window.location.href='/acc-board/list'"--%>
+                    onclick="window.location.href='${ref}'"
+
             >
                 목록
             </button>
@@ -57,20 +48,19 @@
     </div>
 
 
-    <script type="module" src="/assets/js/reply.js"></script>
+<%--    <script type="module" src="/assets/js/reply.js"></script>--%>
 
     <script>
 
+        <%--const userReaction = '${b.userReaction}';--%>
+        // updateReactionButtons(userReaction);
 
-        const userReaction = '${b.userReaction}';
-        updateReactionButtons(userReaction);
-
-        // 서버에 좋아요, 싫어요 요청을 보내는 함수
-        async function sendReaction(reactionType) {
-            console.log(reactionType);
+        // 서버에 좋아요 요청을 보내는 함수
+        async function sendLike() {
+            console.log();
 
             const bno = document.getElementById('wrap').dataset.bno;
-            const res = await fetch(`/board/\${reactionType}?bno=\${bno}`);
+            const res = await fetch(`/acc-board/like?bno=\${bno}`);
 
             if (res.status === 403) {
                 const msg = await res.text();
@@ -78,47 +68,32 @@
                 return;
             }
 
-            const { likeCount, dislikeCount, userReaction } = await res.json();
+            const { likeCount, userReaction } = await res.json();
+            const likeCountElement = document.getElementById('like-count');
+            if (likeCountElement) {
+                likeCountElement.textContent = likeCount;
+            }
 
-            document.getElementById('like-count').textContent = likeCount;
-            document.getElementById('dislike-count').textContent = dislikeCount;
-
-
-            // console.log(json);
             // 버튼 활성화 스타일 처리
             updateReactionButtons(userReaction);
         }
 
-        // 좋아요, 싫어요 버튼 배경색 변경
+        // 좋아요 버튼 배경색 변경
         function updateReactionButtons(userReaction) {
             const $likeBtn = document.getElementById('like-btn');
-            const $dislikeBtn = document.getElementById('dislike-btn');
 
             const ACTIVE = 'active';
             // 좋아요 버튼이 눌렸을 경우
             if(userReaction === 'LIKE') {
                 $likeBtn.classList.add(ACTIVE);
-                $dislikeBtn.classList.remove(ACTIVE);
-            } else if (userReaction === 'DISLIKE') { // 싫어요 버튼이 눌렸을 경우
+            } else { // 안눌렀을 경우
                 $likeBtn.classList.remove(ACTIVE);
-                $dislikeBtn.classList.add(ACTIVE);
-            } else { // 둘 다 안눌렀을 경우
-                $likeBtn.classList.remove(ACTIVE);
-                $dislikeBtn.classList.remove(ACTIVE);
             }
         }
 
         // 좋아요 클릭 이벤트
-        document.getElementById('like-btn').addEventListener('click', e => {
-            console.log('like!');
-            sendReaction('like');
-        });
+        document.getElementById('like-btn').addEventListener('click', sendLike);
 
-        // 싫어요 클릭 이벤트
-        document.getElementById('dislike-btn').addEventListener('click', e => {
-            console.log('dislike!');
-            sendReaction('dislike');
-        });
     </script>
 
 

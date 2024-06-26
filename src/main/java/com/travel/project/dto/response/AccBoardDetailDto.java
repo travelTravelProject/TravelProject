@@ -2,6 +2,7 @@ package com.travel.project.dto.response;
 
 import com.travel.project.entity.AccBoard;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.format.DateTimeFormatter;
 
@@ -17,6 +18,11 @@ public class AccBoardDetailDto {
     private String startDate;
     private String endDate;
     private int viewCount;
+
+    @Setter
+    private int likeCount; // 총 좋아요 수
+    @Setter
+    private String userReaction; // 현재 리액션 상태
 
     public AccBoardDetailDto(AccBoard ab) {
         this.boardId = ab.getBoardId();

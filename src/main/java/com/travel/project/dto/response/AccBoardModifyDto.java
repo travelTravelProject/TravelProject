@@ -23,6 +23,18 @@ public class AccBoardModifyDto {
     private String startDate;
     private String endDate;
 
+    public void setFromEntity(AccBoard ab) {
+        this.boardId = ab.getBoardId();
+        this.account = ab.getAccount();
+        this.categoryId = ab.getCategoryId();
+        this.title = ab.getTitle();
+        this.content = ab.getContent();
+        this.writer = ab.getWriter();
+        this.location = ab.getLocation();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.startDate = ab.getStartDate().format(formatter);
+        this.endDate = ab.getEndDate().format(formatter);
+    }
 
     public AccBoard toEntity() {
         AccBoard ab = new AccBoard();
