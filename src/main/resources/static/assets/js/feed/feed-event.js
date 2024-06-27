@@ -1,4 +1,10 @@
-import {dataToFormData, handleFileInputChange, imageFiles as importedImages, previewImages} from "../image.js";
+import {
+    clearImageFiles,
+    dataToFormData,
+    handleFileInputChange,
+    imageFiles as importedImages,
+    previewImages
+} from "../image.js";
 import {fetchFeedPost} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
 import {fetchFeedModify, setEditModal} from "./feed-modify.js";
@@ -38,13 +44,25 @@ export function initFeedFormEvents() {
 
 
         // 모달 닫기 버튼 처리
-        if (e.target.classList.contains("close")
-          || e.target === createModal
-          || e.target === editModal
-          || e.target === detailModal) {
-            createModal.style.display = "none";
-            editModal.style.display = "none";
-            detailModal.style.display = "none";
+        if (e.target.classList.contains("close")) {
+            const modal = e.target.closest('.modal');
+            const modalDetail = e.target.closest('.detail-modal');
+            if (modal) {
+                modal.style.display = "none";
+                clearImageFiles(); // 모달이 닫힐 때 imageFiles 초기화
+            } else if(modalDetail) {
+                modalDetail.style.display = "none";
+                clearImageFiles();
+            }
+
+        }
+
+        // 모달 백드롭 클릭 시 닫기 처리
+        if (e.target.matches('#createFeedModal') || e.target.matches('#editFeedModal') || e.target.matches('#detailFeedModal')) {
+            if (!e.target.closest('.modal-content') && !e.target.closest('.detail-modal-content')) {
+                e.target.style.display = "none";
+                clearImageFiles(); // 모달이 닫힐 때 imageFiles 초기화
+            }
         }
 
     });
