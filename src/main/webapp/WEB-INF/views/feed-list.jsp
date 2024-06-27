@@ -83,7 +83,7 @@
       <label for="cr-content">내용:</label>
       <input type="text" id="cr-content" name="content" required>
       <label for="postImage">이미지 업로드:</label>
-      <input type="file" id="postImage" name="postImage" accept="image/*" required>
+      <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
       <div class="dropbox" id="post-preview"></div>
       <button type="submit" id="feed-post-Btn">게시</button>
     </div>
@@ -93,16 +93,16 @@
 <!-- 피드 수정 모달 -->
 <div id="editFeedModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close close-modal">&times;</span>
     <div id="editFeedForm">
-      <label for="editNickname">닉네임:</label>
-      <input type="text" id="editNickname" name="nickname" required>
-      <label for="editContent">내용:</label>
-      <input type="text" id="editContent" name="nickname" required>
-      <label for="editPostImage">이미지 업로드:</label>
-      <input type="file" id="editPostImage" name="postImage" accept="image/*">
+      <label for="ed-nickname">닉네임</label>
+      <input type="text" id="ed-nickname" name="nickname" required>
+      <label for="ed-content">내용</label>
+      <input type="text" id="ed-content" name="nickname" required>
+      <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
+      <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
       <div class="dropbox" id="edit-preview"></div>
-      <button type="submit" id="feed-modify-Btn">수정 적용</button>
+      <button type="submit" id="feed-modify-Btn">수정 완료</button>
     </div>
   </div>
 </div>

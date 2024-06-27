@@ -11,6 +11,7 @@ export function previewImages(files, imageBox) {
       const imgTag = `
                 <div class="image-frame"> 
                     <img src="${e.target.result}" class="image-item" data-image-order="${index}" alt="preview image">
+                    <div class="delete-prev-image" data-image-order="${index}">x</div>
                 </div>
             `;
       imageBox.innerHTML += imgTag;
@@ -20,25 +21,50 @@ export function previewImages(files, imageBox) {
   });
 }
 
+// 기존 이미지를 파일로 변환하여 imageFiles에 추가하고 미리보기로 렌더링하는 함수
+export function addExistingImagesToPreview(images, imageBox) {
+  imageBox.innerHTML = ''; // 기존 미리보기 초기화
+  images.forEach((src, index) => {
+    fetch(src)
+        .then(res => res.blob())
+        .then(blob => {
+          const file = new File([blob], `image${index}.jpg`, { type: blob.type });
+          imageFiles.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const imgTag = `
+                <div class="image-frame"> 
+                    <img src="${e.target.result}" class="image-item" data-image-order="${index}" alt="preview image">
+                    <div class="delete-prev-image" data-image-order="${index}">x</div>
+                </div>
+            `;
+            imageBox.innerHTML += imgTag;
+          };
+          reader.readAsDataURL(file);
+        });
+  });
+  console.log('기존미리보기imageFiles: ', imageFiles)
+}
+
 // 이미지 input(e) 변경 시 미리보기 및 이미지 배열 생성
-export function handleFileInputChange(e, imageFiles, imageBox) {
+export function handleFileInputChange(e, imageList, imageBox) {
   console.log('image.js 타입: ', typeof e.target.files, ' / 출력: ', e.target.files)
   const newFiles = Array.from(e.target.files);
-  imageFiles.push(...newFiles);
-  console.log('image.js handle 이미지들 : ', imageFiles);
-  previewImages(imageFiles, imageBox);
+  imageList.push(...newFiles);
+  console.log('image.js handle 이미지들 : ', imageList);
+  previewImages(imageList, imageBox);
   e.target.value = '';
-  return imageFiles;
+  return imageList;
 }
 
 // 게시글 작성, 수정(이미지 포함) FormData에 담는 함수
 // data: FormData에 담아야 할 객체 (ex. title, content)
-export function dataToFormData(data, imageFiles) {
+export function dataToFormData(data, imageList) {
   const formData = new FormData();
   for (const key in data) {
     formData.append(key, data[key]);
   }
-  imageFiles.forEach((file, index) => {
+  imageList.forEach((file, index) => {
     formData.append(`images`, file);
     console.log(index, ' : ', file);
   });
