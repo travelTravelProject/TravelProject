@@ -101,7 +101,7 @@ const debouncedScrollHandler = debounce(async function(e) {
   // 스크롤이 최하단부로 내려갔을 때만 이벤트 발생시켜야 함
   // 현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
   if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight + 200
+    window.innerHeight + window.scrollY >= document.body.offsetHeight + 300
     && !isFetching
   ) {
     // console.log(e);
