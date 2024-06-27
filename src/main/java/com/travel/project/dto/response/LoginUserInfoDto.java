@@ -1,6 +1,6 @@
 package com.travel.project.dto.response;
 
-import com.travel.project.dto.request.UpdateProfileDto;
+//import com.travel.project.dto.request.UpdateProfileDto;
 import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 import com.travel.project.entity.UserDetail;
@@ -47,12 +47,11 @@ public class LoginUserInfoDto {
 
     }
 
-
-    public LoginUserInfoDto(UpdateProfileDto updatedUser) {
-        this.mbti = updatedUser.getMbti();
-        this.oneLiner = updatedUser.getOneLiner();
-        this.rating = updatedUser.getRating();
-        this.profileImage = updatedUser.getProfileImage();
+    public LoginUserInfoDto(UserDetail userDetail) {
+        this.mbti = userDetail.getMbti();
+        this.oneLiner = userDetail.getOneLiner();
+        this.rating = userDetail.getRating();
+        this.profileImage = userDetail.getProfileImage();
     }
 
 //    // 필요한 필드만 초기화하는 생성자

@@ -4,13 +4,15 @@ import com.travel.project.dto.FindIdResponseDto;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
 
+import com.travel.project.dto.request.UpdateProfileDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.login.LoginUtil;
-import com.travel.project.dto.request.UpdateProfileDto;
+//import com.travel.project.dto.request.UpdateProfileDto;
 import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 
 import com.travel.project.entity.UserDetail;
+import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
 import com.travel.project.service.LoginResult;
 
@@ -35,10 +37,13 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserMapper userMapper;
+    private final UserDetailMapper userDetailMapper;
+
     @Value("${file.upload.root-path}")
     private String rootPath;
 
     private final UserService userService;
+
 
     // 회원가입 양식 열기
     @GetMapping("/sign-up")
