@@ -41,5 +41,5 @@ export async function fetchFeedModify(boardId, payload) {
 
   const editModal = document.getElementById("editFeedModal");
   fetchFeedDetail(editModal.dataset.boardId);
-  // setDetailModal();
+  document.querySelector('#editFeedModal .close').click();
 }

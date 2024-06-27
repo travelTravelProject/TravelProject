@@ -145,3 +145,7 @@ export function setOneImgStyle() {
     hiddenTags.forEach(el => el.style.visibility="hidden");
   })
 }
+// imageFiles 배열을 초기화하는 함수
+export function clearImageFiles() {
+  imageFiles = [];
+}
