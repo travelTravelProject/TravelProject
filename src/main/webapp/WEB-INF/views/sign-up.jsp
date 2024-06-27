@@ -187,16 +187,15 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select
-                                            name="gender"
-                                            id="user_gender"
-                                            class="form-control tooltipstered"
-                                            required="required"
-                                            aria-required="true"
-                                    >
-                                        <option value="M">남성</option>
-                                        <option value="F">여성</option>
-                                    </select>
+                                    <label>
+                                        <input type="radio" name="gender" value="M" required ${user.gender == 'M' ? 'checked' : ''}>
+                                        남성
+                                    </label>
+                                    &nbsp;&nbsp;
+                                    <label>
+                                        <input type="radio" name="gender" value="F" required ${user.gender == 'F' ? 'checked' : ''}>
+                                        여성
+                                    </label>
                                 </td>
                             </tr>
                             <tr>

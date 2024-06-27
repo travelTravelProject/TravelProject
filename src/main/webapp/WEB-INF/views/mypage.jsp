@@ -50,12 +50,12 @@
                     <%--                </div>--%>
                     <%--                <div>--%>
                     <span>MBTI</span>
-                    <p>${user.mbti}ISFJ</p>
-                    <%--                </div>--%>
-                    <%--                <div>--%>
-                    <%--                    <span>00</span>--%>
-                    <%--                    <p>DAYS</p>--%>
-                    <%--                </div>--%>
+                    <p>${user.mbti}</p>
+                                    </div>
+                                    <div>
+                                        <span>00</span>
+                                        <p>DAYS</p>
+                                    </div>
                 </div>
 
             </div>
@@ -79,9 +79,9 @@
                 <img src="/assets/img/image-add.png" alt="프로필 이미지">
             </div>
             <div class="profile-info">
-                <h2>${user.mbti}키티</h2>
-                <p>30대 · 여자 · 한국</p>
-                <p>자기소개를 입력하고 마음에 맞는 동행을 구해보세요!</p>
+                <h2>${user.nickname}</h2>
+                <p>30대 · ${user.gender == 'F' ? '여자' : '남자'}</p>
+                <p>${user.oneLiner != null ? user.oneLiner : "자기소개를 입력하고 마음에 맞는 동행을 구해보세요!"}</p>
             </div>
 
         </section>
