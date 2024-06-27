@@ -22,7 +22,7 @@ body {
 }
 #feed-list {
     margin-top: 80px;
-    overflow: auto;
+    /*overflow: auto;*/
 }
 /*#feed-list {*/
 /*    margin-top: 80px;*/
