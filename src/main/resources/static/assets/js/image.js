@@ -48,7 +48,8 @@ export function dataToFormData(data, imageFiles) {
 // 캐러셀 템플릿에 추가
 function addToCarousel(tagBtn, tagImg, identifier) {
   return `
-  <div id="carousel${identifier}" class="carousel slide" data-bs-ride="carousel">
+<!--  <div id="carousel${identifier}" class="carousel slide" data-bs-ride="carousel">-->
+  <div id="carousel${identifier}" class="carousel slide" data-bs-interval="false">
     <div class="carousel-indicators carousel-one">
       ${tagBtn}
     </div>
