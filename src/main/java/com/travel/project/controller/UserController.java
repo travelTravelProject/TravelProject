@@ -17,6 +17,7 @@ import com.travel.project.mapper.UserMapper;
 import com.travel.project.service.LoginResult;
 
 import com.travel.project.service.UserService;
+import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -98,6 +99,14 @@ public class UserController {
 
         return "mypage";
     }
+
+    // 마이페이지에서 프로필 사진 등록
+//    @PostMapping("/mypage")
+//    public String mypage(@Validated LoginUserInfoDto dto, HttpSession session, Model model) {
+//        log.info("mypage POST : forwarding to mypage.jsp");
+//
+////        String uploadedFile = FileUtil.uploadFile(dto.getProfileImage());
+//    }
 
     // 마이페이지 프로필 수정페이지 열기
     @GetMapping("/mypage/update")

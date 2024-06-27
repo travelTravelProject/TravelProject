@@ -10,8 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class LocalResourceConfig implements WebMvcConfigurer {
 
-//    @Value("${file.upload.root-path}")
-//    private String rootPath;
+    @Value("${file.upload.root-path}")
+    private String rootPath;
 
     static String uploadPath = System.getProperty("user.dir") + "/src/main/resources/static/assets/upload/";
     static String imgPath = System.getProperty("user.dir") + "/src/main/resources/static/assets/img/";
