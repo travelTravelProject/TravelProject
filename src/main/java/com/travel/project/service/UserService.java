@@ -13,6 +13,7 @@ import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +33,13 @@ import static com.travel.project.service.LoginResult.*;
 @Slf4j
 public class UserService {
 
+    @Autowired
     private final UserMapper userMapper;
+    @Autowired
     private final UserDetailMapper userDetailMapper;
+    @Autowired
     private final PasswordEncoder encoder;
-//    private final UserService userService;
+
 
     // 회원가입 중간처리
     public boolean join(SignUpDto dto) {
@@ -67,6 +71,18 @@ public class UserService {
         userMapper.updateUser(dto);
         // Update tbl_user_detail
         userDetailMapper.updateUserDetail(dto);
+    }
+
+    @Transactional
+    public void saveOrUpdateUserDetail(UpdateProfileDto dto) {
+        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        if (existingDetail == null) {
+            // Insert new user detail
+            userDetailMapper.insertUserDetail(dto);
+        } else {
+            // Update existing user detail
+            userDetailMapper.updateUserDetail(dto);
+        }
     }
 
     // 사용자 상세 정보 조회

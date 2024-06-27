@@ -26,7 +26,7 @@
 
                 <label for="mbti">MBTI:</label>
                 <select id="mbti" name="mbti" required>
-                    <option value="" disabled selected>MBTI 선택</option>
+                    <option value="" disabled selected>MBTI 선택하세요.</option>
                     <option value="ISTJ" ${userDetail.mbti == 'ISTJ' ? 'selected' : ''}>ISTJ</option>
                     <option value="ISFJ" ${userDetail.mbti == 'ISFJ' ? 'selected' : ''}>ISFJ</option>
                     <option value="INFJ" ${userDetail.mbti == 'INFJ' ? 'selected' : ''}>INFJ</option>

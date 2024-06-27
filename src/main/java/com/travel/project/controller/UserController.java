@@ -130,6 +130,7 @@ public class UserController {
             return "redirect:/sign-in";
         }
 
+
         UpdateProfileDto updatedUser = UpdateProfileDto.builder()
                 .account(dto.getAccount())
                 .name(dto.getName())
@@ -139,9 +140,10 @@ public class UserController {
                 .mbti(dto.getMbti())
                 .rating(dto.getRating())
                 .build();
-
+//
         // 데이터베이스에 업데이트된 사용자 정보 저장
         userService.saveUpdateUser(updatedUser);
+        userService.saveOrUpdateUserDetail(updatedUser);
 
         // 세션의 기존 LoginUserInfoDto 객체 업데이트
         loginUser.setName(dto.getName());
@@ -150,7 +152,6 @@ public class UserController {
         loginUser.setMbti(dto.getMbti());
         loginUser.setOneLiner(dto.getOneLiner());
         loginUser.setRating(dto.getRating());
-
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);

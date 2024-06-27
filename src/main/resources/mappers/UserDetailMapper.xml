@@ -20,4 +20,9 @@
         WHERE account = #{account}
     </update>
 
+    <insert id="insertUserDetail" parameterType="com.travel.project.dto.request.UpdateProfileDto">
+        INSERT INTO tbl_user_detail (account, one_liner, mbti, rating)
+        VALUES (#{account}, #{oneLiner}, #{mbti}, #{rating})
+    </insert>
+
 </mapper>

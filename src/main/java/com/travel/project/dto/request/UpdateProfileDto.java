@@ -26,18 +26,18 @@ public class UpdateProfileDto {
     private int rating; // 평점
 
 
-//    public UpdateProfileDto(User user){
-//        this.account = user.getAccount();
-//        this.name = user.getName();
-//        this.nickname = user.getNickname();
-//        this.email = user.getEmail();
-//    }
-//
-//    public UpdateProfileDto(UserDetail userDetail){
-//        this.oneLiner = userDetail.getOneLiner();
-//        this.mbti = userDetail.getMbti();
-//        this.rating = userDetail.getRating();
-//    }
+    public UpdateProfileDto(User user){
+        this.account = user.getAccount();
+        this.name = user.getName();
+        this.nickname = user.getNickname();
+        this.email = user.getEmail();
+    }
+
+    public UpdateProfileDto(UserDetail userDetail){
+        this.oneLiner = userDetail.getOneLiner();
+        this.mbti = userDetail.getMbti();
+        this.rating = userDetail.getRating();
+    }
 
 
 }

@@ -83,15 +83,31 @@
     </select>
 
 
+<!--    <update id="updateUser" parameterType="com.travel.project.dto.request.UpdateProfileDto">-->
+<!--        UPDATE tbl_user-->
+<!--        <set>-->
+<!--            <if test="name != null">name = #{name},</if>-->
+<!--            <if test="email != null">email = #{email},</if>-->
+<!--            <if test="nickname != null">nickname = #{nickname}</if>-->
+<!--        </set>-->
+<!--        WHERE account = #{account}-->
+<!--    </update>-->
+
     <update id="updateUser" parameterType="com.travel.project.dto.request.UpdateProfileDto">
         UPDATE tbl_user
-        <set>
-            <if test="name != null">name = #{name},</if>
-            <if test="email != null">email = #{email},</if>
-            <if test="nickname != null">nickname = #{nickname}</if>
-        </set>
+        SET name = #{name},
+        email = #{email},
+        nickname = #{nickname}
         WHERE account = #{account}
     </update>
+
+<!--    <update id="updateUserDetail" parameterType="com.travel.project.dto.request.UpdateProfileDto">-->
+<!--        UPDATE tbl_user_detail-->
+<!--        SET one_liner = #{oneLiner},-->
+<!--        mbti = #{mbti},-->
+<!--        rating = #{rating}-->
+<!--        WHERE account = #{account}-->
+<!--    </update>-->
 
 
 
