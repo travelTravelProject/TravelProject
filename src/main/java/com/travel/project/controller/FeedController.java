@@ -102,14 +102,31 @@ public class FeedController {
 
     // 수정 - 수정한 내용을 JSON으로 받도록 수정해야 함
     @RequestMapping(value="/{boardId}", method= {RequestMethod.PUT, RequestMethod.PATCH})
-    public String updateFeed(
-            @RequestPart(value="requestDto") FeedModifyDto dto
-            , @RequestPart(value="file") MultipartFile file // 이미지
+    public ResponseEntity<?> updateFeed(
+            @PathVariable long boardId,
+            @RequestPart("content") String content,
+            @RequestPart("account") String account,
+            @RequestPart("images") List<MultipartFile> images
     ) {
 
+        FeedModifyDto dto = FeedModifyDto.builder()
+                .boardId(boardId)
+                .account(account)
+                .content(content)
+                .images(images)
+                .categoryId(2)
+                .build();
+        log.debug("피드수정 컨트롤러 req: {}", dto);
+
         boolean flag = feedService.updateFeed(dto);
-        if(flag) return "redirect:/feed/v1/"+ dto.getBoardId(); // 수정한 피드 상세조회
-        else return "error";
+        if(!flag) {
+            return ResponseEntity
+                    .internalServerError()
+                    .body("피드 등록 실패!");
+        }
+
+        return ResponseEntity
+                .ok().body(feedService.findById(boardId));
     }
 
     // 삭제 - boardId를 받아서 status D로 변경

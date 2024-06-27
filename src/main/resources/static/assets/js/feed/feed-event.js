@@ -1,10 +1,11 @@
-import {dataToFormData, handleFileInputChange, imageFiles} from "../image.js";
+import {dataToFormData, handleFileInputChange, imageFiles as importedImages, previewImages} from "../image.js";
 import {fetchFeedPost} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
-import {setEditModal} from "./feed-modify.js";
+import {fetchFeedModify, setEditModal} from "./feed-modify.js";
 
 export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
+    const $feedEditBtn = document.getElementById('feed-modify-Btn');
     const $imageInputPost = document.getElementById('postImage');
     const $imageInputEdit = document.getElementById('editPostImage');
     const $imageBoxPost = document.getElementById('post-preview');
@@ -25,7 +26,6 @@ export function initFeedFormEvents() {
             editModal.style.display = "block";
             const boardId = e.target.closest('.detail-modal').dataset.boardId;
             editModal.setAttribute("data-board-id", boardId );
-            // fetchFeedDetail(boardId, 'edit');
             setEditModal(); // 수정모달 초기값 렌더링
 
         } else if (e.target.classList.contains("show-detail")) {
@@ -33,7 +33,7 @@ export function initFeedFormEvents() {
             console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             detailModal.setAttribute("data-board-id", boardId);
-            fetchFeedDetail(boardId, 'detail');
+            fetchFeedDetail(boardId);
         }
 
 
@@ -46,15 +46,24 @@ export function initFeedFormEvents() {
             editModal.style.display = "none";
             detailModal.style.display = "none";
         }
+
     });
 
     // 이미지 input 변경 시 발생 이벤트
     $imageInputPost.addEventListener('change', e => {
-        imageFiles = handleFileInputChange(e, imageFiles, $imageBoxPost);
+        imageFiles = handleFileInputChange(e, importedImages, $imageBoxPost);
     });
     $imageInputEdit.addEventListener('change', e => {
         console.log("edit 모달 이벤트 실행!")
-        imageFiles = handleFileInputChange(e, imageFiles, $imageBoxEdit);
+        imageFiles = handleFileInputChange(e, importedImages, $imageBoxEdit);
+    });
+    // 미리보기 삭제 버튼 이벤트
+    document.getElementById('edit-preview').addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-prev-image')) {
+            const index = e.target.dataset.imageOrder;
+            imageFiles.splice(index, 1);
+            previewImages(imageFiles, document.getElementById('edit-preview'));
+        }
     });
 
     // 모달 작성 완료 버튼 클릭 시 이벤트
@@ -72,9 +81,9 @@ export function initFeedFormEvents() {
         // fetch payload에 담아서 POST 요청
         const data = {
             content: $createContent,
-            account: 'tester1',
+            account: 'tester1', // 로그인 계정 가져오기!!!
         }
-        const formData = dataToFormData(data, imageFiles);
+        const formData = dataToFormData(data, importedImages);
         const payload = {
             method: 'POST',
             body: formData
@@ -82,4 +91,19 @@ export function initFeedFormEvents() {
 
         await fetchFeedPost(payload);
     });
+    $feedEditBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const boardId = document.getElementById('editFeedModal').dataset.boardId;
+        const editContent = document.getElementById('ed-content').value;
+        const data = {
+            content: editContent,
+            account: 'tester1',
+        }
+        const formData = dataToFormData(data, importedImages);
+        const payload = {
+            method: 'PUT',
+            body: formData
+        }
+        await fetchFeedModify(boardId, payload);
+    })
 }
