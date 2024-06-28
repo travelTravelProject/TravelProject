@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/assets/css/feed-list.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -41,7 +42,7 @@
   </div>
 
   <div class="btn-container">
-    <button id="createFeedBtn">새 피드 작성</button>
+    <div id="createFeedBtn"> <i class="fas fa-pen"></i> </div>
 <%--    <button id="editFeedBtn">피드 수정</button>--%>
   </div>
 
@@ -56,7 +57,7 @@
         <span class="nickname">nickname123</span>
       </div>
       <div class="image-carousel">
-        <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">
+<%--        <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">--%>
         <!-- Add more images here for carousel -->
       </div>
       <div class="content-section">
@@ -74,7 +75,7 @@
 <!-- 피드 작성 모달 -->
 <div id="createFeedModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close close-modal">&times;</span>
     <div id="createFeedForm">
       <label for="cr-nickname">닉네임:</label>
       <input type="text" id="cr-nickname" name="nickname" required>
@@ -123,7 +124,7 @@
             <span class="created-at">createdAt</span>
           </div>
         </div>
-        <div class="profile-row">
+        <div class="profile-row row2">
           <button class="edit-feed detail-set-btn" id="editFeedBtn">수정</button>
           <button class="delete-feed detail-set-btn" id="deleteFeedBtn">삭제</button>
         </div>
@@ -148,9 +149,9 @@
 </div>
 <%-- 피드 상세조회 모달 끝 --%>
 <%-- 삭제 확인 모달 --%>
-<div id="deleteModal" class="confirm-modal">
+<div id="deleteFeedModal" class="confirm-modal">
   <div class="modal-content confirm">
-    <span class="close">&times;</span>
+    <span class="close close-modal">&times;</span>
     <p>정말 삭제하시겠습니까?</p>
     <div class="modal-buttons">
       <button id="confirmDeleteBtn" class="confirm-btn">삭제</button>

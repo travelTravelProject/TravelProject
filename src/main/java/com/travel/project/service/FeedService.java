@@ -177,7 +177,7 @@ public class FeedService {
     public FeedListDto deleteFeed(long boardId) {
 
         boolean flag = feedMapper.deleteFeed(boardId);
-
+        log.debug("피드서비스 삭제: {}", flag);
         return flag ? findAll(new Search(new Page(1, 5))) : null;
     }
 

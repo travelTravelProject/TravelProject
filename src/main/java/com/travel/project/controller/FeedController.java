@@ -135,7 +135,7 @@ public class FeedController {
     public ResponseEntity<?> delete(@PathVariable long boardId) {
 
         FeedListDto feeds = feedService.deleteFeed(boardId);
-
+        log.debug("컨트롤러 피드삭제 번호: {}", boardId);
         return ResponseEntity.ok().body(feeds); // list로 리다이렉트?
     }
 

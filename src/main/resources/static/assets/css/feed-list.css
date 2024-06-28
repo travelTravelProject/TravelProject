@@ -124,7 +124,7 @@ body {
 .modal-content {
     background-color: #fefefe;
     margin: 5% auto;
-    padding: 20px;
+    padding: 10px 20px 20px;
     border: 1px solid #888;
     width: 80%;
     max-width: 500px;
@@ -206,12 +206,17 @@ body div.btn-container {
     position: fixed;
     top: 60px;
     left: 70%;
-    width: 100%;
+    /*width: 100%;*/
+    color: #ffffff;
+    font-size: 1.5rem;
+    /*border: 1px solid violet;*/
+    text-align: center;
+    line-height: 50px;
+
     /*display: flex;*/
     /*flex-direction: row;*/
     /*justify-content: space-evenly;*/
 }
-
 /*body div.btn-container {*/
 /*    position: fixed;*/
 /*    top: 60px;*/
@@ -221,7 +226,11 @@ body div.btn-container {
 /*    justify-content: space-evenly;*/
 /*}*/
 .btn-container #createFeedBtn {
-    width: 150px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #4CAF50;
+    /*border: 1px solid red;*/
 }
 
 /* 모달 속 이미지 미리보기 */
@@ -278,6 +287,9 @@ body div.btn-container {
     border-radius: 10px;
     overflow: hidden;
 }
+.detail-modal-content span {
+    padding-right: 10px;
+}
 
 .feed-left-side {
     flex: 2;
@@ -326,6 +338,7 @@ body div.btn-container {
     flex-direction: row;
     justify-content: space-between;
     align-content: center;
+    padding: 5px;
 }
 .profile-column {
     display: flex;
@@ -334,7 +347,14 @@ body div.btn-container {
 .profile-row {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+}
+.feed-right-side .row2 {
+    width: 110px;
+}
+.feed-right-side .row2 button {
+    border-radius: 5px;
 }
 .feed-right-side .created-at {
     color: #aaaaaa;
@@ -369,8 +389,8 @@ body div.btn-container {
 .feed-container .carousel-item {
     width: 600px;
     height: 400px;
-    margin: 0 auto;
-    background-color: #aaaaaa;
+    /*margin: 0 auto;*/
+    /*background-color: #aaaaaa;*/
     overflow: hidden;
     position: relative;
 }
@@ -490,4 +510,22 @@ body div.btn-container {
     visibility: hidden;
     margin: 0 0 20px;
     padding: 0;
+}
+.confirm-modal {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.confirm-modal .confirm {
+
+}
+.modal-buttons {
+    display: flex;
+    flex-direction: row;
 }
