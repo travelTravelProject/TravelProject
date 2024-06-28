@@ -13,33 +13,35 @@
     <%@ include file="include/sub_header.jsp" %>
     <div class="login_wrap">
         <div class="login">
-            <form action="find-id" method="post">
+             <form action="/change-password" method="post">
                 <div class="input-container">
                     <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
+                    type="password" id="newPassword" name="newPassword" required
                     required
                     class="form-control tooltipstered" 
                     class="text-input" 
                     />
-                    <label for="name">이름</label>
+                    <label for="newPassword">새로운 비밀번호</label>
                 </div>
                 <div class="input-container">
                     <input 
-                    type="email" 
-                    id="email"
-                     name="email"
+                    type="password" id="confirmPassword" name="confirmPassword" required
                     required
                     class="form-control tooltipstered" 
                     class="text-input" 
                     />
-                    <label for="name">이메일</label>
+                    <label for="name">비밀번호 확인</label>
                 </div>
                 
                 <button type="submit" class="button"> 로그인하기</button>
 
-                
+                <div style="color:red;">
+                    ${error}
+                </div>
+                <div style="color:green;">
+                    ${message}
+                </div>
+            
 
             </form>
         </div>

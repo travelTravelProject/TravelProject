@@ -1,8 +1,14 @@
 import { validateInput } from "./validate.js";
 import { debounce } from "./util.js";
 
+
+
 const form = document.getElementById('signUpForm');
 const signupButton = document.getElementById('signup-btn');
+if (!signupButton) {
+    console.error('Signup button with id "signup-btn" not found.');
+}
+
 
 const fields = [
     { id: 'user_id', validator: validateInput.account, errorElement: 'idChk', valid: false},
@@ -24,7 +30,7 @@ const updateButtonState = () => {
         signupButton.style.backgroundColor = 'blue';
     } else {
         signupButton.disabled = true;
-        signupButton.style.backgroundColor = 'gray';
+        signupButton.style.backgroundColor = '#fff';
     }
 };
 

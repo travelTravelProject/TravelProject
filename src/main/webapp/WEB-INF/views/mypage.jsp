@@ -1,9 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="KO">
 <head>
+    <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8">
+
 
     <link rel="stylesheet" href="/assets/css/mypage.css">
 </head>
@@ -76,13 +78,10 @@
                 <button type="button" class="modify">프로필 수정</button>
             </div>
 
-    </div>
 
-
-
-
-
-<script type="module" src="/assets/js/myPage.js" defer></script>
 
 </body>
 </html>
+
+
+

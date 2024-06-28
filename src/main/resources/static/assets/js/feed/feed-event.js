@@ -1,11 +1,15 @@
 import {dataToFormData, handleFileInputChange, imageFiles} from "../image.js";
 import {fetchFeedPost} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
+import { fetchInfScrollReplies, state } from "../feed-reply/feed-getReply.js";
+import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
+import { isEditModeActive, fetchReplyModify } from "../feed-reply/feed-modifyReply.js";
 
 export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
     const $imageInput = document.getElementById('postImage');
     const $imageBox = document.querySelector('.dropbox');
+    const $replyAddBtn = document.getElementById('replyAddBtn'); // 댓글 등록 버튼
     let imageFiles = [];
 
     // 모달 및 모달 닫기 버튼 처리
@@ -28,6 +32,7 @@ export function initFeedFormEvents() {
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             detailModal.setAttribute("data-board-id", boardId);
             fetchFeedDetail(boardId);
+            fetchInfScrollReplies(1, true, boardId); // 모달이 열릴 때 댓글 fetch
         }
 
 
@@ -71,5 +76,16 @@ export function initFeedFormEvents() {
         };
 
         await fetchFeedPost(payload);
+    });
+
+    // 댓글 작성/수정 이벤트 등록 (POST)
+    $replyAddBtn.addEventListener('click', async e => {
+        if (isEditModeActive()) {
+          // 수정 모드일 때
+          await fetchReplyModify();
+        } else {
+          // 일반 모드일 때
+          await fetchReplyPost();
+        }
     });
 }

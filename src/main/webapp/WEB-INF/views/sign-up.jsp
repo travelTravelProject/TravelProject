@@ -3,225 +3,202 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8" />
     <title>WithTravel 회원 가입</title>
-    <link rel="stylesheet" href="/assets/css/user.css" />
+    <link rel="stylesheet" href="/assets/css/sing_up_yj.css">
 </head>
 <body>
-<div class="container wrap">
-    <div class="row">
-        <div class="offset-md-2 col-md-4">
-            <div class="card">
-                <div class="card-header text-white">
-                    <h2><span class="text-gray">WithTravel</span> 회원 가입</h2>
-                </div>
-                <div class="card-body">
-                    <form
-                            action="/sign-up"
-                            name="signup"
-                            id="signUpForm"
-                            method="post"
-                            enctype="multipart/form-data"
-                    >
-                        <table class="table">
-                            <tr>
-                                <td class="text-left">
-                                    <p>
-                                        <strong>아이디를 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
-                                        <span id="idChk"></span>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input
-                                            type="text"
-                                            name="account"
-                                            id="user_id"
-                                            class="form-control tooltipstered"
-                                            maxlength="14"
-                                            required="required"
-                                            aria-required="true"
-                                            placeholder="숫자와 영어로 4-14자"
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">
-                                    <p>
-                                        <strong>비밀번호를 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
-                                        <span id="pwChk"></span>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input
-                                            type="password"
-                                            size="17"
-                                            maxlength="20"
-                                            id="password"
-                                            name="password"
-                                            class="form-control tooltipstered"
-                                            required="required"
-                                            aria-required="true"
-                                            placeholder="영문과 특수문자를 포함한 최소 8자"
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">
-                                    <p>
-                                        <strong>비밀번호를 재확인해주세요.</strong>
-                                        <span id="pwChk2"></span>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input
-                                            type="password"
-                                            size="17"
-                                            maxlength="20"
-                                            id="password_check"
-                                            name="pw_check"
-                                            class="form-control tooltipstered"
-                                            required="required"
-                                            aria-required="true"
-                                            placeholder="비밀번호가 일치해야합니다."
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">
-                                    <p>
-                                        <strong>이름을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
-                                        <span id="nameChk"></span>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input
-                                            type="text"
-                                            name="name"
-                                            id="user_name"
-                                            class="form-control tooltipstered"
-                                            maxlength="6"
-                                            required="required"
-                                            aria-required="true"
-                                            placeholder="한글로 최대 6자"
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">
-                                    <p>
-                                        <strong>닉네임을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
-                                        <span id="nicknameChk"></span>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input
-                                            type="text"
-                                            name="nickname"
-                                            id="user_nickname"
-                                            class="form-control tooltipstered"
-                                            required="required"
-                                            aria-required="true"
-                                            placeholder="최대 8자"
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">
-                                    <p>
-                                        <strong>이메일을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
-                                        <span id="emailChk"></span>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input
-                                            type="email"
-                                            name="email"
-                                            id="user_email"
-                                            class="form-control tooltipstered"
-                                            required="required"
-                                            aria-required="true"
-                                            placeholder="ex) abc@mvc.com"
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">
-                                    <p>
-                                        <strong>생년월일을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
-                                        <span id="birthdayChk"></span>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input
-                                            type="date"
-                                            name="birthday"
-                                            id="user_birthday"
-                                            class="form-control tooltipstered"
-                                            required="required"
-                                            aria-required="true"
-                                            placeholder="ex) 2000-06-17"
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">
-                                    <p>
-                                        <strong>성별을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;
-                                        <span id="genderChk"></span>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>
-                                        <input type="radio" name="gender" value="M" required ${user.gender == 'M' ? 'checked' : ''}>
-                                        남성
-                                    </label>
-                                    &nbsp;&nbsp;
-                                    <label>
-                                        <input type="radio" name="gender" value="F" required ${user.gender == 'F' ? 'checked' : ''}>
-                                        여성
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <p>
-                                        <strong>회원가입하셔서 더 많은 서비스를 사용하세요!</strong>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center" colspan="2">
-                                    <input
-                                            type="submit"
-                                            value="회원가입"
-                                            class="btn form-control tooltipstered"
-                                            id="signup-btn"
-                                    />
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+    <%@ include file="include/sub_header.jsp" %>
+    <div class="sign_up_wrap">
+        <div class="sign_up">
+            <h3 style="text-align: center;">회원가입</h3>
+            <form
+                    action="/sign-up"
+                    name="signup"
+                    id="signUpForm"
+                    method="post"
+                    enctype="multipart/form-data"
+            >
+            <div class="sign_up_int_common_box">
+                <div class="input-container">
+                    <input 
+                    type="text" 
+                    name="account" 
+                    id="user_id"
+                    class="form-control tooltipstered" 
+                    required="required" 
+                    placeholder="최소 8자"
+                    class="text-input" 
+                    />
+                    <label for="id">
+                        아이디   
+                    </label>
+                    <p>
+                        <span id="idChk"></span>
+                    </p> 
                 </div>
             </div>
+            
+            <div class="sign_up_int_common_box">
+                <div class="input-container">
+                    <input 
+                    type="password"
+                    size="17"
+                    maxlength="20"
+                    id="password"
+                    name="password"
+                    class="form-control tooltipstered"
+                    required="required"
+                    aria-required="true"
+                    placeholder="영문과 특수문자를 포함한 최소 8자"
+                    />
+                    <label for="id">비밀번호</label>
+                    <p>
+                        <span id="pwChk"></span>
+                    </p> 
+                </div>
+            </div>
+            
+            <div class="sign_up_int_common_box">
+                <div class="input-container">
+                    <input 
+                    type="password"
+                    size="17"
+                    maxlength="20"
+                    id="password_check"
+                    name="pw_check"
+                    class="form-control tooltipstered"
+                    required="required"
+                    aria-required="true"
+                    placeholder="비밀번호가 일치해야합니다."
+                    />
+                    <label for="id">비밀번호 확인</label>
+                    <p>
+                        <span id="pwChk2"></span>
+                    </p> 
+                </div>
+            </div>
+            
+            <div class="sign_up_int_common_box">
+                <div class="input-container">
+                    <input 
+                    type="text"
+                    name="name"
+                    id="user_name"
+                    class="form-control tooltipstered"
+                    maxlength="6"
+                    required="required"
+                    aria-required="true"
+                    placeholder="한글로 최대 6자"
+                    />
+                    <label for="id">이름</label>
+                    <p>
+                        <span id="nameChk"></span>
+                    </p> 
+                </div>
+            </div>
+            
+            <div class="sign_up_int_common_box">
+                <div class="input-container">
+                    <input 
+                    type="text"
+                    name="nickname"
+                    id="user_nickname"
+                    class="form-control tooltipstered"
+                    required="required"
+                    aria-required="true"
+                    placeholder="최대 8자"
+                    />
+                    <label for="id">닉네임</label>
+                    <p>
+                        <span id="nicknameChk"></span>
+                    </p> 
+                </div>
+            </div>
+            
+            <div class="sign_up_int_common_box">
+                <div class="input-container">
+                    <input 
+                    type="email"
+                    name="email"
+                    id="user_email"
+                    class="form-control tooltipstered"
+                    required="required"
+                    aria-required="true"
+                    placeholder="ex) abc@mvc.com"
+                    />
+                    <label for="id">이메일</label>
+                    <p>
+                        <span id="emailChk"></span>
+                    </p> 
+                </div>
+            </div>
+            
+            <div class="birth_gender">
+                <div class="birth_box">
+                    <label class="birth_title" for="">생년월일</label>
+                    <input
+                            type="date"
+                            name="birthday"
+                            id="user_birthday"
+                            class="form-control tooltipstered"
+                            required="required"
+                            aria-required="true"
+                            placeholder="ex) 2000-06-17"
+                    />
+                    <p>
+                        <span id="birthdayChk"></span>
+                    </p> 
+                </div>
+                <div>
+                    <label class="gender_title" for="">성별</label>
+                    <p>
+                        <span id="genderChk"></span>
+                    </p> 
+                    <div class="gender_box">
+                        <div class="Radio">
+                          <input 
+                            value="M" 
+                            type="radio" 
+                            name="gender"
+                            id="Radio1" 
+                            required="required"
+                            aria-required="true"
+                           />
+                          <label for="Radio1">남성</label>
+                        </div>
+                        <div class="Radio">
+                          <input 
+                            value="F" 
+                            type="radio" 
+                            name="gender" 
+                            id="Radio2" 
+                            required="required"
+                            aria-required="true"
+                          />
+                          <label for="Radio2">여성</label>
+                        </div>
+                      </div>
+                      
+                </div>
+            </div>
+            
+            <button 
+                type="submit"
+                value="회원가입"
+                class="btn form-control tooltipstered button"
+                id="signup-btn"
+                > 로그인하기
+            </button>
+
+            </form>
         </div>
     </div>
-</div>
-<script type="module" src="/assets/js/signUp.js" defer></script>
+
+
+
+
+    <script type="module" src="/assets/js/signUp.js" defer></script>
 </body>
 </html>

@@ -32,12 +32,21 @@ public interface UserMapper {
     // 세션아이디로 회원정보 조회
     User findMemberBySessionId(String sessionId);
 
+
     // 프로필 수정 업데이트
     void updateUser(UpdateProfileDto dto);
 //    void updateUserDetail(UpdateProfileDto dto);
 
+
     // 이름과 이메일로 사용자 아이디 조회
     User findIdByNameAndEmail(@Param("name") String name,
                               @Param("email") String email);
+
+
+    User findByAccountAndNameAndEmail(@Param("account") String account, @Param("name") String name, @Param("email") String email);
+
+    User findByAccount(@Param("account") String account);
+
+    boolean updatePassword(User user);
 
 }
