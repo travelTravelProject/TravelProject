@@ -66,9 +66,9 @@
         <span>너무 더워</span>
       </div>
       <div class="interaction-section">
-        <span class="comments">💬 10</span>
-        <span class="hearts">❤️ 25</span>
-        <span class="bookmarks">🔖 5</span>
+        <span class="comments"><ion-icon name="chatbubble-outline"></ion-icon> 10</span>
+        <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>
+        <span class="bookmarks"><ion-icon name="bookmark-outline"></ion-icon> 5</span>
       </div>
     </div>
   </div>
@@ -288,10 +288,15 @@
 
 
 <%-- 스크립트 --%>
-<script type="module" src="/assets/js/feed-list.js"></script>
+<%-- 부트스트랩, 스크롤매직--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<%-- 아이콘 --%>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<%--<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>--%>
+<%-- 스크립트 모듈 --%>
+<script type="module" src="/assets/js/feed-list.js"></script>
 <script type="module" src="/assets/js/feed-reply.js"></script>
 </body>
 </html>
