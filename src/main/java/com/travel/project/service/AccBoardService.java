@@ -7,10 +7,12 @@ import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
 import com.travel.project.dto.response.AccBoardModifyDto;
 import com.travel.project.entity.AccBoard;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.AccBoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,9 +32,10 @@ public class AccBoardService {
     }
 
     // 등록 요청 중간처리
-    public boolean insert(AccBoardWriteDto dto) {
-
+    public boolean insert(AccBoardWriteDto dto, HttpSession session) {
         AccBoard ab = dto.toEntity();
+        // 계정명을 엔터티에 추가 - 세션에서 계정명 가져오기
+        ab.setAccount(LoginUtil.getLoggedInUserAccount(session));
         return accBoardMapper.save(ab);
     }
 

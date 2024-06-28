@@ -7,9 +7,14 @@ import {
 } from "../image.js";
 import {fetchFeedPost} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
+
 import {fetchFeedModify, setEditModal} from "./feed-modify.js";
 import {fetchFeedList} from "./feed-getList.js";
 import {fetchFeedDelete} from "./feed-delete.js";
+
+import { fetchInfScrollReplies, state } from "../feed-reply/feed-getReply.js";
+import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
+import { isEditModeActive, fetchReplyModify } from "../feed-reply/feed-modifyReply.js";
 
 export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
@@ -19,6 +24,8 @@ export function initFeedFormEvents() {
     const $imageInputEdit = document.getElementById('editPostImage');
     const $imageBoxPost = document.getElementById('post-preview');
     const $imageBoxEdit = document.getElementById('edit-preview');
+    const $replyAddBtn = document.getElementById('replyAddBtn'); // 댓글 등록 버튼
+
     let imageFiles = [];
 
     const createModal = document.getElementById("createFeedModal");
@@ -39,7 +46,8 @@ export function initFeedFormEvents() {
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             detailModal.setAttribute("data-board-id", boardId);
             fetchFeedDetail(boardId);
-
+            fetchInfScrollReplies(1, true, boardId); // 모달이 열릴 때 댓글 fetch
+          
         } else if (e.target.id === "editFeedBtn") { // 디테일 모달의 수정 버튼
             editModal.style.display = "block";
             const boardId = e.target.closest('.detail-modal').dataset.boardId;
@@ -50,7 +58,6 @@ export function initFeedFormEvents() {
             deleteModal.style.display = "block";
             const boardId = e.target.closest('.detail-modal').dataset.boardId;
             deleteModal.setAttribute("data-board-id", boardId);
-
         }
 
 
@@ -127,6 +134,7 @@ export function initFeedFormEvents() {
 
         await fetchFeedPost(payload);
     });
+
     // 모달 수정 완료 버튼
     $feedEditBtn.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -159,5 +167,15 @@ export function initFeedFormEvents() {
 
     })
 
+    // 댓글 작성/수정 이벤트 등록 (POST)
+    $replyAddBtn.addEventListener('click', async e => {
+        if (isEditModeActive()) {
+          // 수정 모드일 때
+          await fetchReplyModify();
+        } else {
+          // 일반 모드일 때
+          await fetchReplyPost();
+        }
+    });
 
 }

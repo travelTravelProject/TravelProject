@@ -11,6 +11,8 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static com.travel.project.entity.Auth.*;
+
 @Setter @Getter @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -55,7 +57,7 @@ public class SignUpDto {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .status(STATUS.A) // 기본값 설정
-                .auth(Auth.COMMON) // 기본값 설정
+                .auth(Auth.common) // 기본값 설정
                 .build();
     }
 

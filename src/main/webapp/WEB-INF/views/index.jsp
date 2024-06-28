@@ -3,34 +3,46 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>WithTravel</title>
+    
+    <%@ include file="include/static-head.jsp" %>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Page Scroll with Navigation Dots</title>
 </head>
 <body>
+    
+    <%@ include file="include/header.jsp" %>
 
-<h1>index</h1>
-<h3>웨르컴 <span style="font-size: 40px; color: #000;">${user.nickname}</span></h3>
-<%--<h4>${user.foundMember}</h4>--%>
+    <div class="section" id="section1">
+        <video autoplay muted loop id="background-video">
+            <source src="/assets/img/video1.mp4" type="video/mp4">
+        </video>
+        <h1>
+            "모험이 당신을 기다립니다 - 지금 떠나보세요!"
+        </h1>
+    </div>
+    <div class="section" id="section2">
+        <h1>Section 2</h1>
+    </div>
+    <div class="section" id="section3">
+        <h1>Section 3</h1>
+    </div>
+    <div class="section" id="section4">
+        <h1>Section 4</h1>
+    </div>
+    <div class="nav-dots">
+        <span class="dot" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+        <span class="dot" data-index="3"></span>
+    </div>
 
-<ul>
-    <li><a href="/">메인홈</a></li>
-
-    <c:if test="${user == null}">
-        <li><a href="/sign-in">로그인</a></li>
-        <li><a href="/sign-up">회원가입</a></li>
-        <li><a href="/find-id">아이디 찾기</a></li>
-        <li><a href="/find-pw">비밀번호 찾기? 변경?</a></li>
-    </c:if>
-    <c:if test="${user != null}">
-        <li><a href="/sign-out">로그아웃</a></li>
-        <li><a href="/mypage">마이페이지</a></li>
-    </c:if>
-</ul>
 
 
+
+
+
+    <script src="/assets/js/index.js"></script>
 </body>
 </html>

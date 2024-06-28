@@ -1,7 +1,9 @@
 package com.travel.project.intercertor;
 
 import com.travel.project.entity.User;
+import com.travel.project.entity.UserDetail;
 import com.travel.project.login.LoginUtil;
+import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
 import com.travel.project.service.UserService;
 import lombok.RequiredArgsConstructor;

@@ -307,15 +307,48 @@ VALUES
     (5, 'tester2', '대댓글 - 글번호 5 by user 2', 9),
     (6, 'tester2', '대댓글 - 글번호 6 by user 2', 12);
 
+# CREATE TABLE `tbl_board`
+# (
+#     `board_id`    INT             NOT NULL AUTO_INCREMENT,
+#     `account`     VARCHAR(20)     NOT NULL,
+#     `category_id` INT             NOT NULL,
+#     `title`       VARCHAR(100)    NULL,
+#     `content`     TEXT            NULL,
+#     `writer`      VARCHAR(30)     NOT NULL,
+#     `view_count`  INT             NULL     DEFAULT 0,
+#     `created_at`  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+#     `updated_at`  TIMESTAMP       NULL     DEFAULT CURRENT_TIMESTAMP,
+#     `status`      ENUM ('A', 'D') NULL     DEFAULT 'A',
+#     `location`    VARCHAR(255)    NULL,
+#     `start_date`  DATE            NULL,
+#     `end_date`    DATE            NULL,
+#     PRIMARY KEY (`board_id`),
+#     FOREIGN KEY (`account`) REFERENCES `tbl_user` (`account`),
+#     FOREIGN KEY (`category_id`) REFERENCES `tbl_category` (`category_id`)
+# );
+
+
 -- user detail 데이터 추가
 INSERT INTO tbl_user_detail (mbti, one_liner, rating, account)
 VALUES ('ISFJ', '테스트테스트', 50, 'kitty');
 
 SELECT * FROM tbl_user;
 SELECT * FROM tbl_user_detail;
+SELECT * FROM tbl_board;
 
 DELETE FROM tbl_user
 WHERE account = 'hahahoho';
 
 ALTER TABLE tbl_user
 ADD (profile_image VARCHAR(200));
+
+-- 자동 로그인 관련 컬럼 추가
+-- 쿠키에 저장한 값, 자동로그인 만료시간
+alter table tbl_user
+    add (session_id varchar(255) default 'none');
+
+ALTER TABLE tbl_user
+    ADD (limit_time DATETIME default current_timestamp);
+
+ALTER TABLE tbl_board
+ADD (writer VARCHAR(30));
