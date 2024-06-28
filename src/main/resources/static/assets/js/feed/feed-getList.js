@@ -23,7 +23,7 @@ function appendFeeds({ feeds, pageInfo }) {
          , profileImage: profile, feedImageList}) => {
 
       tag += `
-        <div class="feed-item scroll-spy animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
+        <div class="feed-item animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
         <!-- <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>-->
           <div class="profile-section">
             <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">

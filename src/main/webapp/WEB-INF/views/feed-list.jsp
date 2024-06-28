@@ -263,11 +263,11 @@
       <div class="spinner-border text-light" role="status">
           <span class="visually-hidden">Loading...</span>
       </div>  
-      </div>
-
-
     </div>
     <span class="close">&times;</span>
+
+    </div>
+
   </div>
 </div>
 <%-- 피드 상세조회 모달 끝 --%>
