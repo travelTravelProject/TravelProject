@@ -26,7 +26,7 @@ public class ReplyController {
     // @PathVariable : URL에 있는 변수값을 읽어줌
     @GetMapping("/{boardId}/page/{pageNo}")
     public ResponseEntity<?> list(
-            @PathVariable long boardId
+            @PathVariable long boardId 
             , @PathVariable int pageNo
     ) {
 
