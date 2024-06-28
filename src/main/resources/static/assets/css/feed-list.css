@@ -19,7 +19,8 @@ body {
     margin: 0 auto;
     background: #fafafa;
     z-index: 1;
-    display: block;
+    display: none;
+    /*display: block;*/
     border: 1px solid blue;
 }
 #feed-list {
@@ -194,7 +195,9 @@ body div.top-section form input {
     /*width: 50%;*/
     margin: 5px 20px;
 }
-
+.top-section {
+    display: none;
+}
 #search-type {
     width: 100px;
     height: 80%;
@@ -206,32 +209,22 @@ form .btn.btn-primary {
 /* 피드 작성 버튼 */
 body div.btn-container {
     position: fixed;
-    top: 60px;
-    left: 70%;
+    bottom: 60px;
+    left: 75%;
     /*width: 100%;*/
     color: #ffffff;
-    font-size: 1.5rem;
     /*border: 1px solid violet;*/
     text-align: center;
     line-height: 50px;
-
-    /*display: flex;*/
-    /*flex-direction: row;*/
-    /*justify-content: space-evenly;*/
+    z-index: 10;
 }
-/*body div.btn-container {*/
-/*    position: fixed;*/
-/*    top: 60px;*/
-/*    width: 60%;*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: space-evenly;*/
-/*}*/
+
 .btn-container #createFeedBtn {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: #4CAF50;
+    font-size: 1.7rem;
     /*border: 1px solid red;*/
     cursor: pointer;
     box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);

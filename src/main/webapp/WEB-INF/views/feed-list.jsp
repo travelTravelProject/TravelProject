@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Web Study</title>
+    <%@ include file="include/static-head.jsp" %>
   <link rel="stylesheet" href="/assets/css/feed-list.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,38 +16,39 @@
 <%--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">--%>
 </head>
 <body>
-
+<%@ include file="include/sub_header.jsp" %>
 <section id="feed-header">
   <div class="top-section">
     <!-- 검색창 영역 -->
-    <div class="search">
-      <form action="/feed/list" method="get">
+<%--    <div class="search">--%>
+<%--      <form action="/feed/list" method="get">--%>
 
-        <select class="form-select" name="type" id="search-type">
+<%--        <select class="form-select" name="type" id="search-type">--%>
 
-          <option value="content">내용</option>
-          <option value="writer">작성자</option>
-          <option value="cw">내용+작성자</option>
-        </select>
+<%--          <option value="content">내용</option>--%>
+<%--          <option value="writer">작성자</option>--%>
+<%--          <option value="cw">내용+작성자</option>--%>
+<%--        </select>--%>
 
-        <input type="text" class="form-control" name="keyword" value="${s.keyword}">
+<%--        <input type="text" class="form-control" name="keyword" value="${s.keyword}">--%>
 
-        <button class="btn btn-primary" type="submit">
-  <%--        <i class="fas fa-search"></i>--%>
-          검색
-        </button>
+<%--        <button class="btn btn-primary" type="submit">--%>
+<%--  &lt;%&ndash;        <i class="fas fa-search"></i>&ndash;%&gt;--%>
+<%--          검색--%>
+<%--        </button>--%>
 
-      </form>
-    </div>
+<%--      </form>--%>
+<%--    </div>--%>
 
   </div>
 
-  <div class="btn-container">
-    <div id="createFeedBtn"> <i class="fas fa-pen"></i> </div>
-<%--    <button id="editFeedBtn">피드 수정</button>--%>
-  </div>
+
 
 </section>
+<div class="btn-container">
+    <div id="createFeedBtn"> <i class="fas fa-pen"></i> </div>
+    <%--    <button id="editFeedBtn">피드 수정</button>--%>
+</div>
 <%-- 피드 헤더 끝 --%>
 <%-- 피드 목록 시작 --%>
 <section id="feed-list">
