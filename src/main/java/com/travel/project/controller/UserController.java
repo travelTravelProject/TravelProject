@@ -41,10 +41,17 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserMapper userMapper;
-    private final UserDetailMapper userDetailMapper;
 
     @Value("${file.upload.root-path}")
     private String rootPath;
+
+//     static String rootPath = System.getProperty("user.dir")
+//             + "/src/main/resources/static/assets/upload";
+
+    private final UserDetailMapper userDetailMapper;
+
+
+
 
     private final UserService userService;
 

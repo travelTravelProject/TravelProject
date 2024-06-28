@@ -6,11 +6,13 @@
     <meta charset="UTF-8">
     <title>Web Study</title>
   <link rel="stylesheet" href="/assets/css/feed-list.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <%--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">--%>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
 </head>
 <body>
 
@@ -40,7 +42,7 @@
   </div>
 
   <div class="btn-container">
-    <button id="createFeedBtn">새 피드 작성</button>
+    <div id="createFeedBtn"> <i class="fas fa-pen"></i> </div>
 <%--    <button id="editFeedBtn">피드 수정</button>--%>
   </div>
 
@@ -55,7 +57,7 @@
         <span class="nickname">nickname123</span>
       </div>
       <div class="image-carousel">
-        <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">
+<%--        <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">--%>
         <!-- Add more images here for carousel -->
       </div>
       <div class="content-section">
@@ -73,15 +75,15 @@
 <!-- 피드 작성 모달 -->
 <div id="createFeedModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close close-modal">&times;</span>
     <div id="createFeedForm">
       <label for="cr-nickname">닉네임:</label>
       <input type="text" id="cr-nickname" name="nickname" required>
       <label for="cr-content">내용:</label>
       <input type="text" id="cr-content" name="content" required>
       <label for="postImage">이미지 업로드:</label>
-      <input type="file" id="postImage" name="postImage" accept="image/*" required>
-      <div class="dropbox"></div>
+      <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
+      <div class="dropbox" id="post-preview"></div>
       <button type="submit" id="feed-post-Btn">게시</button>
     </div>
   </div>
@@ -90,15 +92,16 @@
 <!-- 피드 수정 모달 -->
 <div id="editFeedModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close close-modal">&times;</span>
     <div id="editFeedForm">
-      <label for="editNickname">닉네임:</label>
-      <input type="text" id="editNickname" name="nickname" required>
-      <label for="editContent">내용:</label>
-      <input type="text" id="editContent" name="nickname" required>
-      <label for="editPostImage">이미지 업로드:</label>
-      <input type="file" id="editPostImage" name="postImage" accept="image/*">
-      <button type="submit" id="feed-modify-Btn">수정 적용</button>
+      <label for="ed-nickname">닉네임</label>
+      <input type="text" id="ed-nickname" name="nickname" required>
+      <label for="ed-content">내용</label>
+      <input type="text" id="ed-content" name="nickname" required>
+      <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
+      <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
+      <div class="dropbox" id="edit-preview"></div>
+      <button type="submit" id="feed-modify-Btn">수정 완료</button>
     </div>
   </div>
 </div>
@@ -121,7 +124,7 @@
             <span class="created-at">createdAt</span>
           </div>
         </div>
-        <div class="profile-row">
+        <div class="profile-row row2">
           <button class="edit-feed detail-set-btn" id="editFeedBtn">수정</button>
           <button class="delete-feed detail-set-btn" id="deleteFeedBtn">삭제</button>
         </div>
@@ -268,9 +271,25 @@
   </div>
 </div>
 <%-- 피드 상세조회 모달 끝 --%>
+<%-- 삭제 확인 모달 --%>
+<div id="deleteFeedModal" class="confirm-modal">
+  <div class="modal-content confirm">
+    <span class="close close-modal">&times;</span>
+    <p>정말 삭제하시겠습니까?</p>
+    <div class="modal-buttons">
+      <button id="confirmDeleteBtn" class="confirm-btn">삭제</button>
+      <button id="cancelDeleteBtn" class="cancel-btn">취소</button>
+    </div>
+  </div>
+</div>
+<%-- 삭제 확인 모달 끝 --%>
+
 
 <%-- 스크립트 --%>
 <script type="module" src="/assets/js/feed-list.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script type="module" src="/assets/js/feed-reply.js"></script>
 </body>
 </html>

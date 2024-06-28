@@ -80,13 +80,6 @@
         )
     </insert>
 
-    <select id="findAllImage" resultType="boardImage">
-        SELECT *
-        FROM tbl_board_image
-        WHERE board_id = #{boardId}
-        ORDER BY order
-    </select>
-
     <update id="modifyFeed">
         UPDATE tbl_board
         SET content = #{content}

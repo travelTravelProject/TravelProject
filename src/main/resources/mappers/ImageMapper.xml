@@ -28,13 +28,7 @@
 
     <delete id="deleteImagesByBoardId">
         DELETE FROM tbl_board_image
-        WHERE image_id IN (
-            SELECT image_id
-            from (
-                SELECT * FROM tbl_board_image
-                WHERE board_id = #{board_id}
-            ) AS Result
-        )
+        WHERE board_id = #{board_id}
     </delete>
 
 </mapper>
