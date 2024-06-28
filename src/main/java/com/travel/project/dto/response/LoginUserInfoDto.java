@@ -54,11 +54,4 @@ public class LoginUserInfoDto {
         this.profileImage = userDetail.getProfileImage();
     }
 
-//    // 필요한 필드만 초기화하는 생성자
-//    public LoginUserInfoDto(String account, String name, String nickname, String email) {
-//        this.account = account;
-//        this.name = name;
-//        this.nickname = nickname;
-//        this.email = email;
-//    }
 }

@@ -119,7 +119,15 @@ public class UserController {
             return "redirect:/sign-in";
         }
 
+        // 사용자 계정 정보를 기반으로 UserDetail 객체 가져오기
+        UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
+        System.out.println("userDetail = " + userDetail);
+
         model.addAttribute("user", user);
+        model.addAttribute("userDetail", userDetail);
+        System.out.println("user = " + user);
+
+
         return "mypage-update";
     }
 
@@ -160,6 +168,7 @@ public class UserController {
         loginUser.setMbti(dto.getMbti());
         loginUser.setOneLiner(dto.getOneLiner());
         loginUser.setRating(dto.getRating());
+        log.debug("마이페이지 POST: loginUser = " + loginUser);
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
