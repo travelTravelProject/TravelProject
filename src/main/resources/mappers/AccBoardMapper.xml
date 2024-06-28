@@ -45,7 +45,8 @@
         FROM tbl_board B
         LEFT OUTER JOIN tbl_reply R
         ON B.board_id = R.board_id
-        WHERE status = 'A'
+        WHERE B.status = 'A'
+            AND B.category_id = '1'
         <include refid="search" />
         GROUP BY B.board_id
         ORDER BY B.board_id DESC

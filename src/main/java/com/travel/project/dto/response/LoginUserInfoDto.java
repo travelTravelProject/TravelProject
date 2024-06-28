@@ -34,6 +34,7 @@ public class LoginUserInfoDto {
     private int rating; // 평점
 
 
+
     //생성자
     public LoginUserInfoDto(User user){
         this.account = user.getAccount();

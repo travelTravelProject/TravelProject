@@ -1,6 +1,7 @@
 package com.travel.project.config;
 
 
+import com.travel.project.intercertor.AccBoardInterceptor;
 import com.travel.project.intercertor.AfterLoginInterceptor;
 import com.travel.project.intercertor.AutoLoginInterceptor;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     private final AutoLoginInterceptor autoLoginInterceptor;
     private final AfterLoginInterceptor afterLoginInterceptor;
+    private final AccBoardInterceptor accBoardInterceptor;
 
     // 설정 메서드
     @Override
@@ -26,6 +28,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/sign-up", "/sign-in") // /sign-up", "/sign-in" 에 대해서 동작을 시키겠다
         ;
 
+        // 게시판 인터셉터
+        registry
+                .addInterceptor(accBoardInterceptor)
+                .addPathPatterns("/acc-board/write", "/acc-board/modify", "/acc-board/delete");
 
 
         // 자동로그인 인터셉터 등록

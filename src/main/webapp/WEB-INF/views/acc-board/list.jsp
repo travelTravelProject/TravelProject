@@ -4,181 +4,243 @@
 <html lang="ko">
 <head>
 
-    <%@ include file="../include/static-head.jsp" %>
+    <!-- reset -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
-    <link rel="stylesheet" href="/assets/css/list.css">
+    <!-- fontawesome css: https://fontawesome.com -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 
+    <!-- https://linearicons.com/free#cdn -->
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+
+    <title>동행 모집</title>
     <style>
-        .card-container .card .card-title-wrapper .time-view-wrapper>div.hit {
-            background: yellow;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
         }
-        .card-container .card .card-title-wrapper .time-view-wrapper>div.new {
-            background: red;
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .wrap {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px 20px 60px 20px;
+            background-color: #fff;
+        }
+        .search input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .card-wrapper {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        .card-post {
+            display: flex;
+            width: 100%;
+        }
+        .card-content-wrapper {
+            flex: 1;
+        }
+        .card-details-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .card-text {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            margin-right: 20px;
+        }
+        .card-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .card-content {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .card-img {
+            width: 100px;
+            height: 100px;
+            flex-shrink: 0;
+            background-color: #00CE7B;
+            border-radius: 10px;
+        }
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .card-details-bot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+        .card-details-bot .view-count {
+            margin-left: auto;
+        }
+        .add-btn-box {
+            width: 60%;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            padding: 10px 20px;
+        }
+        .add-btn {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #00CE7B;
             color: white;
+            text-decoration: none;
+            border-radius: 10px;
         }
-    </style>
+        .add-btn:hover {
+            color: #fff;
+        }
+        .filters {
+            margin-bottom: 20px;
+        }
+        .filters button {
+            margin-right: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .filters button:hover {
+            background-color: #e0e0e0;
+        }
+        .paging {
+            display: flex;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        .paging nav {
+            flex: 1;
+            justify-content: center;
+        }
+        .pagination-custom .page-link {
+            /*color: #00CE7B;*/
+            color: #000;
+        }
 
+    </style>
 </head>
 <body>
-
-<%--<%@ include file="../include/header.jsp" %>--%>
-
-<div id="wrap">
-
-    <div class="main-title-wrapper">
-        <h1 class="main-title">동행 게시판</h1>
-        <button class="add-btn">글 쓰기</button>
+<div class="wrap">
+    <%--  검색창 영역  --%>
+    <div class="search">
+        <input type="text" placeholder="동행을 찾아보세요." >
     </div>
 
-
-    <div class="top-section">
-        <!-- 검색창 영역 -->
-        <div class="search">
-            <form action="/acc-board/list" method="get">
-
-                <select class="form-select" name="type" id="search-type">
-                    <option value="title">제목</option>
-                    <option value="content">내용</option>
-                    <option value="writer">작성자</option>
-                    <option value="tc">제목+내용</option>
-                </select>
-
-                <input type="text" class="form-control" name="keyword" value="${s.keyword}">
-
-                <button class="btn btn-primary" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-
-            </form>
-        </div>
-
-        <div class="amount">
-            <div><a href="#">6</a></div>
-            <div><a href="#">18</a></div>
-            <div><a href="#">30</a></div>
-        </div>
+    <div class="filters">
+        <button>날짜</button>
+        <button>나이/성별</button>
+        <button>유형</button>
     </div>
 
-    <div class="card-container">
+    <c:if test="${abList.size() == 0}">
+        <div class="empty">
+            게시물이 존재하지 않습니다.
+        </div>
+    </c:if>
 
-        <c:if test="${abList.size() == 0}">
-            <div class="empty">
-                게시물이 존재하지 않습니다.
-            </div>
-        </c:if>
-
-        <c:if test="${abList.size() > 0}">
-            <c:forEach var="ab" items="${abList}">
-                <div class="card-wrapper">
-                    <section class="card" data-bno="${ab.boardId}">
-                        <div class="card-title-wrapper">
-                            <h2 class="card-title">${ab.shortTitle} </h2>
-                            <div class="time-view-wrapper">
-                                <div class="time">
-                                    <i class="far fa-clock"></i>
-                                        ${ab.date}
-                                </div>
-
-<%--                                <c:if test="${ab.hit}">--%>
-<%--                                    <div class="hit">HIT</div>--%>
-<%--                                </c:if>--%>
-
-<%--                                <c:if test="${ab.newArticle}">--%>
-<%--                                    <div class="new">NEW!</div>--%>
-<%--                                </c:if>--%>
-
-                                <div class="view">
-                                    <i class="fas fa-eye"></i>
-                                    <span class="view-count">${ab.view}</span>
+    <c:if test="${abList.size() > 0}">
+        <c:forEach var="ab" items="${abList}">
+            <div class="card-wrapper">
+                <section class="card-post" data-bno="${ab.boardId}">
+                    <div class="card-content-wrapper">
+                        <div class="card-details-top">
+                            <div class="card-text">
+                                <div class="card-title">${ab.shortTitle}</div>
+                                <div class="card-content">
+                                        ${ab.shortContent}
                                 </div>
                             </div>
+                            <div class="card-img">
+                                <img src="#" alt="대표이미지">
+                            </div>
                         </div>
-                        <div class="card-content">
-
-                                ${ab.shortContent}
-
+                        <div class="card-details-bot">
+                            <span>${user.Gender}</span>
+                            <span class="lnr lnr-calendar-full"></span>
+                            <span class="acc-period">&nbsp;${ab.startDate} - ${ab.endDate}</span>
+                            <span class="view-count">조회수 ${ab.view}</span>
                         </div>
-                    </section>
-<%--                    <!-- 관리자이거나 본인이 쓴 글에만 렌더링 되도록 -->--%>
-<%--                    <c:if test="${login.auth == 'ADMIN' || login.account == b.account}">--%>
-                    <div class="card-btn-group">
-                        <button class="del-btn" data-href="/acc-board/delete?boardId=${ab.boardId}">
-                            <i class="fas fa-times"></i>
-                        </button>
                     </div>
-<%--                    </c:if>--%>
-                </div>
-                <%-- .end card-wrapper --%>
-            </c:forEach>
-        </c:if>
+                </section>
+            </div>
+        </c:forEach>
+    </c:if>
 
-
-    </div>
-    <%-- end .card-container --%>
-
-    <!-- 게시글 목록 하단 영역 -->
-    <div class="bottom-section">
-
-        <!-- 페이지 버튼 영역 -->
+    <!-- 페이지 버튼 영역 -->
+    <div class="paging">
         <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-lg pagination-custom">
-
+            <ul class="pagination pagination-sm pagination-custom">
                 <c:if test="${maker.pageInfo.pageNo != 1}">
                     <li class="page-item">
                         <a class="page-link" href="/acc-board/list?pageNo=1&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a>
                     </li>
                 </c:if>
-
                 <c:if test="${maker.prev}">
                     <li class="page-item">
                         <a class="page-link" href="/acc-board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
                     </li>
                 </c:if>
-
                 <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
                     <li data-page-num="${i}" class="page-item">
                         <a class="page-link" href="/acc-board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
-
                     </li>
                 </c:forEach>
-
                 <c:if test="${maker.next}">
                     <li class="page-item">
                         <a class="page-link" href="/acc-board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
                     </li>
                 </c:if>
-
                 <c:if test="${maker.pageInfo.pageNo != maker.finalPage}">
                     <li class="page-item">
                         <a class="page-link" href="/acc-board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a>
                     </li>
                 </c:if>
-
                 </li>
             </ul>
         </nav>
-
     </div>
-    <!-- end div.bottom-section -->
 
-</div>
-<%-- end .wrap --%>
-
-<!-- 모달 창 -->
-<div class="modal" id="modal">
-    <div class="modal-content">
-        <p>정말로 삭제할까요?</p>
-        <div class="modal-buttons">
-            <button class="confirm" id="confirmDelete"><i class="fas fa-check"></i> 예</button>
-            <button class="cancel" id="cancelDelete"><i class="fas fa-times"></i> 아니오</button>
-        </div>
+    <!-- 게시글 추가 -->
+    <div class="add-btn-box">
+        <a href="#" class="add-btn">동행글 작성</a>
     </div>
 </div>
-
-
 
 <script>
-
     const $cardContainer = document.querySelector('.card-container');
 
     //================= 삭제버튼 스크립트 =================//
@@ -202,7 +264,6 @@
 
                 modal.style.display = 'none'; // 모달 창 닫기
             };
-
 
             // 취소 버튼 이벤트
             cancelDelete.onclick = e => {
@@ -243,12 +304,8 @@
         }
     }
 
-
-
     $cardContainer.onmouseover = e => {
-
         if (!e.target.matches('.card-container *')) return;
-
         const $targetCard = e.target.closest('.card');
         $targetCard?.classList.add('card-hover');
 
@@ -259,9 +316,7 @@
     }
 
     $cardContainer.onmousedown = e => {
-
         if (e.target.matches('.card-container .card-btn-group *')) return;
-
         const $targetCard = e.target.closest('.card-wrapper');
         $targetCard?.setAttribute('id', 'card-down');
     };
@@ -286,23 +341,17 @@
 
     // 기존 검색 조건 option태그 고정하기
     function fixSearchOption() {
-
         // 1. 어떤 조건을 검색했는지 값을 알아 옴
         const type = '${s.type}';
-
         // 2. 해당 조건을 가진 option 태그를 검색
         const $option = document.querySelector(`#search-type option[value='\${type}']`);
-
         // 3. 해당 태그에 selected 속성 부여
         $option?.setAttribute('selected', 'selected')
-
     }
 
     appendActivePage();
     fixSearchOption();
-
 </script>
-
 
 </body>
 </html>
