@@ -13,7 +13,7 @@
     </div>      
     <ul class="menu">
       <li><a href="">동행게시판</a></li>
-      <li><a href="/feed-list" rel="external">피드</a></li>
+      <li><a href="/feed/list">피드</a></li>
       <c:if test="${user == null}">
           <li><a href="/sign-in">로그인</a></li>
           <li><a href="/find-id">아이디 찾기</a></li>
