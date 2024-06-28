@@ -57,7 +57,6 @@
         WHERE account = #{account}
     </update>
 
-
     <select id="findMemberBySessionId" resultType="com.travel.project.entity.User">
         SELECT
             account,
@@ -84,18 +83,42 @@
     </select>
 
 
-
-
-
-
-    <update id="updateUser" parameterType="com.travel.project.entity.User">
+    <update id="updateUser" parameterType="com.travel.project.dto.request.UpdateProfileDto">
         UPDATE tbl_user
-        <set>
-            <if test="name != null">name = #{name},</if>
-            <if test="email != null">email = #{email},</if>
-            <if test="nickname != null">nickname = #{nickname}</if>
-        </set>
+        SET name = #{name},
+        email = #{email},
+        nickname = #{nickname}
         WHERE account = #{account}
     </update>
+
+
+<!--     <select id="findUserByAccountNameEmail" resultType="com.travel.project.entity.User">
+        SELECT *
+        FROM tbl_user
+        WHERE account = #{account} AND name = #{name} AND email = #{email}
+    </select>
+ -->
+
+
+    <select id="findByAccountAndNameAndEmail" resultType="com.travel.project.entity.User">
+        SELECT *
+        FROM tbl_user
+        WHERE account = #{account} AND name = #{name} AND email = #{email}
+    </select>
+
+    <select id="findByAccount" resultType="com.travel.project.entity.User">
+        SELECT *
+        FROM tbl_user
+        WHERE account = #{account}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE tbl_user
+        SET password = #{password}
+        WHERE account = #{account}
+    </update>
+
+
+
 
 </mapper>

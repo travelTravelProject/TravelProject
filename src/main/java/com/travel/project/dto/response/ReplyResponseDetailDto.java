@@ -5,6 +5,7 @@ import com.travel.project.entity.Reply;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @ToString
 @NoArgsConstructor
@@ -20,6 +21,7 @@ public class ReplyResponseDetailDto {
 
 //    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH:mm")
     private LocalDateTime createAt; // 댓글 작성일
+    private List<NestedReplyResponseDetailDto> nestedReplies; // 대댓글 목록
 
     // 엔터티를 DTO로 변환하는 생성자
     public ReplyResponseDetailDto(Reply r) {

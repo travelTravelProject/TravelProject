@@ -1,20 +1,25 @@
 package com.travel.project.controller;
 
 import com.travel.project.dto.FindIdResponseDto;
+import com.travel.project.dto.PasswordChangeDto;
+import com.travel.project.dto.PasswordResetRequestDto;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
 
+import com.travel.project.dto.request.UpdateProfileDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.login.LoginUtil;
-import com.travel.project.dto.request.UpdateProfileDto;
+//import com.travel.project.dto.request.UpdateProfileDto;
 import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 
 import com.travel.project.entity.UserDetail;
+import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
 import com.travel.project.service.LoginResult;
 
 import com.travel.project.service.UserService;
+import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +41,13 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserMapper userMapper;
+    private final UserDetailMapper userDetailMapper;
+
     @Value("${file.upload.root-path}")
     private String rootPath;
 
     private final UserService userService;
+
 
     // 회원가입 양식 열기
     @GetMapping("/sign-up")
@@ -79,7 +88,7 @@ public class UserController {
 
         System.out.println("user = " + user);
 
-        if(user == null) {
+        if (user == null) {
             // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/sign-in";
         }
@@ -88,13 +97,8 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
-        // 모델에 사용자 정보 추가
-        if (userDetail == null) {
-            model.addAttribute("userDetail", new UserDetail());
-        } else {
-            model.addAttribute("userDetail", userDetail);
-        }
         model.addAttribute("user", user);
+        model.addAttribute("userDetail", userDetail);
 
         return "mypage";
     }
@@ -105,58 +109,83 @@ public class UserController {
         log.info("mypage GET : forwarding to mypage-update.jsp");
 
         LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
-        if(user == null) {
+        if (user == null) {
             // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/sign-in";
         }
 
+        // 사용자 계정 정보를 기반으로 UserDetail 객체 가져오기
+        UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
+        System.out.println("userDetail = " + userDetail);
+
         model.addAttribute("user", user);
+        model.addAttribute("userDetail", userDetail);
+        System.out.println("user = " + user);
+
         return "mypage-update";
     }
 
     // 마이페이지 프로필 수정하기
     @PostMapping("/mypage/update")
     public String myPageUpdate(@Validated UpdateProfileDto dto,
+                               @RequestParam("profileImage") MultipartFile profileImage,
                                HttpSession session,
                                RedirectAttributes ra) {
         log.info("updateProfile POST: {}", dto);
 
-        LoginUserInfoDto loginUser = (LoginUserInfoDto)session.getAttribute("user");
+        LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
         log.info("loginUser = " + loginUser);
         log.info("loginUser.getAccount() = " + loginUser.getAccount());
         log.info("dto.getAccount() = " + dto.getAccount());
 
-        if(!dto.getAccount().equals(loginUser.getAccount())) {
+        if (!dto.getAccount().equals(loginUser.getAccount())) {
             return "redirect:/sign-in";
         }
 
-        User updatedUser = User.builder()
+        // 파일 업로드 처리
+        if (!profileImage.isEmpty()) {
+            String profileImagePath = userService.uploadProfileImage(profileImage);
+            dto.setProfileImage(profileImagePath);
+        }
+        log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
+
+        UpdateProfileDto updatedUser = UpdateProfileDto.builder()
                 .account(dto.getAccount())
                 .name(dto.getName())
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
+                .oneLiner(dto.getOneLiner())
+                .mbti(dto.getMbti())
+                .profileImage(dto.getProfileImage())
+                .rating(dto.getRating())
                 .build();
-
+//
         // 데이터베이스에 업데이트된 사용자 정보 저장
         userService.saveUpdateUser(updatedUser);
+        userService.saveOrUpdateUserDetail(updatedUser);
 
         // 세션의 기존 LoginUserInfoDto 객체 업데이트
         loginUser.setName(dto.getName());
         loginUser.setEmail(dto.getEmail());
         loginUser.setNickname(dto.getNickname());
+        loginUser.setMbti(dto.getMbti());
+        loginUser.setOneLiner(dto.getOneLiner());
+        loginUser.setProfileImage(dto.getProfileImage());
+        loginUser.setRating(dto.getRating());
+        log.debug("마이페이지 POST: loginUser = " + loginUser);
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
-//        session.setAttribute("user", new LoginUserInfoDto(updatedUser));
+//        session.setAttribute("updatedUser", updatedUser);
+//        session.setAttribute("updatedUser", new LoginUserInfoDto(updatedUser));
         System.out.println("updatedUser = " + updatedUser);
         log.info("Updated user profile: {}", updatedUser);
 
-        // 사용자에게 알림 메시지
-        ra.addFlashAttribute("successMessage", "프로필이 성공적으로 업데이트 되었습니다.");
+        // RedirectAttributes를 사용하여 사용자 정보 전달
+        ra.addFlashAttribute("updatedUser", updatedUser);
 
         return "redirect:/mypage";
     }
-
 
 
 //===============================================================================
@@ -202,7 +231,7 @@ public class UserController {
     public String signIn(LoginDto dto,
                          RedirectAttributes ra,
                          HttpServletRequest request,
-                         HttpServletResponse response){ // (LoginDto dto, Model model) Model model : 사용 xx
+                         HttpServletResponse response) { // (LoginDto dto, Model model) Model model : 사용 xx
         //RedirectAttributes : 리다이렉트된 페이지에 데이터를 전달
 
 
@@ -214,7 +243,7 @@ public class UserController {
         //세션 얻기
         HttpSession session = request.getSession(); //사용자 기억 해 줄
 
-        LoginResult result = userService.authenticate(dto,session,response);
+        LoginResult result = userService.authenticate(dto, session, response);
 
         System.out.println("result = " + result);
 
@@ -294,10 +323,62 @@ public class UserController {
 
 
     // 비밀번호 찾기 페이지 열기
-    @GetMapping("/find-pw")
-    public String findPw() {
-        System.out.println("비밀번호 찾기 페이지");
-        return "/find-pw";
+//    @GetMapping("/find-pw")
+//    public String findPw() {
+//        System.out.println("비밀번호 찾기 페이지");
+//        return "/find-pw";
+//    }
+
+    // 비밀번호 찾기 폼 열기
+    @GetMapping("/find-password")
+    public String showFindPasswordForm() {
+        return "/find-password";
+    }
+
+    // 비밀번호 찾기 요청 처리
+    @PostMapping("/find-password")
+    public String verifyUserForPasswordReset(@ModelAttribute PasswordResetRequestDto dto, RedirectAttributes ra, HttpSession session) {
+        boolean verified = userService.verifyUserForPasswordReset(dto);
+        if (verified) {
+            session.setAttribute("account", dto.getAccount());
+            return "redirect:/change-password";
+        }
+        ra.addFlashAttribute("error", "User verification failed.");
+        return "redirect:/find-password";
+    }
+
+
+    @GetMapping("/change-password")
+    public String showChangePasswordForm() {
+        return "/change-password";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@ModelAttribute PasswordChangeDto dto, HttpSession session, RedirectAttributes ra) {
+        String account = (String) session.getAttribute("account");
+        if (account == null) {
+            ra.addFlashAttribute("error", "Session expired. Please try again.");
+            return "redirect:/find-password";
+        }
+        dto.setAccount(account);
+        boolean changed = userService.changePassword(dto);
+        if (changed) {
+            ra.addFlashAttribute("message", "Password changed successfully.");
+            session.removeAttribute("account");
+            return "redirect:/sign-in";
+        }
+        ra.addFlashAttribute("error", "Password change failed.");
+        return "redirect:/change-password";
+    }
+
+
+
+
+// 임시 main.jsp
+
+    @GetMapping("/main")
+    public String mains() {
+        return "/main"; // find-id.html 또는 find-id.jsp와 같은 뷰 이름 반환
     }
 
 
@@ -305,8 +386,8 @@ public class UserController {
 
 
 
-
-
-
-
 }
+
+
+
+

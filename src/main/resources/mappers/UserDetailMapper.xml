@@ -5,9 +5,39 @@
 
 <mapper namespace="com.travel.project.mapper.UserDetailMapper">
 
+    <insert id="save">
+        INSERT INTO tbl_user_detail
+        (
+        user_datail_id,
+        mbti,
+        one_liner
+        profile_image,
+        rating,
+        account
+        )
+        VALUES
+        (#{userDetailId}, #{mbti}, #{oneLiner}, #{profileImage}, #{rating}, #{account})
+    </insert>
+
+
     <select id="findUserDetailByAccount" resultType="com.travel.project.entity.UserDetail">
         SELECT * FROM tbl_user_detail
         WHERE account = #{account}
     </select>
+
+    <update id="updateUserDetail" parameterType="com.travel.project.dto.request.UpdateProfileDto">
+        UPDATE tbl_user_detail
+        <set>
+            <if test="mbti != null">mbti = #{mbti},</if>
+            <if test="oneLiner != null">one_liner = #{oneLiner},</if>
+            <if test="rating != null">rating = #{rating}</if>
+        </set>
+        WHERE account = #{account}
+    </update>
+
+    <insert id="insertUserDetail" parameterType="com.travel.project.dto.request.UpdateProfileDto">
+        INSERT INTO tbl_user_detail (account, one_liner, mbti, rating)
+        VALUES (#{account}, #{oneLiner}, #{mbti}, #{rating})
+    </insert>
 
 </mapper>
