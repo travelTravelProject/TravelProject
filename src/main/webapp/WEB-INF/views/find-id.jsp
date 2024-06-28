@@ -1,27 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="KO">
 <head>
+    <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>아이디 찾기</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/login.css">
 </head>
 <body>
+    <%@ include file="include/sub_header.jsp" %>
+    <div class="login_wrap">
+        <div class="login">
+            <form action="find-id" method="post">
+                <div class="input-container">
+                    <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    required
+                    class="form-control tooltipstered" 
+                    class="text-input" 
+                    />
+                    <label for="name">이름</label>
+                </div>
+                <div class="input-container">
+                    <input 
+                    type="email" 
+                    id="email"
+                     name="email"
+                    required
+                    class="form-control tooltipstered" 
+                    class="text-input" 
+                    />
+                    <label for="name">이메일</label>
+                </div>
+                
+                <button type="submit" class="button"> 로그인하기</button>
 
-<h1>아이디 찾기</h1>
-<form action="find-id" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br><br>
-        <button type="submit">Find ID</button>
-    </form>
+                
 
+            </form>
+        </div>
+    </div>
+    
 </body>
 </html>

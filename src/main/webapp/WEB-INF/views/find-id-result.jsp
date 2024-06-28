@@ -1,27 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="KO">
 <head>
+    <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>아이디 찾기</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/login.css">
 </head>
 <body>
-
-    <h2>Find ID Result</h2>
-    
-    <c:if test="${not empty result}">
-        <p>Found ID: ${result.id}</p>
+    <%@ include file="include/sub_header.jsp" %>
+    <div class="login_wrap">
+        <div class="login">
+            <h1>너의 아이디는</h1>
+            <c:if test="${not empty result}">
+        <p>${result.id}</p>
     </c:if>
     
     <c:if test="${not empty error}">
         <p>${error}</p>
     </c:if>
+            <button 
+                type="submit" 
+                class="button"
+                onclick="location.href='/sign-in'"
+            > 
+                로그인하기
+            </button>
+        </div>
+    </div>
     
-    <a href="find-id.jsp">Back to Find ID</a>
 </body>
 </html>

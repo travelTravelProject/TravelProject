@@ -342,10 +342,22 @@ public class UserController {
         ra.addFlashAttribute("error", "Password change failed.");
         return "redirect:/change-password";
     }
+
+
+
+
+// 임시 main.jsp
+
+    @GetMapping("/main")
+    public String mains() {
+        return "/main"; // find-id.html 또는 find-id.jsp와 같은 뷰 이름 반환
+    }
+
+
+
+
+
 }
-
-
-
 
 
 

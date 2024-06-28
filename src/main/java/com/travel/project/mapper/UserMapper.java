@@ -44,8 +44,6 @@ public interface UserMapper {
                               @Param("email") String email);
 
 
-
-
     User findByAccountAndNameAndEmail(@Param("account") String account, @Param("name") String name, @Param("email") String email);
 
     User findByAccount(@Param("account") String account);

@@ -187,6 +187,7 @@ public class UserService {
         }
         String encodedPassword = encoder.encode(dto.getNewPassword());
         user.setPassword(encodedPassword);
+        System.out.println("encodedPassword = " + encodedPassword);
         return userMapper.updatePassword(user);
     }
 
