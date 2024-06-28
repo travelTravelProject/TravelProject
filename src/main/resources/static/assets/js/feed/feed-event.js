@@ -42,7 +42,7 @@ export function initFeedFormEvents() {
             detailModal.setAttribute("data-board-id", boardId);
             fetchFeedDetail(boardId);
 
-        } else if (e.target.classList.contains("deleteFeedBtn") {
+        } else if (e.target.classList.contains("deleteFeedBtn")) {
             deleteModal.style.display = "block";
             const boardId = e.target.closest('.detail-modal').dataset.boardId;
             deleteModal.setAttribute("data-board-id", boardId);
