@@ -39,9 +39,6 @@
     </div>
 
 
-<h1>index</h1>
-<h3>웨르컴 <span style="font-size: 40px; color: #000;">${user.nickname}</span></h3>
-<%--<h4>${user.foundMember}</h4>--%>
 
 
 

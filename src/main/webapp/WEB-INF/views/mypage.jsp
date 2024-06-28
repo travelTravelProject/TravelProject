@@ -5,104 +5,78 @@
 <head>
     <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/my-page.css">
 
 
-    
-<!-- fontawesome css: https://fontawesome.com -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
-
-
+    <link rel="stylesheet" href="/assets/css/mypage.css">
 </head>
 <body>
-    <%@ include file="include/sub_header.jsp" %>
-    
-    <div class="container">
-        <div class="my_page_profile_wrap">
-            <div class="profile_img_box">
-                <img src="/assets/img/main_img02.jpg">
-            </div>
-            <div class="profile_title_box">
-                <div class="trapezoid">
-                    <h3>김니모님</h3>
-                </div>
-                <div class="asd">
-                    <h5>sdfpoksdf</h5>
-                </div>
-            </div>
-            <div class="profile_count_box">
-                <div class="aaa">
-                    <div>
-                        <div>
-                            <i class="fas fa-torah"></i>
-                        </div>
-                        <div>
-                            57
-                        </div>
-                        <div>
-                            CONTINENT 
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <i class="fas fa-torah"></i>
-                        </div>
-                        <div>
-                            12
-                        </div>
-                        <div>
-                            COUNTRY
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <i class="fas fa-torah"></i>
-                        </div>
-                        <div>
-                            33
-                        </div>
-                        <div>
-                            DAYS
-                        </div>
-                    </div>
-                </div>
-                <div class="sss">
-                    <div>
-                        <div>
-                            <i class="fas fa-torah"></i>
-                        </div>
-                        <div>
-                            ??
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <i class="fas fa-torah"></i>
-                        </div>
-                        <div>
-                            ??
-                        </div>
-                    </div>
-                </div>
+<div class="container">
+    <div class="card-profile"></div>
+<%--    <h1>My Page</h1>--%>
+    <section class="trip-card">
+        <div class="profile-form">
+
+            <div class="profile-box">
+                <c:choose>
+                    <c:when test="${login != null && userDetail.profileImage != null}">
+                        <img src="${userDetail.profileImage}" alt="profile image">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="/assets/img/anonymous.jpg" alt="profile image">
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
 
-        <div class="profile_info_box">
-            <div class="small_profil_box">
+        <div class="trip-info">
+            <h2>${user.name}</h2>
+            <%--            <p>TRIPSODA TRAVELER</p>--%>
+            <%--            <p>BOARDING-0000000000</p>--%>
+            <div class="trip-stats">
                 <div>
-                    asd
+                    <%--                    <span>00</span>--%>
+                    <%--                    <p>CONTINENT</p>--%>
+                    <%--                </div>--%>
+                    <%--                <div>--%>
+                    <span>MBTI</span>
+                    <p>${userDetail.mbti}</p>
+                                    </div>
+                                    <div>
+                                        <span>00</span>
+                                        <p>DAYS</p>
+                                    </div>
                 </div>
-                <div class="profile_mbti">
-                    123
-                </div>
+
             </div>
-        </div>
-    </div>
+    </section>
+
+
+    <%--            mbti, 소개글, 평점--%>
+    <%--            <h2>${user.name}</h2>--%>
+    <%--            <p>소개글: ${user.oneLiner}</p>--%>
+    <%--            <p>MBTI: ${user.mbti}</p>--%>
+    <%--            <p>나의 점수: ${user.rating}</p>--%>
+    <%--            <p>Email: ${user.email}</p>--%>
+    <%--            <p>Nickname: ${user.nickname}</p>--%>
+    <%--            <p>Birthday: ${user.birthday}</p>--%>
+    <%--            <p>Gender: ${user.gender}</p>--%>
 
 
 
+        <section class="one-liner-profile">
+            <div class="profile-pic">
+                <img src="/assets/img/image-add.png" alt="프로필 이미지">
+            </div>
+            <div class="profile-info">
+                <h2>${user.nickname}</h2>
+                <p>30대 · ${user.gender == 'F' ? '여자' : '남자'}</p>
+                <p>${userDetail.oneLiner != null ? userDetail.oneLiner : "자기소개를 입력하고 마음에 맞는 동행을 구해보세요!"}</p>
+            </div>
+
+        </section>
+            <div class="profile-stats">
+                <button type="button" class="modify">프로필 수정</button>
+            </div>
 
 
 

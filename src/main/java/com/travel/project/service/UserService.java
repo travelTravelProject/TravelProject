@@ -6,16 +6,21 @@ import com.travel.project.dto.request.AutoLoginDto;
 import com.travel.project.dto.FindIdResponseDto;
 import com.travel.project.dto.request.LoginDto;
 import com.travel.project.dto.request.SignUpDto;
+import com.travel.project.dto.request.UpdateProfileDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.entity.User;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.entity.UserDetail;
 import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
+import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
@@ -32,10 +37,13 @@ import static com.travel.project.service.LoginResult.*;
 @Slf4j
 public class UserService {
 
+    @Autowired
     private final UserMapper userMapper;
+    @Autowired
     private final UserDetailMapper userDetailMapper;
+    @Autowired
     private final PasswordEncoder encoder;
-//    private final UserService userService;
+
 
     // 회원가입 중간처리
     public boolean join(SignUpDto dto) {
@@ -61,13 +69,34 @@ public class UserService {
         return userMapper.findOne(account);
     }
 
-    public void saveUpdateUser(User user) {
-        userMapper.updateUser(user);
+    @Transactional
+    public void saveUpdateUser(UpdateProfileDto dto) {
+        // Update tbl_user
+        userMapper.updateUser(dto);
+        // Update tbl_user_detail
+        userDetailMapper.updateUserDetail(dto);
+    }
+
+    @Transactional
+    public void saveOrUpdateUserDetail(UpdateProfileDto dto) {
+        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        if (existingDetail == null) {
+            // Insert new user detail
+            userDetailMapper.insertUserDetail(dto);
+        } else {
+            // Update existing user detail
+            userDetailMapper.updateUserDetail(dto);
+        }
     }
 
     // 사용자 상세 정보 조회
     public UserDetail getUserDetailByAccount(String account) {
         return userDetailMapper.findUserDetailByAccount(account);
+    }
+
+    // FileUtil 클래스의 uploadFile 메서드를 호출하여 파일을 업로드하고, 업로드된 파일의 URL을 반환합니다.
+    public String uploadProfileImage(MultipartFile file) {
+        return FileUtil.uploadFile(file);
     }
 
 
