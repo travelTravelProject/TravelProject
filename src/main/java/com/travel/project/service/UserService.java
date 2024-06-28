@@ -1,5 +1,7 @@
 package com.travel.project.service;
 
+import com.travel.project.dto.PasswordChangeDto;
+import com.travel.project.dto.PasswordResetRequestDto;
 import com.travel.project.dto.request.AutoLoginDto;
 import com.travel.project.dto.FindIdResponseDto;
 import com.travel.project.dto.request.LoginDto;
@@ -134,10 +136,7 @@ public class UserService {
         System.out.println("foundMember = " + foundMember);
     }
 
-
-
 //    =================================== yj ========================================
-
 
     public void autoLoginClear(
             HttpServletRequest request,
@@ -162,10 +161,6 @@ public class UserService {
         );
     }
 
-
-
-
-
     public FindIdResponseDto findIdByNameAndEmail(String name, String email) {
         User user = userMapper.findIdByNameAndEmail(name, email);
 
@@ -175,6 +170,27 @@ public class UserService {
 
         return null;
     }
+
+//    =================================== yj ========================================
+
+
+    public boolean verifyUserForPasswordReset(PasswordResetRequestDto dto) {
+        User user = userMapper.findByAccountAndNameAndEmail(dto.getAccount(), dto.getName(), dto.getEmail());
+        return user != null;
+    }
+
+    public boolean changePassword(PasswordChangeDto dto) {
+        User user = userMapper.findByAccount(dto.getAccount());
+        if (user == null) {
+            log.info("해당 사용자를 찾을 수 없습니다: {}", dto.getAccount());
+            return false;
+        }
+        String encodedPassword = encoder.encode(dto.getNewPassword());
+        user.setPassword(encodedPassword);
+        System.out.println("encodedPassword = " + encodedPassword);
+        return userMapper.updatePassword(user);
+    }
+
 
 
 

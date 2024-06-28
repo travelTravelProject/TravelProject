@@ -98,4 +98,32 @@
         WHERE account = #{account}
     </update>
 
+    <select id="findUserByAccountNameEmail" resultType="com.travel.project.entity.User">
+        SELECT *
+        FROM tbl_user
+        WHERE account = #{account} AND name = #{name} AND email = #{email}
+    </select>
+
+
+
+    <select id="findByAccountAndNameAndEmail" resultType="com.travel.project.entity.User">
+        SELECT *
+        FROM tbl_user
+        WHERE account = #{account} AND name = #{name} AND email = #{email}
+    </select>
+
+    <select id="findByAccount" resultType="com.travel.project.entity.User">
+        SELECT *
+        FROM tbl_user
+        WHERE account = #{account}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE tbl_user
+        SET password = #{password}
+        WHERE account = #{account}
+    </update>
+
+
+
 </mapper>

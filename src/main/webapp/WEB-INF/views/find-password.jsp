@@ -13,12 +13,19 @@
     <%@ include file="include/sub_header.jsp" %>
     <div class="login_wrap">
         <div class="login">
-            <form action="find-id" method="post">
+            <form action="/find-password" method="post">
                 <div class="input-container">
                     <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
+                    type="text" id="account" name="account"
+                    required
+                    class="form-control tooltipstered" 
+                    class="text-input" 
+                    />
+                    <label for="account">아이디</label>
+                </div>
+                <div class="input-container">
+                    <input 
+                    type="text" id="name" name="name" required
                     required
                     class="form-control tooltipstered" 
                     class="text-input" 
@@ -27,14 +34,12 @@
                 </div>
                 <div class="input-container">
                     <input 
-                    type="email" 
-                    id="email"
-                     name="email"
+                    type="email" id="email" name="email" required
                     required
                     class="form-control tooltipstered" 
                     class="text-input" 
                     />
-                    <label for="name">이메일</label>
+                    <label for="email">이메일</label>
                 </div>
                 
                 <button type="submit" class="button"> 로그인하기</button>

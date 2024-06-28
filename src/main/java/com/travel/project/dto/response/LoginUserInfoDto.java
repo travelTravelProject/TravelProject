@@ -32,7 +32,7 @@ public class LoginUserInfoDto {
         this.name = user.getName();
         this.nickname = user.getNickname();
         this.email = user.getEmail();
-        this.auth = user.getAuth().toString();
+        this.auth = user.getAuth().name();
 
         this.birthday = user.getBirthday();
         this.gender = user.getGender();

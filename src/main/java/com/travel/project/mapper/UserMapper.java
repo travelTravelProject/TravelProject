@@ -39,9 +39,15 @@ public interface UserMapper {
 
 
 
-
     // 이름과 이메일로 사용자 아이디 조회
     User findIdByNameAndEmail(@Param("name") String name,
                               @Param("email") String email);
+
+
+    User findByAccountAndNameAndEmail(@Param("account") String account, @Param("name") String name, @Param("email") String email);
+
+    User findByAccount(@Param("account") String account);
+
+    boolean updatePassword(User user);
 
 }

@@ -1,101 +1,113 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="KO">
 <head>
+    <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8">
-    <title>My Page</title>
-    <link rel="stylesheet" href="/assets/css/mypage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/my-page.css">
+
+
+    
+<!-- fontawesome css: https://fontawesome.com -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+
+
 </head>
 <body>
-<div class="container">
-    <h1>My Page</h1>
-    <div class="profile-form ">
-        <form
-                action="/mypage"
-                name="mypage"
-                id="mypageForm"
-                method="post"
-                enctype="multipart/form-data"
-        >
-
-            <div class="profile">
-                <div class="thumbnail-box">
-                    <img src="/assets/img/image-add.png" alt="Profile Image" class="profile-image">
+    <%@ include file="include/sub_header.jsp" %>
+    
+    <div class="container">
+        <div class="my_page_profile_wrap">
+            <div class="profile_img_box">
+                <img src="/assets/img/main_img02.jpg">
+            </div>
+            <div class="profile_title_box">
+                <div class="trapezoid">
+                    <h3>김니모님</h3>
                 </div>
-
-                <label>프로필 이미지 추가</label>
-
-                <input type="file"
-                       id="profile-img"
-                       accept="image/*"
-                       style="display: none;"
-                       name="profileImage"
-                >
+                <div class="asd">
+                    <h5>sdfpoksdf</h5>
+                </div>
             </div>
-
-            <%--            mbti, 소개글, 평점--%>
-            <h2>${user.name}</h2>
-            <div>
-                <p>소개글: <span id="oneLinerText">${userDetail.oneLiner}</span>
-                    <button type="button" class="registerModify" data-modal="oneLinerModal">등록 및 수정</button></p>
-                <p>MBTI: <span id="mbtiText">${userDetail.mbti}</span>
-                    <button type="button" class="registerModify" data-modal="mbtiModal">등록 및 수정</button></p>
-                <p>나의 점수: ${userDetail.rating}</p>
+            <div class="profile_count_box">
+                <div class="aaa">
+                    <div>
+                        <div>
+                            <i class="fas fa-torah"></i>
+                        </div>
+                        <div>
+                            57
+                        </div>
+                        <div>
+                            CONTINENT 
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <i class="fas fa-torah"></i>
+                        </div>
+                        <div>
+                            12
+                        </div>
+                        <div>
+                            COUNTRY
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <i class="fas fa-torah"></i>
+                        </div>
+                        <div>
+                            33
+                        </div>
+                        <div>
+                            DAYS
+                        </div>
+                    </div>
+                </div>
+                <div class="sss">
+                    <div>
+                        <div>
+                            <i class="fas fa-torah"></i>
+                        </div>
+                        <div>
+                            ??
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <i class="fas fa-torah"></i>
+                        </div>
+                        <div>
+                            ??
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p>Email: ${user.email}</p>
-            <p>Nickname: ${user.nickname}</p>
-            <p>Birthday: ${user.birthday}</p>
-            <p>Gender: ${user.gender}</p>
+        </div>
 
-        <button type="button" class="modify">프로필 수정</button>
-        </form>
-
+        <div class="profile_info_box">
+            <div class="small_profil_box">
+                <div>
+                    asd
+                </div>
+                <div class="profile_mbti">
+                    123
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-
-<!-- 소개글 모달 -->
-<div id="oneLinerModal" class="modal">
-    <div class="modal-content">
-        <span class="close" data-modal="oneLinerModal">&times;</span>
-        <h2>소개글 수정</h2>
-        <textarea id="oneLinerInput">${userDetail.oneLiner}</textarea>
-        <button type="button" class="saveButton" data-modal="oneLinerModal">저장</button>
-    </div>
-</div>
-
-<%--<!-- MBTI 모달 -->--%>
-<div id="mbtiModal" class="modal">
-    <div class="modal-content">
-        <span class="close" data-modal="mbtiModal">&times;</span>
-        <h2>MBTI 수정</h2>
-        <select id="mbtiSelect">
-            <option value="ISTJ">ISTJ</option>
-            <option value="ISFJ">ISFJ</option>
-            <option value="INFJ">INFJ</option>
-            <option value="INTJ">INTJ</option>
-            <option value="ISTP">ISTP</option>
-            <option value="ISFP">ISFP</option>
-            <option value="INFP">INFP</option>
-            <option value="INTP">INTP</option>
-            <option value="ESTP">ESTP</option>
-            <option value="ESFP">ESFP</option>
-            <option value="ENFP">ENFP</option>
-            <option value="ENTP">ENTP</option>
-            <option value="ESTJ">ESTJ</option>
-            <option value="ESFJ">ESFJ</option>
-            <option value="ENFJ">ENFJ</option>
-            <option value="ENTJ">ENTJ</option>
-        </select>
-        <button type="button" class="saveButton" data-modal="mbtiModal">저장</button>
-    </div>
-</div>
 
 
 
 
-<script type="module" src="/assets/js/myPage.js" defer></script>
+
 
 </body>
 </html>
+
+
+
