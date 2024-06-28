@@ -22,7 +22,7 @@
 
                 <label for="oneLiner">소개글:</label>
                 <input type="text" id="oneLiner" name="oneLiner"
-                       value="${user.oneLiner}" placeholder="소개글을 입력해주세요." required>
+                       value="${userDetail.oneLiner}" placeholder="소개글을 입력해주세요." required>
 
                 <label for="mbti">MBTI:</label>
                 <select id="mbti" name="mbti" required>

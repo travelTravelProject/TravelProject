@@ -50,7 +50,7 @@
                     <%--                </div>--%>
                     <%--                <div>--%>
                     <span>MBTI</span>
-                    <p>${user.mbti}</p>
+                    <p>${userDetail.mbti}</p>
                                     </div>
                                     <div>
                                         <span>00</span>
@@ -81,7 +81,7 @@
             <div class="profile-info">
                 <h2>${user.nickname}</h2>
                 <p>30대 · ${user.gender == 'F' ? '여자' : '남자'}</p>
-                <p>${user.oneLiner != null ? user.oneLiner : "자기소개를 입력하고 마음에 맞는 동행을 구해보세요!"}</p>
+                <p>${userDetail.oneLiner != null ? userDetail.oneLiner : "자기소개를 입력하고 마음에 맞는 동행을 구해보세요!"}</p>
             </div>
 
         </section>

@@ -94,8 +94,8 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
-
         model.addAttribute("user", user);
+        model.addAttribute("userDetail", userDetail);
 
         return "mypage";
     }
@@ -138,7 +138,6 @@ public class UserController {
         if (!dto.getAccount().equals(loginUser.getAccount())) {
             return "redirect:/sign-in";
         }
-
 
         UpdateProfileDto updatedUser = UpdateProfileDto.builder()
                 .account(dto.getAccount())

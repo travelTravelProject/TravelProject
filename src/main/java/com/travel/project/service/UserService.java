@@ -90,6 +90,14 @@ public class UserService {
         return userDetailMapper.findUserDetailByAccount(account);
     }
 
+//    public static void loginInfo(HttpSession session, UserDetail userDetail) {
+//        log.info("{} 님 로그인 성공 ", userDetail.getAccount());
+//
+//        // login => user로 수정
+//        session.setAttribute("user", new LoginUserInfoDto(userDetail));
+//        System.out.println("userDetail = " + userDetail);
+//    }
+
 
 //    =================================== yj ========================================
 

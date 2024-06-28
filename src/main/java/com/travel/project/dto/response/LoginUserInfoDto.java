@@ -25,7 +25,7 @@ public class LoginUserInfoDto {
 
     // 마이페이지 내 정보 조회를 위해 추가
     private LocalDate birthday; // 생년월일
-    private Gender gender; // 성별
+    private String gender; // 성별
 
     private String mbti; // mbti
     private String oneLiner; // 소개글
@@ -40,10 +40,10 @@ public class LoginUserInfoDto {
         this.name = user.getName();
         this.nickname = user.getNickname();
         this.email = user.getEmail();
-        this.auth = user.getAuth().toString();
+        this.auth = user.getAuth().name();
 
         this.birthday = user.getBirthday();
-        this.gender = user.getGender();
+        this.gender = user.getGender().name();
 
     }
 
