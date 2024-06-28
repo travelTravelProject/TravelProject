@@ -19,7 +19,7 @@ public class AccBoard {
     private int viewCount; // 조회수
     private LocalDateTime createdAt; // 게시글 작성 시간
     private LocalDateTime updatedAt; // 게시글 수정 시간
-//    status; // 상태
+    private STATUS status; // 상태
     private String location; // 여행지
     private LocalDateTime startDate; // 동행 시작일
     private LocalDateTime endDate; // 동행 종료일

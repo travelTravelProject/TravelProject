@@ -45,6 +45,16 @@
         }else if(result == 'NO_PW'){
             alert('비번이 틀려쪙');
         }
+
+        // 비회원 상태로 접근제한 페이지에 들어갔다 온 경우
+        const params = new URLSearchParams(window.location.search);
+        const message = params.get('message');
+
+        if (message === 'login-required') {
+            alert('로그인이 필요한 서비스입니다.')
+            const newUrl = window.locaion.origin + window.location.pathname;
+            history.replaceState(null, null, newUrl);
+        }
     </script>
 </body>
 </html>

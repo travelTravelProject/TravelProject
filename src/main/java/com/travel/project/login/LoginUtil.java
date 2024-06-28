@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 //하나하나 막을것도 아니고 그래서 만든거임 공통으로
 public class LoginUtil {
 
-    public static final String LOGIN = "'login'";
+    public static final String LOGIN = "user";
     public static final String AUTO_LOGIN_COOKIE  = "auto" ;
 
 
