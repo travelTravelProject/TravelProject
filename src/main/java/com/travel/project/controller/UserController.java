@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,14 +101,6 @@ public class UserController {
         return "mypage";
     }
 
-    // 마이페이지에서 프로필 사진 등록
-//    @PostMapping("/mypage")
-//    public String mypage(@Validated LoginUserInfoDto dto, HttpSession session, Model model) {
-//        log.info("mypage POST : forwarding to mypage.jsp");
-//
-////        String uploadedFile = FileUtil.uploadFile(dto.getProfileImage());
-//    }
-
     // 마이페이지 프로필 수정페이지 열기
     @GetMapping("/mypage/update")
     public String showUpdatePage(HttpSession session, Model model) {
@@ -127,13 +120,13 @@ public class UserController {
         model.addAttribute("userDetail", userDetail);
         System.out.println("user = " + user);
 
-
         return "mypage-update";
     }
 
     // 마이페이지 프로필 수정하기
     @PostMapping("/mypage/update")
     public String myPageUpdate(@Validated UpdateProfileDto dto,
+                               @RequestParam("profileImage") MultipartFile profileImage,
                                HttpSession session,
                                RedirectAttributes ra) {
         log.info("updateProfile POST: {}", dto);
@@ -147,6 +140,13 @@ public class UserController {
             return "redirect:/sign-in";
         }
 
+        // 파일 업로드 처리
+        if (!profileImage.isEmpty()) {
+            String profileImagePath = userService.uploadProfileImage(profileImage);
+            dto.setProfileImage(profileImagePath);
+        }
+        log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
+
         UpdateProfileDto updatedUser = UpdateProfileDto.builder()
                 .account(dto.getAccount())
                 .name(dto.getName())
@@ -154,6 +154,7 @@ public class UserController {
                 .nickname(dto.getNickname())
                 .oneLiner(dto.getOneLiner())
                 .mbti(dto.getMbti())
+                .profileImage(dto.getProfileImage())
                 .rating(dto.getRating())
                 .build();
 //
@@ -167,6 +168,7 @@ public class UserController {
         loginUser.setNickname(dto.getNickname());
         loginUser.setMbti(dto.getMbti());
         loginUser.setOneLiner(dto.getOneLiner());
+        loginUser.setProfileImage(dto.getProfileImage());
         loginUser.setRating(dto.getRating());
         log.debug("마이페이지 POST: loginUser = " + loginUser);
 

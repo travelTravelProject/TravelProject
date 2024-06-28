@@ -1,11 +1,9 @@
 package com.travel.project.dto.request;
 
-import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.entity.User;
 import com.travel.project.entity.UserDetail;
 import lombok.*;
 
-import java.time.LocalDate;
 @Setter
 @Getter @ToString
 @NoArgsConstructor
@@ -37,6 +35,7 @@ public class UpdateProfileDto {
         this.oneLiner = userDetail.getOneLiner();
         this.mbti = userDetail.getMbti();
         this.rating = userDetail.getRating();
+        this.profileImage = userDetail.getProfileImage();
     }
 
 

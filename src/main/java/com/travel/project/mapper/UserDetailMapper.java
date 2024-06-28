@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserDetailMapper {
 
+    void save(UserDetail userDetail);
+
     // 상세정보 조회
     UserDetail findUserDetailByAccount(String account);
 

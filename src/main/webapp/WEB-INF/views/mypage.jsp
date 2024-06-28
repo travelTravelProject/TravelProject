@@ -12,31 +12,18 @@
     <div class="card-profile"></div>
 <%--    <h1>My Page</h1>--%>
     <section class="trip-card">
-        <div class="profile-form ">
-            <form
-                    action="/mypage"
-                    name="mypage"
-                    id="mypageForm"
-                    method="post"
-                    enctype="multipart/form-data"
-            >
+        <div class="profile-form">
 
-                <div class="profile">
-                    <div class="thumbnail-box">
-                        <img src="/assets/img/image-add.png" alt="Profile Image" class="profile-image">
-                    </div>
-
-                    <label>프로필 이미지 추가</label>
-
-                    <input type="file"
-                           id="profile-img"
-                           accept="image/*"
-                           style="display: none;"
-                           name="profileImage"
-                    >
-                </div>
-
-            </form>
+            <div class="profile-box">
+                <c:choose>
+                    <c:when test="${login != null && userDetail.profileImage != null}">
+                        <img src="${userDetail.profileImage}" alt="profile image">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="/assets/img/anonymous.jpg" alt="profile image">
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
 
         <div class="trip-info">

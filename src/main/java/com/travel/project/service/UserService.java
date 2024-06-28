@@ -11,12 +11,14 @@ import com.travel.project.login.LoginUtil;
 import com.travel.project.entity.UserDetail;
 import com.travel.project.mapper.UserDetailMapper;
 import com.travel.project.mapper.UserMapper;
+import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
@@ -90,13 +92,10 @@ public class UserService {
         return userDetailMapper.findUserDetailByAccount(account);
     }
 
-//    public static void loginInfo(HttpSession session, UserDetail userDetail) {
-//        log.info("{} 님 로그인 성공 ", userDetail.getAccount());
-//
-//        // login => user로 수정
-//        session.setAttribute("user", new LoginUserInfoDto(userDetail));
-//        System.out.println("userDetail = " + userDetail);
-//    }
+    // FileUtil 클래스의 uploadFile 메서드를 호출하여 파일을 업로드하고, 업로드된 파일의 URL을 반환합니다.
+    public String uploadProfileImage(MultipartFile file) {
+        return FileUtil.uploadFile(file);
+    }
 
 
 //    =================================== yj ========================================

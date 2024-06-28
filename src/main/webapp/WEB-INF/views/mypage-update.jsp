@@ -11,10 +11,32 @@
 <div class="container">
     <h1>프로필 수정</h1>
     <div class="update-form">
+        <div class="profile-form ">
+            <form
+                    action="/mypage/update"
+                    name="mypage"
+                    id="mypageUpdateForm"
+                    method="post"
+                    enctype="multipart/form-data"
+            >
 
-<%--        <p>account: ${user.account}</p>--%>
+                <div class="profile">
+                    <div class="thumbnail-box">
+                        <img src="${userDetail.profileImage != null ? userDetail.profileImage : '/assets/img/image-add.png'}"
+                             alt="Profile Image" class="profile-image" id="profileImagePreview">
+                    </div>
 
-            <form action="/mypage/update" method="post" id="mypageUpdateForm">
+                    <label>프로필 이미지 추가</label>
+
+                    <input type="file"
+                           id="profile-img"
+                           accept="image/*"
+                           style="display: none;"
+                           name="profileImage"
+                    >
+                </div>
+
+
                 <input type="hidden" name="account" value="${user.account}">
 
                 <label for="name">Name:</label>
@@ -46,29 +68,20 @@
                     <option value="ENTJ" ${userDetail.mbti == 'ENTJ' ? 'selected' : ''}>ENTJ</option>
                 </select>
 
-
-
-
-
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="${user.email}" required>
 
                 <label for="nickname">Nickname:</label>
                 <input type="text" id="nickname" name="nickname" value="${user.nickname}" required>
 
-<%--                <label for="birthday">Birthday:</label>--%>
-<%--                <input type="date" id="birthday" name="birthday" value="${user.birthday}" required>--%>
-
-<%--                <label for="gender">Gender:</label>--%>
-<%--                <select id="gender" name="gender" required>--%>
-<%--                    <option value="M" ${user.gender == 'M' ? 'selected' : ''}>Male</option>--%>
-<%--                    <option value="F" ${user.gender == 'F' ? 'selected' : ''}>Female</option>--%>
-<%--                </select>--%>
-
                 <button type="submit" class="update-button">Update</button>
             </form>
+        </div>
     </div>
 </div>
+
+
+
 <script type="module" src="/assets/js/myPageUpdate.js" defer></script>
 </body>
 </html>
