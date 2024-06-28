@@ -43,7 +43,7 @@ export function addExistingImagesToPreview(images, imageBox) {
           reader.readAsDataURL(file);
         });
   });
-  console.log('기존미리보기imageFiles: ', imageFiles)
+  console.log('기존미리보기 imageFiles: ', imageFiles)
 }
 
 // 이미지 input(e) 변경 시 미리보기 및 이미지 배열 생성

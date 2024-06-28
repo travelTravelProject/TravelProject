@@ -64,6 +64,9 @@ function appendFeeds({ feeds, pageInfo }) {
 // 서버에서 피드 목록 가져오는 비동기 요청 함수
 export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') {
 
+  if(isFetching) return; // 서버에서 데이터를 가져오는 중이면 return;
+  isFetching = true;
+
   const url = `${FEED_URL}/v1/list?pageNo=${pageNo}&type=${type}&keyword=${keyword}`;
   console.log('fetchFeedList 실행: ', pageNo);
 
@@ -102,7 +105,7 @@ const debouncedScrollHandler = debounce(async function(e) {
   // 현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
   if (
     // window.innerHeight + window.scrollY >= document.body.offsetHeight + 300
-    window.innerHeight + window.scrollY >= document.body.offsetHeight
+    window.innerHeight + window.scrollY >= document.body.offsetHeight + 500
     && !isFetching
   ) {
     // console.log(e);
@@ -111,7 +114,7 @@ const debouncedScrollHandler = debounce(async function(e) {
     console.log("스크롤 이벤트 핸들러 함수 실행");
     // showSpinner();
     await new Promise(resolve => setTimeout(resolve, 700));
-    await fetchFeedList(currentFeedPage + 1);
+    fetchFeedList(currentFeedPage + 1);
   }
 }, 700);
 
@@ -121,4 +124,3 @@ export function setupInfiniteScroll() {
 
   window.addEventListener('scroll', debouncedScrollHandler)
 }
-

@@ -147,10 +147,24 @@
   </div>
 </div>
 <%-- 피드 상세조회 모달 끝 --%>
+<%-- 삭제 확인 모달 --%>
+<div id="deleteModal" class="confirm-modal">
+  <div class="modal-content confirm">
+    <span class="close">&times;</span>
+    <p>정말 삭제하시겠습니까?</p>
+    <div class="modal-buttons">
+      <button id="confirmDeleteBtn" class="confirm-btn">삭제</button>
+      <button id="cancelDeleteBtn" class="cancel-btn">취소</button>
+    </div>
+  </div>
+</div>
+<%-- 삭제 확인 모달 끝 --%>
+
 
 <%-- 스크립트 --%>
 <script type="module" src="/assets/js/feed-list.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

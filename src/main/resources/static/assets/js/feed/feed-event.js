@@ -23,6 +23,7 @@ export function initFeedFormEvents() {
         const createModal = document.getElementById("createFeedModal");
         const editModal = document.getElementById("editFeedModal");
         const detailModal = document.getElementById("detailFeedModal");
+        const deleteModal = document.getElementById('deleteModal')
 
         // 모달 열기 버튼 처리
         if (e.target.id === "createFeedBtn") {
@@ -40,6 +41,12 @@ export function initFeedFormEvents() {
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             detailModal.setAttribute("data-board-id", boardId);
             fetchFeedDetail(boardId);
+
+        } else if (e.target.classList.contains("deleteFeedBtn") {
+            deleteModal.style.display = "block";
+            const boardId = e.target.closest('.detail-modal').dataset.boardId;
+            deleteModal.setAttribute("data-board-id", boardId);
+            // 삭제 모달 오픈
         }
 
 
@@ -109,6 +116,7 @@ export function initFeedFormEvents() {
 
         await fetchFeedPost(payload);
     });
+    // 모달 수정 완료 버튼
     $feedEditBtn.addEventListener('click', async (e) => {
         e.preventDefault();
         const boardId = document.getElementById('editFeedModal').dataset.boardId;
@@ -124,4 +132,7 @@ export function initFeedFormEvents() {
         }
         await fetchFeedModify(boardId, payload);
     })
+    // 모달 삭제 버튼
+
+
 }

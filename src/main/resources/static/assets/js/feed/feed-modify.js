@@ -1,6 +1,7 @@
 import {FEED_URL} from "../feed-list.js";
 import {addExistingImagesToPreview, imageFiles as importedImages} from "../image.js";
 import {fetchFeedDetail} from "./feed-detail.js";
+import {fetchFeedList} from "./feed-getList.js";
 
 export function setEditModal() {
   // const {boardId, account, nickname, profileImage, content, createdAt, feedImageList} = dto;
@@ -42,4 +43,5 @@ export async function fetchFeedModify(boardId, payload) {
   const editModal = document.getElementById("editFeedModal");
   fetchFeedDetail(editModal.dataset.boardId);
   document.querySelector('#editFeedModal .close').click();
+  fetchFeedList();
 }
