@@ -130,16 +130,139 @@
 <%--        <h2>Title</h2>--%>
         <p>Some description or content goes here...</p>
       </div>
-      <div class="feed-comments">
-        <h3>댓글</h3>
-        <div class="comment">
-          <p><strong>User1:</strong> This is a comment.</p>
+      <!-- 댓글 영역 -->
+
+      <div id="replies" class="row">
+        <div class="offset-md-1 col-md-10">
+        
+
+        <!--댓글 내용 영역-->
+        <div class="card">
+            <!-- 댓글 내용 헤더 -->
+            <div class="card-header text-white m-0" style="background: #343a40">
+            <div class="float-left">댓글 (<span id="replyCnt">0</span>)</div>
+            </div>
+
+            <!-- 댓글 내용 바디 -->
+            <div id="replyCollapse" class="card">
+            <div id="replyData">
+                <!--
+                < JS로 댓글 정보 DIV삽입 >
+                -->
+            </div>
+            </div>
+
+            <!-- 대댓글 내용 바디 -->
+            <div id="nestedReplyCollapse" class="card">
+                <div id="nestedReplyData">
+                <!-- 대댓글 목록이 여기에 렌더링 됩니다 -->
+                </div>
+            </div>
         </div>
-        <div class="comment">
-          <p><strong>User2:</strong> Another comment.</p>
-        </div>
-        <!-- Add more comments here -->
+        <!-- 댓글 쓰기 영역 -->
+        <div class="card">
+          <div class="card-body">
+          <div class="row">
+              <div class="col-md-9">
+              <div class="form-group">
+                  <label for="newReplyText" hidden>댓글 내용</label>
+                  <textarea
+                  rows="3"
+                  id="newReplyText"
+                  name="replyText"
+                  class="form-control"
+                  placeholder="댓글을 입력해주세요."
+                  ></textarea>
+              </div>
+              </div>
+              <div class="col-md-3">
+              <div class="form-group">
+                  <label for="newReplyWriter" hidden>댓글 작성자</label>
+                  <input
+                  id="newReplyWriter"
+                  name="replyWriter"
+                  type="text"
+                  class="form-control"
+                  placeholder="작성자 이름"
+                  style="margin-bottom: 6px"
+                  />
+                  <button
+                  id="replyAddBtn"
+                  type="button"
+                  class="btn btn-dark form-control"
+                  >
+                  등록
+                  </button>
+              </div>
+              </div>
+          </div>
+          </div>
       </div>
+      <!-- end reply write -->
+        
+        <!-- 대댓글 쓰기 영역 -->
+
+        <!-- <div class="card">
+            <div class="card-body">
+            <div class="row">
+                <div class="col-md-9">
+                <div class="form-group">
+                    <label for="newNestedReplyText" hidden>대댓글 내용</label>
+                    <textarea
+                    rows="3"
+                    id="newNestedReplyText"
+                    name="nestedReplyText"
+                    class="form-control"
+                    placeholder="대댓글을 입력해주세요."
+                    ></textarea>
+                </div>
+                </div>
+                <div class="col-md-3">
+                <div class="form-group">
+                    <label for="newNestedReplyWriter" hidden
+                    >대댓글 작성자</label
+                    >
+                    <input
+                    id="newNestedReplyWriter"
+                    name="nestedReplyWriter"
+                    type="text"
+                    class="form-control"
+                    placeholder="작성자 이름"
+                    style="margin-bottom: 6px"
+                    />
+                    <button
+                    id="nestedReplyAddBtn"
+                    type="button"
+                    class="btn btn-dark form-control"
+                    >
+                    등록
+                    </button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div> -->
+        <!-- end nested reply write -->
+
+        <!-- 댓글 페이징 영역 -->
+        <ul class="pagination justify-content-center">
+            <!--
+            < JS로 댓글 페이징 DIV삽입 >
+            -->
+        </ul>
+        </div>
+    </div>
+    <!-- end reply content -->
+    </div>
+    <!-- end replies row -->
+     
+    <div class="spinner-container" id="loadingSpinner">
+      <div class="spinner-border text-light" role="status">
+          <span class="visually-hidden">Loading...</span>
+      </div>  
+      </div>
+
+
     </div>
     <span class="close">&times;</span>
   </div>
@@ -148,5 +271,6 @@
 
 <%-- 스크립트 --%>
 <script type="module" src="/assets/js/feed-list.js"></script>
+<script type="module" src="/assets/js/feed-reply.js"></script>
 </body>
 </html>

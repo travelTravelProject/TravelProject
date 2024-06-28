@@ -15,6 +15,7 @@ public class Search extends Page {
     public Search() {
         this.keyword = "";
     }
+
     public Search(Page page) {
         super(page.getPageNo(), page.getAmount());
         this.keyword = "";
