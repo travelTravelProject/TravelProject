@@ -189,15 +189,12 @@
                 value="회원가입"
                 class="btn form-control tooltipstered button"
                 id="signup-btn"
-                > 로그인하기
+                > 회원가입
             </button>
 
             </form>
         </div>
     </div>
-
-
-
 
     <script type="module" src="/assets/js/signUp.js" defer></script>
 </body>
