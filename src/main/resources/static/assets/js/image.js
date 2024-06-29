@@ -5,6 +5,10 @@ export let imageFiles = [];
 // imageBox는 미리보기 이미지가 렌더링될 DOM
 export function previewImages(files, imageBox) {
   imageBox.innerHTML = ''; // 기존 미리보기 초기화
+  if(!files) return; // 업로드 할 이미지가 없으면 종료
+  console.log('미리보기 렌더링 실행!');
+  console.log('미리보기 files: ', files);
+
   Array.from(files).forEach((file, index) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -48,7 +52,7 @@ export function addExistingImagesToPreview(images, imageBox) {
 
 // 이미지 input(e) 변경 시 미리보기 및 이미지 배열 생성
 export function handleFileInputChange(e, imageList, imageBox) {
-  console.log('image.js 타입: ', typeof e.target.files, ' / 출력: ', e.target.files)
+  console.log('image.js 타입: ', typeof e.target.files, ' / 출력: ', e.target.files[0])
   const newFiles = Array.from(e.target.files);
   imageList.push(...newFiles);
   console.log('image.js handle 이미지들 : ', imageList);
@@ -148,4 +152,11 @@ export function setOneImgStyle() {
 // imageFiles 배열을 초기화하는 함수
 export function clearImageFiles() {
   imageFiles = [];
+}
+// preview 삭제 후 업데이트
+export function deletePreviewAndUpdate(e, $box) {
+  const index = e.target.dataset.imageOrder;
+  imageFiles.splice(index, 1);
+  console.log('미리보기삭제이벤 imageFiles: ', imageFiles);
+  previewImages(imageFiles, $box);
 }

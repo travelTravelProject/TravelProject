@@ -53,8 +53,8 @@ body {
     /*padding: 10px;*/
     box-shadow: 1px 1px 1px 1px rgba(113, 113, 113, 0.1);
 }
-.feed-item .created-at {
-    padding-left: 20px ;
+.feed-right-side .feed-item .created-at {
+    /*padding-left: 20px ;*/
 }
 
 .profile-section {
@@ -245,6 +245,9 @@ body div.btn-container {
 /*#createFeedBtn:hover {*/
 .side-btn:hover {
     transform: scale(1.1);
+}
+#goTopBtn {
+    /*display: none;*/
 }
 
 /* 모달 속 이미지 미리보기 */

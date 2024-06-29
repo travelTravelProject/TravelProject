@@ -46,7 +46,7 @@
 
 </section>
 <div class="btn-container">
-    <div id="createFeedBtn" class="side-btn" data-feed-user="${user != null ? user.account : "null"}"> <i class="fas fa-pen"></i> </div>
+    <div id="createFeedBtn" class="side-btn" data-feed-user="${user != null ? user.account : ""}"> <i class="fas fa-pen"></i> </div>
     <div id="goTopBtn" class="side-btn"> TOP </div>
     <%--    <button id="editFeedBtn">피드 수정</button>--%>
 </div>
@@ -86,7 +86,7 @@
       <input type="text" id="cr-nickname" name="nickname" required value="${user.nickname}" readonly>
       <label for="cr-content">내용</label>
       <input type="text" id="cr-content" name="content" required>
-      <label for="postImage">이미지 업로드</label>
+      <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
       <div class="dropbox" id="post-preview"></div>
       <button type="submit" id="feed-post-Btn">게시</button>
@@ -100,7 +100,7 @@
     <span class="close close-modal">&times;</span>
     <div id="editFeedForm">
       <label for="ed-nickname">닉네임</label>
-      <input type="text" id="ed-nickname" name="nickname" required>
+      <input type="text" id="ed-nickname" name="nickname" required readonly>
       <label for="ed-content">내용</label>
       <input type="text" id="ed-content" name="nickname" required>
       <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>

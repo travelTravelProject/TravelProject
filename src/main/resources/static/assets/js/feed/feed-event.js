@@ -1,6 +1,6 @@
 import {
     clearImageFiles,
-    dataToFormData,
+    dataToFormData, deletePreviewAndUpdate,
     handleFileInputChange,
     imageFiles as importedImages,
     previewImages
@@ -38,7 +38,10 @@ export function initFeedFormEvents() {
 
         // 모달 열기 버튼 처리
         if (e.target.id === "createFeedBtn") {
-            createModal.style.display = "block";
+            e.target.dataset.feedUser
+                ? createModal.style.display = "block"
+                : '' // 로그인 하라는 알람 필요
+            ;
 
         } else if (e.target.classList.contains("show-detail")) { // 더보기, 피드목록 댓글아이콘 클릭시 디테일 모달 열기
             detailModal.style.display = "block";
@@ -69,6 +72,8 @@ export function initFeedFormEvents() {
             if (modal) {
                 modal.style.display = "none";
                 clearImageFiles(); // 모달이 닫힐 때 imageFiles 초기화
+                console.log('모달 닫기 + imageFiles 초기화: ', imageFiles);
+                imageFiles = [];
             } else if(modalDetail) {
                 modalDetail.style.display = "none";
                 clearImageFiles();
@@ -90,40 +95,29 @@ export function initFeedFormEvents() {
             }
         }
 
-        // TOP 버튼
-        if( e.target.matches('#goTopBtn')) {
-            const topBtn = document.getElementById('goTopBtn');
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const scrollOffset = document.querySelector(".story").offsetTop;
-
-            window.addEventListener('scroll', function () {
-                if(scrollTop >= scrollOffset) {
-                    topBtn.style.display = 'block';
-                } else {
-                    topBtn.style.display = 'none';
-                }
-            });
-            topBtn.addEventListener('click', e => {
-                e.preventDefault();
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            })
-        }
     });
 
     // 이미지 input 변경 시 발생 이벤트
     $imageInputPost.addEventListener('change', e => {
+        console.log('post imageFiles: ', imageFiles);
+        console.log('post 이미지 전: ', importedImages);
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxPost);
+        console.log('post 이미지 추가확인: ', imageFiles);
+        console.log('post 이미지 추가후 import: ', importedImages);
     });
     $imageInputEdit.addEventListener('change', e => {
-        console.log("edit 모달 이벤트 실행!")
+        console.log("edit 모달 이미지 추가 이벤트 실행!")
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxEdit);
     });
     // 미리보기 삭제 버튼 이벤트
-    document.getElementById('edit-preview').addEventListener('click', (e) => {
+    $imageBoxPost.addEventListener('click', (e) => {
+        if(e.target.classList.contains('delete-prev-image')) {
+            deletePreviewAndUpdate(e, $imageBoxPost);
+        }
+    })
+    $imageBoxEdit.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-prev-image')) {
-            const index = e.target.dataset.imageOrder;
-            imageFiles.splice(index, 1);
-            previewImages(imageFiles, document.getElementById('edit-preview'));
+            deletePreviewAndUpdate(e, $imageBoxEdit);
         }
     });
 
@@ -133,11 +127,12 @@ export function initFeedFormEvents() {
 
         // 태그들 value, 이미지 파일명 가져오기
         const $createContent = document.getElementById('cr-content').value;
+        createModal
 
-        // if (!$createContent || imageFiles.length === 0) {
-        //     alert('모든 필드를 채워주세요.');
-        //     return;
-        // }
+        if (!$createContent || importedImages.length === 0) {
+            alert('모든 필드를 채워주세요.');
+            return;
+        }
 
         // fetch payload에 담아서 POST 요청
         const data = {
@@ -183,6 +178,21 @@ export function initFeedFormEvents() {
         await fetchFeedList();
         window.scrollTo(0, 0);
 
+    })
+
+    // TOP 버튼
+    const topBtn = document.getElementById('goTopBtn');
+    window.addEventListener('scroll', () => {
+        if(document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            topBtn.style.display = 'block';
+        } else {
+            topBtn.style.display = 'none';
+        }
+    });
+
+    topBtn.addEventListener('click', e => {
+        e.preventDefault();
+        window.scrollTo({top: 0, behavior: 'smooth'});
     })
 
     // 댓글 작성/수정 이벤트 등록 (POST)
