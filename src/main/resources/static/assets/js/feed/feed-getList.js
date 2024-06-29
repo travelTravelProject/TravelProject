@@ -99,19 +99,27 @@ export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') 
 
   // 피드 모두 가져오면 스크롤이벤트 제거
   if(loadedFeeds >= totalFeeds) {
-    window.removeEventListener('scroll', debouncedScrollHandler);
+    console.log('피드 모두 가져옴! 스크롤 이벤트 제거')
+    document.body.removeEventListener('scroll', debouncedFeedScrollHandler);
   }
 
 }
 
 
 // 디바운싱 스크롤 이벤트 핸들러
-const debouncedScrollHandler = debounce(async function(e) {
+const debouncedFeedScrollHandler = debounce(async function(e) {
+
+  console.log("스크롤 이벤트 시작!");
+  const scrollHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight,
+  );
+  const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+  const clientHeight = document.documentElement.clientHeight;
+  console.log(`scrollTop(${scrollTop}) + clientHeight(${clientHeight}) === scrollHeight(${scrollHeight})`)
+
   // 스크롤이 최하단부로 내려갔을 때만 이벤트 발생시켜야 함
-  // 현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
-  if (
-    // window.innerHeight + window.scrollY >= document.body.offsetHeight + 300
-    window.innerHeight + window.scrollY >= document.body.offsetHeight + 200
+  if (scrollTop + clientHeight + 200 >= scrollHeight
     && !isFetchingFeed
   ) {
     // console.log(e);
@@ -128,5 +136,5 @@ const debouncedScrollHandler = debounce(async function(e) {
 export function setupInfiniteScroll() {
   console.log("스크롤이벤트 생성 함수 실행");
 
-  window.addEventListener('scroll', debouncedScrollHandler)
+  document.body.addEventListener('scroll', debouncedFeedScrollHandler)
 }
