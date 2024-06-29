@@ -66,6 +66,7 @@
 
             <div class="profile-box">
                 <c:choose>
+<%--                    <c:when test="${login != null && userDetail.profileImage != null}">--%>
                     <c:when test="${userDetail.profileImage != null}">
                         <img src="${userDetail.profileImage}" alt="profile image">
                     </c:when>
