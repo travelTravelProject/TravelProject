@@ -9,6 +9,7 @@ import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
 import com.travel.project.dto.response.FeedDetailResponseDto;
 import com.travel.project.dto.response.FeedListDto;
+import com.travel.project.dto.response.LikeDto;
 import com.travel.project.entity.Board;
 import com.travel.project.entity.BoardImage;
 import com.travel.project.mapper.FeedMapper;
@@ -31,6 +32,7 @@ public class FeedService {
 
     private final FeedMapper feedMapper;
     private final ImageService imageService;
+    private final LikeService likeService;
 
     public FeedListDto findAll(Search search) {
         List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
@@ -41,13 +43,20 @@ public class FeedService {
         // 각 피드마다 이미지 리스트를 추가
         // 각 피드마다 댓글 수, 좋아요 수, 북마크 수 추가
 
-        // Feed 디테일 응답객체에 이미지 담기
-        // imageService 조회 결과를 setter로 추가
         List<FeedDetailResponseDto> detailDto = feedList.stream()
                 .map(f -> {
                     FeedDetailResponseDto responseDto = f.toDetailResponseDto();
                     log.debug("피드서비스 f: {}", f);
                     log.debug("f 글번호: {}", f.getBoardId());
+
+                    int boardId = (int) f.getBoardId();
+                    String account = f.getAccount();
+                    // 좋아요 수, 로그인 유저의 좋아요 여부 추가
+                    LikeDto like = likeService.like(account, boardId);
+                    responseDto.setLikeCount(like.getLikeCount());
+                    responseDto.setUserLike(like.isUserLike());
+
+                    // Feed 디테일 응답객체에 이미지 담기
                     List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());
                     if (feedImages != null) {
                         responseDto.setFeedImageList(feedImages);
@@ -80,6 +89,7 @@ public class FeedService {
         if (feedImages != null && !feedImages.isEmpty()) {
             responseDto.setFeedImageList(feedImages);
         }
+
         // 조회된 이미지 없으면 바로 리턴
         return responseDto;
 
@@ -111,12 +121,12 @@ public class FeedService {
 
         List<MultipartFile> files = newFeed.getImages();
 
-        if(files == null || files.isEmpty()) {
+        if (files == null || files.isEmpty()) {
             throw new RuntimeException("피드 수정 - 이미지 파일이 없습니다.");
         }
         // file 존재하면 DB에 insert
-            // 이미지 추가 성공하면 등록한 BoardId를 리턴
-            // 이미지 추가 실패하면 트랜잭션 롤백
+        // 이미지 추가 성공하면 등록한 BoardId를 리턴
+        // 이미지 추가 실패하면 트랜잭션 롤백
         for (int i = 0; i < files.size(); i++) {
             MultipartFile file = files.get(i);
             BoardImage b = BoardImage.builder()
@@ -124,7 +134,7 @@ public class FeedService {
                     .imagePath(FileUtil.uploadFile(file))
                     .imageOrder(i) // 인덱스 설정
                     .build();
-            // DB insert 성공 ? 등록한 이미지 id : -1
+            // DB insert 성공 ? 등록 이미지의 수 : -1
             int result = imageService.addImage(b);
             if (result < 0) {
                 log.debug("file 추가 실패: ", file);
@@ -150,12 +160,12 @@ public class FeedService {
 
             // tbl_board_image 수정 (삭제 후 추가 )
             List<MultipartFile> files = dto.getImages();
-            if(files == null || files.isEmpty()) {
+            if (files == null || files.isEmpty()) {
                 throw new RuntimeException("피드 수정 - 이미지 파일이 없습니다.");
             }
 
             boolean b = imageService.deleteImages(dto.getBoardId());
-            if(!b)  throw new RuntimeException("피드 수정 - 기존 이미지 파일 삭제에 실패했습니다.");
+            if (!b) throw new RuntimeException("피드 수정 - 기존 이미지 파일 삭제에 실패했습니다.");
 
             int count = 0;
             for (MultipartFile file : files) {
@@ -163,7 +173,7 @@ public class FeedService {
                         = dto.toImageEntity(file, count++);
                 int result = imageService.addImage(imageEntity);
                 if (result <= 0) {
-                    throw new RuntimeException("피드 수정 - 이미지 저장에 실패했습니다.\n"+imageEntity);
+                    throw new RuntimeException("피드 수정 - 이미지 저장에 실패했습니다.\n" + imageEntity);
                 }
             }
 

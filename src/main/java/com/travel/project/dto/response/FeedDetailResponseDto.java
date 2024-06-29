@@ -31,7 +31,17 @@ public class FeedDetailResponseDto {
     @Setter
     private List<BoardImage> feedImageList; // 게시글에 등록된 모든 이미지
     // 댓글 수, 좋아요 수, 북마크 수 추가
+    @Setter
+    private int replyCount; // 게시글 총 댓글 수
+    @Setter
+    private int likeCount; // 게시글 총 좋아요 수
+    @Setter
+    private int bookmarkCount; // 게시글 총 북마크 수
 
+    @Setter
+    private boolean userLike; // 현재 좋아요 상태
+    @Setter
+    private boolean userBookmark; // 현재 북마크 상태
 
 
 }

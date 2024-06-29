@@ -6,9 +6,11 @@ import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
 import com.travel.project.dto.response.FeedDetailResponseDto;
 import com.travel.project.dto.response.FeedListDto;
+import com.travel.project.dto.response.LikeDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.service.FeedService;
+import com.travel.project.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -29,6 +32,7 @@ import java.util.List;
 public class FeedController {
 
     private final FeedService feedService;
+    private final LikeService likeService;
 
     // 피드 전체 조회 요청
     @GetMapping("/list") // 페이지, 검색 쿼리스트링
@@ -146,6 +150,26 @@ public class FeedController {
         FeedListDto feeds = feedService.deleteFeed(boardId);
         log.debug("컨트롤러 피드삭제 번호: {}", boardId);
         return ResponseEntity.ok().body(feeds); // list로 리다이렉트?
+    }
+
+    // 좋아요 요청 비동기 처리
+    @GetMapping("/like/{boardId}")
+    @ResponseBody
+    public ResponseEntity<?> like(@PathVariable int boardId, HttpSession session) throws SQLException {
+
+        // 로그인 검증
+        if(!LoginUtil.isLoggedIn(session)) {
+            return ResponseEntity.status(403)
+                    .body("로그인이 필요합니다.");
+
+        }
+
+        log.info("좋아요 async request 피드 컨트롤러!");
+
+        String account = LoginUtil.getLoggedInUserAccount(session);
+
+        LikeDto dto = likeService.like(account, boardId);// 좋아요 요청 처리
+        return ResponseEntity.ok().body(dto);
     }
 
 }

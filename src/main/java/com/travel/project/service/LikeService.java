@@ -5,12 +5,14 @@ import com.travel.project.entity.Like;
 import com.travel.project.mapper.LikeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class LikeService {
 
     private final LikeMapper likeMapper;
+
 
     private Like handleLike(String account, int boardId) {
 
@@ -19,7 +21,7 @@ public class LikeService {
 
         if (existingLike != null) { // 이미 like가 존재하는 경우
             likeMapper.deleteLike(account, boardId);
-//            return null;
+
         } else { // 기존의 like 없는 경우
             Like newLike = Like.builder()
                     .account(account)
@@ -35,15 +37,16 @@ public class LikeService {
     // 좋아요 중간처리
     public LikeDto like(String account, int boardId) {
 
-//        if(likeMapper.existsLike(account, boardId) != null) {}
+        Like like = handleLike(account, boardId);
 
         return LikeDto.builder()
                 .likeCount(likeMapper.countLikes(boardId))
+                .userLike(like != null)
                 .build();
     }
 
-//    public int countLikes(int boardId) {
-//        return likeMapper.countLikes(boardId);
-//    }
+    public int countLikes(int boardId) {
+        return likeMapper.countLikes(boardId);
+    }
 
 }
