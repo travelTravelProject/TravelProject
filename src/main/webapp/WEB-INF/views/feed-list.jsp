@@ -122,7 +122,9 @@
     <div class="feed-right-side">
       <div class="profile-section">
         <div class="profile-row">
-          <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+          <div class="profile-box">
+            <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+          </div>
           <div class="profile-column">
             <span class="nickname">nickname</span>
             <span class="created-at">createdAt</span>

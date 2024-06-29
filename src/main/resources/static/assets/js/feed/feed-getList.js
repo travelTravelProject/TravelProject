@@ -20,17 +20,21 @@ function appendFeeds({ feeds, pageInfo }) {
     let animationTiming = 1;
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
-         , profileImage: profile, feedImageList}) => {
+         , profileImage: profile, feedImageList}, index) => {
 
       tag += `
         <div class="feed-item animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
         <!-- <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>-->
           <div class="profile-section">
-            <div class="profile-box">
-                <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">     
+            <div class="profile-row">
+              <div class="profile-box">
+                  <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">     
+              </div>
+              <div class="profile-column">
+                <span class="nickname">${nickname}</span>
+                <span class="created-at">${createdAt}</span>          
+              </div>
             </div>
-            <span class="nickname">${nickname}</span>
-            <span class="created-at">${createdAt}</span>
           </div>
           <div class="image-carousel">`;
 
