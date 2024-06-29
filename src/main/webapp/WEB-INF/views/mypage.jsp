@@ -17,7 +17,7 @@
 
             <div class="profile-box">
                 <c:choose>
-                    <c:when test="${login != null && userDetail.profileImage != null}">
+                    <c:when test="${userDetail.profileImage != null}">
                         <img src="${userDetail.profileImage}" alt="profile image">
                     </c:when>
                     <c:otherwise>
@@ -63,9 +63,19 @@
 
 
         <section class="one-liner-profile">
-            <div class="profile-pic">
-                <img src="/assets/img/image-add.png" alt="프로필 이미지">
+
+            <div class="profile-box">
+                <c:choose>
+                    <c:when test="${userDetail.profileImage != null}">
+                        <img src="${userDetail.profileImage}" alt="profile image">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="/assets/img/anonymous.jpg" alt="profile image">
+                    </c:otherwise>
+                </c:choose>
             </div>
+
+
             <div class="profile-info">
                 <h2>${user.nickname}</h2>
                 <p>30대 · ${user.gender == 'F' ? '여자' : '남자'}</p>
