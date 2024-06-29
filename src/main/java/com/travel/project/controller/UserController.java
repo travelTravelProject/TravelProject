@@ -168,7 +168,7 @@ public class UserController {
 
         // 데이터베이스에 업데이트된 사용자 정보 저장
         userService.saveUpdateUser(dto);
-//        userService.saveOrUpdateUserDetail(updatedUser, profilePath);
+        userService.saveOrUpdateUserDetail(dto, profilePath);
 
         // 세션의 기존 LoginUserInfoDto 객체 업데이트
         loginUser.setName(dto.getName());
