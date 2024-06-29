@@ -12,7 +12,7 @@ import {fetchFeedModify, setEditModal} from "./feed-modify.js";
 import {fetchFeedList} from "./feed-getList.js";
 import {fetchFeedDelete} from "./feed-delete.js";
 
-// import { fetchInfScrollReplies, state } from "../feed-reply/feed-getReply.js";
+import { fetchInfScrollReplies, state } from "../feed-reply/feed-getReply.js";
 // import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
 // import { isEditModeActive, fetchReplyModify } from "../feed-reply/feed-modifyReply.js";
 
@@ -46,7 +46,7 @@ export function initFeedFormEvents() {
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             detailModal.setAttribute("data-board-id", boardId);
             fetchFeedDetail(boardId);
-            // fetchInfScrollReplies(1, true, boardId); // 모달이 열릴 때 댓글 fetch
+            fetchInfScrollReplies(1, true, boardId); // 모달이 열릴 때 댓글 fetch
           
         } else if (e.target.id === "editFeedBtn") { // 디테일 모달의 수정 버튼
             editModal.style.display = "block";

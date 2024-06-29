@@ -67,7 +67,9 @@
       </div>
       <div class="interaction-section">
         <span class="comments"><ion-icon name="chatbubble-outline"></ion-icon> 10</span>
-        <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>
+<%--        <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>--%>
+        <span class="hearts"><i class="far fa-heart"></i> 25</span>
+        <span class="hearts"><i class="fas fa-heart"></i> 25</span>
         <span class="bookmarks"><ion-icon name="bookmark-outline"></ion-icon> 5</span>
       </div>
     </div>

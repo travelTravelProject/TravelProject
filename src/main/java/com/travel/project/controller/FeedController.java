@@ -43,7 +43,7 @@ public class FeedController {
         // Search type, keyword 확인 필요
         FeedListDto feeds = feedService.findAll(page);
 
-        log.debug("FeedListDto: {}", feeds);
+        log.debug("FeedListDto: {}", feeds.getFeeds().get(0));
 
         return ResponseEntity.ok(feeds);
     }

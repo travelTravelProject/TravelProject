@@ -3,7 +3,7 @@ import {debounce} from "../util.js";
 import {renderCarousel, setOneImgStyle} from "../image.js";
 
 let currentFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
-let isFetching = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
+let isFetchingFeed = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
 let totalFeeds = 0;  // 총 게시글 수
 let loadedFeeds = 0;  // 로딩된 게시글 수
 
@@ -26,7 +26,9 @@ function appendFeeds({ feeds, pageInfo }) {
         <div class="feed-item animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
         <!-- <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>-->
           <div class="profile-section">
-            <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">
+            <div class="profile-box">
+                <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">     
+            </div>
             <span class="nickname">${nickname}</span>
             <span class="created-at">${createdAt}</span>
           </div>
@@ -42,9 +44,9 @@ function appendFeeds({ feeds, pageInfo }) {
             <span class="show-detail">더보기</span>
           </div>
           <div class="interaction-section">
-            <span class="comments show-detail">💬 ${pageInfo.totalCount}</span>
-            <span class="hearts">❤️ 25</span>
-            <span class="bookmarks">🔖 5</span>
+            <span class="comments show-detail"><ion-icon name="chatbubble-outline"></ion-icon> ${pageInfo.totalCount}</span>
+            <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>
+            <span class="bookmarks"><ion-icon name="bookmark-outline"></ion-icon> 5</span>
           </div>
         </div>
       `;
@@ -55,7 +57,7 @@ function appendFeeds({ feeds, pageInfo }) {
   }
   // 게시글 컨테이너에 태그 추가
   document.getElementById('feedData').innerHTML += tag;
-  // 이미지 1장이면 캐러셀 ui 안보이게..
+  // 이미지 1장이면 캐러셀 ui 안보이게 스타일 변경
   setOneImgStyle();
   // 로드된 게시글 수 업데이트
   loadedFeeds += feeds.length;
@@ -64,8 +66,8 @@ function appendFeeds({ feeds, pageInfo }) {
 // 서버에서 피드 목록 가져오는 비동기 요청 함수
 export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') {
 
-  if(isFetching) return; // 서버에서 데이터를 가져오는 중이면 return;
-  isFetching = true;
+  if(isFetchingFeed) return; // 서버에서 데이터를 가져오는 중이면 return;
+  isFetchingFeed = true;
 
   const url = `${FEED_URL}/v1/list?pageNo=${pageNo}&type=${type}&keyword=${keyword}`;
   console.log('fetchFeedList 실행: ', pageNo);
@@ -89,7 +91,7 @@ export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') 
   // 피드 목록 렌더링
   appendFeeds(feedListDto);
   currentFeedPage = pageNo;
-  isFetching = false;
+  isFetchingFeed = false;
 
   // 피드 모두 가져오면 스크롤이벤트 제거
   if(loadedFeeds >= totalFeeds) {
@@ -105,8 +107,8 @@ const debouncedScrollHandler = debounce(async function(e) {
   // 현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
   if (
     // window.innerHeight + window.scrollY >= document.body.offsetHeight + 300
-    window.innerHeight + window.scrollY >= document.body.offsetHeight + 500
-    && !isFetching
+    window.innerHeight + window.scrollY >= document.body.offsetHeight + 200
+    && !isFetchingFeed
   ) {
     // console.log(e);
     // 서버에서 데이터를 비동기로 불러와야 함
