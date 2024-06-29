@@ -219,7 +219,7 @@ form .btn.btn-primary {
 /* 피드 작성 버튼 */
 body div.btn-container {
     position: fixed;
-    bottom: 60px;
+    bottom: 100px;
     left: 75%;
     /*width: 100%;*/
     color: #ffffff;
@@ -229,18 +229,21 @@ body div.btn-container {
     z-index: 1;
 }
 
-.btn-container #createFeedBtn {
+.btn-container .side-btn {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     background: #4CAF50;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    line-height: 60px;
     /*border: 1px solid red;*/
     cursor: pointer;
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
     transition: 300ms;
+    margin-bottom: 10px;
 }
-#createFeedBtn:hover {
+/*#createFeedBtn:hover {*/
+.side-btn:hover {
     transform: scale(1.1);
 }
 

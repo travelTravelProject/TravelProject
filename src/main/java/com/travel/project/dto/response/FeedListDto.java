@@ -12,8 +12,8 @@ import java.util.List;
 @Builder
 public class FeedListDto {
 
-//    @Setter
-//    private LoginUserInfoDto loginUser;
+    @Setter
+    private LoginUserInfoDto loginUser;
     private PageMaker pageInfo;
     private List<FeedDetailResponseDto> feeds;
 

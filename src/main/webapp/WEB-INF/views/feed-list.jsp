@@ -46,7 +46,8 @@
 
 </section>
 <div class="btn-container">
-    <div id="createFeedBtn"> <i class="fas fa-pen"></i> </div>
+    <div id="createFeedBtn" class="side-btn" data-feed-user="${user != null ? user.account : "null"}"> <i class="fas fa-pen"></i> </div>
+    <div id="goTopBtn" class="side-btn"> TOP </div>
     <%--    <button id="editFeedBtn">피드 수정</button>--%>
 </div>
 <%-- 피드 헤더 끝 --%>
@@ -77,15 +78,15 @@
 </section>
 <%-- 피드 목록 끝 --%>
 <!-- 피드 작성 모달 -->
-<div id="createFeedModal" class="modal">
+<div id="createFeedModal" class="modal" data-feed-user="${user != null ? user.account : "null"}">
   <div class="modal-content">
     <span class="close close-modal">&times;</span>
     <div id="createFeedForm">
-      <label for="cr-nickname">닉네임:</label>
-      <input type="text" id="cr-nickname" name="nickname" required>
-      <label for="cr-content">내용:</label>
+      <label for="cr-nickname">닉네임</label>
+      <input type="text" id="cr-nickname" name="nickname" required value="${user.nickname}" readonly>
+      <label for="cr-content">내용</label>
       <input type="text" id="cr-content" name="content" required>
-      <label for="postImage">이미지 업로드:</label>
+      <label for="postImage">이미지 업로드</label>
       <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
       <div class="dropbox" id="post-preview"></div>
       <button type="submit" id="feed-post-Btn">게시</button>

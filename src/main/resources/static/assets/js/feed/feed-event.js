@@ -40,7 +40,7 @@ export function initFeedFormEvents() {
         if (e.target.id === "createFeedBtn") {
             createModal.style.display = "block";
 
-        } else if (e.target.classList.contains("show-detail")) {
+        } else if (e.target.classList.contains("show-detail")) { // 더보기, 피드목록 댓글아이콘 클릭시 디테일 모달 열기
             detailModal.style.display = "block";
             console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
@@ -90,6 +90,24 @@ export function initFeedFormEvents() {
             }
         }
 
+        // TOP 버튼
+        if( e.target.matches('#goTopBtn')) {
+            const topBtn = document.getElementById('goTopBtn');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollOffset = document.querySelector(".story").offsetTop;
+
+            window.addEventListener('scroll', function () {
+                if(scrollTop >= scrollOffset) {
+                    topBtn.style.display = 'block';
+                } else {
+                    topBtn.style.display = 'none';
+                }
+            });
+            topBtn.addEventListener('click', e => {
+                e.preventDefault();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            })
+        }
     });
 
     // 이미지 input 변경 시 발생 이벤트

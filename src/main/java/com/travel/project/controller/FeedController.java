@@ -6,6 +6,8 @@ import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
 import com.travel.project.dto.response.FeedDetailResponseDto;
 import com.travel.project.dto.response.FeedListDto;
+import com.travel.project.dto.response.LoginUserInfoDto;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,7 @@ public class FeedController {
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             @RequestParam(name = "type", defaultValue = "content", required = false) String type,
             @RequestParam(name = "keyword", defaultValue = "", required = false) String keyword
+            , HttpSession session
     ) {
 //        log.debug("겟: " + pageNo + "-" + type + "-" + keyword);
         Search page = new Search(new Page(pageNo, 5), type, keyword);
@@ -42,6 +45,7 @@ public class FeedController {
         page.setType(type);
         // Search type, keyword 확인 필요
         FeedListDto feeds = feedService.findAll(page);
+        feeds.setLoginUser(LoginUtil.getLoggedInUser(session));
 
         log.debug("FeedListDto: {}", feeds.getFeeds().get(0));
 
@@ -75,6 +79,11 @@ public class FeedController {
             , HttpSession session
     ) {
         log.debug("POST 컨트롤러 계정: {}", account);
+        LoginUserInfoDto user = (LoginUserInfoDto)session.getAttribute("user");
+        log.debug("POST 세션 계정: {}", user.getAccount());
+        if(!account.equals(user.getAccount())) {
+            return ResponseEntity.badRequest().body("계정 불일치");
+        }
         FeedPostDto dto = FeedPostDto.builder()
                 .account(account)
                 .content(content)
