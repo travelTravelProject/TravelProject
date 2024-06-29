@@ -28,7 +28,7 @@
                     id="user_id"
                     class="form-control tooltipstered" 
                     required="required" 
-                    placeholder="최소 8자"
+                    placeholder="숫자와 영어로 4-14자"
                     class="text-input" 
                     />
                     <label for="id">

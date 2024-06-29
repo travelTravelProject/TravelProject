@@ -6,7 +6,6 @@
     <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8">
 
-
     <link rel="stylesheet" href="/assets/css/mypage.css">
 </head>
 <body>
@@ -78,7 +77,7 @@
                 <button type="button" class="modify">프로필 수정</button>
             </div>
 
-
+    <script type="module" src="/assets/js/myPage.js" defer></script>
 
 </body>
 </html>
