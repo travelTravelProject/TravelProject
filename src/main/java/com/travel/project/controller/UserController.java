@@ -42,16 +42,13 @@ public class UserController {
 
     private final UserMapper userMapper;
 
-    @Value("${file.upload.root-path}")
-    private String rootPath;
+//    @Value("${file.upload.root-path}")
+//    private String rootPath ;
 
-//     static String rootPath = System.getProperty("user.dir")
-//             + "/src/main/resources/static/assets/upload";
+     static String rootPath = System.getProperty("user.dir")
+             + "/src/main/resources/static/assets/upload";
 
     private final UserDetailMapper userDetailMapper;
-
-
-
 
     private final UserService userService;
 
@@ -139,6 +136,14 @@ public class UserController {
                                HttpSession session,
                                RedirectAttributes ra) {
         log.info("updateProfile POST: {}", dto);
+        log.debug("프로필 사진 이름: {}", dto.getProfileImage().getOriginalFilename());
+
+        String profilePath = FileUtil.uploadFile(dto.getProfileImage());
+
+        dto.setProfileImagePath(profilePath);
+
+        log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
+
 
         LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
         log.info("loginUser = " + loginUser);
@@ -149,27 +154,21 @@ public class UserController {
             return "redirect:/sign-in";
         }
 
-        // 파일 업로드 처리
-        if (!profileImage.isEmpty()) {
-            String profileImagePath = userService.uploadProfileImage(profileImage);
-            dto.setProfileImage(profileImagePath);
-        }
-        log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
 
-        UpdateProfileDto updatedUser = UpdateProfileDto.builder()
-                .account(dto.getAccount())
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .nickname(dto.getNickname())
-                .oneLiner(dto.getOneLiner())
-                .mbti(dto.getMbti())
-                .profileImage(dto.getProfileImage())
-                .rating(dto.getRating())
-                .build();
-//
+//        UpdateProfileDto updatedUser = UpdateProfileDto.builder()
+//                .account(dto.getAccount())
+//                .name(dto.getName())
+//                .email(dto.getEmail())
+//                .nickname(dto.getNickname())
+//                .oneLiner(dto.getOneLiner())
+//                .mbti(dto.getMbti())
+//                .profileImage(dto.getProfileImage())
+//                .rating(dto.getRating())
+//                .build();
+
         // 데이터베이스에 업데이트된 사용자 정보 저장
-        userService.saveUpdateUser(updatedUser);
-        userService.saveOrUpdateUserDetail(updatedUser);
+        userService.saveUpdateUser(dto);
+//        userService.saveOrUpdateUserDetail(updatedUser, profilePath);
 
         // 세션의 기존 LoginUserInfoDto 객체 업데이트
         loginUser.setName(dto.getName());
@@ -185,11 +184,11 @@ public class UserController {
         session.setAttribute("user", loginUser);
 //        session.setAttribute("updatedUser", updatedUser);
 //        session.setAttribute("updatedUser", new LoginUserInfoDto(updatedUser));
-        System.out.println("updatedUser = " + updatedUser);
-        log.info("Updated user profile: {}", updatedUser);
+        System.out.println("dto = " + dto);
+        log.info("Updated user profile: {}", dto);
 
         // RedirectAttributes를 사용하여 사용자 정보 전달
-        ra.addFlashAttribute("updatedUser", updatedUser);
+        ra.addFlashAttribute("updatedUser", dto);
 
         return "redirect:/mypage";
     }

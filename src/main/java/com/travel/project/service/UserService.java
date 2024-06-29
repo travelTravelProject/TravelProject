@@ -74,18 +74,44 @@ public class UserService {
         // Update tbl_user
         userMapper.updateUser(dto);
         // Update tbl_user_detail
-        userDetailMapper.updateUserDetail(dto);
+        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        if (existingDetail != null) {
+            // 이미 존재하는 경우에만 업데이트
+            existingDetail.setMbti(dto.getMbti());
+            existingDetail.setOneLiner(dto.getOneLiner());
+            existingDetail.setRating(dto.getRating());
+
+            // 프로필 이미지 업로드 및 경로 설정
+            if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
+                String profilePath = FileUtil.uploadFile(dto.getProfileImage());
+                existingDetail.setProfileImage(profilePath);
+            }
+
+            userDetailMapper.updateUserDetail(existingDetail);
+        }
     }
 
+
     @Transactional
-    public void saveOrUpdateUserDetail(UpdateProfileDto dto) {
+    public void saveOrUpdateUserDetail(UpdateProfileDto dto, String profilePath) {
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
         if (existingDetail == null) {
             // Insert new user detail
-            userDetailMapper.insertUserDetail(dto);
+            UserDetail newUserDetail = UserDetail.builder()
+                    .account(dto.getAccount())
+                    .mbti(dto.getMbti())
+                    .oneLiner(dto.getOneLiner())
+                    .profileImage(profilePath)
+                    .rating(dto.getRating())
+                    .build();
+            userDetailMapper.insertUserDetail(newUserDetail);
         } else {
             // Update existing user detail
-            userDetailMapper.updateUserDetail(dto);
+            existingDetail.setMbti(dto.getMbti());
+            existingDetail.setOneLiner(dto.getOneLiner());
+            existingDetail.setProfileImage(profilePath);
+            existingDetail.setRating(dto.getRating());
+            userDetailMapper.updateUserDetail(existingDetail);
         }
     }
 
@@ -94,10 +120,6 @@ public class UserService {
         return userDetailMapper.findUserDetailByAccount(account);
     }
 
-    // FileUtil 클래스의 uploadFile 메서드를 호출하여 파일을 업로드하고, 업로드된 파일의 URL을 반환합니다.
-    public String uploadProfileImage(MultipartFile file) {
-        return FileUtil.uploadFile(file);
-    }
 
 
 //    =================================== yj ========================================

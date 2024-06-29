@@ -8,9 +8,9 @@
     <insert id="save">
         INSERT INTO tbl_user_detail
         (
-        user_datail_id,
+        user_detail_id,
         mbti,
-        one_liner
+        one_liner,
         profile_image,
         rating,
         account
@@ -25,19 +25,20 @@
         WHERE account = #{account}
     </select>
 
-    <update id="updateUserDetail" parameterType="com.travel.project.dto.request.UpdateProfileDto">
+    <update id="updateUserDetail" parameterType="com.travel.project.entity.UserDetail">
         UPDATE tbl_user_detail
         <set>
             <if test="mbti != null">mbti = #{mbti},</if>
             <if test="oneLiner != null">one_liner = #{oneLiner},</if>
-            <if test="rating != null">rating = #{rating}</if>
+            <if test="rating != null">rating = #{rating},</if>
+            <if test="profileImage != null">profile_image = #{profileImage}</if>
         </set>
         WHERE account = #{account}
     </update>
 
-    <insert id="insertUserDetail" parameterType="com.travel.project.dto.request.UpdateProfileDto">
-        INSERT INTO tbl_user_detail (account, one_liner, mbti, rating)
-        VALUES (#{account}, #{oneLiner}, #{mbti}, #{rating})
+    <insert id="insertUserDetail" parameterType="com.travel.project.entity.UserDetail">
+        INSERT INTO tbl_user_detail (one_liner, mbti, rating, profile_image)
+        VALUES (#{oneLiner}, #{mbti}, #{rating}, #{profileImage})
     </insert>
 
 </mapper>

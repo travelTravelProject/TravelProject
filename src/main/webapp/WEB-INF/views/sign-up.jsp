@@ -151,8 +151,32 @@
                         <span id="birthdayChk"></span>
                     </p> 
                 </div>
+
+<%--                <tr>--%>
+<%--                    <td class="text-left">--%>
+<%--                        <p>--%>
+<%--                            <strong>성별을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;--%>
+<%--                            <span id="genderChk"></span>--%>
+<%--                        </p>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td>--%>
+<%--                        <label>--%>
+<%--                            <input type="radio" name="gender" value="M" required ${user.gender == 'M' ? 'checked' : ''}>--%>
+<%--                            남성--%>
+<%--                        </label>--%>
+<%--                        &nbsp;&nbsp;--%>
+<%--                        <label>--%>
+<%--                            <input type="radio" name="gender" value="F" required ${user.gender == 'F' ? 'checked' : ''}>--%>
+<%--                            여성--%>
+<%--                        </label>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+
+
                 <div>
-                    <label class="gender_title" for="gender">성별</label>
+                    <label class="gender_title" >성별</label>
                     <p>
                         <span id="genderChk"></span>
                     </p> 
