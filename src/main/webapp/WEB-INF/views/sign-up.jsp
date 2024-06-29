@@ -31,7 +31,7 @@
                     placeholder="숫자와 영어로 4-14자"
                     class="text-input" 
                     />
-                    <label for="id">
+                    <label for="user_id">
                         아이디   
                     </label>
                     <p>
@@ -53,7 +53,7 @@
                     aria-required="true"
                     placeholder="영문과 특수문자를 포함한 최소 8자"
                     />
-                    <label for="id">비밀번호</label>
+                    <label for="password">비밀번호</label>
                     <p>
                         <span id="pwChk"></span>
                     </p> 
@@ -73,7 +73,7 @@
                     aria-required="true"
                     placeholder="비밀번호가 일치해야합니다."
                     />
-                    <label for="id">비밀번호 확인</label>
+                    <label for="password_check">비밀번호 확인</label>
                     <p>
                         <span id="pwChk2"></span>
                     </p> 
@@ -92,7 +92,7 @@
                     aria-required="true"
                     placeholder="한글로 최대 6자"
                     />
-                    <label for="id">이름</label>
+                    <label for="user_name">이름</label>
                     <p>
                         <span id="nameChk"></span>
                     </p> 
@@ -110,7 +110,7 @@
                     aria-required="true"
                     placeholder="최대 8자"
                     />
-                    <label for="id">닉네임</label>
+                    <label for="user_nickname">닉네임</label>
                     <p>
                         <span id="nicknameChk"></span>
                     </p> 
@@ -128,7 +128,7 @@
                     aria-required="true"
                     placeholder="ex) abc@mvc.com"
                     />
-                    <label for="id">이메일</label>
+                    <label for="user_email">이메일</label>
                     <p>
                         <span id="emailChk"></span>
                     </p> 
@@ -137,7 +137,7 @@
             
             <div class="birth_gender">
                 <div class="birth_box">
-                    <label class="birth_title" for="">생년월일</label>
+                    <label class="birth_title" for="user_birthday">생년월일</label>
                     <input
                             type="date"
                             name="birthday"
@@ -152,7 +152,7 @@
                     </p> 
                 </div>
                 <div>
-                    <label class="gender_title" for="">성별</label>
+                    <label class="gender_title" for="gender">성별</label>
                     <p>
                         <span id="genderChk"></span>
                     </p> 
