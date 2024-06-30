@@ -20,7 +20,9 @@ function appendFeeds({ feeds, pageInfo }) {
     let animationTiming = 1;
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
-         , profileImage: profile, feedImageList}, index) => {
+         , profileImage: profile, feedImageList
+         , likeCount, userLike
+       }, index) => {
 
       tag += `
         <div class="feed-item animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
@@ -48,9 +50,9 @@ function appendFeeds({ feeds, pageInfo }) {
             <span class="show-detail">더보기</span>
           </div>
           <div class="interaction-section">
-            <span class="comments show-detail"><ion-icon name="chatbubble-outline"></ion-icon> ${pageInfo.totalCount}</span>
-            <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>
-            <span class="bookmarks"><ion-icon name="bookmark-outline"></ion-icon> 5</span>
+            <span class="comments show-detail"><ion-icon name="chatbubble-outline" size="large"></ion-icon> ${pageInfo.totalCount}</span>
+            <span class="hearts"><ion-icon name="${userLike ? 'heart' : 'heart-outline'}" class="${userLike ? 'liked': ''}" size="large"></ion-icon> ${likeCount}</span>
+            <span class="bookmarks"><ion-icon name="bookmark-outline" size="large"></ion-icon> 5</span>
           </div>
         </div>
       `;

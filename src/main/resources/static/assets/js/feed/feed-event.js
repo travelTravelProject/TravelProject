@@ -13,6 +13,7 @@ import {fetchFeedList} from "./feed-getList.js";
 import {fetchFeedDelete} from "./feed-delete.js";
 
 import { fetchInfScrollReplies, state } from "../feed-reply/feed-getReply.js";
+import {fetchLike} from "./feed-interaction.js";
 // import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
 // import { isEditModeActive, fetchReplyModify } from "../feed-reply/feed-modifyReply.js";
 
@@ -43,7 +44,7 @@ export function initFeedFormEvents() {
                 : '' // 로그인 하라는 알람 필요
             ;
 
-        } else if (e.target.classList.contains("show-detail")) { // 더보기, 피드목록 댓글아이콘 클릭시 디테일 모달 열기
+        } else if (e.target.classList.contains("show-detail")) { // 더보기, 피드목록 댓글 클릭시 디테일 모달 열기
             detailModal.style.display = "block";
             console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
@@ -127,7 +128,7 @@ export function initFeedFormEvents() {
 
         // 태그들 value, 이미지 파일명 가져오기
         const $createContent = document.getElementById('cr-content').value;
-        createModal
+        // createModal
 
         if (!$createContent || importedImages.length === 0) {
             alert('모든 필드를 채워주세요.');
@@ -193,6 +194,17 @@ export function initFeedFormEvents() {
     topBtn.addEventListener('click', e => {
         e.preventDefault();
         window.scrollTo({top: 0, behavior: 'smooth'});
+    })
+
+    // 좋아요 버튼
+    document.addEventListener('click', e => {
+        const $heartSpan = e.target.closest('.hearts');
+        // 클릭된 요소가 .hearts이거나, .hearts의 자식인 경우 처리
+        if ($heartSpan) {
+            const boardId = $heartSpan.closest('.feed-item').dataset.feedId;
+            console.log('좋아요 이벤트 실행! : ', boardId);
+            fetchLike($heartSpan.firstElementChild, boardId);
+        }
     })
 
     // 댓글 작성/수정 이벤트 등록 (POST)

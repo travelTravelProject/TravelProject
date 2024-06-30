@@ -68,9 +68,7 @@
       </div>
       <div class="interaction-section">
         <span class="comments"><ion-icon name="chatbubble-outline"></ion-icon> 10</span>
-<%--        <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>--%>
-        <span class="hearts"><i class="far fa-heart"></i> 25</span>
-        <span class="hearts"><i class="fas fa-heart"></i> 25</span>
+        <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>
         <span class="bookmarks"><ion-icon name="bookmark-outline"></ion-icon> 5</span>
       </div>
     </div>
@@ -112,7 +110,7 @@
 </div>
 <!-- 피드 수정 모달 끝 -->
 <!-- 피드 상세조회 모달 -->
-<div id="detailFeedModal" class="detail-modal">
+<div id="detailFeedModal" class="detail-modal" data-login="">
   <div class="detail-modal-content">
     <div class="feed-left-side">
       <div class="image-carousel">

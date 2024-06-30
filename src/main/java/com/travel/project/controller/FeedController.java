@@ -2,6 +2,7 @@ package com.travel.project.controller;
 
 import com.travel.project.common.Page;
 import com.travel.project.common.Search;
+import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
 import com.travel.project.dto.response.FeedDetailResponseDto;
@@ -9,6 +10,7 @@ import com.travel.project.dto.response.FeedListDto;
 import com.travel.project.dto.response.LikeDto;
 import com.travel.project.dto.response.LoginUserInfoDto;
 import com.travel.project.login.LoginUtil;
+import com.travel.project.mapper.FeedMapper;
 import com.travel.project.service.FeedService;
 import com.travel.project.service.LikeService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class FeedController {
 
     private final FeedService feedService;
     private final LikeService likeService;
+    private final FeedMapper feedMapper;
 
     // 피드 전체 조회 요청
     @GetMapping("/list") // 페이지, 검색 쿼리스트링
@@ -167,8 +170,16 @@ public class FeedController {
         log.info("좋아요 async request 피드 컨트롤러!");
 
         String account = LoginUtil.getLoggedInUserAccount(session);
+        FeedFindOneDto feedById = feedMapper.findFeedById((long) boardId);
+        String boardAccount = feedById.getAccount();
 
-        LikeDto dto = likeService.like(account, boardId);// 좋아요 요청 처리
+        LikeDto dto = likeService.like(account, boardId, boardAccount);// 좋아요 요청 처리
+
+        if(dto == null) {
+            return ResponseEntity.status(403)
+                    .body("자신이 작성한 피드에는 좋아요를 누를 수 없습니다.");
+        }
+
         return ResponseEntity.ok().body(dto);
     }
 

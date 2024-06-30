@@ -52,9 +52,8 @@ public class FeedService {
                     int boardId = (int) f.getBoardId();
                     String account = f.getAccount();
                     // 좋아요 수, 로그인 유저의 좋아요 여부 추가
-                    LikeDto like = likeService.like(account, boardId);
-                    responseDto.setLikeCount(like.getLikeCount());
-                    responseDto.setUserLike(like.isUserLike());
+                    responseDto.setLikeCount(likeService.countLikes(boardId));
+                    responseDto.setUserLike(likeService.isLikedByUser(account, boardId));
 
                     // Feed 디테일 응답객체에 이미지 담기
                     List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());

@@ -27,6 +27,9 @@ function setDetailModal(dto) {
   // 상세조회 캐러설에 이미지 추가
   $imgCarousel.innerHTML = renderCarousel(feedImageList, 'post-image d-block w-100', boardId, "Detail");
   setOneImgStyle();
+
+  // 로그인 유저 = 피드 작성자 일때 수정, 삭제 버튼 렌더링
+
 }
 
 // 서버로 boardId 보내서 fetch로 데이터 받아와서 모달에 뿌려줌

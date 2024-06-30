@@ -114,10 +114,9 @@ body {
     display: flex;
     align-items: center;
     font-size: 16px;
+    border: 1px solid blueviolet;
 }
-.interaction-section i {
-    font-size: 20px;
-}
+
 /* 모달 css */
 /* modal.css */
 .modal {
