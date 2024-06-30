@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 public class AccBoardListDto {
 
-    private int boardId; // 게시글 번호
+    private long boardId; // 게시글 번호
     private String shortTitle; // 줄임 처리된 제목
     private String shortContent; // 줄임 처리된 글 내용
     private String date; // 포맷팅된 날짜 문자열

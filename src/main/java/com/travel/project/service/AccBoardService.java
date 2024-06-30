@@ -1,14 +1,15 @@
 package com.travel.project.service;
 
-import com.travel.project.common.Page;
 import com.travel.project.common.Search;
 import com.travel.project.dto.request.AccBoardWriteDto;
 import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
 import com.travel.project.dto.response.AccBoardModifyDto;
 import com.travel.project.entity.AccBoard;
+import com.travel.project.entity.Bookmark;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.AccBoardMapper;
+import com.travel.project.mapper.BookmarkMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class AccBoardService {
 
     private final AccBoardMapper accBoardMapper;
+    private final BookmarkMapper bookmarkMapper;
 
     // 목록 조회 요청 중간처리
     public List<AccBoardListDto> findList(Search page) {
@@ -42,12 +44,12 @@ public class AccBoardService {
     }
 
     // 삭제 요청 중간처리
-    public boolean remove(int boardId) {
+    public boolean remove(long boardId) {
         return accBoardMapper.delete(boardId);
     }
 
     // 상세 조회 요청 중간처리
-    public AccBoardDetailDto detail(int boardId) {
+    public AccBoardDetailDto detail(long boardId) {
         AccBoard ab = accBoardMapper.findOne(boardId);
         if(ab != null) {
 //            accBoardMapper.upViewCount(boardId);
@@ -60,7 +62,7 @@ public class AccBoardService {
     }
 
     // 게시글 수정 화면 요청 처리
-    public AccBoardModifyDto getModifyForm(int boardId) {
+    public AccBoardModifyDto getModifyForm(long boardId) {
         // 수정할 게시글 조회
         AccBoard ab = accBoardMapper.findOne(boardId);
 //        if (ab == null) {
@@ -80,5 +82,12 @@ public class AccBoardService {
 
     public int getCount(Search search) {
         return accBoardMapper.count(search);
+    }
+
+    public boolean checkBookmark(HttpSession session, long boardId) {
+        String account = LoginUtil.getLoggedInUserAccount(session);
+        Bookmark bm = bookmarkMapper.existsBookmark(account, boardId);
+        boolean flag = (bm != null);
+        return flag;
     }
 }

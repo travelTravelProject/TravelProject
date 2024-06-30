@@ -84,27 +84,33 @@
             border-radius: 10px;
             margin-bottom: 30px;
         }
+        #detail-travel .travel-info .fas {
+            color: #999;
+        }
         #detail-travel {
             font-size: 0.9em;
         }
         .buttons {
-            margin-top: 20px;
+            margin: 20px auto;
         }
         .buttons .edit-btn, .buttons .list-btn {
             margin-right: 10px;
             margin-top: 10px;
         }
         .reaction-buttons button {
-            background-color: #00CE7B;
-            color: #ddd;
-            border: none;
+            background-color: transparent;
+            color: #000;
+            border: 2px solid #00CE7B;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
         }
-        .reaction-buttons button:hover {
-            background-color: #00b56a;
+
+        .reaction-buttons button.active {
+            background-color: #00CE7B;
+            color: #fff;
         }
+
     </style>
 
 </head>
@@ -114,10 +120,6 @@
         <div class="card-img">
             <img src="#" alt="대표이미지">
         </div>
-<%--        <h1>${abd.boardId}번 게시물</h1>--%>
-<%--        <h2># 작성일자: ${abd.createdAt}</h2>--%>
-<%--        <label for="writer">작성자</label>--%>
-<%--        <input type="text" id="writer" name="writer" value="${abd.writer}" readonly>--%>
         <div id="inner-wrapper">
             <div id="title">
                 <div class="main-title">
@@ -127,21 +129,17 @@
                     <scan class="view-count">조회수 ${abd.viewCount}</scan>
                 </div>
             </div>
-            <%--    <div id="detail-title">--%>
-            <%--        <scan>#{abd.title}</scan>--%>
-            <%--    </div>--%>
             <div id="detail-travel">
                 <p class="title">여행 일정</p>
                 <div class="travel-info">
                     <div class="travel-period">
-                        <span class="lnr lnr-calendar-full"></span> ${abd.startDate} - ${abd.endDate}
+                        <i class="fas fa-calendar"></i> &nbsp;${abd.startDate} - ${abd.endDate}
                     </div>
                     <div class="travel-destination">
-                        <span class="lnr lnr-map-marker"></span> 장소
+                        <i class="fas fa-map-marker-alt"></i> &nbsp;장소
                     </div>
 
                 </div>
-<%--                <input type="text" id="travel-period" name="travel-period" value="${abd.startDate} - ${abd.endDate}" readonly>--%>
                 <p class="content">여행 소개</p>
                 <div class="text">
                     ${abd.content}
@@ -149,59 +147,81 @@
             </div>
 
             <div class="buttons">
-<%--                <div class="reaction-buttons">--%>
-<%--                    <button id="like-btn">--%>
-<%--                        <i class="fas fa-thumbs-up"></i> 좋아요--%>
-<%--                    </button>--%>
-<%--                </div>--%>
-
+                <div class="reaction-buttons">
+                    <button id="bookmark-btn" class="bookmark-button ${bookmark?active:''}}">
+                        <i class="far fa-bookmark"></i>
+                        <i class="fas fa-bookmark" style="display: none;"></i>
+                    </button>
+                </div>
                 <button class="edit-btn btn btn-secondary" type="button"
                         onclick="window.location.href='/acc-board/modify?bno=${abd.boardId}'">수정
                 </button>
-
                 <button class="list-btn btn btn-secondary" type="button" onclick="window.location.href='${ref}'">목록
                 </button>
+            </div>
+
+            <%--  댓글영역  --%>
+            <div>댓글</div>
+
         </div>
-        </div>
+    </div>
 
-    <script>
-        // 서버에 좋아요 요청을 보내는 함수
-        async function sendLike() {
-            const bno = document.getElementById('wrap').dataset.bno;
-            const res = await fetch(`/acc-board/like?bno=${bno}`);
+        <script>
+            // 페이지 로드 시 북마크 상태 확인 및 버튼 업데이트
+            document.addEventListener('DOMContentLoaded', async function () {
+                const bno = document.getElementById('wrap').dataset.bno;
 
-            if (res.status === 403) {
-                const msg = await res.text();
-                alert(msg);
-                return;
+                const res = await fetch(`/acc-board/bookmark/status?boardId=\${bno}`);
+                const isBookmarked = await res.json();
+                updateBookmarkButton(isBookmarked);
+            });
+
+            // 북마크 요청을 보내는 함수
+            async function toggleBookmark() {
+                const bno = document.getElementById('wrap').dataset.bno;
+                console.log("bno: ", bno);
+                const res = await fetch(`/acc-board/bookmark?boardId=\${bno}`, {
+                    method: 'GET'
+                });
+
+                if (res.status === 403) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = '/sign-in';  // 로그인 페이지로 리다이렉트
+                    return;
+                }
+
+                if (!res.ok) {
+                    const errorMsg = await res.text();
+                    alert(errorMsg);
+                    return;
+                }
+
+                const { bookmarkCount, userBookmark } = await res.json();
+                updateBookmarkButton(userBookmark);
             }
 
-            const { likeCount, userReaction } = await res.json();
-            const likeCountElement = document.getElementById('like-count');
-            if (likeCountElement) {
-                likeCountElement.textContent = likeCount;
+            // 북마크 버튼 스타일 업데이트 함수
+            function updateBookmarkButton(userBookmark) {
+                const bookmarkBtn = document.getElementById('bookmark-btn');
+                const farIcon = bookmarkBtn.querySelector('.far.fa-bookmark');
+                const fasIcon = bookmarkBtn.querySelector('.fas.fa-bookmark');
+
+                if (userBookmark) {
+                    bookmarkBtn.classList.add('active');
+                    farIcon.style.display = 'none';
+                    fasIcon.style.display = 'inline';
+                } else {
+                    bookmarkBtn.classList.remove('active');
+                    farIcon.style.display = 'inline';
+                    fasIcon.style.display = 'none';
+                }
             }
 
-            // 버튼 활성화 스타일 처리
-            updateReactionButtons(userReaction);
-        }
+            // 북마크 버튼 클릭 이벤트 리스너 추가
+            document.getElementById('bookmark-btn').addEventListener('click', toggleBookmark);
+        </script>
 
-        // 좋아요 버튼 배경색 변경
-        function updateReactionButtons(userReaction) {
-            const $likeBtn = document.getElementById('like-btn');
 
-            const ACTIVE = 'active';
-            // 좋아요 버튼이 눌렸을 경우
-            if(userReaction === 'LIKE') {
-                $likeBtn.classList.add(ACTIVE);
-            } else { // 안눌렀을 경우
-                $likeBtn.classList.remove(ACTIVE);
-            }
-        }
-
-        // 좋아요 클릭 이벤트
-        document.getElementById('like-btn').addEventListener('click', sendLike);
-    </script>
 
 
 </body>

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class AccBoard {
 
-    private int boardId; // 글번호
+    private long boardId; // 글번호
     private String account; // 계정명
     private int categoryId; // 게시글 타입 번호
     private String title; // 제목

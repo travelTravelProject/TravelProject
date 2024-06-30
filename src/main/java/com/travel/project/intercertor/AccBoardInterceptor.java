@@ -41,7 +41,7 @@ public class AccBoardInterceptor implements HandlerInterceptor {
                 return true;
             }
             // 2. 삭제 또는 수정하려는 글의 작성자인지 확인
-            int boardId = Integer.parseInt(request.getParameter("bno"));
+            long boardId = Integer.parseInt(request.getParameter("bno"));
             AccBoard accBoard = accBoardMapper.findOne(boardId);
             String accBoardAccount = accBoard.getAccount();
             // 현재 로그인한 회원의 계정명
