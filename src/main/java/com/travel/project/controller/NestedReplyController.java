@@ -52,7 +52,6 @@ public class NestedReplyController {
     // 대댓글 수정
     @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<?> modifyNestedReply(
-            @PathVariable long nestedReplyId,
             @RequestBody NestedReplyRequestModifyDto dto) {
         // 대댓글이 수정된 후의 대댓글 목록
         NestedReplyListDto NestedReplyListDto = nestedReplyService.modifyReply(dto);

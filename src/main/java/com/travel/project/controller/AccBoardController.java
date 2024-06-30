@@ -36,7 +36,7 @@ public class AccBoardController {
         System.out.println("/acc-board/list GET");
 
         // 목록 조회 요청 위임
-        List<AccBoardListDto> abList = boardService.findList(page);
+        List<AccBoardListDto> abList = boardService.    findList(page);
 
         // 페이지 정보
         PageMaker maker = new PageMaker(page, boardService.getCount(page));
@@ -58,13 +58,13 @@ public class AccBoardController {
 
     // 3. 게시글 등록 요청 (/write : POST) > 목록조회 요청 리다이렉션
     @PostMapping("/write")
-    public String write(AccBoardWriteDto dto) {
+    public String write(AccBoardWriteDto dto, HttpSession session) {
         System.out.println("/acc-board/acc-write POST");
 
         // 1. 브라우저가 전달한 게시글 내용 읽기
         System.out.println("dto: " + dto);
 
-        boardService.insert(dto);
+        boardService.insert(dto, session);
 
         return "redirect:/acc-board/list";
     }

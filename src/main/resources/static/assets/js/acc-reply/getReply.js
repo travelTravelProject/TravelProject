@@ -1,12 +1,13 @@
 import { BASE_URL } from "../acc-reply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
-import { fetchInfScrollNestReplies, appendNestedReplies } from "./getNestReply.js";
+import { fetchInfScrollNestReplies } from "./getNestReply.js";
 import { fetchNestedReplyPost } from "./postNestReply.js";
+import { debounce } from "../util.js";
 
 // =============== 무한 스크롤 포함 ============= //
 
 // 댓글 등록시 시간에 대한 필터 함수
-function getRelativeTime(createAt) {
+export function getRelativeTime(createAt) {
   // 현재 시간 구하기
   const now = new Date();
   // 등록 시간 날짜타입으로 변환
@@ -75,8 +76,7 @@ export function appendReplies({ replies }, reset = false) {
                         </div>
                     </div>
                 </div>
-                <div id="nestedReplyData">
-
+                <div id="nestedReplyData-${rno}" class="nested-reply-data">
                 </div>
             </div>
 
@@ -124,6 +124,7 @@ export function appendReplies({ replies }, reset = false) {
                 </div>
             </div>
             `;
+
             // 대댓글 fetch
             fetchInfScrollNestReplies(rno);
     });
@@ -151,7 +152,10 @@ export function appendReplies({ replies }, reset = false) {
     });
   });
 
+
+
   loadedReplies += replies.length;
+  
 }
 
 // 서버에서 댓글 데이터를 페칭
@@ -159,7 +163,7 @@ export async function fetchInfScrollReplies(pageNo = 1, reset = false) {
   if (isFetching) return; // 서버에서 데이터를 가져오는 중이면 return
 
   isFetching = true;
-  if (pageNo > 1) showSpinner();
+  if (pageNo > 1)showSpinner();
 
   const bno = document.getElementById("wrap").dataset.bno; // 게시물 글번호
   const res = await fetch(`${BASE_URL}/${bno}/page/${pageNo}`);
@@ -203,20 +207,15 @@ async function scrollHandler(e) {
   // 스크롤이 최하단부로 내려갔을 때만 이벤트 발생시켜야 함
   //  현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
   if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight + 0 &&
-    !isFetching
+    window.innerHeight + window.scrollY >= document.body.offsetHeight + 20
+    && !isFetching
   ) {
+    console.log('window.innerHeight:', window.innerHeight);
+    console.log('window.scrollY:', window.scrollY);
+    console.log('document.body.offsetHeight:', document.body.offsetHeight);
+    // await new Promise(resolve => setTimeout(resolve, 500));
     await fetchInfScrollReplies(currentPage + 1);
   }
-}
-
-// 디바운싱 함수
-export function debounce(callback, wait) {
-    let timeout;
-    return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => callback(...args), wait);
-    };
 }
 
 // 디바운스 사용
@@ -238,6 +237,6 @@ export async function initInfScroll() {
   window.scrollTo(0, 0);
   currentPage = 1;
   fetchInfScrollReplies(1, true);
-  fetchInfScrollNestReplies(1, true);
   setupInfiniteScroll();
+  // scrollHandler();
 }

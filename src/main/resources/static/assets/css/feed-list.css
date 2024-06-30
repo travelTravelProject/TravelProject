@@ -548,3 +548,6 @@ body div.btn-container {
     width: 200px;
     border-radius: 5px;
 }
+.hidden {
+    display: none;
+}

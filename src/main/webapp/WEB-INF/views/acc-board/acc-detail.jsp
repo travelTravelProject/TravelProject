@@ -111,49 +111,7 @@
                 </div>
                 </div>
 
-
             </div>
-
-            <!-- 대댓글 쓰기 영역 -->
-            <!-- <div id="nestedReplyWriteSection" class="Nestedcard hidden">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <label for="newNestedReplyText" hidden>대댓글 내용</label>
-                                <textarea
-                                rows="3"
-                                id="newNestedReplyText"
-                                name="nestedReplyText"
-                                class="form-control"
-                                placeholder="대댓글을 입력해주세요."
-                                ></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="newNestedReplyWriter" hidden>대댓글 작성자</label>
-                                <input
-                                id="newNestedReplyWriter"
-                                name="nestedReplyWriter"
-                                type="text"
-                                class="form-control"
-                                placeholder="작성자 이름"
-                                style="margin-bottom: 6px"
-                                />
-                                <button
-                                id="nestedReplyAddBtn"
-                                type="button"
-                                class="btn btn-dark form-control"
-                                >
-                                등록
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- end nested reply write -->
 
             <!-- 댓글 페이징 영역 -->
             <ul class="pagination justify-content-center">
