@@ -3,102 +3,105 @@
 <!doctype html>
 <html lang="ko">
 <head>
-    <%@ include file="../include/static-head.jsp" %>
+    <meta charset="UTF-8">
+    <title>동행 게시판 글쓰기</title>
 
-    <!-- ck editor -->
-    <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+    <!-- reset -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+    <!-- fontawesome css: https://fontawesome.com -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+
+    <!-- https://linearicons.com/free#cdn -->
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <style>
-        .form-container {
-            width: 500px;
-            margin: auto;
-            padding: 20px;
-            background-image: linear-gradient(135deg, #a1c4fd, #fbc2eb);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-            font-size: 18px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
         }
-        .form-container h1 {
-            font-size: 40px;
-            font-weight: 700;
-            letter-spacing: 10px;
-            text-align: center;
+        #wrap {
+            width: 60%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
             margin-bottom: 20px;
-            color: #ffffff;
         }
         label {
+            font-weight: bold;
+            margin-top: 10px;
             display: block;
-            margin-bottom: 5px;
-            font-size: 20px;
         }
-        input[type="text"],
-        input[type="date"],
-        textarea {
-            font-size: 18px;
+        input[type="text"], input[type="date"], textarea {
             width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 2px solid #ffffff;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f8f8;
         }
         textarea {
-            resize: none;
-            height: 200px;
+            min-height: 100px;
         }
         .buttons {
-            display: flex;
-            justify-content: flex-end;
             margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
         }
-        button {
-            font-size: 20px;
-            padding: 10px 20px;
+        .buttons button {
+            background-color: #00CE7B;
+            color: #fff;
             border: none;
-            margin-right: 10px;
-            background-color: #4CAF50;
-            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s;
         }
-        button.list-btn {
-            background: #e61e8c;
+        .buttons button:hover {
+            background-color: #00b56a;
         }
-        button:hover {
-            background-color: #3d8b40;
+        .list-btn {
+            background-color: #6c757d;
         }
-        button.list-btn:hover {
-            background: #e61e8c93;
+        .list-btn:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
 <body>
-
 <div id="wrap" class="form-container">
     <h1>동행 게시판 글쓰기</h1>
     <form action="/acc-board/write" method="post">
-<%--        <label for="account">계정명</label>--%>
-<%--        <input type="text" id="account" name="account" required>--%>
-<%--        <label for="categoryId">게시판유형</label>--%>
-<%--        <input type="text" id="categoryId" name="categoryId" required>--%>
-<%--        <label for="writer">작성자</label>--%>
-<%--        <input type="text" id="writer" name="writer" value="${sessionScope.user.nickname}" readonly>--%>
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" required>
-        <label for="content">내용</label>
-        <textarea id="content" name="content" maxlength="200" required></textarea>
+
         <label for="location">장소</label>
         <input type="text" id="location" name="location" required>
+
         <label for="startDate">시작일</label>
         <input type="date" id="startDate" name="startDate" required>
+
         <label for="endDate">종료일</label>
         <input type="date" id="endDate" name="endDate" required>
 
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="content">내용</label>
+        <textarea id="content" name="content" maxlength="200" required></textarea>
+
         <div class="buttons">
-            <button class="list-btn" type="button" onclick="window.location.href='/acc-board/list'">목록</button> <%-- 수정된 부분: URL을 /acc-board/list로 변경 --%>
+            <button class="list-btn" type="button" onclick="window.location.href='/acc-board/list'">목록</button>
             <button type="submit">글쓰기</button>
         </div>
     </form>
