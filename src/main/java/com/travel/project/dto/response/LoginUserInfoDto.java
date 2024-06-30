@@ -55,4 +55,17 @@ public class LoginUserInfoDto {
         this.profileImage = userDetail.getProfileImage();
     }
 
+    // 성별 변환 메서드 추가
+    public String getGenderDisplay() {
+        if (this.gender != null) {
+            switch (this.gender) {
+                case "M":
+                    return "남자";
+                case "F":
+                    return "여자";
+            }
+        }
+        return "";
+    }
+
 }

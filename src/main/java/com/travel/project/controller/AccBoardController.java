@@ -8,10 +8,12 @@ import com.travel.project.dto.response.AccBoardDetailDto;
 import com.travel.project.dto.response.AccBoardListDto;
 import com.travel.project.dto.response.AccBoardModifyDto;
 import com.travel.project.dto.response.LikeDto;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.service.AccBoardService;
 import com.travel.project.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +34,9 @@ public class AccBoardController {
 
     // 1. 목록 조회 요청 (/list : GET)
     @GetMapping("/list")
-    public String list(@ModelAttribute("s") Search page, Model model) {
+    public String list(@ModelAttribute("s") Search page, Model model, HttpSession session) {
         System.out.println("/acc-board/list GET");
-
+        System.out.println(session.getAttribute("user"));
         // 목록 조회 요청 위임
         List<AccBoardListDto> abList = boardService.findList(page);
 
@@ -50,21 +52,27 @@ public class AccBoardController {
 
     // 2. 게시글 쓰기 양식 화면 열기 요청 (/write : GET)
     @GetMapping("/write")
-    public String write() {
+    public String write(HttpSession session) {
         System.out.println("/acc-board/acc-write GET");
+        // 로그인 확인
+        if (!LoginUtil.isLoggedIn(session)) {
+            return "redirect:/sign-in";
+        }
 
         return "acc-board/acc-write";
     }
 
     // 3. 게시글 등록 요청 (/write : POST) > 목록조회 요청 리다이렉션
     @PostMapping("/write")
-    public String write(AccBoardWriteDto dto) {
+    public String write(AccBoardWriteDto dto, HttpSession session) {
         System.out.println("/acc-board/acc-write POST");
 
-        // 1. 브라우저가 전달한 게시글 내용 읽기
-        System.out.println("dto: " + dto);
+        // 로그인 확인
+        if (!LoginUtil.isLoggedIn(session)) {
+            return "redirect:/sign-in"; // 로그인 페이지로 리다이렉트
+        }
 
-        boardService.insert(dto);
+        boardService.insert(dto, session);
 
         return "redirect:/acc-board/list";
     }
@@ -150,16 +158,15 @@ public class AccBoardController {
     public ResponseEntity<?> like(int boardId, HttpSession session) {
 
 //        log.info("like async request!");
-//        // 로그인 검증
-//        if (!LoginUtil.isLoggedIn(session)) {
-//            return ResponseEntity.status(403).body("로그인이 필요합니다.");
-//        }
-//
-//        String account = LoginUtil.getLoggedInUserAccount(session);
-//
-//        LikeDto dto = likeService.like(account, boardId); // 좋아요 요청 처리
-//
-//        return ResponseEntity.ok().body(dto);
-        return null;
+        // 로그인 검증
+        if (!LoginUtil.isLoggedIn(session)) {
+            return ResponseEntity.status(403).body("로그인이 필요합니다.");
+        }
+
+        String account = LoginUtil.getLoggedInUserAccount(session);
+
+        LikeDto dto = likeService.like(account, boardId); // 좋아요 요청 처리
+
+        return ResponseEntity.ok().body(dto);
     }
 }

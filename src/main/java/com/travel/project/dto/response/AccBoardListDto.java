@@ -24,6 +24,8 @@ public class AccBoardListDto {
     private String account; // 작성자 계정
     private String startDate; // 동행 시작일
     private String endDate; // 동행 종료일
+    private String writer; // 닉네임
+    private String gender; // 작성자 성별
 
     // 엔터티를 DTO로 변환
     public AccBoardListDto (AccBoard ab) {
@@ -35,6 +37,8 @@ public class AccBoardListDto {
         this.account = ab.getAccount();
         this.startDate = dateFormatting(ab.getStartDate());
         this.endDate = dateFormatting(ab.getEndDate());
+        this.writer = ab.getWriter();
+        this.gender = ab.getGender().name();
 
     }
 
@@ -44,10 +48,10 @@ public class AccBoardListDto {
     }
 
     private String makeShortContent(String content) {
-        return content.length() > 30 ? content.substring(0, 30) + "..." : content;
+        return content.length() > 100 ? content.substring(0, 100) + "..." : content;
     }
 
     private String makeShortTitle(String title) {
-        return title.length() > 10 ? title.substring(0, 10) + "..." : title;
+        return title.length() > 30 ? title.substring(0, 30) + "..." : title;
     }
 }

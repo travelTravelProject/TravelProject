@@ -80,22 +80,22 @@
 <div id="wrap" class="form-container">
     <h1>동행 게시판 글쓰기</h1>
     <form action="/acc-board/write" method="post">
-        <label for="account">계정명</label>
-        <input type="text" id="account" name="account" required>
-        <label for="categoryId">게시판유형</label> <%-- 수정된 부분: name 속성 값을 categoryId로 변경 --%>
-        <input type="text" id="categoryId" name="categoryId" required> <%-- 수정된 부분: name 속성 값을 categoryId로 변경 --%>
+<%--        <label for="account">계정명</label>--%>
+<%--        <input type="text" id="account" name="account" required>--%>
+        <label for="categoryId">게시판유형</label>
+        <input type="text" id="categoryId" name="categoryId" required>
         <label for="writer">작성자</label>
-        <input type="text" id="writer" name="writer" required>
+        <input type="text" id="writer" name="writer" value="${sessionScope.user.nickname}" readonly>
         <label for="title">제목</label>
         <input type="text" id="title" name="title" required>
         <label for="content">내용</label>
         <textarea id="content" name="content" maxlength="200" required></textarea>
         <label for="location">장소</label>
         <input type="text" id="location" name="location" required>
-        <label for="startDate">시작일</label> <%-- 수정된 부분: name 속성 값을 startDate로 변경 --%>
-        <input type="date" id="startDate" name="startDate" required> <%-- 수정된 부분: name 속성 값을 startDate로 변경 --%>
-        <label for="endDate">종료일</label> <%-- 수정된 부분: name 속성 값을 endDate로 변경 --%>
-        <input type="date" id="endDate" name="endDate" required> <%-- 수정된 부분: name 속성 값을 endDate로 변경 --%>
+        <label for="startDate">시작일</label>
+        <input type="date" id="startDate" name="startDate" required>
+        <label for="endDate">종료일</label>
+        <input type="date" id="endDate" name="endDate" required>
 
         <div class="buttons">
             <button class="list-btn" type="button" onclick="window.location.href='/acc-board/list'">목록</button> <%-- 수정된 부분: URL을 /acc-board/list로 변경 --%>

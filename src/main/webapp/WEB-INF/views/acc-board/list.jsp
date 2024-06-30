@@ -50,6 +50,7 @@
         .card-post {
             display: flex;
             width: 100%;
+            cursor: pointer;
         }
         .card-content-wrapper {
             flex: 1;
@@ -89,13 +90,17 @@
             object-fit: cover;
             border-radius: 10px;
         }
-        .card-details-bot {
+        .card-details-bot1 {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+        .card-details-bot2 {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.9em;
             color: #666;
-            margin-top: 10px;
         }
         .card-details-bot .view-count {
             margin-left: auto;
@@ -172,33 +177,41 @@
         </div>
     </c:if>
 
-    <c:if test="${abList.size() > 0}">
-        <c:forEach var="ab" items="${abList}">
-            <div class="card-wrapper">
-                <section class="card-post" data-bno="${ab.boardId}">
-                    <div class="card-content-wrapper">
-                        <div class="card-details-top">
-                            <div class="card-text">
-                                <div class="card-title">${ab.shortTitle}</div>
-                                <div class="card-content">
-                                        ${ab.shortContent}
+        <div class="card-container">
+            <c:if test="${abList.size() > 0}">
+                <c:forEach var="ab" items="${abList}">
+                    <div class="card-wrapper">
+                        <section class="card-post" data-bno="${ab.boardId}">
+                            <div class="card-content-wrapper">
+                                <div class="card-details-top">
+                                    <div class="card-text">
+                                        <div class="card-title">${ab.shortTitle}</div>
+                                        <div class="card-content">
+                                                ${ab.shortContent}
+                                        </div>
+                                    </div>
+                                    <div class="card-img">
+                                        <img src="#" alt="대표이미지">
+                                    </div>
+                                </div>
+                                <div class="card-details-bot1">
+                                    <span>${ab.writer} ·
+                                        <c:choose>
+                                            <c:when test="${ab.gender == 'M'}">남자</c:when>
+                                            <c:when test="${ab.gender == 'F'}">여자</c:when>
+                                        </c:choose>
+                                    </span>
+                                </div>
+                                <div class="card-details-bot2">
+                                    <span class="lnr lnr-calendar-full">&nbsp;${ab.startDate} - ${ab.endDate}</span>
+                                    <span class="view-count">조회수 ${ab.view}</span>
                                 </div>
                             </div>
-                            <div class="card-img">
-                                <img src="#" alt="대표이미지">
-                            </div>
-                        </div>
-                        <div class="card-details-bot">
-                            <span>${user.Gender}</span>
-                            <span class="lnr lnr-calendar-full"></span>
-                            <span class="acc-period">&nbsp;${ab.startDate} - ${ab.endDate}</span>
-                            <span class="view-count">조회수 ${ab.view}</span>
-                        </div>
+                        </section>
                     </div>
-                </section>
-            </div>
-        </c:forEach>
-    </c:if>
+                </c:forEach>
+            </c:if>
+        </div>
 
     <!-- 페이지 버튼 영역 -->
     <div class="paging">
@@ -249,33 +262,13 @@
     const cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
 
     $cardContainer?.addEventListener('click', e => {
-        // 삭제 버튼을 눌렀다면~
-        if (e.target.matches('.card-btn-group *')) {
-            console.log('삭제버튼 클릭');
-            modal.style.display = 'flex'; // 모달 창 띄움
-
-            const $delBtn = e.target.closest('.del-btn');
-            const deleteLocation = $delBtn.dataset.href;
-
-            // 확인 버튼 이벤트
-            confirmDelete.onclick = e => {
-                // 삭제 처리 로직
-                window.location.href = deleteLocation;
-
-                modal.style.display = 'none'; // 모달 창 닫기
-            };
-
-            // 취소 버튼 이벤트
-            cancelDelete.onclick = e => {
-                modal.style.display = 'none'; // 모달 창 닫기
-            };
-        } else { // 삭제 버튼 제외한 부분은 글 상세조회 요청
+            console.log(e.target);
 
             // section태그에 붙은 글번호 읽기
-            const bno = e.target.closest('section.card').dataset.bno;
+            const bno = e.target.closest('section.card-post').dataset.bno;
             // 요청 보내기
             window.location.href= '/acc-board/detail?bno=' + bno;
-        }
+            console.log(window.location.href);
     });
 
     // 전역 이벤트로 모달창 닫기
