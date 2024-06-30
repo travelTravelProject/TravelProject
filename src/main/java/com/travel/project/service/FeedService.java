@@ -189,7 +189,7 @@ public class FeedService {
         log.debug("피드서비스 삭제: {}", flag);
         return flag ? findAll(new Search(new Page(1, 5))) : null;
     }
-
+    // 조회수 증가
     public boolean addViewCount(long boardId) {
         return feedMapper.upViewCount(boardId);
     }
