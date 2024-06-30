@@ -82,10 +82,10 @@
     <form action="/acc-board/write" method="post">
 <%--        <label for="account">계정명</label>--%>
 <%--        <input type="text" id="account" name="account" required>--%>
-        <label for="categoryId">게시판유형</label>
-        <input type="text" id="categoryId" name="categoryId" required>
-        <label for="writer">작성자</label>
-        <input type="text" id="writer" name="writer" value="${sessionScope.user.nickname}" readonly>
+<%--        <label for="categoryId">게시판유형</label>--%>
+<%--        <input type="text" id="categoryId" name="categoryId" required>--%>
+<%--        <label for="writer">작성자</label>--%>
+<%--        <input type="text" id="writer" name="writer" value="${sessionScope.user.nickname}" readonly>--%>
         <label for="title">제목</label>
         <input type="text" id="title" name="title" required>
         <label for="content">내용</label>

@@ -36,6 +36,8 @@ public class AccBoardService {
         AccBoard ab = dto.toEntity();
         // 계정명을 엔터티에 추가 - 세션에서 계정명 가져오기
         ab.setAccount(LoginUtil.getLoggedInUserAccount(session));
+        ab.setCategoryId(1);
+        ab.setWriter(LoginUtil.getLoggedInUserNickname(session));
         return accBoardMapper.save(ab);
     }
 

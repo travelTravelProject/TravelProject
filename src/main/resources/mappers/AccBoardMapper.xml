@@ -58,20 +58,20 @@
 
     <select id="findOne" resultType="accBoard">
         SELECT
-        B.board_id,
-        B.account,
-        B.category_id,
-        B.title,
-        B.content,
-        B.writer,
-        B.view_count,
-        B.created_at,
-        B.updated_at,
-        B.status,
-        B.location,
-        B.start_date,
-        B.end_date,
-        U.gender AS gender
+            B.board_id,
+            B.account,
+            B.category_id,
+            B.title,
+            B.content,
+            B.writer,
+            B.view_count,
+            B.created_at,
+            B.updated_at,
+            B.status,
+            B.location,
+            B.start_date,
+            B.end_date,
+            U.gender AS gender
         FROM tbl_board B
         JOIN tbl_user U ON B.account = U.account
         WHERE B.board_id = #{boardId}
