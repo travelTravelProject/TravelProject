@@ -32,7 +32,7 @@ function setDetailModal(dto) {
 
 }
 
-// 서버로 boardId 보내서 fetch로 데이터 받아와서 모달에 뿌려줌
+// 서버로 boardId 보내서 fetch로 데이터 받아와서 모달에 렌더링
 export async function fetchFeedDetail(boardId) {
 
   const url = `${FEED_URL}/v1/${boardId}`

@@ -44,7 +44,7 @@ export function initFeedFormEvents() {
                 : '' // 로그인 하라는 알람 필요
             ;
 
-        } else if (e.target.classList.contains("show-detail")) { // 더보기, 피드목록 댓글 클릭시 디테일 모달 열기
+        } else if (e.target.classList.contains("show-detail") || e.target.closest('.show-detail')) { // 더보기, 피드목록 댓글 클릭시 디테일 모달 열기
             detailModal.style.display = "block";
             console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
@@ -129,6 +129,7 @@ export function initFeedFormEvents() {
         // 태그들 value, 이미지 파일명 가져오기
         const $createContent = document.getElementById('cr-content').value;
         // createModal
+        const loginUser = createModal.dataset.feedUser
 
         if (!$createContent || importedImages.length === 0) {
             alert('모든 필드를 채워주세요.');
@@ -138,7 +139,7 @@ export function initFeedFormEvents() {
         // fetch payload에 담아서 POST 요청
         const data = {
             content: $createContent,
-            account: 'tester1', // 로그인 계정 가져오기!!!
+            account: loginUser, // 로그인 계정 가져오기!!!
         }
         const formData = dataToFormData(data, importedImages);
         const payload = {
@@ -156,7 +157,6 @@ export function initFeedFormEvents() {
         const editContent = document.getElementById('ed-content').value;
         const data = {
             content: editContent,
-            account: 'tester1',
         }
         const formData = dataToFormData(data, importedImages);
         const payload = {

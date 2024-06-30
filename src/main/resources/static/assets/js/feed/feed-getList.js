@@ -50,8 +50,14 @@ function appendFeeds({ feeds, pageInfo }) {
             <span class="show-detail">더보기</span>
           </div>
           <div class="interaction-section">
-            <span class="comments show-detail"><ion-icon name="chatbubble-outline" size="large"></ion-icon> ${pageInfo.totalCount}</span>
-            <span class="hearts"><ion-icon name="${userLike ? 'heart' : 'heart-outline'}" class="${userLike ? 'liked': ''}" size="large"></ion-icon> ${likeCount}</span>
+            <span class="comments show-detail"><ion-icon name="chatbubble-outline" size="large"></ion-icon> ${pageInfo.totalCount}</span>`;
+
+      tag+= `
+            <span class="hearts">
+                <ion-icon 
+                    name="${userLike ? "heart" : "heart-outline"}"  size="large"
+                    style="color: ${userLike ? '#f44336' : '#000'}"
+                ></ion-icon> ${likeCount}</span>
             <span class="bookmarks"><ion-icon name="bookmark-outline" size="large"></ion-icon> 5</span>
           </div>
         </div>

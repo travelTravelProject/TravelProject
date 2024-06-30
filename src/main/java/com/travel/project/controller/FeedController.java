@@ -121,13 +121,20 @@ public class FeedController {
     public ResponseEntity<?> updateFeed(
             @PathVariable long boardId,
             @RequestPart("content") String content,
-            @RequestPart("account") String account,
-            @RequestPart("images") List<MultipartFile> images
+            @RequestPart("images") List<MultipartFile> images,
+            HttpSession session
     ) {
 
+        String boardAccount = feedMapper.findFeedById(boardId).getAccount();
+        String userAccount = LoginUtil.getLoggedInUserAccount(session);
+
+        // 피드 작성자 또는 관리자가 아니면 수정 불가
+        if(!LoginUtil.isMine(boardAccount, userAccount) && !LoginUtil.isAdmin(session)) {
+            return ResponseEntity.badRequest().body("피드 작성자가 아니면 수정할 수 없습니다.");
+        }
         FeedModifyDto dto = FeedModifyDto.builder()
                 .boardId(boardId)
-                .account(account)
+                .account(boardAccount)
                 .content(content)
                 .images(images)
                 .categoryId(2)
