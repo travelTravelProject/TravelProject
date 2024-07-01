@@ -147,6 +147,15 @@ public class UserService {
         }
     }
 
+    // 회원 탈퇴(삭제)
+    @Transactional
+    public User remove(String account) {
+        User user = userMapper.findOne(account);
+
+        boolean flag = userMapper.delete(account);
+        return flag ? user : null;
+    }
+
 
 //    =================================== yj ========================================
 
