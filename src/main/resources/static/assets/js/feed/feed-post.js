@@ -1,6 +1,7 @@
 import {FEED_URL} from "../feed-list.js";
 import {dataToFormData, handleFileInputChange,  imageFiles as importedImageFiles } from "../image.js";
 import {fetchFeedDetail} from "./feed-detail.js";
+import {fetchFeedList} from "./feed-getList.js";
 
 const createFeedModal = document.getElementById('createFeedModal')
 // const $feedPostBtn = document.getElementById('feed-post-Btn')
@@ -8,20 +9,23 @@ const createFeedModal = document.getElementById('createFeedModal')
 const $imageBox = createFeedModal.querySelector('.dropbox');
 let imageFiles = importedImageFiles; // 다른 변수에 할당하여 재할당 가능
 
+
 // 등록 후 모달 확인
 function openDetailModal(newBoardId) {
     const detailModal = document.getElementById("detailFeedModal");
     detailModal.setAttribute("data-board-id", newBoardId);
 
     detailModal.style.display = "block";
+    fetchFeedList();
     fetchFeedDetail(newBoardId);
 }
+
+
 // 작성 모달 닫을 경우 모달 입력사항 리셋
 export function resetPostModal() {
     document.getElementById('cr-content').value = '';
     $imageBox.innerHTML = '';
 }
-
 
 
 // 미리보기 확인 후 fetch
