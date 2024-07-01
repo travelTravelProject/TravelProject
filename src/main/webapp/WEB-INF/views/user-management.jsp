@@ -109,6 +109,7 @@
             </table>
         </div>
     </div>
+</div>
 
     <script>
         // 모달 열기
@@ -127,7 +128,6 @@
 
 
     <script type="module" src="/" defer></script>
-
 </body>
 </html>
 
