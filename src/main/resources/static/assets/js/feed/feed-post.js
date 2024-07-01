@@ -1,5 +1,5 @@
 import {FEED_URL} from "../feed-list.js";
-import {dataToFormData, handleFileInputChange,  imageFiles as importedImageFiles } from "../image.js";
+import {imageFiles as importedImageFiles } from "../image.js";
 import {fetchFeedDetail} from "./feed-detail.js";
 import {fetchFeedList} from "./feed-getList.js";
 
@@ -9,15 +9,16 @@ const createFeedModal = document.getElementById('createFeedModal')
 const $imageBox = createFeedModal.querySelector('.dropbox');
 let imageFiles = importedImageFiles; // 다른 변수에 할당하여 재할당 가능
 
+// 등록 시 <br> -> \n\r
 
-// 등록 후 모달 확인
+// 등록 후 디테일 모달 열기
 function openDetailModal(newBoardId) {
     const detailModal = document.getElementById("detailFeedModal");
     detailModal.setAttribute("data-board-id", newBoardId);
 
-    detailModal.style.display = "block";
     fetchFeedList();
     fetchFeedDetail(newBoardId);
+    detailModal.style.display = "block";
 }
 
 

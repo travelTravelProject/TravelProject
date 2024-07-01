@@ -127,18 +127,18 @@ export function initFeedFormEvents() {
         e.preventDefault();
 
         // 태그들 value, 이미지 파일명 가져오기
-        const $createContent = document.getElementById('cr-content').value;
+        const createContent = document.getElementById('cr-content').value;
         // createModal
         const loginUser = createModal.dataset.feedUser
 
-        if (!$createContent || importedImages.length === 0) {
+        if (!createContent || importedImages.length === 0) {
             alert('모든 필드를 채워주세요.');
             return;
         }
 
         // fetch payload에 담아서 POST 요청
         const data = {
-            content: $createContent,
+            content: createContent,
             account: loginUser, // 로그인 계정 가져오기!!!
         }
         const formData = dataToFormData(data, importedImages);

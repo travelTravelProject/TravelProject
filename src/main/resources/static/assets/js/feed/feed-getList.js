@@ -23,7 +23,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
          , profileImage: profile, feedImageList
          , likeCount, userLike
        }, index) => {
-        console.log('피드목록렌더링시 값들: ', account,' / ', userLike);
+        console.log('피드목록렌더링 account: ', account,' /userLike: ', userLike);
       tag += `
 <!--        <div class="feed-item animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>-->
          <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>

@@ -85,7 +85,7 @@
       <label for="cr-nickname">닉네임</label>
       <input type="text" id="cr-nickname" name="nickname" required value="${user.nickname}" readonly>
       <label for="cr-content">내용</label>
-      <input type="text" id="cr-content" name="content" required>
+      <textarea id="cr-content" name="content" rows="3" placeholder="본문을 입력하세요." required></textarea>
       <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
       <div class="dropbox" id="post-preview"></div>

@@ -128,7 +128,7 @@ ion-icon:hover {
     color: #00ce7c;
 }
 .interaction-section ion-icon.liked {
-    color: #f44336;
+    color: #ff627a;
 }
 
 /* 모달 css */
@@ -153,7 +153,7 @@ ion-icon:hover {
     padding: 10px 20px 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 500px;
+    max-width: 550px;
     border-radius: 10px;
 }
 
@@ -177,7 +177,8 @@ label {
 }
 
 input[type="text"],
-input[type="file"] {
+input[type="file"],
+textarea{
     width: 100%;
     padding: 10px;
     margin: 5px 0 20px;
@@ -185,6 +186,9 @@ input[type="file"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+.modal .modal-content input:focus {
+    border: 1px solid #00ce7c;
 }
 button {
     width: 100%;
@@ -272,7 +276,7 @@ body div.btn-container {
 /* 모달 속 이미지 미리보기 */
 .dropbox {
     /*width: 100%;*/
-    width: 462px;
+    width: 500px;
     min-height: 98px;
     margin: 10px auto;
     display: flex;
@@ -280,12 +284,12 @@ body div.btn-container {
     flex-wrap: wrap;
     /*border: 1px solid rgba(0, 0, 0, 0.2);*/
     border-radius: 5px;
-    padding: 2px;
+    padding: 3px;
     background: rgba(0, 0, 0, 0.1);
 }
 .image-frame {
 
-    padding: 1px;
+    padding: 2px;
 
 }
 .image-item {
@@ -510,7 +514,7 @@ body div.btn-container {
     width: 20px;
     height: 20px;
     border-radius: 10px;
-    background: red;
+    background: #ff0000;
     display: none;
     position: absolute;
     color: white;
@@ -522,8 +526,8 @@ body div.btn-container {
     font-weight: 500;
 }
 .image-frame:hover .delete-prev-image {
-    display: inline-block;
-    background: red;
+    display: block;
+    background: #ff0000;
     cursor: pointer;
 }
 .fake-upload {
