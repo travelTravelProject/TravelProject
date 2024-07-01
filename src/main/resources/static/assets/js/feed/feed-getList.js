@@ -57,6 +57,8 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
                 <ion-icon 
                     name="${userLike ? 'heart' : 'heart-outline'}"  size="large"
                     style="color: ${userLike ? '#f44336' : '#666'}"
+                    onmouseover="this.style.color='#00ce7c'"
+                    onmouseout="this.style.color='#666'"
                 ></ion-icon> ${likeCount}</span>
             <span class="bookmarks"><ion-icon name="bookmark-outline" size="large"></ion-icon> 5</span>
           </div>

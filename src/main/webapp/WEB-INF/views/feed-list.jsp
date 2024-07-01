@@ -87,7 +87,7 @@
       <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
       <div class="dropbox" id="post-preview"></div>
-      <button type="submit" id="feed-post-Btn">게시</button>
+      <button type="submit" id="feed-post-Btn" class="one-modal-btn">게시</button>
     </div>
   </div>
 </div>
@@ -104,7 +104,7 @@
       <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
       <div class="dropbox" id="edit-preview"></div>
-      <button type="submit" id="feed-modify-Btn">수정 완료</button>
+      <button type="submit" id="feed-modify-Btn" class="one-modal-btn">수정 완료</button>
     </div>
   </div>
 </div>

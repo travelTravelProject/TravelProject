@@ -53,10 +53,9 @@ body {
     /*padding: 10px;*/
     box-shadow: 1px 1px 1px 1px rgba(113, 113, 113, 0.1);
 }
-.feed-right-side .feed-item .created-at {
-    /*padding-left: 20px ;*/
+.created-at {
+    color: #aaaaaa;
 }
-
 .profile-section {
     display: flex;
     align-items: center;
@@ -112,12 +111,20 @@ body {
 }
 ion-icon {
     font-size: 32px;
+    cursor: pointer;
+}
+ion-icon:hover {
+    color: #00ce7c;
 }
 .interaction-section span {
     display: flex;
     align-items: center;
     font-size: 16px;
-    border: 1px solid blueviolet;
+    cursor: pointer;
+    /*border: 1px solid blueviolet;*/
+}
+.interaction-section span:hover {
+    color: #00ce7c;
 }
 
 /* 모달 css */
@@ -175,7 +182,6 @@ input[type="file"] {
     border-radius: 4px;
     box-sizing: border-box;
 }
-
 button {
     width: 100%;
     background-color: #00ce7c;
@@ -189,6 +195,13 @@ button {
 
 button:hover {
     background-color: #00ce7c;
+}
+.one-modal-btn {
+    border-radius: 5px;
+    transition: 300ms;
+}
+.one-modal-btn:hover {
+    transform: translateY(3px);
 }
 /* 검색창 */
 body div.top-section{
@@ -510,16 +523,16 @@ body div.btn-container {
     cursor: pointer;
 }
 .fake-upload {
-    border: 1px solid #4CAF50;;
+    border: 1px solid #00ce7c;
     border-radius: 5px;
-    color: #4CAF50;;
+    color: #00ce7c;;
     font-weight: 700;
     padding: 5px 10px;
     /*background: #4CAF50;*/
 }
 .fake-upload:hover {
     /*border-radius: ;*/
-    background: #4CAF50;;
+    background: #00ce7c;;
     color: #ffffff;
 }
 .modal-content label {
