@@ -92,12 +92,6 @@ button:hover {
     cursor: pointer;
 }
 
-.profile label {
-    font-weight: 700;
-    font-size: 1.0em;
-    cursor: pointer;
-    color: rgb(140, 217, 248);
-}
 .profile .thumbnail-box {
     width: 200px;
     height: 200px;
@@ -261,6 +255,7 @@ body {
 
 .profile-stats {
     text-align: center;
+    height: 100px;
 }
 
 
@@ -308,4 +303,65 @@ body {
     margin: 0;
     padding: 10px 0;
     color: #666;
+}
+
+/* 게시글 조회 */
+.card-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+.card-post {
+    display: flex;
+    width: 100%;
+}
+.card-content-wrapper {
+    flex: 1;
+}
+.card-details-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.card-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 20px;
+}
+.card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.card-content {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+.card-img {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    background-color: #00CE7B;
+    border-radius: 10px;
+}
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.card-details-bot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+}
+.card-details-bot .view-count {
+    margin-left: auto;
 }

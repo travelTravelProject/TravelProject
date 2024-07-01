@@ -70,6 +70,15 @@ public class UserService {
         return userMapper.findOne(account);
     }
 
+    public void saveUserDetail(UserDetail userDetail) {
+        userDetailMapper.save(userDetail);
+    }
+
+    // 사용자 상세 정보 조회
+    public UserDetail getUserDetailByAccount(String account) {
+        return userDetailMapper.findUserDetailByAccount(account);
+    }
+
     @Transactional
     public void saveUpdateUser(UpdateProfileDto dto) {
         // Update tbl_user
@@ -95,6 +104,8 @@ public class UserService {
 
     @Transactional
     public void saveOrUpdateUserDetail(UpdateProfileDto dto, String profilePath) {
+
+
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
         if (existingDetail == null) {
             // Insert new user detail
@@ -114,11 +125,6 @@ public class UserService {
             existingDetail.setRating(dto.getRating());
             userDetailMapper.updateUserDetail(existingDetail);
         }
-    }
-
-    // 사용자 상세 정보 조회
-    public UserDetail getUserDetailByAccount(String account) {
-        return userDetailMapper.findUserDetailByAccount(account);
     }
 
     // 생년월일 연령대 계산

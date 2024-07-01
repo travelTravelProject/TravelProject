@@ -17,6 +17,7 @@ public class UserDetail {
     private String profileImage; // 프로필 사진 경로
     private int rating; // 평점
 
+    // 외래 키
     private String account; // 계정
 
 

@@ -40,7 +40,6 @@
                     <p>${birthYear} · ${user.gender == 'F' ? '여자' : '남자'}</p>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -71,6 +70,53 @@
     <div class="profile-stats">
         <button type="button" class="modify">프로필 수정</button>
     </div>
+
+    <div class="trip-info">
+        <div class="trip-stats">
+            <div>
+                <span>동행</span>
+            </div>
+            <div>
+                <span>피드</span>
+            </div>
+            <div>
+                <span>좋아요</span>
+            </div>
+        </div>
+    </div>
+
+<%--    <c:if test="${abList.size() > 0}">--%>
+<%--    <c:forEach var="ab" items="${abList}">--%>
+    <div class="board-container">
+    <div class="card-wrapper">
+        <section class="card-post" data-bno="">
+            <div class="card-content-wrapper">
+                <div class="card-details-top">
+                    <div class="card-text">
+                        <div class="card-title">제목</div>
+                        <div class="card-content">
+                                내용
+                        </div>
+                    </div>
+                    <div class="card-img">
+                        <img src="#" alt="대표이미지">
+                    </div>
+                </div>
+                <div class="card-details-bot">
+                    <span>여</span>
+                    <span class="lnr lnr-calendar-full"></span>
+                    <span class="acc-period">&nbsp;2024-06-05 - 2024-06-30</span>
+                    <span class="view-count">조회수 </span>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<%--    </c:forEach>--%>
+<%--    </c:if>--%>
+
+
+
 
     <script type="module" src="/assets/js/myPage.js" defer></script>
 
