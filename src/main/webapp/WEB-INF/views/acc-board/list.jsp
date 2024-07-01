@@ -161,9 +161,12 @@
 <body>
 <div class="wrap">
     <%--  검색창 영역  --%>
-    <div class="search">
-        <input type="text" placeholder="동행을 찾아보세요." >
-    </div>
+        <div class="search">
+            <form id="searchForm" action="/acc-board/list" method="get">
+                <input type="hidden" name="type" value="tc">
+                <input type="text" class="form-control" name="keyword" placeholder="동행을 찾아보세요." >
+            </form>
+        </div>
 
     <div class="filters">
         <button>날짜</button>
@@ -254,6 +257,15 @@
 </div>
 
 <script>
+
+    // 검색
+    document.querySelector('.search input[name="keyword"]').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('searchForm').submit();
+        }
+    });
+
     const $cardContainer = document.querySelector('.card-container');
 
     //================= 삭제버튼 스크립트 =================//
