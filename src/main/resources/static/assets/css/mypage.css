@@ -82,6 +82,16 @@ button:hover {
     margin-bottom: 30px;
     text-align: center;
 }
+
+.profile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 30px auto 10px;
+    cursor: pointer;
+}
+
 .profile label {
     font-weight: 700;
     font-size: 1.0em;
@@ -96,12 +106,6 @@ button:hover {
     margin: 30px auto 10px;
     cursor: pointer;
 }
-
-.profile .thumbnail-box img {
-    width: 200px;
-    height: 200px;
-}
-
 
 
 
@@ -206,15 +210,41 @@ body {
     height: 200px;
 }
 
-.profile-pic img {
+.profile-box {
+    width: 200px;
+    height: 100px;
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    /*overflow: hidden;*/
+    margin: 10px;
+
+    display: flex;
+    text-align: left;
+}
+
+.profile-box img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    /*margin: 30px auto 10px;*/
+    cursor: pointer;
+}
+.profile-nickname {
+    width: 100px;
+    padding-left: 20px;
+}
+.profile-nickname p {
+    font-size: 14px;
+}
+
+.profile-nickname h2 {
+    text-align: left;
 }
 
 .profile-info {
     flex: 1;
     margin-left: 20px;
+    height: 200px;
 }
 
 .profile-info h2 {
@@ -225,11 +255,14 @@ body {
 .profile-info p {
     color: #666;
     margin: 5px 0;
+    font-size: 18px;
 }
 
 .profile-stats {
     text-align: center;
 }
+
+
 
 .edit-profile-btn {
     background-color: #00aaff;
