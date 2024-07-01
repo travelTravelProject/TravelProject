@@ -18,11 +18,11 @@
 
             <div class="profile">
                 <c:choose>
-                    <c:when test="${userDetail.profileImage != null}">
+                    <c:when test="${not empty userDetail.profileImage && userDetail.profileImage != 'none'}">
                         <img src="${userDetail.profileImage}" alt="profile image">
                     </c:when>
                     <c:otherwise>
-                        <img src="/assets/img/anonymous.jpg" alt="profile image">
+                        <img src="/assets/img/anonymous.jpg" alt="Anonymous Profile Image">
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -68,16 +68,16 @@
             <div class="profile-box">
                 <c:choose>
 <%--                    <c:when test="${login != null && userDetail.profileImage != null}">--%>
-                    <c:when test="${userDetail.profileImage != null}">
+                    <c:when test="${not empty userDetail.profileImage && userDetail.profileImage != 'none'}">
                         <img src="${userDetail.profileImage}" alt="profile image">
                     </c:when>
                     <c:otherwise>
-                        <img src="/assets/img/anonymous.jpg" alt="profile image">
+                        <img src="/assets/img/anonymous.jpg" alt="Anonymous Profile Image">
                     </c:otherwise>
                 </c:choose>
                 <div class="profile-nickname">
                 <h2>${user.nickname}</h2>
-                <p>30대 · ${user.gender == 'F' ? '여자' : '남자'}</p>
+                <p>${birthYear} · ${user.gender == 'F' ? '여자' : '남자'}</p>
                 </div>
             </div>
 

@@ -235,6 +235,7 @@ body {
 }
 .profile-nickname p {
     font-size: 14px;
+    width: 150px;
 }
 
 .profile-nickname h2 {

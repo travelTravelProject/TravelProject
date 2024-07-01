@@ -27,6 +27,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static com.travel.project.login.LoginUtil.AUTO_LOGIN_COOKIE;
@@ -120,6 +121,31 @@ public class UserService {
         return userDetailMapper.findUserDetailByAccount(account);
     }
 
+    // 생년월일 연령대 계산
+    public String calculateAgeGroup(String account) {
+        User user = userMapper.findOne(account);
+
+        LocalDate birthDate = user.getBirthday();
+        int birthYear = birthDate.getYear();
+        int currentYear = LocalDate.now().getYear();
+        int age = currentYear - birthYear;
+
+        if (age < 10) {
+            return "10대 미만";
+        } else if (age < 20) {
+            return "10대";
+        } else if (age < 30) {
+            return "20대";
+        } else if (age < 40) {
+            return "30대";
+        } else if (age < 50) {
+            return "40대";
+        } else if (age < 60) {
+            return "50대";
+        } else {
+            return "60대 이상";
+        }
+    }
 
 
 //    =================================== yj ========================================

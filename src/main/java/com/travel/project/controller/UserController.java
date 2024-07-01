@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 
 @Controller
 @Slf4j
@@ -101,8 +102,14 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
+        // 생년월일 연령대 계산
+        String birthYear = userService.calculateAgeGroup(user.getAccount());
+        System.out.println("birthYear = " + birthYear);
+
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
+        model.addAttribute("birthYear", birthYear); // 연령대
+
 
         return "mypage";
     }
@@ -124,6 +131,7 @@ public class UserController {
 
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
+
         System.out.println("user = " + user);
 
         return "mypage-update";
@@ -139,11 +147,10 @@ public class UserController {
         log.debug("프로필 사진 이름: {}", dto.getProfileImage().getOriginalFilename());
 
         String profilePath = FileUtil.uploadFile(dto.getProfileImage());
-
         dto.setProfileImagePath(profilePath);
+        log.info("profilePath = " + profilePath);
 
         log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
-
 
         LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
         log.info("loginUser = " + loginUser);
@@ -187,8 +194,11 @@ public class UserController {
         System.out.println("dto = " + dto);
         log.info("Updated user profile: {}", dto);
 
+        session.setAttribute("updatedUser", dto);
+
+
         // RedirectAttributes를 사용하여 사용자 정보 전달
-        ra.addFlashAttribute("updatedUser", dto);
+//        ra.addFlashAttribute("updatedUser", dto);
 
         return "redirect:/mypage";
     }
