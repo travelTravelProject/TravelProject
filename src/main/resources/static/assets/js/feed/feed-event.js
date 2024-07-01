@@ -5,7 +5,7 @@ import {
     imageFiles as importedImages,
     previewImages
 } from "../image.js";
-import {fetchFeedPost} from "./feed-post.js";
+import {fetchFeedPost, resetPostModal} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
 
 import {fetchFeedModify, setEditModal} from "./feed-modify.js";
@@ -38,11 +38,11 @@ export function initFeedFormEvents() {
     document.addEventListener('click', function(e) {
 
         // 모달 열기 버튼 처리
-        if (e.target.id === "createFeedBtn") {
-            e.target.dataset.feedUser
+        if (e.target.id === "createFeedBtn" || e.target.closest('#createFeedBtn')) {
+            const tag = e.target.id === 'createFeedBtn' ? e.target : e.target.closest('#createFeedBtn');
+            tag.dataset.feedUser
                 ? createModal.style.display = "block"
-                : '' // 로그인 하라는 알람 필요
-            ;
+                : alert("피드 작성 시 로그인이 필요합니다.");
 
         } else if (e.target.classList.contains("show-detail") || e.target.closest('.show-detail')) { // 더보기, 피드목록 댓글 클릭시 디테일 모달 열기
             detailModal.style.display = "block";
@@ -71,10 +71,10 @@ export function initFeedFormEvents() {
             const modalDetail = e.target.closest('.detail-modal');
             const modalConfirm = e.target.closest('.confirm-modal');
             if (modal) {
-                modal.style.display = "none";
+                resetPostModal(); // 모달 입력사항 초기화
                 clearImageFiles(); // 모달이 닫힐 때 imageFiles 초기화
-                console.log('모달 닫기 + imageFiles 초기화: ', imageFiles);
                 imageFiles = [];
+                modal.style.display = "none";
             } else if(modalDetail) {
                 modalDetail.style.display = "none";
                 clearImageFiles();
@@ -193,7 +193,7 @@ export function initFeedFormEvents() {
 
     topBtn.addEventListener('click', e => {
         e.preventDefault();
-        window.scrollTo({top: 0, behavior: 'smooth'});
+        document.body.scrollTo({top: 0, behavior: 'smooth'});
     })
 
     // 좋아요 버튼

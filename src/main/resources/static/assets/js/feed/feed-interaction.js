@@ -11,7 +11,7 @@ function updateLike($icon, likeCount, userLike) {
 
     // 스타일 업데이트
     const newIcon = heartsElement.querySelector('ion-icon');
-    newIcon.style.color = userLike ? '#f44336' : '#000';
+    newIcon.style.color = userLike ? '#f44336' : '#666';
 }
 
 export async function fetchLike(tag, boardId) {

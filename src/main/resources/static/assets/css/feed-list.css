@@ -108,8 +108,11 @@ body {
     padding: 10px 10px;
     border-top: 1px solid #dbdbdb;
     margin-top: 5px;
+    color: #666666 ;
 }
-
+ion-icon {
+    font-size: 32px;
+}
 .interaction-section span {
     display: flex;
     align-items: center;
@@ -122,7 +125,7 @@ body {
 .modal {
     display: none;
     position: fixed;
-    z-index: 2;
+    z-index: 10;
     left: 0;
     top: 0;
     width: 100%;
@@ -175,7 +178,7 @@ input[type="file"] {
 
 button {
     width: 100%;
-    background-color: #4CAF50;
+    background-color: #00ce7c;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -185,7 +188,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #00ce7c;
 }
 /* 검색창 */
 body div.top-section{
@@ -229,12 +232,12 @@ body div.btn-container {
 }
 
 .btn-container .side-btn {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: #4CAF50;
-    font-size: 1.5rem;
-    line-height: 60px;
+    background: #00ce7c;
+    font-size: 1.2rem;
+    line-height: 50px;
     /*border: 1px solid red;*/
     cursor: pointer;
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
@@ -252,15 +255,15 @@ body div.btn-container {
 /* 모달 속 이미지 미리보기 */
 .dropbox {
     /*width: 100%;*/
-    width: 448px;
-    height: 98px;
-    margin: 10px 0 10px;
+    width: 462px;
+    min-height: 98px;
+    margin: 10px auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     /*border: 1px solid rgba(0, 0, 0, 0.2);*/
     border-radius: 5px;
-    padding: 5px;
+    padding: 2px;
     background: rgba(0, 0, 0, 0.1);
 }
 .image-frame {
@@ -287,7 +290,7 @@ body div.btn-container {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2;
+    z-index: 10;
 }
 
 .detail-modal-content {
@@ -389,7 +392,7 @@ body div.btn-container {
     font-size: 0.8rem;
     display: block;
     padding: 3px;
-    background: #dcdcdc;
+    background: #d9d9d9;
 }
 
 #createFeedModal,

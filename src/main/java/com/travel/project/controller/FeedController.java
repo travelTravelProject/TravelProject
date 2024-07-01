@@ -5,10 +5,7 @@ import com.travel.project.common.Search;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
-import com.travel.project.dto.response.FeedDetailResponseDto;
-import com.travel.project.dto.response.FeedListDto;
-import com.travel.project.dto.response.LikeDto;
-import com.travel.project.dto.response.LoginUserInfoDto;
+import com.travel.project.dto.response.*;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.FeedMapper;
 import com.travel.project.service.FeedService;
@@ -16,10 +13,7 @@ import com.travel.project.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,7 +45,7 @@ public class FeedController {
         page.setKeyword(keyword);
         page.setType(type);
         // Search type, keyword 확인 필요
-        FeedListDto feeds = feedService.findAll(page);
+        FeedListDto feeds = feedService.findAll(page, session);
         feeds.setLoginUser(LoginUtil.getLoggedInUser(session));
 
         log.debug("FeedListDto: {}", feeds.getFeeds().get(0));
@@ -62,17 +56,26 @@ public class FeedController {
     // 피드 상세 조회 요청
     @GetMapping("/{boardId}")
     @ResponseBody
-    public ResponseEntity<?> findOne(@PathVariable long boardId) {
+    public ResponseEntity<?> findOne(
+            @PathVariable long boardId
+            , HttpSession session) {
 
         log.debug("컨트롤러 글번호: {}", boardId);
 
-        FeedDetailResponseDto foundFeed = feedService.findById(boardId);
+        FeedDetailDto foundFeed = feedService.findById(boardId);
 
         if(foundFeed == null) {
             return ResponseEntity.noContent().build();
         }
-
-        return ResponseEntity.ok().body(foundFeed);
+        String loginAccount = LoginUtil.getLoggedInUserAccount(session);
+        FeedResponseDto dto = FeedResponseDto.builder()
+                .loginAccount(loginAccount)
+                .isAdmin(LoginUtil.isAdmin(session))
+                .isMine(LoginUtil.isMine(foundFeed.getAccount(), loginAccount))
+                .feed(foundFeed)
+                .build();
+        log.debug("디테일응답: {}", dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     // 생성 요청
@@ -155,9 +158,9 @@ public class FeedController {
     // 삭제 - boardId를 받아서 status D로 변경
     @DeleteMapping("/{boardId}")
     @ResponseBody
-    public ResponseEntity<?> delete(@PathVariable long boardId) {
+    public ResponseEntity<?> delete(@PathVariable long boardId, HttpSession session) {
 
-        FeedListDto feeds = feedService.deleteFeed(boardId);
+        FeedListDto feeds = feedService.deleteFeed(boardId, session);
         log.debug("컨트롤러 피드삭제 번호: {}", boardId);
         return ResponseEntity.ok().body(feeds); // list로 리다이렉트?
     }

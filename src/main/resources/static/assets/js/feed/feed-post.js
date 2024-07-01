@@ -16,6 +16,11 @@ function openDetailModal(newBoardId) {
     detailModal.style.display = "block";
     fetchFeedDetail(newBoardId);
 }
+// 작성 모달 닫을 경우 모달 입력사항 리셋
+export function resetPostModal() {
+    document.getElementById('cr-content').value = '';
+    $imageBox.innerHTML = '';
+}
 
 
 

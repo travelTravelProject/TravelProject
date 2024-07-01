@@ -28,6 +28,7 @@ export function previewImages(files, imageBox) {
 // 기존 이미지를 파일로 변환하여 imageFiles에 추가하고 미리보기로 렌더링하는 함수
 export function addExistingImagesToPreview(images, imageBox) {
   imageBox.innerHTML = ''; // 기존 미리보기 초기화
+  imageFiles = []; // 이미지 배열 초기화
   images.forEach((src, index) => {
     fetch(src)
         .then(res => res.blob())
@@ -153,6 +154,7 @@ export function setOneImgStyle() {
 export function clearImageFiles() {
   imageFiles = [];
 }
+
 // preview 삭제 후 업데이트
 export function deletePreviewAndUpdate(e, $box) {
   const index = e.target.dataset.imageOrder;

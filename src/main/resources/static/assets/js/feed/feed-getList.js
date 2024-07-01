@@ -9,7 +9,7 @@ let loadedFeeds = 0;  // 로딩된 게시글 수
 
 // 피드 목록 렌더링
 // spring FeedListDto 필드명 참고
-function appendFeeds({ feeds, pageInfo }) {
+function appendFeeds({ feeds, pageInfo, loginUser }) {
 
   console.log("appendFeeds 실행중: ", feeds);
   console.log("pageInfo : ", pageInfo.pageInfo);
@@ -23,7 +23,7 @@ function appendFeeds({ feeds, pageInfo }) {
          , profileImage: profile, feedImageList
          , likeCount, userLike
        }, index) => {
-
+        console.log('피드목록렌더링시 값들: ', account,' / ', userLike);
       tag += `
         <div class="feed-item animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
         <!-- <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>-->
@@ -55,8 +55,8 @@ function appendFeeds({ feeds, pageInfo }) {
       tag+= `
             <span class="hearts">
                 <ion-icon 
-                    name="${userLike ? "heart" : "heart-outline"}"  size="large"
-                    style="color: ${userLike ? '#f44336' : '#000'}"
+                    name="${userLike ? 'heart' : 'heart-outline'}"  size="large"
+                    style="color: ${userLike ? '#f44336' : '#666'}"
                 ></ion-icon> ${likeCount}</span>
             <span class="bookmarks"><ion-icon name="bookmark-outline" size="large"></ion-icon> 5</span>
           </div>

@@ -110,7 +110,7 @@
 </div>
 <!-- 피드 수정 모달 끝 -->
 <!-- 피드 상세조회 모달 -->
-<div id="detailFeedModal" class="detail-modal" data-login="">
+<div id="detailFeedModal" class="detail-modal" data-login="${user != null ? user.account : ""}">
   <div class="detail-modal-content">
     <div class="feed-left-side">
       <div class="image-carousel">
@@ -129,9 +129,11 @@
             <span class="created-at">createdAt</span>
           </div>
         </div>
-        <div class="profile-row row2">
-          <button class="edit-feed detail-set-btn" id="editFeedBtn">수정</button>
-          <button class="delete-feed detail-set-btn" id="deleteFeedBtn">삭제</button>
+        <div class="profile-row row2" id="detail-update-btn">
+<%--          <c:if test="${user != null}">--%>
+<%--            <button class="edit-feed detail-set-btn" id="editFeedBtn">수정</button>--%>
+<%--            <button class="delete-feed detail-set-btn" id="deleteFeedBtn">삭제</button>--%>
+<%--          </c:if>--%>
         </div>
       </div>
       <div class="detail-content">

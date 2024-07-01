@@ -7,11 +7,11 @@ import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
-import com.travel.project.dto.response.FeedDetailResponseDto;
+import com.travel.project.dto.response.FeedDetailDto;
 import com.travel.project.dto.response.FeedListDto;
-import com.travel.project.dto.response.LikeDto;
 import com.travel.project.entity.Board;
 import com.travel.project.entity.BoardImage;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.FeedMapper;
 import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,18 +33,19 @@ public class FeedService {
     private final ImageService imageService;
     private final LikeService likeService;
 
-    public FeedListDto findAll(Search search) {
+    public FeedListDto findAll(Search search, HttpSession session) {
         List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
-        log.debug("서비스 findAll: {}", feedList);
+//        log.debug("서비스 findAll: {}", feedList);
+        String loginAccount = LoginUtil.getLoggedInUserAccount(session);
         if (feedList.isEmpty()) {
             return null;
         }
         // 각 피드마다 이미지 리스트를 추가
         // 각 피드마다 댓글 수, 좋아요 수, 북마크 수 추가
 
-        List<FeedDetailResponseDto> detailDto = feedList.stream()
+        List<FeedDetailDto> detailDto = feedList.stream()
                 .map(f -> {
-                    FeedDetailResponseDto responseDto = f.toDetailResponseDto();
+                    FeedDetailDto responseDto = f.toDetailResponseDto();
                     log.debug("피드서비스 f: {}", f);
                     log.debug("f 글번호: {}", f.getBoardId());
 
@@ -53,7 +53,7 @@ public class FeedService {
                     String account = f.getAccount();
                     // 좋아요 수, 로그인 유저의 좋아요 여부 추가
                     responseDto.setLikeCount(likeService.countLikes(boardId));
-                    responseDto.setUserLike(likeService.isLikedByUser(account, boardId));
+                    responseDto.setUserLike(likeService.isLikedByUser(loginAccount, boardId));
 
                     // Feed 디테일 응답객체에 이미지 담기
                     List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());
@@ -73,7 +73,7 @@ public class FeedService {
 
     }
 
-    public FeedDetailResponseDto findById(long boardId) {
+    public FeedDetailDto findById(long boardId) {
         log.debug("글번호: {}", boardId);
 
         // DB에서 FeedFindOneDto 받아와서 response dto에 담기
@@ -81,7 +81,7 @@ public class FeedService {
         log.debug("개별조회: {}", feedById);
 
         // 피드 상세조회 응답 DTO를 생성
-        FeedDetailResponseDto responseDto = feedById.toDetailDto();
+        FeedDetailDto responseDto = feedById.toDetailDto();
 
         // 이미지 모두 조회하여 추가
         List<BoardImage> feedImages = imageService.findFeedImages(feedById.getBoardId());
@@ -183,11 +183,11 @@ public class FeedService {
     }
 
     // 피드 삭제
-    public FeedListDto deleteFeed(long boardId) {
+    public FeedListDto deleteFeed(long boardId, HttpSession session) {
 
         boolean flag = feedMapper.deleteFeed(boardId);
         log.debug("피드서비스 삭제: {}", flag);
-        return flag ? findAll(new Search(new Page(1, 5))) : null;
+        return flag ? findAll(new Search(new Page(1, 5)), session) : null;
     }
     // 조회수 증가
     public boolean addViewCount(long boardId) {

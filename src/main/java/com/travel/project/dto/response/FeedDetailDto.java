@@ -1,7 +1,5 @@
 package com.travel.project.dto.response;
 
-import com.travel.project.dto.request.FeedFindAllDto;
-import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.entity.BoardImage;
 import lombok.*;
 
@@ -13,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FeedDetailResponseDto {
+public class FeedDetailDto {
     private long boardId; // 게시글 id
 
     private String account; // 게시글 작성자 계정
