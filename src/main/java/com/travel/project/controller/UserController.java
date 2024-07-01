@@ -110,7 +110,6 @@ public class UserController {
         model.addAttribute("userDetail", userDetail);
         model.addAttribute("birthYear", birthYear); // 연령대
 
-
         return "mypage";
     }
 
@@ -161,18 +160,6 @@ public class UserController {
             return "redirect:/sign-in";
         }
 
-
-//        UpdateProfileDto updatedUser = UpdateProfileDto.builder()
-//                .account(dto.getAccount())
-//                .name(dto.getName())
-//                .email(dto.getEmail())
-//                .nickname(dto.getNickname())
-//                .oneLiner(dto.getOneLiner())
-//                .mbti(dto.getMbti())
-//                .profileImage(dto.getProfileImage())
-//                .rating(dto.getRating())
-//                .build();
-
         // 데이터베이스에 업데이트된 사용자 정보 저장
         userService.saveUpdateUser(dto);
         userService.saveOrUpdateUserDetail(dto, profilePath);
@@ -189,16 +176,11 @@ public class UserController {
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
-//        session.setAttribute("updatedUser", updatedUser);
-//        session.setAttribute("updatedUser", new LoginUserInfoDto(updatedUser));
+
         System.out.println("dto = " + dto);
         log.info("Updated user profile: {}", dto);
 
         session.setAttribute("updatedUser", dto);
-
-
-        // RedirectAttributes를 사용하여 사용자 정보 전달
-//        ra.addFlashAttribute("updatedUser", dto);
 
         return "redirect:/mypage";
     }
