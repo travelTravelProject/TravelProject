@@ -73,6 +73,8 @@
       </div>
     </div>
   </div>
+    <%-- 스피너 --%>
+    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </section>
 <%-- 피드 목록 끝 --%>
 <!-- 피드 작성 모달 -->

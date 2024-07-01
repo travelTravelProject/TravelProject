@@ -25,8 +25,8 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
        }, index) => {
         console.log('피드목록렌더링시 값들: ', account,' / ', userLike);
       tag += `
-        <div class="feed-item animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>
-        <!-- <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>-->
+<!--        <div class="feed-item animate__animated animate__slideInUp animate__delay-${animationTiming}s" data-feed-id='${boardId}' data-feed-account='${account}'>-->
+         <div class="feed-item" data-feed-id='${boardId}' data-feed-account='${account}'>
           <div class="profile-section">
             <div class="profile-row">
               <div class="profile-box">
@@ -50,17 +50,14 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
             <span class="show-detail">더보기</span>
           </div>
           <div class="interaction-section">
-            <span class="comments show-detail"><ion-icon name="chatbubble-outline" size="large"></ion-icon> ${pageInfo.totalCount}</span>`;
+            <span class="comments show-detail"><ion-icon name="chatbubble" ></ion-icon> ${pageInfo.totalCount}</span>`;
 
       tag+= `
             <span class="hearts">
                 <ion-icon 
-                    name="${userLike ? 'heart' : 'heart-outline'}"  size="large"
-                    style="color: ${userLike ? '#f44336' : '#666'}"
-                    onmouseover="this.style.color='#00ce7c'"
-                    onmouseout="this.style.color='#666'"
+                    name="heart" class="${userLike ? 'liked':''}" 
                 ></ion-icon> ${likeCount}</span>
-            <span class="bookmarks"><ion-icon name="bookmark-outline" size="large"></ion-icon> 5</span>
+            <span class="bookmarks"><ion-icon name="bookmark" ></ion-icon> 5</span>
           </div>
         </div>
       `;
