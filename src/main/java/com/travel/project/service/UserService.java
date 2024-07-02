@@ -78,50 +78,88 @@ public class UserService {
         return userDetailMapper.findUserDetailByAccount(account);
     }
 
+//    public void updateUser(UpdateProfileDto dto,
+//                           HttpSession session) {
+//
+//        LoginUserInfoDto sessionUser = (LoginUserInfoDto) session.getAttribute("user");
+//
+//        User user = User.builder()
+//                .nickname(dto.getNickname())
+//                .name(sessionUser.getName())
+//                .account(sessionUser.getAccount())
+//                .email(sessionUser.getEmail())
+//                .build();
+//        UserDetail userDetail = UserDetail.builder()
+//                .mbti(dto.getMbti())
+//                .oneLiner(dto.getOneLiner())
+//                .profileImage(String.valueOf(dto.getProfileImage()))
+//                .build();
+//
+//        userMapper.updateUser(user);
+//        userDetailMapper.updateUserDetail(userDetail);
+//    }
+
+//
+//    @Transactional
+//    public void saveUpdateUser(UpdateProfileDto dto) {
+//        // Update tbl_user
+//        userMapper.updateUser(dto);
+//        // Update tbl_user_detail
+//        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+//        if (existingDetail != null) {
+//            // 이미 존재하는 경우에만 업데이트
+//            existingDetail.setMbti(dto.getMbti());
+//            existingDetail.setOneLiner(dto.getOneLiner());
+//            existingDetail.setRating(dto.getRating());
+//
+//            // 프로필 이미지 업로드 및 경로 설정
+//            if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
+//                String profilePath = FileUtil.uploadFile(dto.getProfileImage());
+//                existingDetail.setProfileImage(profilePath);
+//            }
+//
+//            userDetailMapper.updateUserDetail(existingDetail);
+//        }
+//    }
+
     @Transactional
-    public void saveUpdateUser(UpdateProfileDto dto) {
-        // Update tbl_user
-        userMapper.updateUser(dto);
-        // Update tbl_user_detail
-        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
-        if (existingDetail != null) {
-            // 이미 존재하는 경우에만 업데이트
-            existingDetail.setMbti(dto.getMbti());
-            existingDetail.setOneLiner(dto.getOneLiner());
-            existingDetail.setRating(dto.getRating());
+    public void saveOrUpdateUserDetail(UpdateProfileDto dto, HttpSession session) {
 
-            // 프로필 이미지 업로드 및 경로 설정
-            if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
-                String profilePath = FileUtil.uploadFile(dto.getProfileImage());
-                existingDetail.setProfileImage(profilePath);
-            }
+        LoginUserInfoDto sessionUser = (LoginUserInfoDto) session.getAttribute("user");
 
-            userDetailMapper.updateUserDetail(existingDetail);
-        }
+        User user = User.builder()
+                .nickname(dto.getNickname())
+                .name(sessionUser.getName())
+                .account(sessionUser.getAccount())
+                .email(sessionUser.getEmail())
+                .build();
+        UserDetail userDetail = UserDetail.builder()
+                .mbti(dto.getMbti())
+                .oneLiner(dto.getOneLiner())
+                .profileImage(String.valueOf(dto.getProfileImage()))
+                .build();
+
+        userMapper.updateUser(user);
+        userDetailMapper.updateUserDetail(userDetail);
+//
+//        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+//        if (sessionUser == null) {
+//            // 새로운 회원 정보 저장
+//            UserDetail newUserDetail = UserDetail.builder()
+//                    .mbti(dto.getMbti())
+//                    .oneLiner(dto.getOneLiner())
+//                    .profileImage(dto.getProfileImage())
+//                    .build();
+//            userDetailMapper.insertUserDetail(newUserDetail);
+//        } else {
+//            // 이미 존재하는 회원 정보 수정 저장
+//            existingDetail.setMbti(dto.getMbti());
+//            existingDetail.setOneLiner(dto.getOneLiner());
+//            existingDetail.setProfileImage(dto.getProfileImage());
+//            userDetailMapper.updateUserDetail(existingDetail);
+//        }
     }
 
-    @Transactional
-    public void saveOrUpdateUserDetail(UpdateProfileDto dto, String profilePath) {
-        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
-        if (existingDetail == null) {
-            // 새로운 회원 정보 저장
-            UserDetail newUserDetail = UserDetail.builder()
-                    .account(dto.getAccount())
-                    .mbti(dto.getMbti())
-                    .oneLiner(dto.getOneLiner())
-                    .profileImage(profilePath)
-                    .rating(dto.getRating())
-                    .build();
-            userDetailMapper.insertUserDetail(newUserDetail);
-        } else {
-            // 이미 존재하는 회원 정보 수정 저장
-            existingDetail.setMbti(dto.getMbti());
-            existingDetail.setOneLiner(dto.getOneLiner());
-            existingDetail.setProfileImage(profilePath);
-            existingDetail.setRating(dto.getRating());
-            userDetailMapper.updateUserDetail(existingDetail);
-        }
-    }
 
     // 생년월일 연령대 계산
     public String calculateAgeGroup(String account) {
@@ -278,8 +316,6 @@ public class UserService {
         System.out.println("encodedPassword = " + encodedPassword);
         return userMapper.updatePassword(user);
     }
-
-
 
 
 }

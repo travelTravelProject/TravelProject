@@ -46,7 +46,7 @@ public class UserController {
     private final UserService userService;
 
     @Value("${file.upload.root-path}")
-    private String rootPath ;
+    private String rootPath;
 
 //     static String rootPath = System.getProperty("user.dir")
 //             + "/src/main/resources/static/assets/upload";
@@ -86,7 +86,7 @@ public class UserController {
 
         // 세션에서 로그인된 사용자 정보 가져오기
         LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
-//        log.debug("\"User information retrieved from session: {}\", user");
+
 
         System.out.println("user = " + user);
 
@@ -136,40 +136,39 @@ public class UserController {
     // 마이페이지 프로필 수정하기
     @PostMapping("/mypage/update")
     public String myPageUpdate(@Validated UpdateProfileDto dto,
-                               @RequestParam("profileImage") MultipartFile profileImage,
-                               HttpSession session,
-                               RedirectAttributes ra) {
-        log.info("updateProfile POST: {}", dto);
-        log.debug("프로필 사진 이름: {}", dto.getProfileImage().getOriginalFilename());
+                               @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+                               HttpSession session) {
 
-        String profilePath = FileUtil.uploadFile(dto.getProfileImage());
-        dto.setProfileImagePath(profilePath);
-        log.info("profilePath = " + profilePath);
+//        userService.updateUser(dto, session);
 
-        log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
+        log.info("mypage POST : forwarding to mypage-update.jsp");
 
+        // 프로필 이미지 업로드 및 경로 설정
+        if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
+            log.debug("프로필 사진 이름: {}", dto.getProfileImage());
+//            String rootPath = FileUtil.uploadFile(profileImage);
+            dto.setProfileImage(profileImage);
+            log.info("rootPath = " + rootPath);
+        }
+
+        // 세션에서 로그인 사용자 정보 가져오기
         LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
-        log.info("loginUser = " + loginUser);
-        log.info("loginUser.getAccount() = " + loginUser.getAccount());
-        log.info("dto.getAccount() = " + dto.getAccount());
+//        log.info("loginUser = " + loginUser);
+//        log.info("loginUser.getAccount() = " + loginUser.getAccount());
+//        log.info("dto.getAccount() = " + dto.getAccount());
 
-        if (!dto.getAccount().equals(loginUser.getAccount())) {
+        if (!loginUser.getAccount().equals(loginUser.getAccount())) {
             return "redirect:/sign-in";
         }
 
-        // 데이터베이스에 업데이트된 사용자 정보 저장
-        userService.saveUpdateUser(dto);
-        userService.saveOrUpdateUserDetail(dto, profilePath);
+        userService.saveOrUpdateUserDetail(dto, session);
 
-        // 세션의 기존 LoginUserInfoDto 객체 업데이트
         loginUser.setName(dto.getName());
-        loginUser.setEmail(dto.getEmail());
         loginUser.setNickname(dto.getNickname());
         loginUser.setMbti(dto.getMbti());
         loginUser.setOneLiner(dto.getOneLiner());
-        loginUser.setProfileImage(dto.getProfileImage());
-        loginUser.setRating(dto.getRating());
-        log.debug("마이페이지 POST: loginUser = " + loginUser);
+        dto.setProfileImage(profileImage);
+//        loginUser.setProfileImage();
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
@@ -367,18 +366,12 @@ public class UserController {
     }
 
 
-
-
 // 임시 main.jsp
 
     @GetMapping("/main")
     public String mains() {
         return "/main"; // find-id.html 또는 find-id.jsp와 같은 뷰 이름 반환
     }
-
-
-
-
 
 
 }
