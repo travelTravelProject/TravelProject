@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 public class AccBoardDetailDto {
 
-    private int boardId;
+    private long boardId;
     private String writer;
     private String title;
     private String content;

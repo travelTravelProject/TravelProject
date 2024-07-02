@@ -4,14 +4,17 @@ import com.travel.project.common.Page;
 import com.travel.project.common.PageMaker;
 import com.travel.project.common.Search;
 import com.travel.project.dto.request.AccBoardWriteDto;
-import com.travel.project.dto.response.AccBoardDetailDto;
-import com.travel.project.dto.response.AccBoardListDto;
-import com.travel.project.dto.response.AccBoardModifyDto;
-import com.travel.project.dto.response.LikeDto;
+import com.travel.project.dto.response.*;
+import com.travel.project.entity.AccBoard;
+import com.travel.project.login.LoginUtil;
+import com.travel.project.mapper.AccBoardMapper;
+import com.travel.project.mapper.BookmarkMapper;
 import com.travel.project.service.AccBoardService;
+import com.travel.project.service.BookmarkService;
 import com.travel.project.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -28,13 +32,15 @@ import java.util.List;
 public class AccBoardController {
 
     private final AccBoardService boardService;
-    private final LikeService likeService;
+    private final AccBoardMapper boardMapper;
+    private final BookmarkService bookmarkService;
+    
 
     // 1. 목록 조회 요청 (/list : GET)
     @GetMapping("/list")
-    public String list(@ModelAttribute("s") Search page, Model model) {
+    public String list(@ModelAttribute("s") Search page, Model model, HttpSession session) {
         System.out.println("/acc-board/list GET");
-
+        System.out.println(session.getAttribute("user"));
         // 목록 조회 요청 위임
         List<AccBoardListDto> abList = boardService.    findList(page);
 
@@ -50,8 +56,12 @@ public class AccBoardController {
 
     // 2. 게시글 쓰기 양식 화면 열기 요청 (/write : GET)
     @GetMapping("/write")
-    public String write() {
+    public String write(HttpSession session) {
         System.out.println("/acc-board/acc-write GET");
+        // 로그인 확인
+        if (!LoginUtil.isLoggedIn(session)) {
+            return "redirect:/sign-in";
+        }
 
         return "acc-board/acc-write";
     }
@@ -61,8 +71,10 @@ public class AccBoardController {
     public String write(AccBoardWriteDto dto, HttpSession session) {
         System.out.println("/acc-board/acc-write POST");
 
-        // 1. 브라우저가 전달한 게시글 내용 읽기
-        System.out.println("dto: " + dto);
+        // 로그인 확인
+        if (!LoginUtil.isLoggedIn(session)) {
+            return "redirect:/sign-in"; // 로그인 페이지로 리다이렉트
+        }
 
         boardService.insert(dto, session);
 
@@ -71,7 +83,7 @@ public class AccBoardController {
 
     // 4. 게시글 삭제 요청 (/delete : GET) > 목록조회 요청 리다이렉션
     @GetMapping("/delete")
-    public String delete(int boardId) {
+    public String delete(long boardId) {
         System.out.println("/acc-board/acc-delete GET");
 
         boardService.remove(boardId);
@@ -81,12 +93,14 @@ public class AccBoardController {
 
     // 5. 게시글 상세 조회 요청 (/detail : GET)
     @GetMapping("/detail")
-    public String detail(@RequestParam("bno") Integer boardId, Model model, HttpServletRequest req) {
+    public String detail(@RequestParam("bno") long boardId, Model model, HttpServletRequest req) {
         System.out.println("/acc-board/acc-detail GET");
         // 글번호 조회
         AccBoardDetailDto dto = boardService.detail(boardId);
         // JSP 에 전송
         model.addAttribute("abd", dto);
+        boolean flag = boardService.checkBookmark(req.getSession(), boardId);
+        model.addAttribute("bookmark", flag);
 
         // 이전 페이지 주소
         String ref = req.getHeader("referer");
@@ -144,22 +158,36 @@ public class AccBoardController {
         return "redirect:/acc-board/detail?bno=" + dto.getBoardId();
     }
 
-    // 좋아요 요청 비동기 처리
-    @GetMapping("/like")
+    // 북마크 요청 비동기 처리
+    @GetMapping("/bookmark")
     @ResponseBody
-    public ResponseEntity<?> like(int boardId, HttpSession session) {
+    public ResponseEntity<?> bookmark(@RequestParam("boardId") long boardId, HttpSession session) throws SQLException {
+        // 로그인 검증
+        if (!LoginUtil.isLoggedIn(session)) {
+            return ResponseEntity.status(403).body("로그인이 필요합니다.");
+        }
 
-//        log.info("like async request!");
-//        // 로그인 검증
-//        if (!LoginUtil.isLoggedIn(session)) {
-//            return ResponseEntity.status(403).body("로그인이 필요합니다.");
-//        }
-//
-//        String account = LoginUtil.getLoggedInUserAccount(session);
-//
-//        LikeDto dto = likeService.like(account, boardId); // 좋아요 요청 처리
-//
-//        return ResponseEntity.ok().body(dto);
-        return null;
+        String account = LoginUtil.getLoggedInUserAccount(session);
+        AccBoard findAccountByBoardId = boardMapper.findOne(boardId);
+        String boardAccount = findAccountByBoardId.getAccount();
+
+        BookmarkDto dto = bookmarkService.bookmark(account, boardId, boardAccount);
+
+        if (dto == null) {
+            return ResponseEntity.status(400).body("자신의 글은 북마크할 수 없습니다.");
+        }
+
+        return ResponseEntity.ok().body(dto);
+    }
+
+    // 북마크 상태를 가져오는 메서드
+    @GetMapping("/bookmark/status")
+    @ResponseBody
+    public ResponseEntity<?> getBookmarkStatus(@RequestParam("boardId") long boardId, HttpSession session) {
+
+        String account = LoginUtil.getLoggedInUserAccount(session);
+        boolean isBookmarked = bookmarkService.isBookmarkByUser(account, boardId);
+
+        return ResponseEntity.ok().body(isBookmarked);
     }
 }

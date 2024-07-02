@@ -32,6 +32,12 @@ public class LoginUtil {
         return loggedInUser != null ? loggedInUser.getAccount() : null;
     }
 
+    // 로그인한 회원의 닉네임 얻기
+    public static String getLoggedInUserNickname(HttpSession session) {
+        LoginUserInfoDto loggedInUser = getLoggedInUser(session);
+        return loggedInUser != null ? loggedInUser.getNickname() : null;
+    }
+
     public static LoginUserInfoDto getLoggedInUser(HttpSession session) {
         return (LoginUserInfoDto) session.getAttribute(LOGIN);
     }

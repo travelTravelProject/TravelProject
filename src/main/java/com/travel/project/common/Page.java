@@ -13,7 +13,7 @@ public class Page {
 
     public Page() {
         this.pageNo = 1;
-        this.amount = 6;
+        this.amount = 10;
     }
 
     // 페이지 범위 밖이면 1로 고정
