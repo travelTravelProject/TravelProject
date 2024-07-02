@@ -20,5 +20,7 @@ public interface ImageMapper {
     // 한 게시글의 모든 이미지 삭제
     boolean deleteImagesByBoardId(long boardId);
 
+    // 한 게시글의 첫번째 이미지 조회
+    BoardImage findFirstOne(long boardId);
 
 }

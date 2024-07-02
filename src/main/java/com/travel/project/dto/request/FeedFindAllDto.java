@@ -1,6 +1,7 @@
 package com.travel.project.dto.request;
 
 import com.travel.project.dto.response.FeedDetailDto;
+import com.travel.project.dto.response.MyFeedDto;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,8 +30,6 @@ public class FeedFindAllDto {
 //    private Status status; // 디폴트 A, 삭제시 D로 수정 필요
 
 
-    // 좋아요 수, 북마크 수, 댓글 수
-
     // 피드 상세 DTO 에 담기
     public FeedDetailDto toDetailDto() {
         return FeedDetailDto.builder()
@@ -43,6 +42,12 @@ public class FeedFindAllDto {
                 .viewCount(viewCount)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
+                .build();
+    }
+    public MyFeedDto toMyFeed() {
+        return MyFeedDto.builder()
+                .boardId(boardId)
+                .account(account)
                 .build();
     }
 

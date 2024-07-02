@@ -56,6 +56,8 @@
         WHERE status = 'A'
         AND category_id = 2
         AND.account = #{account}
+        ORDER BY created_at DESC
+        LIMIT #{s.pageStart}, #{s.amount}
     </select>
 
     <select id="findFeedById" resultType="com.travel.project.dto.request.FeedFindOneDto">

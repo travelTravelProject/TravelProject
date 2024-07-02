@@ -70,5 +70,8 @@ public class ImageService {
         return imageMapper.deleteImagesByBoardId(boardId);
     }
 
-
+    // 한 게시글의 첫번째 이미지 조회
+    public BoardImage findFirstOne(long boardId) {
+        return imageMapper.findFirstOne(boardId);
+    }
 }

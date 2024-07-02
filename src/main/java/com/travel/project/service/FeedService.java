@@ -7,8 +7,7 @@ import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
-import com.travel.project.dto.response.FeedDetailDto;
-import com.travel.project.dto.response.FeedListDto;
+import com.travel.project.dto.response.*;
 import com.travel.project.entity.Board;
 import com.travel.project.entity.BoardImage;
 import com.travel.project.login.LoginUtil;
@@ -232,4 +231,40 @@ public class FeedService {
         return result;
     }
 
+    @Transactional
+    public MyFeedListDto findFeedsById(Search search, HttpSession session) {
+        LoginUserInfoDto loggedInUser = LoginUtil.getLoggedInUser(session);
+
+        List<FeedFindAllDto> feedList = feedMapper.findAllByAccount(search, loggedInUser.getAccount());
+        if (feedList.isEmpty()) {
+            return null;
+        }
+        List<MyFeedDto> myFeeds = feedList.stream().map(f -> {
+
+            MyFeedDto myFeed = f.toMyFeed();
+            long boardId = f.getBoardId();
+
+            // 이미지 추가 (1개)
+            BoardImage firstOne = imageService.findFirstOne(boardId);
+            if(firstOne == null) throw new RuntimeException("이미지가 존재하지 않습니다.");
+
+            // 좋아요 수 추가
+            myFeed.setLikeCount(likeService.countLikes((int)boardId));
+
+            // 북마크 수 추가
+            myFeed.setBookmarkCount(bookmarkService.countBookmarks((int)boardId));
+
+            // 댓글 수 추가 (확인 필요)
+
+            return myFeed;
+        }).collect(Collectors.toList());
+
+        PageMaker pageMaker = new PageMaker(new Page(search.getPageNo(), search.getAmount()), myFeeds.size());
+
+        return MyFeedListDto.builder()
+                .loginUser(loggedInUser)
+                .pageInfo(pageMaker)
+                .myFeeds(myFeeds)
+                .build();
+    }
 }

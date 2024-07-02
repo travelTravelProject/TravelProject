@@ -111,6 +111,9 @@ export function initFeedFormEvents() {
     $imageInputPost.addEventListener('change', e => {
         console.log('post imageFiles: ', imageFiles);
         console.log('post 이미지 전: ', importedImages);
+        if(importedImages.length === 10) {
+            alert("이미지는 최대 10장까지 업로드 가능합니다.");
+        }
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxPost);
         console.log('post 이미지 추가확인: ', imageFiles);
         console.log('post 이미지 추가후 import: ', importedImages);
