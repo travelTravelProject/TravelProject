@@ -74,7 +74,10 @@
     </div>
   </div>
     <%-- 스피너 --%>
-    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    <div class="spinner-container">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+
 </section>
 <%-- 피드 목록 끝 --%>
 <!-- 피드 작성 모달 -->
@@ -167,7 +170,7 @@
 
         </div>
 
-        
+
         <!-- 댓글 쓰기 영역 -->
         <div class="card">
           <div class="card-body">
@@ -209,7 +212,7 @@
         </div>
         <!-- end reply write -->
         
-        
+
         <!-- 댓글 페이징 영역 -->
         <ul class="pagination justify-content-center">
             <!--
@@ -227,12 +230,8 @@
           <span class="visually-hidden">Loading...</span>
       </div>  
     </div>
-
-
-    </div>
+    <%-- 디테일 모달 닫기 - 스피너 컨테이너 형제  --%>
     <span class="close">&times;</span>
-
-    </div>
 
   </div>
 </div>

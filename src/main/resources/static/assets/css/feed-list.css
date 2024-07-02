@@ -586,7 +586,12 @@ body div.btn-container {
 }
 
 /* 스피너 */
-
+.spinner-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border: 1px solid lawngreen;
+}
 .lds-spinner,
 .lds-spinner div,
 .lds-spinner div:after {
@@ -595,9 +600,10 @@ body div.btn-container {
 .lds-spinner {
     color: currentColor;
     display: inline-block;
+    /*display: block;*/
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
 }
 .lds-spinner div {
     transform-origin: 40px 40px;
