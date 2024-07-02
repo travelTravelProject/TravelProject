@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
@@ -102,16 +106,34 @@ public class AccBoardController {
         boolean flag = boardService.checkBookmark(req.getSession(), boardId);
         model.addAttribute("bookmark", flag);
 
+        // String 타입의 날짜를 LocalDate로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        LocalDate startDate = LocalDate.parse(dto.getStartDate(), formatter);
+        LocalDate endDate = LocalDate.parse(dto.getEndDate(), formatter);
+        // 날짜 차이 계산
+        long period = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+        model.addAttribute("period", period);
+
+        // 사용자 정보 가져오기
+        HttpSession session = req.getSession();
+        LoginUserInfoDto userInfo = (LoginUserInfoDto) session.getAttribute("user"); // 세션에서 LoginUserInfoDto 객체를 가져옴
+        String account = userInfo != null ? userInfo.getAccount() : null; // 사용자 계정 정보 추출
+        String boardAccount = dto.getAccount(); // 게시글 작성자 계정 정보 추출
+
+        // 현재 사용자가 글의 작성자이거나 관리자인지 확인
+        model.addAttribute("isOwnerOrAdmin", account != null && (account.equals(boardAccount) || LoginUtil.isAdmin(session)));
+
         // 이전 페이지 주소
         String ref = req.getHeader("referer");
 
         // 최근 'acc-board/list' URL을 찾기 위한 조건문
         if (ref != null && !ref.contains("acc-board/list")) {
             // 세션이 존재하는지 확인
-            HttpSession session = req.getSession(false);
-            if (session != null) {
+            HttpSession sessionCheck = req.getSession(false);
+            if (sessionCheck != null) {
                 // 세션에서 이전 referer 값을 가져옴
-                String prevRef = (String) session.getAttribute("prevReferer");
+                String prevRef = (String) sessionCheck.getAttribute("prevReferer");
+
                 // 이전 referer가 존재하고, 'acc-board/list'를 포함하는지 확인
                 if (prevRef != null && prevRef.contains("acc-board/list")) {
                     // 조건을 만족하면 이전 referer를 현재 referer로 설정
@@ -126,9 +148,10 @@ public class AccBoardController {
             }
         } else if (ref != null) {
             // 현재 referer가 'acc-board/list'를 포함하면, 세션에 저장
-            HttpSession session = req.getSession();
-            session.setAttribute("prevReferer", ref);
+            HttpSession sessionSave = req.getSession();
+            sessionSave.setAttribute("prevReferer", ref);
         }
+
 
         model.addAttribute("ref", ref);
 

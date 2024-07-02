@@ -18,6 +18,7 @@ public class AccBoardDetailDto {
     private String startDate;
     private String endDate;
     private int viewCount;
+    private String account;
 
     @Setter
     private int likeCount; // 총 좋아요 수
@@ -29,6 +30,7 @@ public class AccBoardDetailDto {
         this.title = ab.getTitle();
         this.writer = ab.getWriter();
         this.content = ab.getContent();
+        this.account = ab.getAccount();
 
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 a hh시 mm분 ss초");
         this.createdAt = pattern.format(ab.getCreatedAt());

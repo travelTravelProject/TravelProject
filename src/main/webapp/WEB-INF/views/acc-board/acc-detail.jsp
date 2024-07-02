@@ -91,11 +91,17 @@
             font-size: 0.9em;
         }
         .buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin: 20px auto;
         }
-        .buttons .edit-btn, .buttons .list-btn {
-            margin-right: 10px;
-            margin-top: 10px;
+        .reaction-buttons {
+            flex: 1;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
         }
         .reaction-buttons button {
             background-color: transparent;
@@ -105,10 +111,47 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
         .reaction-buttons button.active {
             background-color: #00CE7B;
             color: #fff;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal .btn {
+            margin: 10px;
         }
 
     </style>
@@ -133,7 +176,7 @@
                 <p class="title">여행 일정</p>
                 <div class="travel-info">
                     <div class="travel-period">
-                        <i class="fas fa-calendar"></i> &nbsp;${abd.startDate} - ${abd.endDate}
+                        <i class="fas fa-calendar"></i> &nbsp;${abd.startDate} - ${abd.endDate} (${period}일)
                     </div>
                     <div class="travel-destination">
                         <i class="fas fa-map-marker-alt"></i> &nbsp;장소
@@ -153,16 +196,32 @@
                         <i class="fas fa-bookmark" style="display: none;"></i>
                     </button>
                 </div>
-                <button class="edit-btn btn btn-secondary" type="button"
-                        onclick="window.location.href='/acc-board/modify?bno=${abd.boardId}'">수정
-                </button>
-                <button class="list-btn btn btn-secondary" type="button" onclick="window.location.href='${ref}'">목록
-                </button>
+                <div class="action-buttons">
+                    <c:if test="${isOwnerOrAdmin}">
+                        <button class="del-btn btn btn-danger" type="button">삭제</button>
+                        <button class="edit-btn btn btn-secondary" type="button"
+                                onclick="window.location.href='/acc-board/modify?bno=${abd.boardId}'">수정
+                        </button>
+                    </c:if>
+                    <button class="list-btn btn btn-secondary" type="button" onclick="window.location.href='${ref}'">목록
+                    </button>
+                </div>
             </div>
+
 
             <%--  댓글영역  --%>
             <div>댓글</div>
 
+        </div>
+    </div>
+
+    <!-- 삭제 확인 모달 -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>정말로 삭제하시겠습니까?</p>
+            <button id="confirmDelete" class="btn btn-danger">삭제</button>
+            <button id="cancelDelete" class="btn btn-secondary">취소</button>
         </div>
     </div>
 
@@ -219,6 +278,34 @@
 
             // 북마크 버튼 클릭 이벤트 리스너 추가
             document.getElementById('bookmark-btn').addEventListener('click', toggleBookmark);
+
+            // 삭제 스크립트
+            const modal = document.getElementById('deleteModal'); // 모달창
+            const span = document.getElementsByClassName('close')[0];
+            const confirmDelete = document.getElementById('confirmDelete'); // 모달 삭제 확인 버튼
+            const cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
+
+            // 삭제버튼 클릭이벤트 - 모달창
+            document.querySelector('.del-btn').addEventListener('click', function () {
+                modal.style.display = 'block';
+            });
+
+            // 모달 창 닫기 이벤트 (X 버튼)
+            span.onclick = function () {
+                modal.style.display = 'none';
+            };
+
+            // 모달 창 닫기 이벤트 (취소 버튼)
+            cancelDelete.onclick = function () {
+                modal.style.display = 'none';
+            };
+
+            // 모달 창 - 게시글 삭제 이벤트
+            confirmDelete.addEventListener('click', function() {
+                const bno = document.getElementById('wrap').dataset.bno;
+                window.location.href = `/acc-board/delete?boardId=\${bno}`;
+            });
+
         </script>
 
 
