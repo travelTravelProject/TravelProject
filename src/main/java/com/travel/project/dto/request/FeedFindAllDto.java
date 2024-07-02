@@ -2,6 +2,7 @@ package com.travel.project.dto.request;
 
 import com.travel.project.dto.response.FeedDetailDto;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Slf4j
 public class FeedFindAllDto {
 
     @Setter
@@ -30,7 +32,7 @@ public class FeedFindAllDto {
     // 좋아요 수, 북마크 수, 댓글 수
 
     // 피드 상세 DTO 에 담기
-    public FeedDetailDto toDetailResponseDto() {
+    public FeedDetailDto toDetailDto() {
         return FeedDetailDto.builder()
                 .boardId(boardId)
                 .account(account)
@@ -43,4 +45,5 @@ public class FeedFindAllDto {
                 .updatedAt(updatedAt)
                 .build();
     }
+
 }

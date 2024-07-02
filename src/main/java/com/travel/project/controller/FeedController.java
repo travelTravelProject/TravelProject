@@ -104,10 +104,8 @@ public class FeedController {
             // 에러 메세지 Map 필요
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
-        // 받아온 계정과 세션 계정 일치하는지 검증 필요
-        // 일치하면 Board 작성 아니면 에러메세지 리턴
 
-        // tbl_board 생성된 데이터의 boardId를 가져옴 (실패 시 -1 리턴)
+        // tbl_board 생성된 데이터의 boardId를 가져옴 (실패 시 RuntimeException)
         long newBoardId = feedService.insertFeed(dto, session);
         if(newBoardId < 0) {
             return ResponseEntity

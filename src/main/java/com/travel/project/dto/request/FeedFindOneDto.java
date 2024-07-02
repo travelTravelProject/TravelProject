@@ -38,4 +38,5 @@ public class FeedFindOneDto {
                 .updatedAt(this.updatedAt)
                 .build();
     }
+
 }

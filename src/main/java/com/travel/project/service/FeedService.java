@@ -33,9 +33,10 @@ public class FeedService {
     private final ImageService imageService;
     private final LikeService likeService;
 
+    // 피드 전체 조회
     public FeedListDto findAll(Search search, HttpSession session) {
         List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
-//        log.debug("서비스 findAll: {}", feedList);
+
         String loginAccount = LoginUtil.getLoggedInUserAccount(session);
         if (feedList.isEmpty()) {
             return null;
@@ -44,25 +45,25 @@ public class FeedService {
         // 각 피드마다 댓글 수, 좋아요 수, 북마크 수 추가
 
         List<FeedDetailDto> detailDto = feedList.stream()
-                .map(f -> {
-                    FeedDetailDto responseDto = f.toDetailResponseDto();
-                    log.debug("피드서비스 f: {}", f);
-                    log.debug("f 글번호: {}", f.getBoardId());
+            .map(f -> {
+                log.debug("전체조회 - 피드서비스 f: {}", f);
+                FeedDetailDto responseDto = f.toDetailDto();
+                responseDto.setContent(formatContent(changeEol(f.getContent()))); // content 변경
 
-                    int boardId = (int) f.getBoardId();
-                    String account = f.getAccount();
-                    // 좋아요 수, 로그인 유저의 좋아요 여부 추가
-                    responseDto.setLikeCount(likeService.countLikes(boardId));
-                    responseDto.setUserLike(likeService.isLikedByUser(loginAccount, boardId));
+                int boardId = (int) f.getBoardId(); // like service 가 int 요구해서
 
-                    // Feed 디테일 응답객체에 이미지 담기
-                    List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());
-                    if (feedImages != null) {
-                        responseDto.setFeedImageList(feedImages);
-                    }
-                    return responseDto;
-                })
-                .collect(Collectors.toList());
+                // 좋아요 수, 로그인 유저의 좋아요 여부 추가
+                responseDto.setLikeCount(likeService.countLikes(boardId));
+                responseDto.setUserLike(likeService.isLikedByUser(loginAccount, boardId));
+
+                // Feed 디테일 응답객체에 이미지 담기
+                List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());
+                if (feedImages != null) {
+                    responseDto.setFeedImageList(feedImages);
+                }
+                return responseDto;
+            })
+            .collect(Collectors.toList());
 
         Page page = new Page(search.getPageNo(), search.getAmount());
 
@@ -73,15 +74,17 @@ public class FeedService {
 
     }
 
+    // 피드 상세 조회 - 글 번호로
     public FeedDetailDto findById(long boardId) {
         log.debug("글번호: {}", boardId);
 
-        // DB에서 FeedFindOneDto 받아와서 response dto에 담기
+        // DB tbl_board 조회 결과 FeedFindOneDto 에 담기
         FeedFindOneDto feedById = feedMapper.findFeedById(boardId);
         log.debug("개별조회: {}", feedById);
 
         // 피드 상세조회 응답 DTO를 생성
         FeedDetailDto responseDto = feedById.toDetailDto();
+        responseDto.setContent(changeEol(feedById.getContent())); // \r\n -> <br>
 
         // 이미지 모두 조회하여 추가
         List<BoardImage> feedImages = imageService.findFeedImages(feedById.getBoardId());
@@ -124,8 +127,8 @@ public class FeedService {
             throw new RuntimeException("피드 수정 - 이미지 파일이 없습니다.");
         }
         // file 존재하면 DB에 insert
-        // 이미지 추가 성공하면 등록한 BoardId를 리턴
-        // 이미지 추가 실패하면 트랜잭션 롤백
+        // 성공하면 등록한 BoardId를 리턴
+        // 실패하면 트랜잭션 롤백
         for (int i = 0; i < files.size(); i++) {
             MultipartFile file = files.get(i);
             BoardImage b = BoardImage.builder()
@@ -199,4 +202,29 @@ public class FeedService {
         Integer result = feedMapper.countFeeds(search);
         return result != null ? result : 0;
     }
+
+    // 디비에 저장된 textarea 개행문자 -> br 태그
+    public String changeEol(String content) {
+        return content.replaceAll("\r\n", "<br>");
+    }
+
+    // 피드 전체 조회 시 10글자 이상은 생략
+    public String formatContent(String content) {
+
+        String[] split = content.split("<br>");
+        String result = split[0]; // 첫번째 줄
+
+        // 첫번째 줄이 10글자 보다 긴 경우
+        if(split[0].length() > 10) {
+            result = split[0].substring(0, 10) + " ...";
+
+        } else { // 첫번째 줄이 10글자 이하
+            if(split.length > 1) { // 두번째 줄이 있는 경우
+                result = split[0] + " ...";
+            }
+        }
+
+        return result;
+    }
+
 }
