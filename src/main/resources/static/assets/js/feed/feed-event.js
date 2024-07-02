@@ -190,8 +190,12 @@ export function initFeedFormEvents() {
 
     })
 
-    // TOP 버튼
+    // 스크롤 최상단으로 이동 버튼
     const topBtn = document.getElementById('goTopBtn');
+    topBtn.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.scrollTo({top: 0, behavior: 'smooth'});
+    })
     window.addEventListener('scroll', () => {
         if(document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
             topBtn.style.display = 'block';
@@ -200,9 +204,11 @@ export function initFeedFormEvents() {
         }
     });
 
-    topBtn.addEventListener('click', e => {
+    // 스크롤 최하단으로 이동 버튼
+    const bottomBtn = document.getElementById('goBottomBtn');
+    bottomBtn.addEventListener('click', e => {
         e.preventDefault();
-        document.body.scrollTo({top: 0, behavior: 'smooth'});
+        document.body.scrollIntoView({ behavior: "smooth", block: "end" });
     })
 
     // 좋아요 버튼

@@ -535,6 +535,7 @@ body div.btn-container {
     border-radius: 5px;
     color: #00ce7c;;
     font-weight: 500;
+    margin-top: 10px;
     padding: 5px 10px;
     /*background: #4CAF50;*/
 }
@@ -559,7 +560,7 @@ body div.btn-container {
 .confirm-modal {
     display: none;
     position: fixed;
-    z-index: 2;
+    z-index: 11;
     left: 0;
     top: 0;
     width: 100%;
@@ -569,7 +570,7 @@ body div.btn-container {
 }
 .confirm-modal .confirm {
     height: 300px;
-    border: 1px solid blue;
+    /*border: 1px solid blue;*/
     position: relative;
     top: 200px;
 }
@@ -586,7 +587,7 @@ body div.btn-container {
 }
 
 /* 스피너 */
-.spinner-container {
+.spinner-container-lds {
     width: 100%;
     display: flex;
     justify-content: center;

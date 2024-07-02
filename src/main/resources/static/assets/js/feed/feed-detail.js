@@ -1,5 +1,6 @@
 import {FEED_URL} from "../feed-list.js";
 import {renderCarousel, setOneImgStyle} from "../image.js";
+import {getRelTime} from "../util.js";
 
 
 function setDetailModal(dto) {
@@ -20,7 +21,7 @@ function setDetailModal(dto) {
 
   // 날짜 적용
   const $created = document.querySelector('.feed-right-side .created-at');
-  $created.textContent = createdAt;
+  $created.textContent = getRelTime(createdAt);
 
   // content 적용
   const $content = document.querySelector('.detail-content');

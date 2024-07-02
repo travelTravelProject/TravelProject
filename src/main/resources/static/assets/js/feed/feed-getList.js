@@ -1,5 +1,5 @@
 import { FEED_URL } from "../feed-list.js";
-import {debounce} from "../util.js";
+import {debounce, getRelTime} from "../util.js";
 import {renderCarousel, setOneImgStyle} from "../image.js";
 
 let currentFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
@@ -34,7 +34,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
               </div>
               <div class="profile-column">
                 <span class="nickname">${nickname}</span>
-                <span class="created-at">${createdAt}</span>          
+                <span class="created-at">${getRelTime(createdAt)}</span>          
               </div>
             </div>
           </div>
