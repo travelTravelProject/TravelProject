@@ -244,8 +244,7 @@
                 });
 
                 if (res.status === 403) {
-                    alert('로그인이 필요합니다.');
-                    window.location.href = '/sign-in';  // 로그인 페이지로 리다이렉트
+                    window.location.href = '/sign-in?message=login-required&redirect='+ window.location.pathname + `?bno=\${bno}`;  // 로그인 페이지로 리다이렉트
                     return;
                 }
 
