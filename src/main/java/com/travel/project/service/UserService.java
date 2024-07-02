@@ -27,6 +27,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static com.travel.project.login.LoginUtil.AUTO_LOGIN_COOKIE;
@@ -43,7 +44,6 @@ public class UserService {
     private final UserDetailMapper userDetailMapper;
     @Autowired
     private final PasswordEncoder encoder;
-
 
     // 회원가입 중간처리
     public boolean join(SignUpDto dto) {
@@ -69,24 +69,8 @@ public class UserService {
         return userMapper.findOne(account);
     }
 
-    @Transactional
-    public void saveUpdateUser(UpdateProfileDto dto) {
-        // Update tbl_user
-        userMapper.updateUser(dto);
-        // Update tbl_user_detail
-        userDetailMapper.updateUserDetail(dto);
-    }
-
-    @Transactional
-    public void saveOrUpdateUserDetail(UpdateProfileDto dto) {
-        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
-        if (existingDetail == null) {
-            // Insert new user detail
-            userDetailMapper.insertUserDetail(dto);
-        } else {
-            // Update existing user detail
-            userDetailMapper.updateUserDetail(dto);
-        }
+    public void saveUserDetail(UserDetail userDetail) {
+        userDetailMapper.save(userDetail);
     }
 
     // 사용자 상세 정보 조회
@@ -94,9 +78,84 @@ public class UserService {
         return userDetailMapper.findUserDetailByAccount(account);
     }
 
-    // FileUtil 클래스의 uploadFile 메서드를 호출하여 파일을 업로드하고, 업로드된 파일의 URL을 반환합니다.
-    public String uploadProfileImage(MultipartFile file) {
-        return FileUtil.uploadFile(file);
+    @Transactional
+    public void saveUpdateUser(UpdateProfileDto dto) {
+        // Update tbl_user
+        userMapper.updateUser(dto);
+        // Update tbl_user_detail
+        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        if (existingDetail != null) {
+            // 이미 존재하는 경우에만 업데이트
+            existingDetail.setMbti(dto.getMbti());
+            existingDetail.setOneLiner(dto.getOneLiner());
+            existingDetail.setRating(dto.getRating());
+
+            // 프로필 이미지 업로드 및 경로 설정
+            if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
+                String profilePath = FileUtil.uploadFile(dto.getProfileImage());
+                existingDetail.setProfileImage(profilePath);
+            }
+
+            userDetailMapper.updateUserDetail(existingDetail);
+        }
+    }
+
+    @Transactional
+    public void saveOrUpdateUserDetail(UpdateProfileDto dto, String profilePath) {
+        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        if (existingDetail == null) {
+            // 새로운 회원 정보 저장
+            UserDetail newUserDetail = UserDetail.builder()
+                    .account(dto.getAccount())
+                    .mbti(dto.getMbti())
+                    .oneLiner(dto.getOneLiner())
+                    .profileImage(profilePath)
+                    .rating(dto.getRating())
+                    .build();
+            userDetailMapper.insertUserDetail(newUserDetail);
+        } else {
+            // 이미 존재하는 회원 정보 수정 저장
+            existingDetail.setMbti(dto.getMbti());
+            existingDetail.setOneLiner(dto.getOneLiner());
+            existingDetail.setProfileImage(profilePath);
+            existingDetail.setRating(dto.getRating());
+            userDetailMapper.updateUserDetail(existingDetail);
+        }
+    }
+
+    // 생년월일 연령대 계산
+    public String calculateAgeGroup(String account) {
+        User user = userMapper.findOne(account);
+
+        LocalDate birthDate = user.getBirthday();
+        int birthYear = birthDate.getYear();
+        int currentYear = LocalDate.now().getYear();
+        int age = currentYear - birthYear;
+
+        if (age < 10) {
+            return "10대 미만";
+        } else if (age < 20) {
+            return "10대";
+        } else if (age < 30) {
+            return "20대";
+        } else if (age < 40) {
+            return "30대";
+        } else if (age < 50) {
+            return "40대";
+        } else if (age < 60) {
+            return "50대";
+        } else {
+            return "60대 이상";
+        }
+    }
+
+    // 회원 탈퇴(삭제)
+    @Transactional
+    public User remove(String account) {
+        User user = userMapper.findOne(account);
+
+        boolean flag = userMapper.delete(account);
+        return flag ? user : null;
     }
 
 

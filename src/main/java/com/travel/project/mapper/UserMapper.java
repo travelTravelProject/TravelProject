@@ -16,6 +16,15 @@ public interface UserMapper {
     // 회원정보 개별 조회
     User findOne(String account);
 
+    // 회원정보 전체 조회
+    User findAll(String account);
+
+    // 회원 탈퇴(삭제)
+    boolean delete(String account);
+
+    // 총 회원 수 조회
+    int count(String account);
+
     // 중복 확인(아이디, 이메일)
     /**
      * 중복 확인(아이디, 이메일)

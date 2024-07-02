@@ -9,84 +9,76 @@
     <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
 
     <style>
-        .form-container {
-            width: 500px;
-            margin: auto;
-            padding: 20px;
-            background-image: linear-gradient(135deg, #a1c4fd, #fbc2eb);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-            font-size: 18px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
         }
-        .form-container h1 {
-            font-size: 40px;
-            font-weight: 700;
-            letter-spacing: 10px;
-            text-align: center;
+        #wrap {
+            width: 60%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
             margin-bottom: 20px;
-            color: #ffffff;
         }
         label {
+            font-weight: bold;
+            margin-top: 10px;
             display: block;
-            margin-bottom: 5px;
-            font-size: 20px;
         }
-        input[type="text"],
-        input[type="date"],
-        textarea {
-            font-size: 18px;
+        input[type="text"], input[type="date"], textarea {
             width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 2px solid #ffffff;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f8f8;
         }
         textarea {
-            resize: none;
-            height: 200px;
+            min-height: 100px;
         }
         .buttons {
-            display: flex;
-            justify-content: flex-end;
             margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
         }
-        button {
-            font-size: 20px;
-            padding: 10px 20px;
+        .buttons button {
+            background-color: #00CE7B;
+            color: #fff;
             border: none;
-            margin-right: 10px;
-            background-color: #4CAF50;
-            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s;
         }
-        button.list-btn {
-            background: #e61e8c;
+        .buttons button:hover {
+            background-color: #00b56a;
         }
-        button:hover {
-            background-color: #3d8b40;
+        .list-btn {
+            background-color: #6c757d;
         }
-        button.list-btn:hover {
-            background: #e61e8c93;
+        .list-btn:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
 <body>
 
 <div id="wrap" class="form-container">
-    <h1>동행 게시판 수정</h1>
+    <h1>게시글 수정</h1>
     <form action="/acc-board/modify" method="post">
-        <input type="hidden" name="boardId" value="${abm.boardId}">
-        <label for="account">계정명</label>
-        <input type="text" id="account" name="account" value="${abm.account}" required>
-        <label for="categoryId">게시판유형</label>
-        <input type="text" id="categoryId" name="categoryId" value="${abm.categoryId}" required>
-        <label for="writer">작성자</label>
-        <input type="text" id="writer" name="writer" value="${abm.writer}" required>
+<%--        <input type="hidden" name="boardId" value="${abm.boardId}">--%>
+<%--        <label for="account">계정명</label>--%>
+<%--        <input type="text" id="account" name="account" value="${abm.account}" required>--%>
+<%--        <label for="categoryId">게시판유형</label>--%>
+<%--        <input type="text" id="categoryId" name="categoryId" value="${abm.categoryId}" required>--%>
+<%--        <label for="writer">작성자</label>--%>
+<%--        <input type="text" id="writer" name="writer" value="${abm.writer}" required>--%>
         <label for="title">제목</label>
         <input type="text" id="title" name="title" value="${abm.title}" required>
         <label for="content">내용</label>

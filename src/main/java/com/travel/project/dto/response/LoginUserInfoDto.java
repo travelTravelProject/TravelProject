@@ -5,6 +5,7 @@ import com.travel.project.entity.Gender;
 import com.travel.project.entity.User;
 import com.travel.project.entity.UserDetail;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -30,7 +31,7 @@ public class LoginUserInfoDto {
     private String mbti; // mbti
     private String oneLiner; // 소개글
     @Setter
-    private String profileImage; // 프로필 사진
+    private MultipartFile profileImage; // 프로필 사진
     private int rating; // 평점
 
 
@@ -52,7 +53,20 @@ public class LoginUserInfoDto {
         this.mbti = userDetail.getMbti();
         this.oneLiner = userDetail.getOneLiner();
         this.rating = userDetail.getRating();
-        this.profileImage = userDetail.getProfileImage();
+//        this.profileImage = userDetail.getProfileImage();
+    }
+
+    // 성별 변환 메서드 추가
+    public String getGenderDisplay() {
+        if (this.gender != null) {
+            switch (this.gender) {
+                case "M":
+                    return "남자";
+                case "F":
+                    return "여자";
+            }
+        }
+        return "";
     }
 
 }

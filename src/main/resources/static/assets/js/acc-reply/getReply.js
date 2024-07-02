@@ -1,12 +1,13 @@
 import { BASE_URL } from "../acc-reply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
-import { fetchInfScrollNestReplies, appendNestedReplies } from "./getNestReply.js";
+import { fetchInfScrollNestReplies } from "./getNestReply.js";
 import { fetchNestedReplyPost } from "./postNestReply.js";
+import { debounce } from "../util.js";
 
 // =============== 무한 스크롤 포함 ============= //
 
 // 댓글 등록시 시간에 대한 필터 함수
-function getRelativeTime(createAt) {
+export function getRelativeTime(createAt) {
   // 현재 시간 구하기
   const now = new Date();
   // 등록 시간 날짜타입으로 변환
@@ -56,7 +57,7 @@ export function appendReplies({ replies }, reset = false) {
 
   let tag = "";
   if (replies && replies.length > 0) {
-    replies.forEach(({ replyId: rno, writer, text, createAt, nestedReplies }) => {
+    replies.forEach(({ replyId: rno, writer, text, createAt }) => {
       tag += `
             <div id='replyContent' class='card-body' data-rno='${rno}'>
                 <div class='row user-block'>
@@ -75,9 +76,10 @@ export function appendReplies({ replies }, reset = false) {
                         </div>
                     </div>
                 </div>
-                <div id="nestedReplyData">
-
+                <!-- <button id="loadMoreNestedReplies-${rno}" class="btn btn-sm btn-outline-dark load-more-nested-replies" data-rno="${rno}">▽ 답글0개</button> -->
+                <div id="nestedReplyData-${rno}" class="nested-reply-data">
                 </div>
+                
             </div>
 
 
@@ -124,6 +126,7 @@ export function appendReplies({ replies }, reset = false) {
                 </div>
             </div>
             `;
+
             // 대댓글 fetch
             fetchInfScrollNestReplies(rno);
     });
@@ -137,6 +140,7 @@ export function appendReplies({ replies }, reset = false) {
   // 답글 버튼 클릭시 rno에 맞는 대댓글 입력창 토글
   document.querySelectorAll(".reply-reply-button").forEach(button => {
     button.addEventListener("click", (event) => {
+      console.log('찍어');
       const rno = event.target.dataset.rno;
       const nestedReplySection = document.getElementById(`nestedReplyWriteSection-${rno}`);
       nestedReplySection.classList.toggle("hidden");
@@ -151,7 +155,34 @@ export function appendReplies({ replies }, reset = false) {
     });
   });
 
-  loadedReplies += replies.length;
+
+
+  // // 대댓글 더보기 버튼 클릭시 이벤트 리스너 추가
+  // document.querySelectorAll(".load-more-nested-replies").forEach(button => {
+  //   button.addEventListener("click", async (e) => {
+  //     const rno = e.target.dataset.rno;
+  //     const nestedReplyData = document.getElementById(`nestedReplyData-${rno}`);
+  //     nestedReplyData.classList.toggle("hidden");
+
+  //     if (!nestedReplyData.classList.contains("hidden")) {
+  //       await fetchInfScrollNestReplies(rno);
+  //       button.textContent = "△ 답글0개"; // 버튼 텍스트 변경
+  //     } else {
+  //       button.textContent = "▽ 답글0개"; // 버튼 텍스트 변경
+  //     }
+  //   });
+  // });
+
+  //   // 대댓글이 없는 경우 버튼 숨기기
+  // document.querySelectorAll(".load-more-nested-replies").forEach(button => {
+  //   const rno = button.dataset.rno;
+  //   const nestedReplyCount = document.getElementById(`nestedReplyData-${rno}`).childElementCount;
+  //   if (nestedReplyCount === 0) {
+  //     button.style.display = "none";
+  //   }
+  // });
+
+  
 }
 
 // 서버에서 댓글 데이터를 페칭
@@ -190,33 +221,33 @@ export async function fetchInfScrollReplies(pageNo = 1, reset = false) {
     if (reset) {
       window.scrollTo(0, 0); // 수정 후 페이지 상단으로 이동
     }
+
     // 댓글을 전부 가져올 시 스크롤 이벤트 제거하기
     if (loadedReplies >= totalReplies) {
       removeInfiniteScroll();
     }
+    
     isFetching = false;
   }, spinnerMinTime);
 }
 
 // 스크롤 이벤트 핸들러 함수
 async function scrollHandler(e) {
+  // console.log(123);
   // 스크롤이 최하단부로 내려갔을 때만 이벤트 발생시켜야 함
   //  현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
   if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight + 0 &&
-    !isFetching
+    window.innerHeight + window.scrollY >= document.body.offsetHeight + 100
+    && !isFetching
   ) {
+    // showSpinner();
+    // console.log('window.innerHeight:', window.innerHeight);
+    // console.log('window.scrollY:', window.scrollY);
+    // console.log('document.body.offsetHeight:', document.body.offsetHeight);
+    // console.log('window.innerHeight + window.scrollY >= document.body.offsetHeight: ', window.innerHeight + window.scrollY >= document.body.offsetHeight);
+    // await new Promise(resolve => setTimeout(resolve, 500));
     await fetchInfScrollReplies(currentPage + 1);
   }
-}
-
-// 디바운싱 함수
-export function debounce(callback, wait) {
-    let timeout;
-    return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => callback(...args), wait);
-    };
 }
 
 // 디바운스 사용
@@ -224,20 +255,22 @@ const debounceScrollHandler = debounce(scrollHandler, 500);
 
 // 무한 스크롤 이벤트 생성 함수
 export function setupInfiniteScroll() {
-  window.addEventListener("scroll", debounceScrollHandler);
+  window.addEventListener('scroll', debounceScrollHandler);
 }
 
 // 무한 스크롤 이벤트 삭제 함수
 export function removeInfiniteScroll() {
-  window.removeEventListener("scroll", debounceScrollHandler);
+  // console.log('removed scroll');
+  window.removeEventListener('scroll', debounceScrollHandler);
 }
 
 // 초기 상태 리셋 함수
 export async function initInfScroll() {
+  // console.log('init!!');
   removeInfiniteScroll();
   window.scrollTo(0, 0);
   currentPage = 1;
   fetchInfScrollReplies(1, true);
-  fetchInfScrollNestReplies(1, true);
+  // console.log('setup scroll');
   setupInfiniteScroll();
 }

@@ -22,7 +22,7 @@
 
                 <div class="profile">
                     <div class="thumbnail-box">
-                        <img src="${userDetail.profileImage != null ? userDetail.profileImage : '/assets/img/image-add.png'}"
+                        <img src="${not empty userDetail.profileImage && userDetail.profileImage != 'none' ? userDetail.profileImage : '/assets/img/image-add.png'}"
                              alt="Profile Image" class="profile-image" id="profileImagePreview">
                     </div>
 

@@ -3,16 +3,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    
+
     <%@ include file="include/static-head.jsp" %>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>One Page Scroll with Navigation Dots</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WithTravel</title>
+
 </head>
 <body>
-    
-    <%@ include file="include/header.jsp" %>
+
+    <%@ include file="include/static-head.jsp" %>
 
     <div class="section" id="section1">
         <video autoplay muted loop id="background-video">
@@ -39,10 +42,5 @@
     </div>
 
 
-
-
-
-
-    <script src="/assets/js/index.js"></script>
 </body>
 </html>

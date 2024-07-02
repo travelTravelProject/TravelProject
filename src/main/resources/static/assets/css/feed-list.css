@@ -584,6 +584,7 @@ body div.btn-container {
     width: 200px;
     border-radius: 5px;
 }
+
 /* 스피너 */
 
 .lds-spinner,
@@ -669,4 +670,6 @@ body div.btn-container {
         opacity: 0;
     }
 }
-
+.hidden {
+    display: none;
+}
