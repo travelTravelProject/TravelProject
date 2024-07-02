@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Web Study</title>
+    <%@ include file="include/static-head.jsp" %>
   <link rel="stylesheet" href="/assets/css/feed-list.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,38 +16,40 @@
 <%--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">--%>
 </head>
 <body>
-
+<%@ include file="include/sub_header.jsp" %>
 <section id="feed-header">
   <div class="top-section">
     <!-- 검색창 영역 -->
-    <div class="search">
-      <form action="/feed/list" method="get">
+<%--    <div class="search">--%>
+<%--      <form action="/feed/list" method="get">--%>
 
-        <select class="form-select" name="type" id="search-type">
+<%--        <select class="form-select" name="type" id="search-type">--%>
 
-          <option value="content">내용</option>
-          <option value="writer">작성자</option>
-          <option value="cw">내용+작성자</option>
-        </select>
+<%--          <option value="content">내용</option>--%>
+<%--          <option value="writer">작성자</option>--%>
+<%--          <option value="cw">내용+작성자</option>--%>
+<%--        </select>--%>
 
-        <input type="text" class="form-control" name="keyword" value="${s.keyword}">
+<%--        <input type="text" class="form-control" name="keyword" value="${s.keyword}">--%>
 
-        <button class="btn btn-primary" type="submit">
-  <%--        <i class="fas fa-search"></i>--%>
-          검색
-        </button>
+<%--        <button class="btn btn-primary" type="submit">--%>
+<%--  &lt;%&ndash;        <i class="fas fa-search"></i>&ndash;%&gt;--%>
+<%--          검색--%>
+<%--        </button>--%>
 
-      </form>
-    </div>
+<%--      </form>--%>
+<%--    </div>--%>
 
   </div>
 
-  <div class="btn-container">
-    <div id="createFeedBtn"> <i class="fas fa-pen"></i> </div>
-<%--    <button id="editFeedBtn">피드 수정</button>--%>
-  </div>
+
 
 </section>
+<div class="btn-container">
+    <div id="createFeedBtn" class="side-btn" data-feed-user="${user != null ? user.account : ""}"> <i class="fas fa-pen"></i> </div>
+    <div id="goTopBtn" class="side-btn"> TOP </div>
+    <%--    <button id="editFeedBtn">피드 수정</button>--%>
+</div>
 <%-- 피드 헤더 끝 --%>
 <%-- 피드 목록 시작 --%>
 <section id="feed-list">
@@ -64,27 +67,29 @@
         <span>너무 더워</span>
       </div>
       <div class="interaction-section">
-        <span class="comments">💬 10</span>
-        <span class="hearts">❤️ 25</span>
-        <span class="bookmarks">🔖 5</span>
+        <span class="comments"><ion-icon name="chatbubble-outline"></ion-icon> 10</span>
+        <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>
+        <span class="bookmarks"><ion-icon name="bookmark-outline"></ion-icon> 5</span>
       </div>
     </div>
   </div>
+    <%-- 스피너 --%>
+    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </section>
 <%-- 피드 목록 끝 --%>
 <!-- 피드 작성 모달 -->
-<div id="createFeedModal" class="modal">
+<div id="createFeedModal" class="modal" data-feed-user="${user != null ? user.account : "null"}">
   <div class="modal-content">
     <span class="close close-modal">&times;</span>
     <div id="createFeedForm">
-      <label for="cr-nickname">닉네임:</label>
-      <input type="text" id="cr-nickname" name="nickname" required>
-      <label for="cr-content">내용:</label>
-      <input type="text" id="cr-content" name="content" required>
-      <label for="postImage">이미지 업로드:</label>
+      <label for="cr-nickname">닉네임</label>
+      <input type="text" id="cr-nickname" name="nickname" required value="${user.nickname}" readonly>
+      <label for="cr-content">내용</label>
+      <textarea id="cr-content" name="content" rows="3" placeholder="본문을 입력하세요." required></textarea>
+      <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
       <div class="dropbox" id="post-preview"></div>
-      <button type="submit" id="feed-post-Btn">게시</button>
+      <button type="submit" id="feed-post-Btn" class="one-modal-btn">게시</button>
     </div>
   </div>
 </div>
@@ -95,19 +100,19 @@
     <span class="close close-modal">&times;</span>
     <div id="editFeedForm">
       <label for="ed-nickname">닉네임</label>
-      <input type="text" id="ed-nickname" name="nickname" required>
+      <input type="text" id="ed-nickname" name="nickname" required readonly>
       <label for="ed-content">내용</label>
-      <input type="text" id="ed-content" name="nickname" required>
+        <textarea type="text" id="ed-content" name="nickname" required></textarea>
       <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
       <div class="dropbox" id="edit-preview"></div>
-      <button type="submit" id="feed-modify-Btn">수정 완료</button>
+      <button type="submit" id="feed-modify-Btn" class="one-modal-btn">수정 완료</button>
     </div>
   </div>
 </div>
 <!-- 피드 수정 모달 끝 -->
 <!-- 피드 상세조회 모달 -->
-<div id="detailFeedModal" class="detail-modal">
+<div id="detailFeedModal" class="detail-modal" data-login="${user != null ? user.account : ""}">
   <div class="detail-modal-content">
     <div class="feed-left-side">
       <div class="image-carousel">
@@ -119,20 +124,21 @@
     <div class="feed-right-side">
       <div class="profile-section">
         <div class="profile-row">
-          <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+          <div class="profile-box">
+            <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+          </div>
           <div class="profile-column">
             <span class="nickname">nickname</span>
             <span class="created-at">createdAt</span>
           </div>
         </div>
-        <div class="profile-row row2">
-          <button class="edit-feed detail-set-btn" id="editFeedBtn">수정</button>
-          <button class="delete-feed detail-set-btn" id="deleteFeedBtn">삭제</button>
+        <div class="profile-row row2" id="detail-update-btn">
         </div>
       </div>
       <div class="detail-content">
-<%--        <h2>Title</h2>--%>
-        <p>Some description or content goes here...</p>
+        <p>
+<%--            Some description or content goes here...--%>
+        </p>
       </div>
       <!-- 댓글 영역 -->
 
@@ -222,8 +228,12 @@
       </div>  
     </div>
 
+
     </div>
     <span class="close">&times;</span>
+
+    </div>
+
   </div>
 </div>
 <%-- 피드 상세조회 모달 끝 --%>
@@ -242,9 +252,17 @@
 
 
 <%-- 스크립트 --%>
-<script type="module" src="/assets/js/feed-list.js"></script>
+<%-- 부트스트랩, 스크롤매직--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<%-- 아이콘 --%>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<%--<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>--%>
+<%-- 스크립트 모듈 --%>
+<script type="module" src="/assets/js/feed-list.js"></script>
+<script type="module" src="/assets/js/feed-reply.js"></script>
+
 </body>
 </html>

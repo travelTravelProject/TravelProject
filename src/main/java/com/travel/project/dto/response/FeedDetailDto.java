@@ -1,7 +1,5 @@
 package com.travel.project.dto.response;
 
-import com.travel.project.dto.request.FeedFindAllDto;
-import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.entity.BoardImage;
 import lombok.*;
 
@@ -13,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FeedDetailResponseDto {
+public class FeedDetailDto {
     private long boardId; // 게시글 id
 
     private String account; // 게시글 작성자 계정
@@ -31,7 +29,17 @@ public class FeedDetailResponseDto {
     @Setter
     private List<BoardImage> feedImageList; // 게시글에 등록된 모든 이미지
     // 댓글 수, 좋아요 수, 북마크 수 추가
+    @Setter
+    private int replyCount; // 게시글 총 댓글 수
+    @Setter
+    private int likeCount; // 게시글 총 좋아요 수
+    @Setter
+    private int bookmarkCount; // 게시글 총 북마크 수
 
+    @Setter
+    private boolean userLike; // 현재 좋아요 상태
+    @Setter
+    private boolean userBookmark; // 현재 북마크 상태
 
 
 }
