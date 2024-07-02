@@ -12,9 +12,14 @@ import {fetchFeedModify, setEditModal} from "./feed-modify.js";
 import {fetchFeedList} from "./feed-getList.js";
 import {fetchFeedDelete} from "./feed-delete.js";
 
-import { fetchInfScrollReplies, state } from "../feed-reply/feed-getReply.js";
+import { initInfScroll} from "../feed-reply/feed-getReply.js";
 import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
 import { isEditModeActive, fetchReplyModify } from "../feed-reply/feed-modifyReply.js";
+import { removeReplyClickEvent } from "../feed-reply/feed-deleteReply.js";
+import { modifyReplyClickEvent } from "../feed-reply/feed-modifyReply.js";
+
+// 대댓글 작성시 boardId를 전달하기 위해 설정한 전역변수
+let currentBoardId = null;
 
 export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
@@ -45,8 +50,11 @@ export function initFeedFormEvents() {
             console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             detailModal.setAttribute("data-board-id", boardId);
+            currentBoardId = boardId;
             fetchFeedDetail(boardId);
-            fetchInfScrollReplies(1, true, boardId); // 모달이 열릴 때 댓글 fetch
+            initInfScroll(boardId);
+            
+            
           
         } else if (e.target.id === "editFeedBtn") { // 디테일 모달의 수정 버튼
             editModal.style.display = "block";
@@ -178,4 +186,6 @@ export function initFeedFormEvents() {
         }
     });
 
+    modifyReplyClickEvent();
+    removeReplyClickEvent();
 }

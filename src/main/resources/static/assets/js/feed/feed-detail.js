@@ -1,6 +1,7 @@
 import {FEED_URL} from "../feed-list.js";
 import {renderCarousel, setOneImgStyle} from "../image.js";
 
+
 function setDetailModal(dto) {
   console.log("디테일모달 업데이트 실행!");
   const {boardId, account, nickname, profileImage, content, createdAt, feedImageList} = dto;
@@ -41,5 +42,4 @@ export async function fetchFeedDetail(boardId) {
   console.log("피드디테일 fetch 결과:",feedDetailDto);
 
   setDetailModal(feedDetailDto);
-
 }

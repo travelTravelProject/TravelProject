@@ -1,19 +1,17 @@
-// feed-getReply.js
-
 import { BASE_URL } from "../feed-reply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
 import { debounce } from "../util.js";
+import { fetchInfScrollNestReplies } from "./feed-getNestReply.js";
+import { fetchNestedReplyPost } from "./feed-postNestReply.js";
 
-// 전역 상태 객체
-export const state = {
-  currentPage: 1, // 현재 무한스크롤시 진행되고 있는 페이지 번호
-  isFetching: false, // 데이터를 불러오는 중에는 더 가져오지 않게 제어하는 변수
-  totalReplies: 0, // 총 댓글 수
-  loadedReplies: 0, // 로딩된 댓글 수
-};
+let currentPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
+let isFetching = false; // 데이터를 불러오는 중에는 더 가져오지 않게 제어하는 변수
+let totalReplies = 0; // 총 댓글 수
+let loadedReplies = 0; // 로딩된 댓글 수
+let currentBoardId = null; // 대댓글 작성시 boardId를 전달하기 위해 설정한 전역변수
 
 // 댓글 등록시 시간에 대한 필터 함수
-function getRelativeTime(createAt) {
+export function getRelativeTime(createAt) {
   // 현재 시간 구하기
   const now = new Date();
   // 등록 시간 날짜타입으로 변환
@@ -51,7 +49,7 @@ export function appendReplies({ replies }, reset = false) {
   // reset모드일경우 댓글을 모두 지움
   if (reset) {
     $replyData.innerHTML = "";
-    state.loadedReplies = 0; // 로드된 댓글 수 초기화
+    loadedReplies = 0; // 로드된 댓글 수 초기화
     return;
   }
 
@@ -75,39 +73,104 @@ export function appendReplies({ replies }, reset = false) {
                         <a id='replyModBtn' class='btn btn-sm btn-outline-dark' href='#'>수정</a>&nbsp;
                         <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>&nbsp;
                         <div class="reply-reply-write"> <button type="button"
-                          class="btn btn-dark form-control reply-reply-button">답글</button>
+                          class="btn btn-dark form-control reply-reply-button" data-rno='${rno}'>답글</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div id="nestedReplyData-${rno}" class="nested-reply-data">
+                </div>
+            </div>
+
+            <div id="nestedReplyWriteSection-${rno}" class="Nestedcard hidden" data-rno='${rno}'>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="newNestedReplyText-${rno}" hidden>대댓글 내용</label>
+                                <textarea
+                                rows="3"
+                                id="newNestedReplyText-${rno}"
+                                name="nestedReplyText"
+                                class="form-control"
+                                placeholder="대댓글을 입력해주세요."
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="newNestedReplyWriter-${rno}" hidden>대댓글 작성자</label>
+                                <input
+                                id="newNestedReplyWriter-${rno}"
+                                name="nestedReplyWriter"
+                                type="text"
+                                class="form-control"
+                                placeholder="작성자 이름"
+                                style="margin-bottom: 6px"
+                                />
+                                <button
+                                id="nestedReplyAddBtn-${rno}"
+                                type="button"
+                                class="btn btn-dark form-control nested-reply-add-btn"
+                                data-rno='${rno}'
+                                >
+                                등록
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             `;
+
+            // 대댓글 fetch
+            fetchInfScrollNestReplies(rno);
     });
   } else {
     tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
 
   $replyData.innerHTML += tag;
+
+  // 답글 버튼 클릭시 rno에 맞는 대댓글 입력창 토글
+  document.querySelectorAll(".reply-reply-button").forEach(button => {
+    button.addEventListener("click", (event) => {
+      const rno = event.target.dataset.rno;
+      const nestedReplySection = document.getElementById(`nestedReplyWriteSection-${rno}`);
+      nestedReplySection.classList.toggle("hidden");
+    });
+  });
+
+  // 대댓글 등록 버튼 클릭시 이벤트 리스너 추가
+  document.querySelectorAll(".nested-reply-add-btn").forEach(button => {
+    button.addEventListener("click", async (event) => {
+      const rno = event.target.dataset.rno;
+      await fetchNestedReplyPost(rno);
+    });
+  });
+
+  // loadedReplies += replies.length;
 }
 
-// 더보기 누를시 -> 서버에서 댓글 데이터를 페칭
-export async function fetchInfScrollReplies(pageNo = 1, reset = false, boardId) {
-  if (state.isFetching) return; // 서버에서 데이터를 가져오는 중이면 return
+// 서버에서 댓글 데이터를 페칭
+export async function fetchInfScrollReplies(pageNo = 1, reset = false) {
+  if (isFetching) return; // 서버에서 데이터를 가져오는 중이면 return
 
-  state.isFetching = true;
+  isFetching = true;
   if (pageNo > 1) showSpinner();
 
-  const res = await fetch(`${BASE_URL}/${boardId}/page/${pageNo}`);
+  const res = await fetch(`${BASE_URL}/${currentBoardId}/page/${pageNo}`);
   const replyResponse = await res.json();
 
   // 응답 데이터 구조 확인
   console.log("replyResponse:", replyResponse);
-
+  console.log('boardId: ', currentBoardId);
   if (reset) {
     // 총 댓글 수 전역 변수 값 세팅
-    state.totalReplies = replyResponse.pageInfo.totalCount;
+    totalReplies = replyResponse.pageInfo.totalCount;
     // 댓글 수 렌더링
-    document.getElementById("replyCnt").textContent = state.totalReplies;
-    state.loadedReplies = 0; // 댓글 입력, 삭제시 다시 1페이지 로딩시 초기값으로 만든다.
+    document.getElementById("replyCnt").textContent = totalReplies;
+    loadedReplies = 0; // 댓글 입력, 삭제시 다시 1페이지 로딩시 초기값으로 만든다.
     appendReplies([], true); // 기존 댓글 목록 비우기
   }
 
@@ -118,17 +181,17 @@ export async function fetchInfScrollReplies(pageNo = 1, reset = false, boardId) 
     hideSpinner();
     appendReplies(replyResponse);
     // 로드된 댓글 수 업데이트
-    state.loadedReplies += replyResponse.replies.length;
-    state.currentPage = pageNo;
+    loadedReplies += replyResponse.replies.length;
+    currentPage = pageNo;
 
     if (reset) {
       window.scrollTo(0, 0); // 수정 후 페이지 상단으로 이동
     }
     // 댓글을 전부 가져올 시 스크롤 이벤트 제거하기
-    if (state.loadedReplies >= state.totalReplies) {
+    if (loadedReplies >= totalReplies) {
       removeInfiniteScroll();
     }
-    state.isFetching = false;
+    isFetching = false;
   }, spinnerMinTime);
 }
 
@@ -136,42 +199,33 @@ export async function fetchInfScrollReplies(pageNo = 1, reset = false, boardId) 
 async function scrollHandler(e) {
   if (
     window.innerHeight + window.scrollY >= document.body.offsetHeight + 0 &&
-    !state.isFetching
+    !isFetching
   ) {
-    await fetchInfScrollReplies(state.currentPage + 1);
+    await fetchInfScrollReplies(currentPage + 1);
   }
 }
 
 // 디바운스 사용
-function debounceScrollHandler() {
-  debounce(scrollHandler, 500);
-} 
+const debounceScrollHandler = debounce(scrollHandler, 500);
 
 
-// 디바운싱 함수
-// export function debounce(callback, wait) {
-//   let timeout;
-//   return (...args) => {
-//     clearTimeout(timeout);
-//     timeout = setTimeout(() => callback(...args), wait);
-//   };
-// }
 
 // 무한 스크롤 이벤트 생성 함수
 export function setupInfiniteScroll() {
-  window.addEventListener("scroll", debounceScrollHandler());
+  window.addEventListener("scroll", debounceScrollHandler);
 }
 
 // 무한 스크롤 이벤트 삭제 함수
 export function removeInfiniteScroll() {
-  window.removeEventListener("scroll", debounceScrollHandler());
+  window.removeEventListener("scroll", debounceScrollHandler);
 }
 
 // 초기 상태 리셋 함수
-export async function initInfScroll() {
+export async function initInfScroll(boardId) {
+  currentBoardId = boardId; // 전역 변수에 boardId 저장
   removeInfiniteScroll();
   window.scrollTo(0, 0);
-  state.currentPage = 1;
+  currentPage = 1;
   fetchInfScrollReplies(1, true);
   setupInfiniteScroll();
 }

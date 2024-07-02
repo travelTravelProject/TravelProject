@@ -115,6 +115,7 @@
         <!-- Add more images here for carousel -->
       </div>
     </div>
+
     <div class="feed-right-side">
       <div class="profile-section">
         <div class="profile-row">
@@ -137,8 +138,6 @@
 
       <div id="replies" class="row">
         <div class="offset-md-1 col-md-10">
-        
-
         <!--댓글 내용 영역-->
         <div class="card">
             <!-- 댓글 내용 헤더 -->
@@ -152,16 +151,17 @@
                 <!--
                 < JS로 댓글 정보 DIV삽입 >
                 -->
+                <!-- 대댓글 내용 바디 -->
+                <div id="nestedReplyCollapse" class="card">
+                    <div id="nestedReplyData">
+                    </div>
+                </div>
             </div>
             </div>
 
-            <!-- 대댓글 내용 바디 -->
-            <div id="nestedReplyCollapse" class="card">
-                <div id="nestedReplyData">
-                <!-- 대댓글 목록이 여기에 렌더링 됩니다 -->
-                </div>
-            </div>
         </div>
+
+        
         <!-- 댓글 쓰기 영역 -->
         <div class="card">
           <div class="card-body">
@@ -200,53 +200,10 @@
               </div>
           </div>
           </div>
-      </div>
-      <!-- end reply write -->
+        </div>
+        <!-- end reply write -->
         
-        <!-- 대댓글 쓰기 영역 -->
-
-        <!-- <div class="card">
-            <div class="card-body">
-            <div class="row">
-                <div class="col-md-9">
-                <div class="form-group">
-                    <label for="newNestedReplyText" hidden>대댓글 내용</label>
-                    <textarea
-                    rows="3"
-                    id="newNestedReplyText"
-                    name="nestedReplyText"
-                    class="form-control"
-                    placeholder="대댓글을 입력해주세요."
-                    ></textarea>
-                </div>
-                </div>
-                <div class="col-md-3">
-                <div class="form-group">
-                    <label for="newNestedReplyWriter" hidden
-                    >대댓글 작성자</label
-                    >
-                    <input
-                    id="newNestedReplyWriter"
-                    name="nestedReplyWriter"
-                    type="text"
-                    class="form-control"
-                    placeholder="작성자 이름"
-                    style="margin-bottom: 6px"
-                    />
-                    <button
-                    id="nestedReplyAddBtn"
-                    type="button"
-                    class="btn btn-dark form-control"
-                    >
-                    등록
-                    </button>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div> -->
-        <!-- end nested reply write -->
-
+        
         <!-- 댓글 페이징 영역 -->
         <ul class="pagination justify-content-center">
             <!--
@@ -254,8 +211,8 @@
             -->
         </ul>
         </div>
-    </div>
-    <!-- end reply content -->
+      </div>
+      <!-- end reply content -->
     </div>
     <!-- end replies row -->
      
@@ -263,8 +220,7 @@
       <div class="spinner-border text-light" role="status">
           <span class="visually-hidden">Loading...</span>
       </div>  
-      </div>
-
+    </div>
 
     </div>
     <span class="close">&times;</span>
@@ -290,6 +246,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script type="module" src="/assets/js/feed-reply.js"></script>
 </body>
 </html>
