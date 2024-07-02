@@ -1,7 +1,6 @@
 package com.travel.project.dto.response;
 
 import com.travel.project.common.PageMaker;
-import com.travel.project.entity.BoardImage;
 import lombok.*;
 
 import java.util.List;
@@ -12,9 +11,9 @@ import java.util.List;
 @Builder
 public class FeedListDto {
 
-//    @Setter
-//    private LoginUserInfoDto loginUser;
+    @Setter
+    private LoginUserInfoDto loginUser;
     private PageMaker pageInfo;
-    private List<FeedDetailResponseDto> feeds;
+    private List<FeedDetailDto> feeds;
 
 }

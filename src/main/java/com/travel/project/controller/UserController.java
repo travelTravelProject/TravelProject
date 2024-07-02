@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 
 @Controller
 @Slf4j
@@ -41,20 +42,14 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserMapper userMapper;
+    private final UserDetailMapper userDetailMapper;
+    private final UserService userService;
 
     @Value("${file.upload.root-path}")
-    private String rootPath;
+    private String rootPath ;
 
 //     static String rootPath = System.getProperty("user.dir")
 //             + "/src/main/resources/static/assets/upload";
-
-    private final UserDetailMapper userDetailMapper;
-
-
-
-
-    private final UserService userService;
-
 
     // 회원가입 양식 열기
     @GetMapping("/sign-up")
@@ -104,8 +99,13 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
+        // 생년월일 연령대 계산
+        String birthYear = userService.calculateAgeGroup(user.getAccount());
+//        System.out.println("birthYear = " + birthYear);
+
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
+        model.addAttribute("birthYear", birthYear); // 연령대
 
         return "mypage";
     }
@@ -127,6 +127,7 @@ public class UserController {
 
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
+
         System.out.println("user = " + user);
 
         return "mypage-update";
@@ -139,6 +140,13 @@ public class UserController {
                                HttpSession session,
                                RedirectAttributes ra) {
         log.info("updateProfile POST: {}", dto);
+        log.debug("프로필 사진 이름: {}", dto.getProfileImage().getOriginalFilename());
+
+        String profilePath = FileUtil.uploadFile(dto.getProfileImage());
+        dto.setProfileImagePath(profilePath);
+        log.info("profilePath = " + profilePath);
+
+        log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
 
         LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
         log.info("loginUser = " + loginUser);
@@ -149,27 +157,9 @@ public class UserController {
             return "redirect:/sign-in";
         }
 
-        // 파일 업로드 처리
-        if (!profileImage.isEmpty()) {
-            String profileImagePath = userService.uploadProfileImage(profileImage);
-            dto.setProfileImage(profileImagePath);
-        }
-        log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
-
-        UpdateProfileDto updatedUser = UpdateProfileDto.builder()
-                .account(dto.getAccount())
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .nickname(dto.getNickname())
-                .oneLiner(dto.getOneLiner())
-                .mbti(dto.getMbti())
-                .profileImage(dto.getProfileImage())
-                .rating(dto.getRating())
-                .build();
-//
         // 데이터베이스에 업데이트된 사용자 정보 저장
-        userService.saveUpdateUser(updatedUser);
-        userService.saveOrUpdateUserDetail(updatedUser);
+        userService.saveUpdateUser(dto);
+        userService.saveOrUpdateUserDetail(dto, profilePath);
 
         // 세션의 기존 LoginUserInfoDto 객체 업데이트
         loginUser.setName(dto.getName());
@@ -183,13 +173,11 @@ public class UserController {
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
-//        session.setAttribute("updatedUser", updatedUser);
-//        session.setAttribute("updatedUser", new LoginUserInfoDto(updatedUser));
-        System.out.println("updatedUser = " + updatedUser);
-        log.info("Updated user profile: {}", updatedUser);
 
-        // RedirectAttributes를 사용하여 사용자 정보 전달
-        ra.addFlashAttribute("updatedUser", updatedUser);
+        System.out.println("dto = " + dto);
+        log.info("Updated user profile: {}", dto);
+
+        session.setAttribute("updatedUser", dto);
 
         return "redirect:/mypage";
     }

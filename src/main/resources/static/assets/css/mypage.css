@@ -82,12 +82,16 @@ button:hover {
     margin-bottom: 30px;
     text-align: center;
 }
-.profile label {
-    font-weight: 700;
-    font-size: 1.0em;
+
+.profile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 30px auto 10px;
     cursor: pointer;
-    color: rgb(140, 217, 248);
 }
+
 .profile .thumbnail-box {
     width: 200px;
     height: 200px;
@@ -96,12 +100,6 @@ button:hover {
     margin: 30px auto 10px;
     cursor: pointer;
 }
-
-.profile .thumbnail-box img {
-    width: 200px;
-    height: 200px;
-}
-
 
 
 
@@ -206,15 +204,42 @@ body {
     height: 200px;
 }
 
-.profile-pic img {
+.profile-box {
+    width: 200px;
+    height: 100px;
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    /*overflow: hidden;*/
+    margin: 10px;
+
+    display: flex;
+    text-align: left;
+}
+
+.profile-box img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    /*margin: 30px auto 10px;*/
+    cursor: pointer;
+}
+.profile-nickname {
+    width: 100px;
+    padding-left: 20px;
+}
+.profile-nickname p {
+    font-size: 14px;
+    width: 150px;
+}
+
+.profile-nickname h2 {
+    text-align: left;
 }
 
 .profile-info {
     flex: 1;
     margin-left: 20px;
+    height: 200px;
 }
 
 .profile-info h2 {
@@ -225,11 +250,15 @@ body {
 .profile-info p {
     color: #666;
     margin: 5px 0;
+    font-size: 18px;
 }
 
 .profile-stats {
     text-align: center;
+    height: 100px;
 }
+
+
 
 .edit-profile-btn {
     background-color: #00aaff;
@@ -274,4 +303,65 @@ body {
     margin: 0;
     padding: 10px 0;
     color: #666;
+}
+
+/* 게시글 조회 */
+.card-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+.card-post {
+    display: flex;
+    width: 100%;
+}
+.card-content-wrapper {
+    flex: 1;
+}
+.card-details-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.card-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 20px;
+}
+.card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.card-content {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+.card-img {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    background-color: #00CE7B;
+    border-radius: 10px;
+}
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.card-details-bot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+}
+.card-details-bot .view-count {
+    margin-left: auto;
 }
