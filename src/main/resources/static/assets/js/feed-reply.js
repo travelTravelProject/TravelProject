@@ -1,7 +1,6 @@
-import { initInfScroll } from "./feed-reply/feed-getReply.js";
-import { removeReplyClickEvent } from "./feed-reply/feed-deleteReply.js";
-import { modifyReplyClickEvent, fetchReplyModify, isEditModeActive } from "./feed-reply/feed-modifyReply.js";
-import { fetchReplyPost } from "./feed-reply/feed-postReply.js";
+// import { initInfScroll } from "./feed-reply/feed-getReply.js";
+// import { removeReplyClickEvent } from "./feed-reply/feed-deleteReply.js";
+// import { modifyReplyClickEvent } from "./feed-reply/feed-modifyReply.js";
 // import { fetchNestedReplyPost } from "./acc-reply/postNestReply.js";
 
 // ========================= 전역 변수 ========================
@@ -17,9 +16,9 @@ export const NEST_BASE_URL = "http://localhost:8181/api/v1/nested/replies";
 // 댓글 목록 서버에서 불러오기
 // fetchReplies();
 // setupInfiniteScroll();
-initInfScroll();
+// initInfScroll();
 // 수정 이벤트 등록 함수 실행
-modifyReplyClickEvent();
+// modifyReplyClickEvent();
 
 // 댓글 작성/수정 이벤트 등록 (POST)
 // document.getElementById('replyAddBtn').onclick = async e => {
@@ -40,6 +39,6 @@ modifyReplyClickEvent();
 // }
 
 // 댓글 삭제 이벤트 등록
-removeReplyClickEvent();
+// removeReplyClickEvent();
 
 

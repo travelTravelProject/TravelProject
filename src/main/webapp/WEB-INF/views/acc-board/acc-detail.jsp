@@ -158,10 +158,20 @@
                 </button>
                 <button class="list-btn btn btn-secondary" type="button" onclick="window.location.href='${ref}'">목록
                 </button>
+
+            </div>
+
+            <!-- 댓글 페이징 영역 -->
+            <ul class="pagination justify-content-center">
+                <!--
+                < JS로 댓글 페이징 DIV삽입 >
+                -->
+            </ul>
+
             </div>
 
             <%--  댓글영역  --%>
-            <div>댓글</div>
+            
 
         </div>
     </div>

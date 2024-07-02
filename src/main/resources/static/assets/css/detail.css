@@ -198,3 +198,24 @@ button.list-btn {
 .hidden {
     display: none;
 }
+
+/* 대댓글 카드 스타일 */
+.nested-reply-card {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin: 10px 0 10px 30px; /* 왼쪽 여백을 추가하여 대댓글을 안쪽으로 이동 */
+    padding: 10px;
+    border: 1px solid #e9ecef;
+  }
+  
+  /* 대댓글 작성자 및 시간 스타일 */
+  .nested-reply-card .user-block {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* 대댓글 내용 스타일 */
+  .nested-reply-card .reply-content {
+    margin-top: 5px;
+  }
+  
