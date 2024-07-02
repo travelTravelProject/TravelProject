@@ -208,7 +208,7 @@ export function initFeedFormEvents() {
     const bottomBtn = document.getElementById('goBottomBtn');
     bottomBtn.addEventListener('click', e => {
         e.preventDefault();
-        document.body.scrollIntoView({ behavior: "smooth", block: "end" });
+        document.body.scrollTop = document.body.scrollHeight;
     })
 
     // 좋아요 버튼, 북마크 버튼 클릭 시 상태 업데이트
