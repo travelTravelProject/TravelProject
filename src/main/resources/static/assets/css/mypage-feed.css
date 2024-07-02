@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/*.board-container {*/
+#my-feed-tab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 800px;
+}
+
+.myfeed-item {
+    position: relative;
+    width: calc(25% - 10px); /* 4 items per row, with gap adjustment */
+    overflow: hidden;
+}
+
+.myfeed-item img {
+    width: 100%;
+    display: block;
+}
+
+.myfeed-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.myfeed-item:hover .overlay {
+    height: 100%;
+}
+
+.text {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}

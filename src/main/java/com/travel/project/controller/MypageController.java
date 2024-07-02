@@ -20,7 +20,7 @@ public class MypageController {
         this.feedService = feedService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list/{account}/{page}")
     public ResponseEntity<?> getFeeds(
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             HttpSession session) {

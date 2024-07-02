@@ -35,6 +35,8 @@
         SELECT image_id, board_id, image_path, MIN(image_order) as image_order
         FROM tbl_board_image
         WHERE board_id = #{board_id}
+            AND category_id = 2
+            AND status = 'A'
         GROUP BY board_id
     </select>
 

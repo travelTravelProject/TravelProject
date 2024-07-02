@@ -76,7 +76,7 @@
             <div>
                 <span>동행</span>
             </div>
-            <div>
+            <div id="my-feed-btn" data-my-account="${user.account}">
                 <span>피드</span>
             </div>
             <div>
@@ -114,12 +114,18 @@
 </div>
 <%--    </c:forEach>--%>
 <%--    </c:if>--%>
+<div class="board-container" id="my-feed-tab">
+    <div class="my-tab-inner">
 
+
+    </div>
+    <span class="close close-modal">x</span>
+</div>
 
 
 
     <script type="module" src="/assets/js/myPage.js" defer></script>
-
+    <script type="module" src="/assets/js/feed/mypage-feed.js" defer></script>
 </body>
 </html>
 
