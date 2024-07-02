@@ -1,15 +1,9 @@
 // 이미지
 export let imageFiles = [];
 
-// input 업로드된 파일 미리보기 렌더링 함수
-// imageBox는 미리보기 이미지가 렌더링될 DOM
-export function previewImages(files, imageBox) {
-  imageBox.innerHTML = ''; // 기존 미리보기 초기화
-  if(!files) return; // 업로드 할 이미지가 없으면 종료
-  console.log('미리보기 렌더링 실행!');
-  console.log('미리보기 files: ', files);
-
-  Array.from(files).forEach((file, index) => {
+// 비동기 순서대로 미리보기 렌더링
+function readFile(file, index, imageBox) {
+  return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const imgTag = `
@@ -19,35 +13,51 @@ export function previewImages(files, imageBox) {
                 </div>
             `;
       imageBox.innerHTML += imgTag;
+      resolve(); // 파일 읽기가 완료되었음
     };
+    reader.onerror = () => {
+      reject(reader.error); // 파일 읽기 중 에러가 발생했음
+    }
     // 파일을 Data URL로 읽기 완료하면 reader.onload 콜백함수 실행
     reader.readAsDataURL(file);
   });
 }
 
+
+// input 업로드된 파일 미리보기 렌더링 함수
+// imageBox는 미리보기 이미지가 렌더링될 DOM
+export async function previewImages(files, imageBox) {
+  imageBox.innerHTML = ''; // 기존 미리보기 초기화
+  if(!files) return; // 업로드 할 이미지가 없으면 종료
+
+  console.log('미리보기 files: ', files);
+
+  for (let i = 0; i < files.length; i++) {
+    await readFile(files[i], i, imageBox);
+  }
+}
+
+function getOriginalFileName(url) {
+  const str = url.split("/");
+  const setStr = str[str.length - 1].split("_");
+  return setStr[setStr.length - 1];
+}
+
 // 기존 이미지를 파일로 변환하여 imageFiles에 추가하고 미리보기로 렌더링하는 함수
-export function addExistingImagesToPreview(images, imageBox) {
+// images는 img 태그의 src 배열
+export async function addExistingImagesToPreview(images, imageBox) {
   imageBox.innerHTML = ''; // 기존 미리보기 초기화
   imageFiles = []; // 이미지 배열 초기화
-  images.forEach((src, index) => {
-    fetch(src)
-        .then(res => res.blob())
-        .then(blob => {
-          const file = new File([blob], `image${index}.jpg`, { type: blob.type });
-          imageFiles.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const imgTag = `
-                <div class="image-frame"> 
-                    <img src="${e.target.result}" class="image-item" data-image-order="${index}" alt="preview image">
-                    <div class="delete-prev-image" data-image-order="${index}">x</div>
-                </div>
-            `;
-            imageBox.innerHTML += imgTag;
-          };
-          reader.readAsDataURL(file);
-        });
-  });
+
+  for (let i = 0; i < images.length; i++) {
+    const src = images[i];
+    const res = await fetch(src);
+    const blob = await res.blob();
+    const file = new File([blob], getOriginalFileName(src), { type: blob.type });
+    imageFiles.push(file);
+    await readFile(file, i, imageBox);
+  }
+
   console.log('기존미리보기 imageFiles: ', imageFiles)
 }
 
@@ -63,7 +73,7 @@ export function handleFileInputChange(e, imageList, imageBox) {
 }
 
 // 게시글 작성, 수정(이미지 포함) FormData에 담는 함수
-// data: FormData에 담아야 할 객체 (ex. title, content)
+// data: FormData에 담아야 할 객체 (ex. {title:'', content:''})
 export function dataToFormData(data, imageList) {
   const formData = new FormData();
   for (const key in data) {
