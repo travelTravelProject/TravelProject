@@ -24,7 +24,8 @@ function setDetailModal(dto) {
 
   // content 적용
   const $content = document.querySelector('.detail-content');
-  $content.firstElementChild.textContent = content;
+  $content.firstElementChild.innerHTML = content;
+  console.log('디테일모달 content: ', content);
 
   // 상세조회 캐러설에 이미지 추가
   $imgCarousel.innerHTML = renderCarousel(feedImageList, 'post-image d-block w-100', boardId, "Detail");

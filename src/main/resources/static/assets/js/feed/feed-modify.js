@@ -3,14 +3,19 @@ import {addExistingImagesToPreview, imageFiles as importedImages} from "../image
 import {fetchFeedDetail} from "./feed-detail.js";
 import {fetchFeedList} from "./feed-getList.js";
 
+
+// br 태그를 개행문자로 변경 (textarea 렌더링 위해)
+function replaceBrToEol(content) {
+  return content.replaceAll("<br>", "\r\n");
+}
+// 수정 모달 열릴 때 입력되어 있어야 하는 정보 렌더링
 export function setEditModal() {
-  // const {boardId, account, nickname, profileImage, content, createdAt, feedImageList} = dto;
 
   const nickText = document.querySelector('.feed-right-side .nickname').textContent;
   document.getElementById('ed-nickname').value = nickText;
-  console.log('content디테일: ',document.querySelector('.detail-content').firstElementChild)
-  const detailContent = document.querySelector('.detail-content').firstElementChild.textContent;
-  document.getElementById('ed-content').value = detailContent;
+
+  const detailContent = document.querySelector('.detail-content').firstElementChild.innerHTML;
+  document.getElementById('ed-content').value = replaceBrToEol(detailContent);
 
   // 수정모달에 렌더링할 미리보기 컨테이너
   const $imageBox = document.getElementById('edit-preview');
@@ -21,7 +26,6 @@ export function setEditModal() {
 
   // 기존 이미지를 미리보기로 렌더링
   addExistingImagesToPreview(detailImages, $imageBox);
-
 
 }
 
