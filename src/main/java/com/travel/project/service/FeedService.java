@@ -32,6 +32,7 @@ public class FeedService {
     private final FeedMapper feedMapper;
     private final ImageService imageService;
     private final LikeService likeService;
+    private final BookmarkService bookmarkService;
 
     // 피드 전체 조회
     public FeedListDto findAll(Search search, HttpSession session) {
@@ -55,6 +56,10 @@ public class FeedService {
                 // 좋아요 수, 로그인 유저의 좋아요 여부 추가
                 responseDto.setLikeCount(likeService.countLikes(boardId));
                 responseDto.setUserLike(likeService.isLikedByUser(loginAccount, boardId));
+
+                // 북마크 수, 로그인 유저의 북마크 여부 추가
+                responseDto.setBookmarkCount(bookmarkService.countBookmarks(boardId));
+                responseDto.setUserBookmark(bookmarkService.isBookmarkByUser(loginAccount, boardId));
 
                 // Feed 디테일 응답객체에 이미지 담기
                 List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());
@@ -210,13 +215,13 @@ public class FeedService {
 
     // 피드 전체 조회 시 10글자 이상은 생략
     public String formatContent(String content) {
-
+        int len = 15;
         String[] split = content.split("<br>");
         String result = split[0]; // 첫번째 줄
 
         // 첫번째 줄이 10글자 보다 긴 경우
-        if(split[0].length() > 10) {
-            result = split[0].substring(0, 10) + " ...";
+        if(split[0].length() > len) {
+            result = split[0].substring(0, len) + " ...";
 
         } else { // 첫번째 줄이 10글자 이하
             if(split.length > 1) { // 두번째 줄이 있는 경우
