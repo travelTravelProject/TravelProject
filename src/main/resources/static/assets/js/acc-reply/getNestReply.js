@@ -11,14 +11,14 @@ export function appendNestedReplies({ nestedReplies }, rno) {
   if (nestedReplies && nestedReplies.length > 0) {
     nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt }) => {
       tag += `
-        <div id='nestedReplyContent-${nestedReplyId}' class='card-body' data-nested-rno='${nestedReplyId}'>
+        <div id='nestedReplyContent-${nestedReplyId}' class='card-body nested-reply-card' data-nested-rno='${nestedReplyId}'>
           <div class='row user-block'>
             <span class='col-md-3'>
               <b>${writer}</b>
             </span>
             <span class='offset-md-6 col-md-3 text-right'><b>${getRelativeTime(createAt)}</b></span>
           </div><br>
-          <div class='row'>
+          <div class='row reply-content'>
             <div class='col-md-9'>${text}</div>
             <div class='col-md-3 text-right'>
               <a class='btn btn-sm btn-outline-dark nestedReplyModBtn' href='#' data-rno=${nestedReplyId}>수정</a>&nbsp;
@@ -29,11 +29,10 @@ export function appendNestedReplies({ nestedReplies }, rno) {
       `;
     });
   } else {
-    tag = `<div id='nestedReplyContent' class='card-body'>대댓글이 아직 없습니다! ㅠㅠ</div>`;
+    // tag = `<div id='nestedReplyContent' class='card-body'>대댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
 
   $nestedReplyData.innerHTML = tag;
-
 
   // 나중에 modifyNestReply.js로 모듈화
 
@@ -97,8 +96,6 @@ export function appendNestedReplies({ nestedReplies }, rno) {
     });
   });
 
-
-
    // 대댓글 삭제버튼에 이벤트 리스너 추가
    document.querySelectorAll(`#nestedReplyData-${rno} .nestedReplyDelBtn`).forEach((button) => {
     button.addEventListener("click", async function (e) {
@@ -138,7 +135,8 @@ export async function fetchInfScrollNestReplies(rno) {
   showSpinner();
   const res = await fetch(`${NEST_BASE_URL}/${rno}`);
   const nestedReplyResponse = await res.json();
-
+  console.log('nestedReplyResponse: ', nestedReplyResponse);
   hideSpinner();
   appendNestedReplies(nestedReplyResponse, rno);
+  return nestedReplyResponse.nestedReplies.length;
 }

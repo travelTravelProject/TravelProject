@@ -115,6 +115,7 @@
         <!-- Add more images here for carousel -->
       </div>
     </div>
+
     <div class="feed-right-side">
       <div class="profile-section">
         <div class="profile-row">
@@ -137,8 +138,6 @@
 
       <div id="replies" class="row">
         <div class="offset-md-1 col-md-10">
-        
-
         <!--댓글 내용 영역-->
         <div class="card">
             <!-- 댓글 내용 헤더 -->
@@ -201,8 +200,8 @@
               </div>
           </div>
           </div>
-      </div>
-      <!-- end reply write -->
+        </div>
+        <!-- end reply write -->
         
         
         <!-- 댓글 페이징 영역 -->
@@ -212,8 +211,8 @@
             -->
         </ul>
         </div>
-    </div>
-    <!-- end reply content -->
+      </div>
+      <!-- end reply content -->
     </div>
     <!-- end replies row -->
      
@@ -247,6 +246,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<!-- <script type="module" src="/assets/js/feed-reply.js"></script> -->
 </body>
 </html>

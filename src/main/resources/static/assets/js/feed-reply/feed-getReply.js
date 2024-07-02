@@ -4,14 +4,6 @@ import { debounce } from "../util.js";
 import { fetchInfScrollNestReplies } from "./feed-getNestReply.js";
 import { fetchNestedReplyPost } from "./feed-postNestReply.js";
 
-// 전역 상태 객체
-// export const state = {
-//   currentPage: 1, // 현재 무한스크롤시 진행되고 있는 페이지 번호
-//   isFetching: false, // 데이터를 불러오는 중에는 더 가져오지 않게 제어하는 변수
-//   totalReplies: 0, // 총 댓글 수
-//   loadedReplies: 0, // 로딩된 댓글 수
-// };
-
 let currentPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetching = false; // 데이터를 불러오는 중에는 더 가져오지 않게 제어하는 변수
 let totalReplies = 0; // 총 댓글 수
@@ -157,7 +149,7 @@ export function appendReplies({ replies }, reset = false) {
     });
   });
 
-  loadedReplies += replies.length;
+  // loadedReplies += replies.length;
 }
 
 // 서버에서 댓글 데이터를 페칭
@@ -214,28 +206,18 @@ async function scrollHandler(e) {
 }
 
 // 디바운스 사용
-function debounceScrollHandler() {
-  debounce(scrollHandler, 500);
-} 
+const debounceScrollHandler = debounce(scrollHandler, 500);
 
 
-// 디바운싱 함수
-// export function debounce(callback, wait) {
-//   let timeout;
-//   return (...args) => {
-//     clearTimeout(timeout);
-//     timeout = setTimeout(() => callback(...args), wait);
-//   };
-// }
 
 // 무한 스크롤 이벤트 생성 함수
 export function setupInfiniteScroll() {
-  window.addEventListener("scroll", debounceScrollHandler());
+  window.addEventListener("scroll", debounceScrollHandler);
 }
 
 // 무한 스크롤 이벤트 삭제 함수
 export function removeInfiniteScroll() {
-  window.removeEventListener("scroll", debounceScrollHandler());
+  window.removeEventListener("scroll", debounceScrollHandler);
 }
 
 // 초기 상태 리셋 함수

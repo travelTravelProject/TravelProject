@@ -28,7 +28,7 @@ export function appendNestedReplies({ nestedReplies }, rno) {
       `;
     });
   } else {
-    tag = `<div id='nestedReplyContent' class='card-body'>대댓글이 아직 없습니다! ㅠㅠ</div>`;
+    // tag = `<div id='nestedReplyContent' class='card-body'>대댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
 
   $nestedReplyData.innerHTML = tag;
