@@ -130,6 +130,9 @@ ion-icon:hover {
 .interaction-section ion-icon.liked {
     color: #ff627a;
 }
+.interaction-section ion-icon.bookmarked {
+    color: #ffd6a5;
+}
 
 /* 모달 css */
 /* modal.css */

@@ -21,7 +21,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
          , profileImage: profile, feedImageList
-         , likeCount, userLike
+         , likeCount, userLike, bookmarkCount, userBookmark
        }, index) => {
         console.log('피드목록렌더링 account: ', account,' /userLike: ', userLike);
       tag += `
@@ -57,7 +57,9 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
                 <ion-icon 
                     name="heart" class="${userLike ? 'liked':''}" 
                 ></ion-icon> ${likeCount}</span>
-            <span class="bookmarks"><ion-icon name="bookmark" ></ion-icon> 5</span>
+            <span class="bookmarks">
+                <ion-icon name="bookmark" class="${userBookmark ? 'bookmarked': ''}"
+                ></ion-icon> ${bookmarkCount}</span>
           </div>
         </div>
       `;

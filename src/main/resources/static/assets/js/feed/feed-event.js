@@ -11,7 +11,7 @@ import {fetchFeedDetail} from "./feed-detail.js";
 import {fetchFeedModify, setEditModal} from "./feed-modify.js";
 import {fetchFeedList} from "./feed-getList.js";
 import {fetchFeedDelete} from "./feed-delete.js";
-import {fetchLike} from "./feed-interaction.js";
+import {fetchBookmark, fetchLike} from "./feed-interaction.js";
 
 import { initInfScroll} from "../feed-reply/feed-getReply.js";
 import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
@@ -211,7 +211,7 @@ export function initFeedFormEvents() {
         document.body.scrollIntoView({ behavior: "smooth", block: "end" });
     })
 
-    // 좋아요 버튼
+    // 좋아요 버튼, 북마크 버튼 클릭 시 상태 업데이트
     document.addEventListener('click', e => {
         const $heartSpan = e.target.closest('.hearts');
         // 클릭된 요소가 .hearts이거나, .hearts의 자식인 경우 처리
@@ -219,6 +219,14 @@ export function initFeedFormEvents() {
             const boardId = $heartSpan.closest('.feed-item').dataset.feedId;
             console.log('좋아요 이벤트 실행! : ', boardId);
             fetchLike($heartSpan.firstElementChild, boardId);
+        }
+
+    })
+    document.addEventListener('click', e=> {
+        const $bookmarkSpan = e.target.closest('.bookmarks');
+        if($bookmarkSpan) {
+            const boardId = $bookmarkSpan.closest('.feed-item').dataset.feedId;
+            fetchBookmark($bookmarkSpan.firstElementChild, boardId);
         }
     })
 
