@@ -45,7 +45,6 @@ public class UserService {
     @Autowired
     private final PasswordEncoder encoder;
 
-
     // 회원가입 중간처리
     public boolean join(SignUpDto dto) {
 
@@ -101,14 +100,11 @@ public class UserService {
         }
     }
 
-
     @Transactional
     public void saveOrUpdateUserDetail(UpdateProfileDto dto, String profilePath) {
-
-
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
         if (existingDetail == null) {
-            // Insert new user detail
+            // 새로운 회원 정보 저장
             UserDetail newUserDetail = UserDetail.builder()
                     .account(dto.getAccount())
                     .mbti(dto.getMbti())
@@ -118,7 +114,7 @@ public class UserService {
                     .build();
             userDetailMapper.insertUserDetail(newUserDetail);
         } else {
-            // Update existing user detail
+            // 이미 존재하는 회원 정보 수정 저장
             existingDetail.setMbti(dto.getMbti());
             existingDetail.setOneLiner(dto.getOneLiner());
             existingDetail.setProfileImage(profilePath);

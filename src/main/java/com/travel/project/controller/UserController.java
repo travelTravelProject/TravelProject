@@ -42,17 +42,14 @@ import java.time.LocalDate;
 public class UserController {
 
     private final UserMapper userMapper;
+    private final UserDetailMapper userDetailMapper;
+    private final UserService userService;
 
     @Value("${file.upload.root-path}")
     private String rootPath ;
 
 //     static String rootPath = System.getProperty("user.dir")
 //             + "/src/main/resources/static/assets/upload";
-
-    private final UserDetailMapper userDetailMapper;
-
-    private final UserService userService;
-
 
     // 회원가입 양식 열기
     @GetMapping("/sign-up")
@@ -104,7 +101,7 @@ public class UserController {
 
         // 생년월일 연령대 계산
         String birthYear = userService.calculateAgeGroup(user.getAccount());
-        System.out.println("birthYear = " + birthYear);
+//        System.out.println("birthYear = " + birthYear);
 
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
