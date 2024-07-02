@@ -102,7 +102,7 @@
       <label for="ed-nickname">닉네임</label>
       <input type="text" id="ed-nickname" name="nickname" required readonly>
       <label for="ed-content">내용</label>
-      <input type="text" id="ed-content" name="nickname" required>
+        <textarea type="text" id="ed-content" name="nickname" required></textarea>
       <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
       <div class="dropbox" id="edit-preview"></div>
@@ -132,15 +132,12 @@
           </div>
         </div>
         <div class="profile-row row2" id="detail-update-btn">
-<%--          <c:if test="${user != null}">--%>
-<%--            <button class="edit-feed detail-set-btn" id="editFeedBtn">수정</button>--%>
-<%--            <button class="delete-feed detail-set-btn" id="deleteFeedBtn">삭제</button>--%>
-<%--          </c:if>--%>
         </div>
       </div>
       <div class="detail-content">
-<%--        <h2>Title</h2>--%>
-        <p>Some description or content goes here...</p>
+        <p>
+<%--            Some description or content goes here...--%>
+        </p>
       </div>
       <!-- 댓글 영역 -->
 
