@@ -1,11 +1,12 @@
 package com.travel.project.entity;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter @ToString @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserDetail {
 
@@ -13,15 +14,11 @@ public class UserDetail {
     private String mbti; // mbti
     private String oneLiner; // 소개글
     @Setter
-    private String profileImage; // 프로필 사진
+    private String profileImage; // 프로필 사진 경로
     private int rating; // 평점
 
+    // 외래 키
     private String account; // 계정
 
-    // 기본 생성자
-//    public UserDetail() {
-//        this.oneLiner = "안녕하세요.";
-//        this.mbti = "MBTI를 입력해주세요.";
-//        this.rating = 0;
-//    }
+
 }
