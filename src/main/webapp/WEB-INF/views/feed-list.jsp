@@ -89,6 +89,7 @@
       <label for="cr-nickname">닉네임</label>
       <input type="text" id="cr-nickname" name="nickname" required value="${user.nickname}" readonly>
       <label for="cr-content">내용</label>
+        <span class="typing-text"> <span class="typing-count">0</span>/50</span>
       <textarea id="cr-content" name="content" rows="4" placeholder="본문을 입력하세요." required></textarea>
       <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
@@ -106,8 +107,8 @@
       <label for="ed-nickname">닉네임</label>
       <input type="text" id="ed-nickname" name="nickname" required readonly>
       <label for="ed-content">내용</label>
-        <span> <span class="typing-count">0</span>/100</span>
-        <textarea type="text" id="ed-content" name="nickname" required></textarea>
+        <span class="typing-text"> <span class="typing-count">0</span>/50</span>
+        <textarea type="text" id="ed-content" name="nickname" rows="4" required></textarea>
       <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
       <div class="dropbox" id="edit-preview"></div>

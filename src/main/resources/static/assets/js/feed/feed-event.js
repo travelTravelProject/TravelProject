@@ -113,6 +113,7 @@ export function initFeedFormEvents() {
         console.log('post 이미지 전: ', importedImages);
         if(importedImages.length === 10) {
             alert("이미지는 최대 10장까지 업로드 가능합니다.");
+            return;
         }
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxPost);
         console.log('post 이미지 추가확인: ', imageFiles);
@@ -122,6 +123,7 @@ export function initFeedFormEvents() {
         console.log("edit 모달 이미지 추가 이벤트 실행!")
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxEdit);
     });
+
     // 미리보기 삭제 버튼 이벤트
     $imageBoxPost.addEventListener('click', (e) => {
         if(e.target.classList.contains('delete-prev-image')) {
@@ -147,6 +149,10 @@ export function initFeedFormEvents() {
             alert('모든 필드를 채워주세요.');
             return;
         }
+        if(createContent.length >= 50) {
+            alert('피드 분문은 최대 50자까지 입력 가능합니다.');
+            return;
+        }
 
         // fetch payload에 담아서 POST 요청
         const data = {
@@ -167,6 +173,16 @@ export function initFeedFormEvents() {
         e.preventDefault();
         const boardId = document.getElementById('editFeedModal').dataset.boardId;
         const editContent = document.getElementById('ed-content').value;
+
+        if (!editContent || importedImages.length === 0) {
+            alert('모든 필드를 채워주세요.');
+            return;
+        }
+        if(editContent.length >= 50) {
+            alert('피드 분문은 최대 50자까지 입력 가능합니다.');
+            return;
+        }
+
         const data = {
             content: editContent,
         }
@@ -237,9 +253,26 @@ export function initFeedFormEvents() {
     const $textareaPost = document.getElementById('cr-content');
     const $textareaEdit = document.getElementById('ed-content');
     $textareaPost.addEventListener('keyup', e => {
-       if($textareaPost.value.length >= 50) {
-           alert('피드 본문은 최대 100자까지 입력 가능합니다.')
+       const length = $textareaPost.value.length;
+        if(length > 50) {
+            $textareaPost.value = $textareaPost.value.substring(0, 50);
+           alert('피드 본문은 최대 50자까지 입력 가능합니다.');
+           return;
        }
+       const $typingCnt = document.querySelector('#createFeedModal .typing-count');
+       $typingCnt.textContent = length+'';
+    });
+
+    $textareaEdit.addEventListener('keydown', e => {
+        const length = $textareaEdit.value.length;
+        const $span = document.querySelector('#editFeedModal .typing-text');
+        const $typingCnt = document.querySelector('#editFeedModal .typing-count');
+        $typingCnt.textContent = length.toString();
+        if(length > 50) {
+            alert('피드 본문은 최대 50자까지 입력 가능합니다.');
+            $textareaEdit.value = $textareaEdit.value.substring(0, 50);
+        }
+        $typingCnt.textContent = $textareaEdit.value.length.toString();
     });
 
 
