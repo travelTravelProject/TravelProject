@@ -232,7 +232,7 @@ public class FeedService {
     }
 
     @Transactional
-    public MyFeedListDto findFeedsById(Search search, HttpSession session) {
+    public MyFeedListDto findFeedsByAccount(Search search, HttpSession session) {
         LoginUserInfoDto loggedInUser = LoginUtil.getLoggedInUser(session);
 
         List<FeedFindAllDto> feedList = feedMapper.findAllByAccount(search, loggedInUser.getAccount());
@@ -247,6 +247,7 @@ public class FeedService {
             // 이미지 추가 (1개)
             BoardImage firstOne = imageService.findFirstOne(boardId);
             if(firstOne == null) throw new RuntimeException("이미지가 존재하지 않습니다.");
+            myFeed.setImage(firstOne);
 
             // 좋아요 수 추가
             myFeed.setLikeCount(likeService.countLikes((int)boardId));

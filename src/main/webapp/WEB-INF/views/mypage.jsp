@@ -5,7 +5,8 @@
 <head>
     <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8">
-
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/mypage-feed.css">
     <link rel="stylesheet" href="/assets/css/mypage.css">
 </head>
 <body>
@@ -73,13 +74,13 @@
 
     <div class="trip-info">
         <div class="trip-stats">
-            <div>
+            <div id="my-board-btn" class="tab-btn">
                 <span>동행</span>
             </div>
-            <div id="my-feed-btn" data-my-account="${user.account}">
+            <div id="my-feed-btn" class="tab-btn" data-my-account="${user.account}">
                 <span>피드</span>
             </div>
-            <div>
+            <div id="my-like-btn" class="tab-btn">
                 <span>좋아요</span>
             </div>
         </div>
@@ -122,8 +123,8 @@
     <span class="close close-modal">x</span>
 </div>
 
-
-
+    <%-- 아이콘 --%>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script type="module" src="/assets/js/myPage.js" defer></script>
     <script type="module" src="/assets/js/feed/mypage-feed.js" defer></script>
 </body>

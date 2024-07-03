@@ -3,7 +3,6 @@ package com.travel.project.controller;
 import com.travel.project.common.Page;
 import com.travel.project.common.Search;
 import com.travel.project.dto.response.MyFeedListDto;
-import com.travel.project.login.LoginUtil;
 import com.travel.project.service.FeedService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ public class MypageController {
 
         Search search = new Search(new Page(pageNo, 12));
 
-        MyFeedListDto feedsById = feedService.findFeedsById(search, session);
+        MyFeedListDto feedsById = feedService.findFeedsByAccount(search, session);
 
         return ResponseEntity.ok().body(feedsById);
     }

@@ -46,7 +46,6 @@
         SELECT
         board_id,
         account,
-        nickname,
         category_id,
         content,
         view_count,
@@ -55,7 +54,7 @@
         FROM tbl_board
         WHERE status = 'A'
         AND category_id = 2
-        AND.account = #{account}
+        AND account = #{account}
         ORDER BY created_at DESC
         LIMIT #{s.pageStart}, #{s.amount}
     </select>

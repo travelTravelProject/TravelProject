@@ -1,4 +1,4 @@
-import {setupInfiniteScroll} from "./feed-getList";
+import {debounce} from "../util.js";
 
 const $myFeedBtn = document.getElementById('my-feed-btn');
 
@@ -10,11 +10,18 @@ let loadedMyFeeds = 0;  // 로딩된 게시글 수
 
 function openFeedTab(account) {
     const $feedTab = document.getElementById('my-feed-tab');
-    $feedTab.style.display = block;
+    const $tab = document.querySelector('.board-container');
+    $tab.classList.add('inactive-tab');
+    $tab.classList.remove('active-tab-btn');
+    fetchMyFeedList(account);
+    $feedTab.classList.add('active-tab');
+    // $myFeedBtn.style.textDecoration = 'underline';
+    $myFeedBtn.classList.add('active-tab-btn');
 }
 
 $myFeedBtn.addEventListener('click', e => {
     const account = $myFeedBtn.dataset.myAccount
+    console.log('마이페이지 피드 클릭!')
     openFeedTab(account);
 });
 
@@ -22,14 +29,18 @@ function appendMyFeeds(myFeedListDto) {
     const {myFeeds} = myFeedListDto;
     let tag = '';
     myFeeds.forEach(f => {
-        const {boardId, imagePath, likeCount, bookmarkCount, replyCount} = f;
+        const {boardId, image, likeCount, bookmarkCount, replyCount} = f;
         tag += `
             <div class="myfeed-item" data-feed-id="${boardId}">
-                <img src="${imagePath}" alt="Image 1">
+                <img src="${image.imagePath}" alt="Image 1">
                 <div class="overlay">
-                    <div class="text">❤️ ${likeCount} | 💬 ${replyCount} ${bookmarkCount}</div>
+                    <div class="text">
+                        <ion-icon name="heart"></ion-icon> ${likeCount}  
+                        <ion-icon name="bookmark"></ion-icon> ${bookmarkCount}
+                        <ion-icon name="chatbubble" ></ion-icon> ${replyCount}
+                    </div>
                 </div>
-            </div>
+            </div>          
         `;
     });
     const $feedTab = document.getElementById('my-feed-tab');
@@ -44,7 +55,7 @@ async function fetchMyFeedList(account, pageNo=1) {
     isFetchingMyFeed = true;
 
     const res = await fetch(url);
-    if(!res.ok()) {
+    if(!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
     }
     const myFeedListDto = await res.json();
@@ -56,7 +67,7 @@ async function fetchMyFeedList(account, pageNo=1) {
 
         const $feedTab = document.getElementById('my-feed-tab');
         $feedTab.innerHTML = '';
-        setupInfiniteScroll();
+        setupMyFeedInfiniteScroll();
     }
     // 피드 목록 렌더링
     appendMyFeeds(myFeedListDto);
@@ -65,7 +76,7 @@ async function fetchMyFeedList(account, pageNo=1) {
 
     // 피드 모두 가져오면 스크롤이벤트 제거
     if(loadedMyFeeds >= totalMyFeeds) {
-        console.log('피드 모두 가져옴! 스크롤 이벤트 제거')
+        console.log('마이페이지 피드 모두 가져옴! 스크롤 이벤트 제거')
         document.body.removeEventListener('scroll', debouncedMyFeedScrollHandler);
     }
 
@@ -83,7 +94,7 @@ const debouncedMyFeedScrollHandler = debounce(async function(e) {
 
     // 스크롤이 최하단부로 내려갔을 때만 이벤트 발생시켜야 함
     if (scrollTop + clientHeight + 200 >= scrollHeight
-        && !isFetchingFeed
+        && !isFetchingMyFeed
     ) {
         // console.log(e);
         // 서버에서 데이터를 비동기로 불러와야 함
@@ -92,12 +103,12 @@ const debouncedMyFeedScrollHandler = debounce(async function(e) {
         // showSpinner();
         await new Promise(resolve => setTimeout(resolve, 700));
         const account = $myFeedBtn.dataset.myAccount;
-        fetchMyFeedList(account, currentFeedPage + 1);
+        await fetchMyFeedList(account, currentMyFeedPage + 1);
     }
 }, 700);
 
 // 무한 스크롤 이벤트 생성 함수
-export function setupInfiniteScroll() {
+export function setupMyFeedInfiniteScroll() {
     console.log("스크롤이벤트 생성 함수 실행");
 
     document.body.addEventListener('scroll', debouncedMyFeedScrollHandler)
