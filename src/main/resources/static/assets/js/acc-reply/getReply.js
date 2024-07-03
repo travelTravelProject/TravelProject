@@ -65,13 +65,11 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                         <b>${writer}</b>
                     </span>
                     <span class='offset-md-6 col-md-3 text-right'><b>${getRelativeTime(createAt)}</b></span>
-                </div>
-                <br>
+                </div><br>
                 <div class='row'>
                     <div class='col-md-9'>${text}</div>
                     <div class='col-md-3 text-right'>
                     `;
-
             // 관리자이거나 내가 쓴 댓글일 경우만 조건부 렌더링
             // 로그인한 회원 권한, 로그인한 회원 계정명, 해당 댓글의 계정명
             if (loginUser) { // 로그인 유저가 존재하면~
@@ -90,6 +88,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                   </div>
                 </div>
 
+                </div>
                 <div id="nestedReplyData-${rno}" class="nested-reply-data">
                 </div>
                 
@@ -142,7 +141,6 @@ export function appendReplies({ replies, loginUser }, reset = false) {
             fetchInfScrollNestReplies(rno);
     }
   });
-
   } else {
     tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
@@ -152,10 +150,10 @@ export function appendReplies({ replies, loginUser }, reset = false) {
   // 답글 버튼 클릭시 rno에 맞는 대댓글 입력창 토글
   document.querySelectorAll(".reply-reply-button").forEach(button => {
     button.addEventListener("click", (event) => {
-      console.log('찍어');
       const rno = event.target.dataset.rno;
       const nestedReplySection = document.getElementById(`nestedReplyWriteSection-${rno}`);
       nestedReplySection.classList.toggle("hidden");
+      console.log('답글 click!');
     });
   });
 

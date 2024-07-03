@@ -194,9 +194,11 @@
                   id="newReplyWriter"
                   name="replyWriter"
                   type="text"
+                  value="${user.nickname}"
                   class="form-control"
                   placeholder="작성자 이름"
                   style="margin-bottom: 6px"
+                  readonly
                   />
                   <button
                   id="replyAddBtn"
