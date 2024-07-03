@@ -20,6 +20,17 @@
 <section id="feed-header">
   <div class="top-section">
     <!-- 검색창 영역 -->
+      <div class="search">
+          <form id="searchFeed" method="get">
+              <input type="hidden" name="type" value="cw">
+              <input type="text" class="form-control" name="keyword" placeholder="피드를 찾아보세요." >
+          </form>
+      </div>
+
+      <div class="filters">
+          <button id="filter-latest" class="filter-item active-filter">최신글</button>
+          <button id="fileter-" class="filter-item">인기글</button>
+      </div>
 <%--    <div class="search">--%>
 <%--      <form action="/feed/list" method="get">--%>
 

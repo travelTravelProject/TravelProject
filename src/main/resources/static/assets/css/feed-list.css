@@ -1,12 +1,8 @@
 body {
-    /*font-family: Arial, sans-serif;*/
     --bs-font-sans-serif: "Noto Sans KR", sans-serif;
     --bs-body-font-family: var(--bs-font-sans-serif);
     font-family: "Noto Sans KR", sans-serif;
     background-color: #fafafa;
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
     height: 100vh;
     margin: 0;
     position: relative;
@@ -215,19 +211,19 @@ button:hover {
     transform: translateY(3px);
 }
 /* 검색창 */
-body div.top-section{
+.top-section{
     position: fixed;
     top: 0;
     left: 33%;
     /*width: 70%;*/
     /*margin: 0 auto;*/
 }
-body div.top-section form {
+.top-section form {
     display: flex;
     flex-direction: row;
     height: 50px;
 }
-body div.top-section form input {
+.top-section form input {
     /*width: 50%;*/
     margin: 5px 20px;
 }

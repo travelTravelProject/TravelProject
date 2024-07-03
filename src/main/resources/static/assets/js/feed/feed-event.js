@@ -274,6 +274,15 @@ export function initFeedFormEvents() {
         $typingCnt.textContent = $textareaEdit.value.length.toString();
     });
 
+    // 검색
+    document.querySelector('.search input[name="keyword"]').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('searchForm').submit();
+        }
+    });
+
+
 
     modifyReplyClickEvent();
     removeReplyClickEvent();
