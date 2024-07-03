@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>게시글 상세보기</title>
+<title>${abd.title}</title>
 
 <!-- reset -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
@@ -57,20 +57,21 @@
         font-size: 0.9em;
     }
     #inner-wrapper .text {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
+        font-size: 0.9em;
     }
     .card-img {
         height: 150px;
         background-color: #00CE7B;
     }
     #title .main-title{
-        font-size: 1.5em;
+        font-size: 1.2em;
         font-weight: bold;
     }
     #title .sub-title{
-        font-size: 0.9em;
+        font-size: 0.8em;
         color: #999;
-        padding: 10px 0px 30px;
+        padding: 10px 0px 20px;
     }
     #detail-travel .title {
         font-size: 0.9em;
@@ -82,7 +83,7 @@
         background-color: #f8f8f8;
         padding: 15px 10px;
         border-radius: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
     #detail-travel .travel-info .fas {
         color: #999;
@@ -108,7 +109,7 @@
         color: #888;
         border: 2px solid transparent;
         padding: 10px 20px;
-        border-radius: 5px;
+        border-radius: 10px;
         cursor: pointer;
     }
     .reaction-buttons button.active {
@@ -193,11 +194,11 @@
         <div id="detail-travel">
             <p class="title">여행 일정</p>
             <div class="travel-info">
-                <div class="travel-period">
-                    <i class="fas fa-calendar"></i> &nbsp;${abd.startDate} - ${abd.endDate} (${period}일)
-                </div>
                 <div class="travel-destination">
                     <i class="fas fa-map-marker-alt"></i> &nbsp;${abd.location}
+                </div>
+                <div class="travel-period">
+                    <i class="fas fa-calendar"></i> &nbsp;${abd.startDate} - ${abd.endDate} (${period}일)
                 </div>
 
             </div>
