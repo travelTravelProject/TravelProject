@@ -52,6 +52,7 @@
     #inner-wrapper {
         width: 100%;
         padding: 20px;
+        word-break: break-word;
     }
     #inner-wrapper .content {
         font-size: 0.9em;

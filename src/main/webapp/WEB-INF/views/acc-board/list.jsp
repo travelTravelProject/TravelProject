@@ -65,6 +65,7 @@
             flex-direction: column;
             flex: 1;
             margin-right: 20px;
+            word-break: break-word;
         }
         .card-title {
             font-size: 1.2em;
