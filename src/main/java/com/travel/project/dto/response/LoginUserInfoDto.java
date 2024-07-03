@@ -32,9 +32,6 @@ public class LoginUserInfoDto {
     private String oneLiner; // 소개글
     @Setter
     private String profileImage; // 프로필 사진
-//    private MultipartFile profileImage; // 프로필 사진
-//    private int rating; // 평점
-
 
 
     //생성자

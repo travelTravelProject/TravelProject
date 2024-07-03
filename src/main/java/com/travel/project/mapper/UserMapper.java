@@ -45,8 +45,6 @@ public interface UserMapper {
     // 프로필 수정 업데이트
     void updateUser(User user);
 
-//    void updateUserDetail(UpdateProfileDto dto);
-
 
     // 이름과 이메일로 사용자 아이디 조회
     User findIdByNameAndEmail(@Param("name") String name,
