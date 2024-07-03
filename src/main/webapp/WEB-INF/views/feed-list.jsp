@@ -106,6 +106,7 @@
       <label for="ed-nickname">닉네임</label>
       <input type="text" id="ed-nickname" name="nickname" required readonly>
       <label for="ed-content">내용</label>
+        <span> <span class="typing-count">0</span>/100</span>
         <textarea type="text" id="ed-content" name="nickname" required></textarea>
       <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
       <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">

@@ -233,6 +233,16 @@ export function initFeedFormEvents() {
         }
     })
 
+    // 텍스트 입력 제한 이벤트
+    const $textareaPost = document.getElementById('cr-content');
+    const $textareaEdit = document.getElementById('ed-content');
+    $textareaPost.addEventListener('keyup', e => {
+       if($textareaPost.value.length >= 50) {
+           alert('피드 본문은 최대 100자까지 입력 가능합니다.')
+       }
+    });
+
+
     modifyReplyClickEvent();
     removeReplyClickEvent();
 }
