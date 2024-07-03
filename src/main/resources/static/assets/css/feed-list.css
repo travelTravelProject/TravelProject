@@ -530,7 +530,7 @@ body div.btn-container {
 }
 .image-frame:hover .delete-prev-image {
     display: block;
-    background: #ff0000;
+    background: #5d5d5d;
     cursor: pointer;
 }
 .fake-upload {
@@ -587,6 +587,11 @@ body div.btn-container {
 .modal-buttons button {
     width: 200px;
     border-radius: 5px;
+}
+/* textarea 글자수 */
+.typing-text {
+    padding-left: 10px;
+    color: rgba(204, 204, 204, 0.9);
 }
 
 /* 스피너 */
@@ -682,4 +687,7 @@ body div.btn-container {
 }
 .hidden {
     display: none;
+}
+.warning {
+    color: #fd6363;
 }

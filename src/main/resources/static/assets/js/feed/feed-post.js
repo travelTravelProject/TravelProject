@@ -9,7 +9,7 @@ const createFeedModal = document.getElementById('createFeedModal')
 const $imageBox = createFeedModal.querySelector('.dropbox');
 let imageFiles = importedImageFiles; // 다른 변수에 할당하여 재할당 가능
 
-// 등록 시 <br> -> \n\r
+
 
 // 등록 후 디테일 모달 열기
 function openDetailModal(newBoardId) {
@@ -31,7 +31,7 @@ export function resetPostModal() {
 
 // 미리보기 확인 후 fetch
 export const fetchFeedPost = async (payload) => {
-    console.log("fetchFeedPost 실행!")
+    console.log("fetchFeedPost 실행!");
     try {
         const res
             = await fetch(FEED_URL + '/v1/list', payload);

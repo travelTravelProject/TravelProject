@@ -252,20 +252,18 @@ export function initFeedFormEvents() {
     // 텍스트 입력 제한 이벤트
     const $textareaPost = document.getElementById('cr-content');
     const $textareaEdit = document.getElementById('ed-content');
-    $textareaPost.addEventListener('keyup', e => {
+    $textareaPost.addEventListener('keydown', e => {
        const length = $textareaPost.value.length;
-        if(length > 50) {
-            $textareaPost.value = $textareaPost.value.substring(0, 50);
-           alert('피드 본문은 최대 50자까지 입력 가능합니다.');
-           return;
-       }
        const $typingCnt = document.querySelector('#createFeedModal .typing-count');
-       $typingCnt.textContent = length+'';
+        if(length > 50) {
+            alert('피드 본문은 최대 50자까지 입력 가능합니다.');
+            $textareaPost.value = $textareaPost.value.substring(0, 50);
+       }
+       $typingCnt.textContent = $textareaPost.value.length.toString();
     });
 
     $textareaEdit.addEventListener('keydown', e => {
         const length = $textareaEdit.value.length;
-        const $span = document.querySelector('#editFeedModal .typing-text');
         const $typingCnt = document.querySelector('#editFeedModal .typing-count');
         $typingCnt.textContent = length.toString();
         if(length > 50) {

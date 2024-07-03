@@ -15,7 +15,10 @@ export function setEditModal() {
   document.getElementById('ed-nickname').value = nickText;
 
   const detailContent = document.querySelector('.detail-content').firstElementChild.innerHTML;
-  document.getElementById('ed-content').value = replaceBrToEol(detailContent);
+  const detailContentText = replaceBrToEol(detailContent);
+  document.getElementById('ed-content').value = detailContentText;
+  const $typingEdit = document.querySelector('#editFeedModal .typing-count');
+  $typingEdit.textContent = detailContentText.length+'';
 
   // 수정모달에 렌더링할 미리보기 컨테이너
   const $imageBox = document.getElementById('edit-preview');
