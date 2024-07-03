@@ -88,10 +88,11 @@
     <div id="createFeedForm">
       <label for="cr-nickname">닉네임</label>
       <input type="text" id="cr-nickname" name="nickname" required value="${user.nickname}" readonly>
-      <label for="cr-content">내용</label>
+      <label for="cr-content"></label>
         <span class="typing-text"> <span class="typing-count">0</span>/50</span>
       <textarea id="cr-content" name="content" rows="4" placeholder="본문을 입력하세요." required></textarea>
       <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
+        <span class="typing-text">최대 10장까지 업로드 가능합니다.</span>
       <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
       <div class="dropbox" id="post-preview"></div>
       <button type="submit" id="feed-post-Btn" class="one-modal-btn">새 피드 등록</button>
@@ -106,10 +107,11 @@
     <div id="editFeedForm">
       <label for="ed-nickname">닉네임</label>
       <input type="text" id="ed-nickname" name="nickname" required readonly>
-      <label for="ed-content">내용</label>
+      <label for="ed-content">본문</label>
         <span class="typing-text"> <span class="typing-count">0</span>/50</span>
         <textarea type="text" id="ed-content" name="nickname" rows="4" required></textarea>
       <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
+        <span class="typing-text">최대 10장까지 업로드 가능합니다.</span>
       <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
       <div class="dropbox" id="edit-preview"></div>
       <button type="submit" id="feed-modify-Btn" class="one-modal-btn">수정 완료</button>

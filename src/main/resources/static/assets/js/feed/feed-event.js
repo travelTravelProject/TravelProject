@@ -101,6 +101,7 @@ export function initFeedFormEvents() {
         ) {
             if (!e.target.closest('.modal-content') && !e.target.closest('.detail-modal-content')) {
                 e.target.style.display = "none";
+                resetPostModal(); // 피드 작성 모달 입력사항 초기화
                 clearImageFiles(); // 모달이 닫힐 때 imageFiles 초기화
             }
         }

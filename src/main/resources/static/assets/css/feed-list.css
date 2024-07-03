@@ -592,6 +592,7 @@ body div.btn-container {
 .typing-text {
     padding-left: 10px;
     color: rgba(204, 204, 204, 0.9);
+    font-size: 0.9rem;
 }
 
 /* 스피너 */
