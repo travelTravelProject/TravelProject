@@ -50,13 +50,6 @@ public class LoginUserInfoDto {
 
     }
 
-//    public LoginUserInfoDto(UserDetail userDetail) {
-//        this.mbti = userDetail.getMbti();
-//        this.oneLiner = userDetail.getOneLiner();
-//        this.rating = userDetail.getRating();
-////        this.profileImage = userDetail.getProfileImage();
-//    }
-
     // 성별 변환 메서드 추가
     public String getGenderDisplay() {
         if (this.gender != null) {

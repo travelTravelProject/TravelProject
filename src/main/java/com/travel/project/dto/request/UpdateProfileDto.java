@@ -23,24 +23,8 @@ public class UpdateProfileDto {
     private MultipartFile profileImage; // 프로필 사진
 //    private String profileImage; // 프로필 사진
 
-//    private int rating; // 평점
-
-//    private String profileImagePath;
 
 
-//    public UpdateProfileDto(User user){
-//        this.account = user.getAccount();
-//        this.name = user.getName();
-//        this.nickname = user.getNickname();
-//        this.email = user.getEmail();
-//    }
-//
-//    public UpdateProfileDto(UserDetail userDetail){
-//        this.oneLiner = userDetail.getOneLiner();
-//        this.mbti = userDetail.getMbti();
-//        this.rating = userDetail.getRating();
-//        this.profileImagePath = userDetail.getProfileImage();
-//    }
 
 
 }

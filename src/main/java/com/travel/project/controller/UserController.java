@@ -87,8 +87,7 @@ public class UserController {
         // 세션에서 로그인된 사용자 정보 가져오기
         LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
 
-
-        System.out.println("user = " + user);
+        System.out.println("LoginUserInfoDto user = " + user);
 
         if (user == null) {
             // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
@@ -99,9 +98,10 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
+        userService.updateUser(user, session);
+
         // 생년월일 연령대 계산
         String birthYear = userService.calculateAgeGroup(user.getAccount());
-//        System.out.println("birthYear = " + birthYear);
 
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
@@ -125,6 +125,8 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
+        userService.updateUser(user, session);
+
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
 
@@ -135,48 +137,50 @@ public class UserController {
 
     // 마이페이지 프로필 수정하기
     @PostMapping("/mypage/update")
-    public String myPageUpdate(@Validated UpdateProfileDto dto,
-                               @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
-                               HttpSession session) {
-
-//        userService.updateUser(dto, session);
+    public String myPageUpdate(@Validated UpdateProfileDto dto, HttpSession session) {
 
         log.info("mypage POST : forwarding to mypage-update.jsp");
 
+        UserDetail existingUserDetail = userService.getUserDetailByAccount(dto.getAccount());
+
         // 프로필 이미지 업로드 및 경로 설정
+        MultipartFile profileImage = dto.getProfileImage();
+        String profilePath = null;
+
         if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
-            log.debug("프로필 사진 이름: {}", dto.getProfileImage());
-//            String rootPath = FileUtil.uploadFile(profileImage);
-            dto.setProfileImage(profileImage);
-            log.info("rootPath = " + rootPath);
+            profilePath = FileUtil.uploadFile(profileImage);
+            log.info("profilePath = " + profilePath);
+        } else {
+            profilePath = existingUserDetail.getProfileImage();
         }
+
+        userService.saveOrUpdateUserDetail(dto, session, profilePath);
 
         // 세션에서 로그인 사용자 정보 가져오기
         LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
-//        log.info("loginUser = " + loginUser);
-//        log.info("loginUser.getAccount() = " + loginUser.getAccount());
-//        log.info("dto.getAccount() = " + dto.getAccount());
 
         if (!loginUser.getAccount().equals(loginUser.getAccount())) {
             return "redirect:/sign-in";
         }
 
-        userService.saveOrUpdateUserDetail(dto, session);
+        userService.saveOrUpdateUserDetail(dto, session, profilePath);
+        userService.updateUser(loginUser, session);
+        userService.saveUpdateUser(dto);
 
         loginUser.setName(dto.getName());
         loginUser.setNickname(dto.getNickname());
         loginUser.setMbti(dto.getMbti());
         loginUser.setOneLiner(dto.getOneLiner());
         dto.setProfileImage(profileImage);
-//        loginUser.setProfileImage();
+        loginUser.setProfileImage(profilePath);
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
+        System.out.println("loginUser = " + loginUser);
 
-        System.out.println("dto = " + dto);
-        log.info("Updated user profile: {}", dto);
+        log.info("Updated user profile: {}", loginUser);
 
-        session.setAttribute("updatedUser", dto);
+        session.setAttribute("user", loginUser);
 
         return "redirect:/mypage";
     }

@@ -44,6 +44,7 @@ public interface UserMapper {
 
     // 프로필 수정 업데이트
     void updateUser(User user);
+
 //    void updateUserDetail(UpdateProfileDto dto);
 
 
