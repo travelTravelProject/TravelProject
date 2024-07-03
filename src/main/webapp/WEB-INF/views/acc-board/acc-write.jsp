@@ -18,8 +18,8 @@
     <!-- bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- bootstrap js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- daterangepicker css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 
     <style>
         body {
@@ -39,6 +39,7 @@
         }
         h1 {
             margin-bottom: 20px;
+            text-align: center;
         }
         label {
             font-weight: bold;
@@ -52,6 +53,10 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             background-color: #f8f8f8;
+            cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
+        }
+        input[type="text"]:not([readonly]) {
+            cursor: auto; /* 읽기 전용이 아닌 텍스트 필드는 기본 커서 사용 */
         }
         textarea {
             min-height: 100px;
@@ -70,13 +75,72 @@
             cursor: pointer;
         }
         .buttons button:hover {
-            background-color: #00b56a;
+            background-color: #888888;
         }
         .list-btn {
             background-color: #6c757d;
         }
         .list-btn:hover {
             background-color: #5a6268;
+        }
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            position: relative;
+        }
+        .modal .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .modal .close:hover,
+        .modal .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+        .modal .modal-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .modal .modal-buttons button {
+            flex: 0 0 calc(50% - 10px);
+            margin: 5px;
+            padding: 10px;
+            background-color: #00CE7B;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal .modal-buttons button:hover {
+            background-color: #00b56a;
         }
     </style>
 </head>
@@ -86,19 +150,19 @@
     <form action="/acc-board/write" method="post">
 
         <label for="location">장소</label>
-        <input type="text" id="location" name="location" required>
+        <input type="text" id="location" name="location" readonly required onclick="openModal()">
 
-        <label for="startDate">시작일</label>
-        <input type="date" id="startDate" name="startDate" required>
+        <label for="dateRange">동행 기간</label>
+        <input type="text" id="dateRange" name="dateRange" readonly required>
 
-        <label for="endDate">종료일</label>
-        <input type="date" id="endDate" name="endDate" required>
+        <input type="hidden" id="startDate" name="startDate">
+        <input type="hidden" id="endDate" name="endDate">
 
         <label for="title">제목</label>
-        <input type="text" id="title" name="title" required>
+        <input type="text" id="title" name="title" required style="cursor: auto;">
 
         <label for="content">내용</label>
-        <textarea id="content" name="content" maxlength="200" required></textarea>
+        <textarea id="content" name="content" maxlength="200" required style="cursor: auto;"></textarea>
 
         <div class="buttons">
             <button class="list-btn" type="button" onclick="window.location.href='/acc-board/list'">목록</button>
@@ -107,9 +171,68 @@
     </form>
 </div>
 
+<!-- 장소 선택 모달 -->
+<div id="locationModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>장소 선택</h2>
+        <div class="modal-buttons">
+            <button onclick="selectLocation('제주도')">제주도</button>
+            <button onclick="selectLocation('강원도')">강원도</button>
+            <button onclick="selectLocation('서울')">서울</button>
+            <button onclick="selectLocation('부산')">부산</button>
+            <button onclick="selectLocation('경상도')">경상도</button>
+            <button onclick="selectLocation('전라도')">전라도</button>
+            <button onclick="selectLocation('경기도')">경기도</button>
+            <button onclick="selectLocation('충청도')">충청도</button>
+            <button onclick="selectLocation('인천')">인천</button>
+            <button onclick="selectLocation('울릉도')">울릉도</button>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- daterangepicker JS -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script>
-    CKEDITOR.replace('content');
+    $(function() {
+        $('input[name="dateRange"]').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD',
+                separator: ' - ',
+                applyLabel: '확인',
+                cancelLabel: '취소',
+                fromLabel: '시작일',
+                toLabel: '종료일',
+                customRangeLabel: '사용자 지정',
+                daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                firstDay: 0
+            },
+            minDate: moment().startOf('day') // 오늘 이전 날짜 선택 불가
+        }, function(start, end, label) {
+            $('#startDate').val(start.format('YYYY-MM-DD'));
+            $('#endDate').val(end.format('YYYY-MM-DD'));
+        });
+    });
+
+    function openModal() {
+        document.getElementById('locationModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('locationModal').style.display = 'none';
+    }
+
+    function selectLocation(location) {
+        document.getElementById('location').value = location;
+        closeModal();
+    }
 </script>
+
 
 </body>
 </html>
