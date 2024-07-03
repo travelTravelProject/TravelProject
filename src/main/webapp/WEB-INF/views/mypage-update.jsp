@@ -75,7 +75,7 @@
 <%--                <input type="email" id="email" name="email" value="${user.email}" required>--%>
 
 
-                <button type="submit" class="update-button">Update</button>
+                <button type="submit" class="update-button">수정</button>
             </form>
         </div>
     </div>
