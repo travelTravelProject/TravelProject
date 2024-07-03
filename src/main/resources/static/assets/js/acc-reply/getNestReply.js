@@ -4,12 +4,12 @@ import { getRelativeTime } from "./getReply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
 
 // 대댓글 렌더링
-export function appendNestedReplies({ nestedReplies }, rno) {
+export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
   const $nestedReplyData = document.getElementById(`nestedReplyData-${rno}`);
 
   let tag = "";
   if (nestedReplies && nestedReplies.length > 0) {
-    nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt }) => {
+    nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt, account: nestReplyAccount }) => {
       tag += `
         <div id='nestedReplyContent-${nestedReplyId}' class='card-body nested-reply-card' data-nested-rno='${nestedReplyId}'>
           <div class='row user-block'>
@@ -21,13 +21,23 @@ export function appendNestedReplies({ nestedReplies }, rno) {
           <div class='row reply-content'>
             <div class='col-md-9'>${text}</div>
             <div class='col-md-3 text-right'>
+            `;
+      if (loginUser) { // 로그인 유저가 존재하면~
+        const {auth, account: loginUserAccount} = loginUser;
+
+        if (auth === 'ADMIN' || nestReplyAccount === loginUserAccount) {
+          tag += `
               <a class='btn btn-sm btn-outline-dark nestedReplyModBtn' href='#' data-rno=${nestedReplyId}>수정</a>&nbsp;
               <a class='btn btn-sm btn-outline-dark nestedReplyDelBtn' href='#' data-rno=${nestedReplyId}>삭제</a>
+          `;
+        }
+        tag += `
             </div>
           </div>
         </div>
       `;
-    });
+    }
+  });
   } else {
     // tag = `<div id='nestedReplyContent' class='card-body'>대댓글이 아직 없습니다! ㅠㅠ</div>`;
   }

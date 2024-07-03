@@ -261,7 +261,6 @@
 <%--<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>--%>
 <%-- 스크립트 모듈 --%>
 <script type="module" src="/assets/js/feed-list.js"></script>
-<script type="module" src="/assets/js/feed-reply.js"></script>
 
 </body>
 </html>

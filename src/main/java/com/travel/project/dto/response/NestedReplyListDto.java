@@ -12,5 +12,8 @@ import java.util.List;
 
 public class NestedReplyListDto {
 
+    @Setter
+    private LoginUserInfoDto loginUser;
+
     private List<NestedReplyResponseDetailDto> nestedReplies;
 }

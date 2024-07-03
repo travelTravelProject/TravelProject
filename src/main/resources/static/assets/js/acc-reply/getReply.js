@@ -45,7 +45,7 @@ let totalReplies = 0; // 총 댓글 수
 let loadedReplies = 0; // 로딩된 댓글 수
 
 // 댓글 렌더링
-export function appendReplies({ replies }, reset = false) {
+export function appendReplies({ replies, loginUser }, reset = false) {
   const $replyData = document.getElementById("replyData");
 
   // reset모드일경우 댓글을 모두 지움
@@ -57,7 +57,7 @@ export function appendReplies({ replies }, reset = false) {
 
   let tag = "";
   if (replies && replies.length > 0) {
-    replies.forEach(({ replyId: rno, writer, text, createAt }) => {
+    replies.forEach(({ replyId: rno, writer, text, createAt, account: replyAccount }) => {
       tag += `
             <div id='replyContent' class='card-body' data-rno='${rno}'>
                 <div class='row user-block'>
@@ -65,26 +65,35 @@ export function appendReplies({ replies }, reset = false) {
                         <b>${writer}</b>
                     </span>
                     <span class='offset-md-6 col-md-3 text-right'><b>${getRelativeTime(createAt)}</b></span>
-                </div><br>
+                </div>
+                <br>
                 <div class='row'>
                     <div class='col-md-9'>${text}</div>
                     <div class='col-md-3 text-right'>
-                        <a id='replyModBtn' class='btn btn-sm btn-outline-dark' href='#'>수정</a>&nbsp;
-                        <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>&nbsp;
-                        <div class="reply-reply-write">
-                          <button type="button" class="reply-reply-button" data-rno='${rno}'>답글</button>
-                        </div>
+                    `;
+
+            // 관리자이거나 내가 쓴 댓글일 경우만 조건부 렌더링
+            // 로그인한 회원 권한, 로그인한 회원 계정명, 해당 댓글의 계정명
+            if (loginUser) { // 로그인 유저가 존재하면~
+              const {auth, account: loginUserAccount} = loginUser;
+
+              if (auth === 'ADMIN' || replyAccount === loginUserAccount) {
+                tag += `
+                    <a id='replyModBtn' class='btn btn-sm btn-outline-dark' href='#'>수정</a>&nbsp;
+                    <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>&nbsp;
+                `;
+              }
+              tag += `
+                    <div class="reply-reply-write">
+                    <button type="button" class="reply-reply-button" data-rno='${rno}'>답글</button>
                     </div>
+                  </div>
                 </div>
-                <!-- <button id="loadMoreNestedReplies-${rno}" class="btn btn-sm btn-outline-dark load-more-nested-replies" data-rno="${rno}">▽ 답글0개</button> -->
+
                 <div id="nestedReplyData-${rno}" class="nested-reply-data">
                 </div>
                 
             </div>
-
-
-
-
 
             <div id="nestedReplyWriteSection-${rno}" class="Nestedcard hidden" data-rno='${rno}'>
                 <div class="card-body">
@@ -108,9 +117,11 @@ export function appendReplies({ replies }, reset = false) {
                                 id="newNestedReplyWriter-${rno}"
                                 name="nestedReplyWriter"
                                 type="text"
+                                value="${loginUser.nickname}"
                                 class="form-control"
                                 placeholder="작성자 이름"
                                 style="margin-bottom: 6px"
+                                readonly
                                 />
                                 <button
                                 id="nestedReplyAddBtn-${rno}"
@@ -124,12 +135,13 @@ export function appendReplies({ replies }, reset = false) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>         
             `;
 
             // 대댓글 fetch
             fetchInfScrollNestReplies(rno);
-    });
+    }
+  });
 
   } else {
     tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
