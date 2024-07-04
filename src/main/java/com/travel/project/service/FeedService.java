@@ -34,12 +34,12 @@ public class FeedService {
     private final BookmarkService bookmarkService;
 
     // 피드 전체 조회
-    public FeedListDto findAll(Search search, HttpSession session) {
+    public FeedListDto findAll(Search search, HttpSession session, String sort) {
 
         Page page = new Page(search.getPageNo(), search.getAmount());
         String loginAccount = LoginUtil.getLoggedInUserAccount(session);
 
-        List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
+        List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search, sort);
 
         // 조건에 맞는 피드가 없는 경우
         if (feedList.isEmpty()) {
@@ -199,7 +199,7 @@ public class FeedService {
 
         boolean flag = feedMapper.deleteFeed(boardId);
         log.debug("피드서비스 삭제: {}", flag);
-        return flag ? findAll(new Search(new Page(1, 5)), session) : null;
+        return flag ? findAll(new Search(new Page(1, 5)), session,"latest") : null;
     }
     // 조회수 증가
     public boolean addViewCount(long boardId) {

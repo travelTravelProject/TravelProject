@@ -7,19 +7,27 @@
 
     <!-- 동적 SQL 조건을 분리 -->
     <sql id="search">
-        <if test="type == 'content'">
-            AND B.content LIKE CONCAT('%', #{keyword}, '%')
+        <if test="search.type == 'content'">
+            AND B.content LIKE CONCAT('%', #{search.keyword}, '%')
         </if>
-        <if test="type == 'writer'">
-            AND U.nickname LIKE CONCAT('%', #{keyword}, '%')
+        <if test="search.type == 'writer'">
+            AND U.nickname LIKE CONCAT('%', #{search.keyword}, '%')
         </if>
-        <if test="type == 'cw'">
-            AND (U.nickname LIKE CONCAT('%', #{keyword}, '%')
-            OR B.content  LIKE CONCAT('%', #{keyword}, '%'))
+        <if test="search.type == 'cw'">
+            AND (U.nickname LIKE CONCAT('%', #{search.keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{search.keyword}, '%'))
+        </if>
+    </sql>
+    <sql id="sort">
+        <if test="sort == 'latest'">
+            ORDER BY B.created_at DESC
+        </if>
+        <if test="sort == 'pop'">
+            ORDER BY B.view_count DESC
         </if>
     </sql>
 
-    <select id="findAllFeeds" resultType="feed">
+    <select id="findAllFeeds" resultType="feed" parameterType="hashmap">
         SELECT
             B.board_id,
             B.account,
@@ -38,8 +46,8 @@
         WHERE B.status = 'A'
             AND B.category_id = 2
         <include refid="search" />
-        ORDER BY B.board_id DESC
-        LIMIT #{pageStart}, #{amount}
+        <include refid="sort"/>
+        LIMIT #{search.pageStart}, #{search.amount}
     </select>
 
     <select id="findAllByAccount" resultType="feed">

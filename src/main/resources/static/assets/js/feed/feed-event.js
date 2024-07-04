@@ -1,23 +1,21 @@
 import {
     clearImageFiles,
-    dataToFormData, deletePreviewAndUpdate,
+    dataToFormData,
+    deletePreviewAndUpdate,
     handleFileInputChange,
-    imageFiles as importedImages,
-    previewImages
+    imageFiles as importedImages
 } from "../image.js";
 import {fetchFeedPost, resetPostModal} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
 
 import {fetchFeedModify, setEditModal} from "./feed-modify.js";
-import {fetchFeedList} from "./feed-getList.js";
+import {fetchFeedList, getSearchKeyword, getSortSelected} from "./feed-getList.js";
 import {fetchFeedDelete} from "./feed-delete.js";
 import {fetchBookmark, fetchLike} from "./feed-interaction.js";
 
-import { initInfScroll} from "../feed-reply/feed-getReply.js";
-import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
-import { isEditModeActive, fetchReplyModify } from "../feed-reply/feed-modifyReply.js";
-import { removeReplyClickEvent } from "../feed-reply/feed-deleteReply.js";
-import { modifyReplyClickEvent } from "../feed-reply/feed-modifyReply.js";
+import {initInfScroll} from "../feed-reply/feed-getReply.js";
+import {modifyReplyClickEvent} from "../feed-reply/feed-modifyReply.js";
+import {removeReplyClickEvent} from "../feed-reply/feed-deleteReply.js";
 
 // 대댓글 작성시 boardId를 전달하기 위해 설정한 전역변수
 let currentBoardId = null;
@@ -278,7 +276,7 @@ export function initFeedFormEvents() {
     document.querySelector('.search input[name="keyword"]').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
             e.preventDefault();
-            document.getElementById('searchForm').submit();
+            fetchFeedList();
         }
     });
     // 정렬
@@ -292,6 +290,7 @@ export function initFeedFormEvents() {
             $latest.classList.remove('active-filter');
             $popular.classList.add('active-filter');
         }
+        fetchFeedList();
     })
 
 

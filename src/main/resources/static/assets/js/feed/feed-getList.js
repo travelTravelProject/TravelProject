@@ -83,12 +83,18 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
 }
 
 // 서버에서 피드 목록 가져오는 비동기 요청 함수
-export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') {
+export async function fetchFeedList(
+    pageNo = 1,
+    // keyword = '',
+    // sort='latest'
+    ) {
 
   if(isFetchingFeed) return; // 서버에서 데이터를 가져오는 중이면 return;
   isFetchingFeed = true;
+  const keyword = getSearchKeyword() || '';
+  const sort = getSortSelected();
 
-  const url = `${FEED_URL}/v1/list?pageNo=${pageNo}&type=${type}&keyword=${keyword}`;
+  const url = `${FEED_URL}/v1/list?pageNo=${pageNo}&type=cw&keyword=${keyword}&sort=${sort}`;
   console.log('fetchFeedList 실행: ', pageNo);
 
   const res = await fetch(url);
@@ -142,9 +148,7 @@ const debouncedFeedScrollHandler = debounce(async function(e) {
   if (scrollTop + clientHeight + 200 >= scrollHeight
     && !isFetchingFeed
   ) {
-    // console.log(e);
     // 서버에서 데이터를 비동기로 불러와야 함
-    // 2초의 대기열이 생성되면 다음 대기열 생성까지 2초를 기다려야 함
     console.log("스크롤 이벤트 핸들러 함수 실행");
     showFeedSpinner();
     await new Promise(resolve => setTimeout(resolve, 700));
@@ -157,4 +161,15 @@ export function setupInfiniteScroll() {
   console.log("스크롤이벤트 생성 함수 실행");
 
   document.body.addEventListener('scroll', debouncedFeedScrollHandler)
+}
+
+// 검색어 값 찾아서 반환하는 함수
+export function getSearchKeyword() {
+  const $searchInput = document.querySelector('#searchFeed .form-control')
+  return $searchInput.value;
+}
+// 정렬 선택사항 찾아서 반환하는 함수
+export function getSortSelected() {
+  const $filters = document.getElementById('filters-box');
+  return  $filters.querySelector('.active-filter').dataset.sort || 'latest';
 }

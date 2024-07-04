@@ -1,12 +1,10 @@
 package com.travel.project.common;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter @Setter @ToString
 @EqualsAndHashCode
+@AllArgsConstructor
 public class Search extends Page {
 
     // 검색어, 검색조건
@@ -19,7 +17,7 @@ public class Search extends Page {
     public Search(Page page) {
         super(page.getPageNo(), page.getAmount());
         this.keyword = "";
-        this.type = "content";
+        this.type = "cw";
     }
 
     public Search(Page page, String keyword, String type) {

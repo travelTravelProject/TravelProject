@@ -39,7 +39,8 @@ public class FeedController {
     public ResponseEntity<?> list(
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
             @RequestParam(name = "type", defaultValue = "content", required = false) String type,
-            @RequestParam(name = "keyword", defaultValue = "", required = false) String keyword
+            @RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
+            @RequestParam(name = "sort", defaultValue = "latest", required = false) String sort
             , HttpSession session
     ) {
 //        log.debug("겟: " + pageNo + "-" + type + "-" + keyword);
@@ -48,7 +49,7 @@ public class FeedController {
         page.setType(type);
 
         // Search type, keyword 확인 필요
-        FeedListDto feeds = feedService.findAll(page, session);
+        FeedListDto feeds = feedService.findAll(page, session, sort);
         log.debug("서비스결과: {}",feeds);
         feeds.setLoginUser(LoginUtil.getLoggedInUser(session));
 

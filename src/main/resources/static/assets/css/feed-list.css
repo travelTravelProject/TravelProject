@@ -45,11 +45,14 @@ body {
 
 .feed-item {
     background-color: #fff;
-    border: 1px solid #d4d4d4;
+    /*border: 1px solid #d4d4d4;*/
     border-radius: 5px;
     margin-bottom: 10px;
     /*padding: 10px;*/
-    box-shadow: 1px 1px 5px 1px rgba(113, 113, 113, 0.1);
+    box-shadow: 0 6px 15px 1px rgba(36, 37, 38, 0.1);
+}
+.feed-item:hover {
+    box-shadow: 0 6px 15px 3px rgba(36, 37, 38, 0.2);
 }
 .created-at {
     color: #aaaaaa;
@@ -109,11 +112,11 @@ body {
 }
 ion-icon {
     font-size: 30px;
-    color: #cccccc;
+    color: #dddddd;
     cursor: pointer;
 }
 ion-icon:hover {
-    /*color: #00ce7c;*/
+    color: #4facfe;
     background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -235,6 +238,14 @@ button:hover {
     padding: 10px;
     margin-bottom: 20px;
 }
+.search input:focus{
+    outline:none;
+    /*border: 1px solid transparent;*/
+    /*background-image: linear-gradient(#fff, #fff), linear-gradient(to right, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);*/
+    /*background-origin: border-box;*/
+    /*background-clip: content-box, border-box;*/
+
+}
 .filters {
     display: flex;
     flex-direction: row;
@@ -246,21 +257,24 @@ button:hover {
     margin-right: 10px;
     /*padding: 10px;*/
     padding: 3px;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
+    /*background-color: #f0f0f0;*/
+    background-color: #e9ecef;
+    /*border: 1px solid #ddd;*/
     border-radius: 20px;
     cursor: pointer;
     line-height: 30px;
 }
 .filters button:hover {
-    background-color: #ddd;
+    /*background-color: #ddd;*/
+    background-color: #c0c5cc;;
+
 }
 
 /* 피드 작성 버튼 */
 body div.btn-container {
     position: fixed;
     bottom: 100px;
-    left: 75%;
+    left: 90%;
     /*width: 100%;*/
     color: #ffffff;
     /*border: 1px solid violet;*/
@@ -270,29 +284,39 @@ body div.btn-container {
 }
 
 .btn-container .side-btn {
-    width: 50px;
+    width: 40px;
     height: 50px;
-    border-radius: 50%;
-    background: #4facfe;
+    border-radius: 0 0 30px 30px;
+    background: #f8f8f8;
     font-size: 1.2rem;
     line-height: 50px;
-    /*border: 1px solid red;*/
+    border: 1px solid #ddd;
+    color: #4facfe;
     cursor: pointer;
     /*box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);*/
-    box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 15px 1px rgba(36, 37, 38, 0.1);
     transition: 300ms;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 /*#createFeedBtn:hover {*/
 .side-btn:hover {
     background-image: linear-gradient(45deg, #4facfe 0%, #41ccff 60%, #00f2fe 100%);
+    color: #ffffff;
+    box-shadow: 0 5px 15px 1px rgba(36, 37, 38, 0.2);
     /*transform: scale(1.1);*/
 }
 #goTopBtn {
     /*display: none;*/
+    border-radius: 30px 30px 0 0;
+    padding-top: 3px;
+}
+#goBottomBtn {
+    border-radius: 0 0 30px 30px;
+    /*padding-bottom: 5px;*/
+    padding-top: -3px;
 }
 
-/* 모달 속 이미지 미리보기 */
+    /* 모달 속 이미지 미리보기 */
 .dropbox {
     /*width: 100%;*/
     width: 500px;

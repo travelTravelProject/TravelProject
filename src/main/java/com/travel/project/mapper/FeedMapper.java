@@ -13,7 +13,9 @@ import java.util.List;
 public interface FeedMapper {
 
     // 전체 피드 조회
-    List<FeedFindAllDto> findAllFeeds(Search s);
+    List<FeedFindAllDto> findAllFeeds(
+            @Param("search") Search search,
+            @Param("sort") String sort);
 
     // 피드 하나 조회
     FeedFindOneDto findFeedById(long boardId);
