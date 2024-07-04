@@ -49,6 +49,10 @@ label {
     color: #333;
 }
 
+/*label .deleteProfileImage {*/
+/*    text-align: center;*/
+/*}*/
+
 input, select {
     padding: 10px;
     font-size: 1em;
@@ -57,6 +61,7 @@ input, select {
 }
 
 button {
+/*.update-button {*/
 
     background-color: #00aaff;
     color: #fff;
@@ -68,11 +73,12 @@ button {
 }
 
 button:hover {
+/*.update-button:hover {*/
     background-color: #0056b3;
 }
 
 .profile {
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
     text-align: center;
 }
 
@@ -95,8 +101,6 @@ button:hover {
 }
 
 
-
-
 /*css*/
 
 body {
@@ -111,7 +115,6 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
-
 
 
 .add-trip {
@@ -216,10 +219,12 @@ body {
     /*margin: 30px auto 10px;*/
     cursor: pointer;
 }
+
 .profile-nickname {
     width: 100px;
     padding-left: 20px;
 }
+
 .profile-nickname p {
     font-size: 14px;
     width: 150px;
@@ -250,7 +255,6 @@ body {
     text-align: center;
     height: 100px;
 }
-
 
 
 .edit-profile-btn {

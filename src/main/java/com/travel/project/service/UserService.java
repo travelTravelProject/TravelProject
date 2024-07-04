@@ -103,6 +103,10 @@ public class UserService {
     public void saveUpdateUser(UpdateProfileDto dto) {
         // Update tbl_user_detail
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        log.debug("saveUpdateUser  existingDetail: {}", existingDetail);
+        // saveUpdateUser  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
+        // profileImage=/assets/upload/2024/07/04/b6242aed-3495-4871-8406-cc09f74bbdd4_다운로드 (2).jfif, rating=0, account=kitty)
+
         if (existingDetail != null) {
             // 이미 존재하는 경우에만 업데이트
             existingDetail.setMbti(dto.getMbti());
@@ -116,8 +120,15 @@ public class UserService {
     public void saveOrUpdateUserDetail(UpdateProfileDto dto, HttpSession session, String profilePath) {
 
         LoginUserInfoDto sessionUser = (LoginUserInfoDto) session.getAttribute("user");
+        log.debug("saveOrUpdateUserDetail  sessionUser: {}", sessionUser);
+        // saveOrUpdateUserDetail  sessionUser LoginUserInfoDto(account=kitty, name=키티키티123, nickname=헬로키티kitty,
+        // email=kitty@gmail.com, auth=COMMON, birthday=1996-06-12, gender=F, mbti=null, oneLiner=null, profileImage=null)
 
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        log.debug("saveOrUpdateUserDetail  existingDetail: {}", existingDetail);
+        // saveOrUpdateUserDetail  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
+        // profileImage=/assets/upload/2024/07/04/e867a6ff-5907-458a-964a-4689e82ecb05_다운로드 (4).jfif, rating=0, account=kitty)
+
         if (sessionUser == null) {
             // 새로운 회원 정보 저장
             UserDetail newUserDetail = UserDetail.builder()

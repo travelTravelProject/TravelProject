@@ -143,6 +143,8 @@ public class UserController {
 
         UserDetail existingUserDetail = userService.getUserDetailByAccount(dto.getAccount());
 
+        log.info("existingUserDetail: {}", existingUserDetail);
+
         // 프로필 이미지 업로드 및 경로 설정
         MultipartFile profileImage = dto.getProfileImage();
         String profilePath = null;
@@ -179,6 +181,9 @@ public class UserController {
         System.out.println("loginUser = " + loginUser);
 
         log.info("Updated user profile: {}", loginUser);
+        // Updated user profile: LoginUserInfoDto(account=kitty, name=키티키티123, nickname=헬로키티kitty,
+        // email=kitty@gmail.com, auth=COMMON, birthday=1996-06-12, gender=F, mbti=ENTP,
+        // oneLiner=하이하이 키티 헬로헬로, profileImage=/assets/upload/2024/07/04/b6242aed-3495-4871-8406-cc09f74bbdd4_다운로드 (2).jfif)
 
         session.setAttribute("user", loginUser);
 
