@@ -30,11 +30,14 @@ public class MypageService {
 
     @Transactional
     public MyBoardListDto findBoardsByAccount(Search search, HttpSession session) {
-        LoginUserInfoDto loggedInUser = LoginUtil.getLoggedInUser(session);
+        LoginUserInfoDto loginUser = LoginUtil.getLoggedInUser(session);
+        List<AccBoardListDto> boards = mypageMapper.findAllByAccount(loginUser.getAccount(), search);
 
         mypageMapper.findAllByAccount(loggedInUser.getAccount());
 
-        return null;
+        return new MyBoardListDto(boards.stream()
+                .map(board -> new AccBoardListDto(board))
+                .collect(Collectors.toList()));
 
 //        List<MyFeedDto> myFeeds = feedList.stream().map(f -> {
 //

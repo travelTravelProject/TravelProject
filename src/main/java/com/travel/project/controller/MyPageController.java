@@ -18,7 +18,7 @@ public class MyPageController {
     private final MypageService mypageService;
 
     @GetMapping
-    public ResponseEntity getboards(String account, HttpSession session) {
+    public ResponseEntity<?> getboards(String account, HttpSession session) {
 
 
 
