@@ -27,9 +27,9 @@
           </form>
       </div>
 
-      <div class="filters">
+      <div class="filters" id="filters-box">
           <button id="filter-latest" class="filter-item active-filter">최신글</button>
-          <button id="fileter-" class="filter-item">인기글</button>
+          <button id="filter-pop" class="filter-item">인기글</button>
       </div>
 <%--    <div class="search">--%>
 <%--      <form action="/feed/list" method="get">--%>

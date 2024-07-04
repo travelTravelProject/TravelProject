@@ -281,6 +281,18 @@ export function initFeedFormEvents() {
             document.getElementById('searchForm').submit();
         }
     });
+    // 정렬
+    document.getElementById('filters-box').addEventListener('click', e => {
+        const $latest = document.getElementById('filter-latest');
+        const $popular = document.getElementById('filter-pop');
+        if(e.target.matches('#filter-latest')) {
+            $latest.classList.add('active-filter');
+            $popular.classList.remove('active-filter');
+        } else if (e.target.matches('#filter-pop')) {
+            $latest.classList.remove('active-filter');
+            $popular.classList.add('active-filter');
+        }
+    })
 
 
 
