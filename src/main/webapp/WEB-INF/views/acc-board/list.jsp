@@ -82,7 +82,8 @@
             width: 100px;
             height: 100px;
             flex-shrink: 0;
-            background-color: #00CE7B;
+            /*background-color: #00CE7B;*/
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             border-radius: 10px;
         }
         .card-img img {
@@ -121,7 +122,9 @@
             width: 100%;
             text-align: center;
             padding: 10px 0;
-            background-color: #00CE7B;
+            /*background-color: #00CE7B;*/
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            /*background-color: #00f2fe;*/
             color: white;
             text-decoration: none;
             border-radius: 10px;
@@ -195,7 +198,7 @@
                                         </div>
                                     </div>
                                     <div class="card-img">
-                                        <img src="#" alt="대표이미지">
+                                        <img src="/assets/img/accBoardDefaultImg.webp" alt="대표이미지">
                                     </div>
                                 </div>
                                 <div class="card-details-bot1">

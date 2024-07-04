@@ -62,8 +62,19 @@
         font-size: 0.9em;
     }
     .card-img {
-        height: 150px;
-        background-color: #00CE7B;
+        width: 100%;
+        padding-bottom: 30%;
+        position: relative;
+        /*overflow: hidden;*/
+        cursor: pointer;
+    }
+    .card-img img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 이미지를 잘라서 채움 */
     }
     #title .main-title{
         font-size: 1.2em;
@@ -174,6 +185,25 @@
         margin: 10px;
     }
 
+    /* 이미지 모달 스타일 */
+    .img-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+    .img-modal-content {
+        max-width: 80%;
+        max-height: 80%;
+    }
+
 </style>
 
 </head>
@@ -181,7 +211,7 @@
 
 <div id="wrap" class="form-container" data-bno="${abd.boardId}">
     <div class="card-img">
-        <img src="#" alt="대표이미지">
+        <img src="/assets/img/accBoardDefaultImg.webp" alt="대표이미지">
     </div>
     <div id="inner-wrapper">
         <div id="title">
@@ -233,6 +263,11 @@
         <div>댓글</div>
 
     </div>
+</div>
+
+<!-- 이미지 모달 -->
+<div id="imgModal" class="img-modal">
+    <img src="/assets/img/accBoardDefaultImg.webp" class="img-modal-content" id="modalImage">
 </div>
 
 <!-- 삭제 확인 모달 -->
@@ -307,30 +342,51 @@
         document.getElementById('bookmark-btn').addEventListener('click', toggleBookmark);
 
         // 삭제 스크립트
-        const modal = document.getElementById('deleteModal'); // 모달창
-        const span = document.getElementsByClassName('close')[0];
-        const confirmDelete = document.getElementById('confirmDelete'); // 모달 삭제 확인 버튼
-        const cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
+        const $modal = document.getElementById('deleteModal'); // 모달창
+        const $span = document.getElementsByClassName('close')[0];
+        const $confirmDelete = document.getElementById('confirmDelete'); // 모달 삭제 확인 버튼
+        const $cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
 
         // 삭제버튼 클릭이벤트 - 모달창
         document.querySelector('.del-btn').addEventListener('click', function () {
-            modal.style.display = 'block';
+            $modal.style.display = 'block';
         });
 
         // 모달 창 닫기 이벤트 (X 버튼)
-        span.onclick = function () {
-            modal.style.display = 'none';
+        $span.onclick = function () {
+            $modal.style.display = 'none';
         };
 
         // 모달 창 닫기 이벤트 (취소 버튼)
-        cancelDelete.onclick = function () {
-            modal.style.display = 'none';
+        $cancelDelete.onclick = function () {
+            $modal.style.display = 'none';
         };
 
         // 모달 창 - 게시글 삭제 이벤트
-        confirmDelete.addEventListener('click', function() {
+        $confirmDelete.addEventListener('click', function() {
             const bno = document.getElementById('wrap').dataset.bno;
             window.location.href = `/acc-board/delete?boardId=\${bno}`;
+        });
+
+        // 이미지 클릭 시 전체 화면 모달 열기
+        // 이미지 모달창
+        const $imgModal = document.querySelector('.img-modal');
+        // 모달창 내부 img태그
+        const $modalImg = document.getElementById('modalImage');
+        // 타겟 이미지 태그
+        const $targetImg = document.querySelector('.card-img img');
+
+        document.querySelector('.card-img img').addEventListener('click', () => {
+            console.log('사진클릭');
+            $imgModal.style.display = 'flex';
+            $modalImg.src = $targetImg.src;
+        });
+
+        // 모달 사진 클릭 시 모달창 닫기
+        $modalImg.addEventListener('click', e => {
+            window.location.pathname
+                $imgModal.style.display = 'none';
+                $modalImg.src = "";
         });
 
     </script>
