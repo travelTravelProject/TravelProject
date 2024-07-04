@@ -18,7 +18,8 @@ body {
     /*display: none;*/
     display: block;
     /*border: 1px solid blue;*/
-    border-bottom: 1px solid #dddddd;
+    /*border-bottom: 1px solid #dddddd;*/
+    /*box-shadow: 1px 1px 5px 3px rgba(0,0,0,0.1);*/
 }
 #feed-list {
     margin-top: 10px;
@@ -48,7 +49,7 @@ body {
     border-radius: 5px;
     margin-bottom: 10px;
     /*padding: 10px;*/
-    box-shadow: 1px 1px 1px 1px rgba(113, 113, 113, 0.1);
+    box-shadow: 1px 1px 5px 1px rgba(113, 113, 113, 0.1);
 }
 .created-at {
     color: #aaaaaa;
@@ -112,7 +113,10 @@ ion-icon {
     cursor: pointer;
 }
 ion-icon:hover {
-    color: #00ce7c;
+    /*color: #00ce7c;*/
+    background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
 }
 .interaction-section span {
     display: flex;
@@ -122,7 +126,7 @@ ion-icon:hover {
     /*border: 1px solid blueviolet;*/
 }
 .interaction-section span:hover ion-icon{
-    color: #00ce7c;
+    color: #4facfe;
 }
 .interaction-section ion-icon.liked {
     color: #ff627a;
@@ -188,11 +192,11 @@ textarea{
     box-sizing: border-box;
 }
 .modal .modal-content input:focus {
-    border: 1px solid #00ce7c;
+    border: 1px solid #4facfe;
 }
 button {
     width: 100%;
-    background-color: #00ce7c;
+    background-color: #4facfe;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -202,7 +206,7 @@ button {
 }
 
 button:hover {
-    background-color: #00ce7c;
+    background-color: #4facfe;
 }
 .one-modal-btn {
     border-radius: 5px;
@@ -269,18 +273,20 @@ body div.btn-container {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: #00ce7c;
+    background: #4facfe;
     font-size: 1.2rem;
     line-height: 50px;
     /*border: 1px solid red;*/
     cursor: pointer;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
+    /*box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);*/
+    box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.2);
     transition: 300ms;
     margin-bottom: 10px;
 }
 /*#createFeedBtn:hover {*/
 .side-btn:hover {
-    transform: scale(1.1);
+    background-image: linear-gradient(45deg, #4facfe 0%, #41ccff 60%, #00f2fe 100%);
+    /*transform: scale(1.1);*/
 }
 #goTopBtn {
     /*display: none;*/
@@ -331,8 +337,8 @@ body div.btn-container {
     display: flex;
     /*justify-content: center;*/
     /*align-items: center;*/
-    width: 70%;
-    height: 70%; /* 모달의 높이 설정 */
+    width: 1344px;
+    height: 654px; /* 모달의 높이 설정 */
     max-height: 80vh; /* 최대 높이 설정 */
     margin: 80px auto auto;
     background-color: white;
@@ -356,7 +362,7 @@ body div.btn-container {
 
 .feed-right-side {
     flex: 1;
-    padding: 20px;
+    padding: 20px 10px 20px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -544,9 +550,9 @@ body div.btn-container {
     cursor: pointer;
 }
 .fake-upload {
-    border: 1px solid #00ce7c;
+    border: 1px solid #4facfe;
     border-radius: 5px;
-    color: #00ce7c;;
+    color: #4facfe;
     font-weight: 500;
     margin-top: 10px;
     padding: 5px 10px;
@@ -554,7 +560,10 @@ body div.btn-container {
 }
 .fake-upload:hover {
     /*border-radius: ;*/
-    background: #00ce7c;;
+    /*background: #4facfe;*/
+    background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
     color: #ffffff;
 }
 .modal-content label {
@@ -703,5 +712,6 @@ body div.btn-container {
     color: #fd6363;
 }
 .active-filter {
-    background: #00ce7c;
+    /*background: #00ce7c;*/
+    background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
 }

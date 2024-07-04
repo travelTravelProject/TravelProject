@@ -1,6 +1,7 @@
 import { FEED_URL } from "../feed-list.js";
 import {debounce, getRelTime} from "../util.js";
 import {renderCarousel, setOneImgStyle} from "../image.js";
+import {hideFeedSpinner, showFeedSpinner} from "../spinner.js";
 
 let currentFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetchingFeed = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
@@ -66,7 +67,12 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
     }); // feeads.forEach 종료
 
   } else{ // 게시글 없는 경우
-
+      tag = `
+        <div id="no-feed">
+            <p>모든 피드를 다 보셨거나 작성하신 피드가 없습니다.</p> <br>
+            <p>${loginUser ? loginUser.nickname : '방문자'}님 기억에 남은 여행을 공유하면 어떨까요?</p>
+        </div>
+      `;
   }
   // 게시글 컨테이너에 태그 추가
   document.getElementById('feedData').innerHTML += tag;
@@ -87,7 +93,11 @@ export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') 
 
   const res = await fetch(url);
   if (!res.ok) {
-    throw new Error(`HTTP error! Status: ${res.status}`);
+    if(res.status === 204) {
+
+    } else {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
   }
   const feedListDto = await res.json();
   console.log(feedListDto);
@@ -109,6 +119,7 @@ export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') 
   // 피드 모두 가져오면 스크롤이벤트 제거
   if(loadedFeeds >= totalFeeds) {
     console.log('피드 모두 가져옴! 스크롤 이벤트 제거')
+    hideFeedSpinner();
     document.body.removeEventListener('scroll', debouncedFeedScrollHandler);
   }
 
@@ -135,7 +146,7 @@ const debouncedFeedScrollHandler = debounce(async function(e) {
     // 서버에서 데이터를 비동기로 불러와야 함
     // 2초의 대기열이 생성되면 다음 대기열 생성까지 2초를 기다려야 함
     console.log("스크롤 이벤트 핸들러 함수 실행");
-    // showSpinner();
+    showFeedSpinner();
     await new Promise(resolve => setTimeout(resolve, 700));
     fetchFeedList(currentFeedPage + 1);
   }

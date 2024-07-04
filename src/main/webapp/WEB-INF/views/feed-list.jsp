@@ -85,10 +85,15 @@
 <%--      </div>--%>
 <%--    </div>--%>
   </div>
-    <%-- 스피너 --%>
-    <div class="spinner-container-lds">
-        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    <%-- 피드 목록 스피너 --%>
+    <div class="spinner-container" id="loadingFeedSpinner">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
+<%--    <div class="spinner-container-lds">--%>
+<%--        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>--%>
+<%--    </div>--%>
 
 </section>
 <%-- 피드 목록 끝 --%>
@@ -238,14 +243,14 @@
         </div>
       </div>
       <!-- end reply content -->
-    </div>
-    <!-- end replies row -->
-     
     <div class="spinner-container" id="loadingSpinner">
       <div class="spinner-border text-light" role="status">
           <span class="visually-hidden">Loading...</span>
-      </div>  
+      </div>
     </div>
+    </div>
+    <!-- end replies row -->
+
     <%-- 디테일 모달 닫기 - 스피너 컨테이너 형제  --%>
     <span class="close">&times;</span>
 

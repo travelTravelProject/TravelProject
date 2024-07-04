@@ -4,6 +4,7 @@ import com.travel.project.common.Page;
 import com.travel.project.common.Search;
 import com.travel.project.dto.response.MyFeedListDto;
 import com.travel.project.service.FeedService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +27,17 @@ public class MypageController {
 
         Search search = new Search(new Page(pageNo, 12));
 
-        MyFeedListDto feedsById = feedService.findFeedsByAccount(search, session);
+        MyFeedListDto feedsById = null;
 
-        return ResponseEntity.ok().body(feedsById);
+        try {
+            feedsById = feedService.findFeedsByAccount(search, session);
+
+            return ResponseEntity.ok().body(feedsById);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
     }
 
 }

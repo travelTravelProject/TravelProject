@@ -35,11 +35,17 @@ public class FeedService {
 
     // 피드 전체 조회
     public FeedListDto findAll(Search search, HttpSession session) {
+
+        Page page = new Page(search.getPageNo(), search.getAmount());
+        String loginAccount = LoginUtil.getLoggedInUserAccount(session);
+
         List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
 
-        String loginAccount = LoginUtil.getLoggedInUserAccount(session);
+        // 조건에 맞는 피드가 없는 경우
         if (feedList.isEmpty()) {
-            return null;
+            return FeedListDto.builder()
+                    .pageInfo(new PageMaker(page, 0))
+                    .build();
         }
         // 각 피드마다 이미지 리스트를 추가
         // 각 피드마다 댓글 수, 좋아요 수, 북마크 수 추가
@@ -69,7 +75,6 @@ public class FeedService {
             })
             .collect(Collectors.toList());
 
-        Page page = new Page(search.getPageNo(), search.getAmount());
 
         return FeedListDto.builder()
                 .pageInfo(new PageMaker(page, getCount(search)))
@@ -233,18 +238,25 @@ public class FeedService {
 
     @Transactional
     public MyFeedListDto findFeedsByAccount(Search search, HttpSession session) {
+
         LoginUserInfoDto loggedInUser = LoginUtil.getLoggedInUser(session);
 
         List<FeedFindAllDto> feedList = feedMapper.findAllByAccount(search, loggedInUser.getAccount());
+
+        // 해당 계정이 작성한 피드가 없는 경우
         if (feedList.isEmpty()) {
-            return null;
+            return MyFeedListDto.builder()
+                    .loginUser(loggedInUser)
+                    .pageInfo(new PageMaker(new Page(search.getPageNo(), search.getAmount()), 0))
+                    .myFeeds(null)
+                    .build();
         }
         List<MyFeedDto> myFeeds = feedList.stream().map(f -> {
 
             MyFeedDto myFeed = f.toMyFeed();
             long boardId = f.getBoardId();
 
-            // 이미지 추가 (1개)
+            // 이미지 조회한 결과 추가 (1개)
             BoardImage firstOne = imageService.findFirstOne(boardId);
             if(firstOne == null) throw new RuntimeException("이미지가 존재하지 않습니다.");
             myFeed.setImage(firstOne);

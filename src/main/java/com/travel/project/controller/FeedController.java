@@ -46,13 +46,15 @@ public class FeedController {
         Search page = new Search(new Page(pageNo, 5), type, keyword);
         page.setKeyword(keyword);
         page.setType(type);
+
         // Search type, keyword 확인 필요
         FeedListDto feeds = feedService.findAll(page, session);
+        log.debug("서비스결과: {}",feeds);
         feeds.setLoginUser(LoginUtil.getLoggedInUser(session));
 
         log.debug("FeedListDto: {}", feeds.getFeeds().get(0));
 
-        return ResponseEntity.ok(feeds);
+        return ResponseEntity.ok().body(feeds);
     }
 
     // 피드 상세 조회 요청
