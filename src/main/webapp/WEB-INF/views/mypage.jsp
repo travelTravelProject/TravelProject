@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="/assets/css/mypage.css">
-    <link rel="stylesheet" href="/assets/css/mypage-board.css">
+<%--    <link rel="stylesheet" href="/assets/css/mypage-board.css">--%>
 </head>
 <body>
 <%@ include file="include/sub_header.jsp" %>
