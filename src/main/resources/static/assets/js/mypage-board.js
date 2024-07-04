@@ -2,12 +2,43 @@
 
 const $myBoardBtn = document.getElementById('my-board-btn');
 
-$myBoardBtn.addEventListener('click', e => {
-    const account = $myBoardBtn.dataset.myAccount
+$myBoardBtn.addEventListener('click', async e => {
+    const account = $myBoardBtn.dataset.myAccount;
     console.log('마이페이지 동행 클릭!');
     console.log('account: ', account);
 
+    try {
+    const response = await fetch(`/mypage/boards?account=${account}`);
+    if(!response.ok) {
+    throw new Error('Network response was not ok ' + response.statusText);
+    }
+
+const data = await response.json();
+ console.log('게시글 목록: ', data);
+
+ // 데이터 렌더링
+         renderBoardList(data);
+    }
+
 });
+
+function renderBoardList(boardList) {
+    const boardContainer = document.getElementById('board-container');
+    boardContainer.innerHTML = '';
+
+    boardList.forEach(board => {
+        const boardElement = document.createElement('div');
+        boardElement.className = 'board';
+        boardElement.innerHTML = `
+            <h3>${board.title}</h3>
+            <p>${board.content}</p>
+            <p>작성자: ${board.writer}</p>
+            <p>조회수: ${board.viewCount}</p>
+            <p>작성일: ${board.createdAt}</p>
+        `;
+        boardContainer.appendChild(boardElement);
+    });
+}
 
 
 
