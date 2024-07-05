@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 @Builder
 public class AccBoardModifyDto {
 
-    private int boardId;
+    private long boardId;
     private String account;
     private int categoryId;
     private String title;

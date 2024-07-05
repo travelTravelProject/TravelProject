@@ -1,20 +1,27 @@
 import {
     clearImageFiles,
-    dataToFormData,
+    dataToFormData, deletePreviewAndUpdate,
     handleFileInputChange,
     imageFiles as importedImages,
     previewImages
 } from "../image.js";
-import {fetchFeedPost} from "./feed-post.js";
+import {fetchFeedPost, resetPostModal} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
 
 import {fetchFeedModify, setEditModal} from "./feed-modify.js";
 import {fetchFeedList} from "./feed-getList.js";
 import {fetchFeedDelete} from "./feed-delete.js";
+import {fetchLike} from "./feed-interaction.js";
 
-import { fetchInfScrollReplies, state } from "../feed-reply/feed-getReply.js";
+import { initInfScroll} from "../feed-reply/feed-getReply.js";
 import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
 import { isEditModeActive, fetchReplyModify } from "../feed-reply/feed-modifyReply.js";
+import { removeReplyClickEvent } from "../feed-reply/feed-deleteReply.js";
+import { modifyReplyClickEvent } from "../feed-reply/feed-modifyReply.js";
+
+// 대댓글 작성시 boardId를 전달하기 위해 설정한 전역변수
+let currentBoardId = null;
+
 
 export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
@@ -37,16 +44,22 @@ export function initFeedFormEvents() {
     document.addEventListener('click', function(e) {
 
         // 모달 열기 버튼 처리
-        if (e.target.id === "createFeedBtn") {
-            createModal.style.display = "block";
+        if (e.target.id === "createFeedBtn" || e.target.closest('#createFeedBtn')) {
+            const tag = e.target.id === 'createFeedBtn' ? e.target : e.target.closest('#createFeedBtn');
+            tag.dataset.feedUser
+                ? createModal.style.display = "block"
+                : alert("피드 작성 시 로그인이 필요합니다.");
 
-        } else if (e.target.classList.contains("show-detail")) {
+        } else if (e.target.classList.contains("show-detail") || e.target.closest('.show-detail')) { // 더보기, 피드목록 댓글 클릭시 디테일 모달 열기
             detailModal.style.display = "block";
             console.log('글번호', e.target.closest('.feed-item').dataset.feedId);
             const boardId = e.target.closest('.feed-item').dataset.feedId;
             detailModal.setAttribute("data-board-id", boardId);
+            currentBoardId = boardId;
             fetchFeedDetail(boardId);
-            fetchInfScrollReplies(1, true, boardId); // 모달이 열릴 때 댓글 fetch
+            initInfScroll(boardId);
+            
+            
           
         } else if (e.target.id === "editFeedBtn") { // 디테일 모달의 수정 버튼
             editModal.style.display = "block";
@@ -67,8 +80,10 @@ export function initFeedFormEvents() {
             const modalDetail = e.target.closest('.detail-modal');
             const modalConfirm = e.target.closest('.confirm-modal');
             if (modal) {
-                modal.style.display = "none";
+                resetPostModal(); // 모달 입력사항 초기화
                 clearImageFiles(); // 모달이 닫힐 때 imageFiles 초기화
+                imageFiles = [];
+                modal.style.display = "none";
             } else if(modalDetail) {
                 modalDetail.style.display = "none";
                 clearImageFiles();
@@ -94,18 +109,25 @@ export function initFeedFormEvents() {
 
     // 이미지 input 변경 시 발생 이벤트
     $imageInputPost.addEventListener('change', e => {
+        console.log('post imageFiles: ', imageFiles);
+        console.log('post 이미지 전: ', importedImages);
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxPost);
+        console.log('post 이미지 추가확인: ', imageFiles);
+        console.log('post 이미지 추가후 import: ', importedImages);
     });
     $imageInputEdit.addEventListener('change', e => {
-        console.log("edit 모달 이벤트 실행!")
+        console.log("edit 모달 이미지 추가 이벤트 실행!")
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxEdit);
     });
     // 미리보기 삭제 버튼 이벤트
-    document.getElementById('edit-preview').addEventListener('click', (e) => {
+    $imageBoxPost.addEventListener('click', (e) => {
+        if(e.target.classList.contains('delete-prev-image')) {
+            deletePreviewAndUpdate(e, $imageBoxPost);
+        }
+    })
+    $imageBoxEdit.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-prev-image')) {
-            const index = e.target.dataset.imageOrder;
-            imageFiles.splice(index, 1);
-            previewImages(imageFiles, document.getElementById('edit-preview'));
+            deletePreviewAndUpdate(e, $imageBoxEdit);
         }
     });
 
@@ -114,17 +136,19 @@ export function initFeedFormEvents() {
         e.preventDefault();
 
         // 태그들 value, 이미지 파일명 가져오기
-        const $createContent = document.getElementById('cr-content').value;
+        const createContent = document.getElementById('cr-content').value;
+        // createModal
+        const loginUser = createModal.dataset.feedUser
 
-        // if (!$createContent || imageFiles.length === 0) {
-        //     alert('모든 필드를 채워주세요.');
-        //     return;
-        // }
+        if (!createContent || importedImages.length === 0) {
+            alert('모든 필드를 채워주세요.');
+            return;
+        }
 
         // fetch payload에 담아서 POST 요청
         const data = {
-            content: $createContent,
-            account: 'tester1', // 로그인 계정 가져오기!!!
+            content: createContent,
+            account: loginUser, // 로그인 계정 가져오기!!!
         }
         const formData = dataToFormData(data, importedImages);
         const payload = {
@@ -142,7 +166,6 @@ export function initFeedFormEvents() {
         const editContent = document.getElementById('ed-content').value;
         const data = {
             content: editContent,
-            account: 'tester1',
         }
         const formData = dataToFormData(data, importedImages);
         const payload = {
@@ -167,15 +190,32 @@ export function initFeedFormEvents() {
 
     })
 
-    // 댓글 작성/수정 이벤트 등록 (POST)
-    $replyAddBtn.addEventListener('click', async e => {
-        if (isEditModeActive()) {
-          // 수정 모드일 때
-          await fetchReplyModify();
+    // TOP 버튼
+    const topBtn = document.getElementById('goTopBtn');
+    window.addEventListener('scroll', () => {
+        if(document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            topBtn.style.display = 'block';
         } else {
-          // 일반 모드일 때
-          await fetchReplyPost();
+            topBtn.style.display = 'none';
         }
     });
 
+    topBtn.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.scrollTo({top: 0, behavior: 'smooth'});
+    })
+
+    // 좋아요 버튼
+    document.addEventListener('click', e => {
+        const $heartSpan = e.target.closest('.hearts');
+        // 클릭된 요소가 .hearts이거나, .hearts의 자식인 경우 처리
+        if ($heartSpan) {
+            const boardId = $heartSpan.closest('.feed-item').dataset.feedId;
+            console.log('좋아요 이벤트 실행! : ', boardId);
+            fetchLike($heartSpan.firstElementChild, boardId);
+        }
+    })
+
+    modifyReplyClickEvent();
+    removeReplyClickEvent();
 }

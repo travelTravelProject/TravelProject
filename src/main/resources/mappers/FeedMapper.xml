@@ -42,6 +42,22 @@
         LIMIT #{pageStart}, #{amount}
     </select>
 
+    <select id="findAllByAccount" resultType="feed">
+        SELECT
+        board_id,
+        account,
+        nickname,
+        category_id,
+        content,
+        view_count,
+        created_at,
+        updated_at
+        FROM tbl_board
+        WHERE status = 'A'
+        AND category_id = 2
+        AND.account = #{account}
+    </select>
+
     <select id="findFeedById" resultType="com.travel.project.dto.request.FeedFindOneDto">
         SELECT
             B.board_id,

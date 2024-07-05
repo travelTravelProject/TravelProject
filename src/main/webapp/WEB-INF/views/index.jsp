@@ -176,7 +176,7 @@
 
 
 <section class="section4 section fp-section fp-table" id="kakao" style="height: 843px;" data-anchor="4rdPage">
-	
+   
   <div class="left_img_box">
     <img src="../assets/img/img.png" class="img-fluid">
   </div>
@@ -211,7 +211,7 @@
 
 
 <section class="section2 section fp-section fp-table" id="service" style="height: 843px;" data-anchor="secondPage">
-	<div class="fp-tableCell" style="height: 843px;">
+   <div class="fp-tableCell" style="height: 843px;">
     <div class="weather_wrap">
       <div class="weather_container">
         <div class="search-box">
@@ -264,7 +264,7 @@
         </div>
       </div>
     </div>
-	</div>
+   </div>
 </section>
 
 

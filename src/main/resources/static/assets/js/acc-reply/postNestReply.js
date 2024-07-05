@@ -1,6 +1,6 @@
-import { fetchInfScrollNestReplies } from "./getNestReply.js";
 import { NEST_BASE_URL } from "../acc-reply.js";
-import { fetchInfScrollReplies } from "./getReply.js";
+// import { fetchInfScrollReplies } from "./getReply.js";
+import { fetchInfScrollNestReplies } from "../feed-reply/feed-getNestReply.js";
 
 // 서버에 대댓글 등록을 요청하는 비동기 함수
 export const fetchNestedReplyPost = async (rno) => {
@@ -34,8 +34,6 @@ NestTextInput.value = '';
 NestWriterInput.value = '';
 
 // 대댓글 데이터 페칭
-// await fetchInfScrollNestReplies(rno);
-
-await fetchInfScrollReplies();
+await fetchInfScrollNestReplies(rno);
 };
 
