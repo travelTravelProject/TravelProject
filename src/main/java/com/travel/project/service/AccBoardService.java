@@ -52,7 +52,6 @@ public class AccBoardService {
     public AccBoardDetailDto detail(long boardId) {
         AccBoard ab = accBoardMapper.findOne(boardId);
         if(ab != null) {
-//            accBoardMapper.upViewCount(boardId);
             // 조회수 증가
             accBoardMapper.upViewCount(boardId);
             // 조회수 증가 후 게시글을 다시 조회하여 업데이트된 조회수를 가져옵니다.
@@ -78,7 +77,6 @@ public class AccBoardService {
         AccBoard ab = dto.toEntity();
         return accBoardMapper.modify(ab);
     }
-
 
     public int getCount(Search search) {
         return accBoardMapper.count(search);

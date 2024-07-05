@@ -163,6 +163,8 @@
     </style>
 </head>
 <body>
+<%@ include file="../include/sub_header.jsp" %>
+
 <div class="wrap">
     <%--  검색창 영역  --%>
         <div class="search">
@@ -172,11 +174,11 @@
             </form>
         </div>
 
-    <div class="filters">
-        <button>날짜</button>
-        <button>나이/성별</button>
-        <button>유형</button>
-    </div>
+<%--    <div class="filters">--%>
+<%--        <button>날짜</button>--%>
+<%--        <button>나이/성별</button>--%>
+<%--        <button>유형</button>--%>
+<%--    </div>--%>
 
     <c:if test="${abList.size() == 0}">
         <div class="empty">

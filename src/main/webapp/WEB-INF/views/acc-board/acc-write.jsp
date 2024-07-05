@@ -202,6 +202,8 @@
     </style>
 </head>
 <body>
+<%@ include file="../include/sub_header.jsp" %>
+
 <div id="wrap" class="form-container">
     <h1>동행 게시판 글쓰기</h1>
     <form action="/acc-board/write" method="post" enctype="multipart/form-data">
@@ -227,17 +229,8 @@
             <div class="image-upload-btn">
                 <i class="fas fa-upload"></i>
             </div>
-            <input
-                    type="file"
-                    id="upload-image"
-                    accept="image/*"
-                    style="display: none;"
-                    name="imagePreview"
-            >
-            <div
-                    class="removeImage"
-                    style="display: none;"
-            >X</div>
+            <input type="file" id="upload-image" accept="image/*" style="display: none;" name="postImage">
+            <div class="removeImage" style="display: none;">X</div>
         </div>
 
         <div class="buttons">
@@ -290,7 +283,9 @@
                 monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
                 firstDay: 0
             },
-            minDate: moment().startOf('day') // 오늘 이전 날짜 선택 불가
+            minDate: moment().startOf('day'), // 오늘 이전 날짜 선택 불가
+            startDate: moment(), // 기본 시작 날짜를 오늘로 설정
+            endDate: moment() // 기본 종료 날짜를 오늘로 설정
         }, function(start, end, label) {
             $('#startDate').val(start.format('YYYY-MM-DD'));
             $('#endDate').val(end.format('YYYY-MM-DD'));

@@ -12,6 +12,7 @@ import com.travel.project.mapper.BookmarkMapper;
 import com.travel.project.service.AccBoardService;
 import com.travel.project.service.BookmarkService;
 import com.travel.project.service.LikeService;
+import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
@@ -38,7 +39,7 @@ public class AccBoardController {
     private final AccBoardService boardService;
     private final AccBoardMapper boardMapper;
     private final BookmarkService bookmarkService;
-    
+
 
     // 1. 목록 조회 요청 (/list : GET)
     @GetMapping("/list")
@@ -80,6 +81,11 @@ public class AccBoardController {
             return "redirect:/sign-in"; // 로그인 페이지로 리다이렉트
         }
 
+        log.debug("post image name: {}", dto.getPostImage().getOriginalFilename());
+
+        // 서버 업로드 후 업로드 경로 반환
+        String imagePath = FileUtil.uploadFile(dto.getPostImage());
+        System.out.println("imagePath = " + imagePath);
         boardService.insert(dto, session);
 
         return "redirect:/acc-board/list";

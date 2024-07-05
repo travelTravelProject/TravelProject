@@ -195,7 +195,7 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.9);
         justify-content: center;
         align-items: center;
     }
@@ -208,6 +208,7 @@
 
 </head>
 <body>
+<%@ include file="../include/sub_header.jsp" %>
 
 <div id="wrap" class="form-container" data-bno="${abd.boardId}">
     <div class="card-img">
@@ -348,7 +349,7 @@
         const $cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
 
         // 삭제버튼 클릭이벤트 - 모달창
-        document.querySelector('.del-btn').addEventListener('click', function () {
+        document.querySelector('.del-btn')?.addEventListener('click', function () {
             $modal.style.display = 'block';
         });
 
@@ -376,15 +377,14 @@
         // 타겟 이미지 태그
         const $targetImg = document.querySelector('.card-img img');
 
-        document.querySelector('.card-img img').addEventListener('click', () => {
+        $targetImg.addEventListener('click', () => {
             console.log('사진클릭');
             $imgModal.style.display = 'flex';
             $modalImg.src = $targetImg.src;
         });
 
         // 모달 사진 클릭 시 모달창 닫기
-        $modalImg.addEventListener('click', e => {
-            window.location.pathname
+        $imgModal.addEventListener('click', e => {
                 $imgModal.style.display = 'none';
                 $modalImg.src = "";
         });
