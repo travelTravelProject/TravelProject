@@ -38,7 +38,7 @@ public class FeedController {
 //    @ResponseBody
     public ResponseEntity<?> list(
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-            @RequestParam(name = "type", defaultValue = "content", required = false) String type,
+            @RequestParam(name = "type", defaultValue = "cw", required = false) String type,
             @RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
             @RequestParam(name = "sort", defaultValue = "latest", required = false) String sort
             , HttpSession session

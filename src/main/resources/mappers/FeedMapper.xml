@@ -7,15 +7,15 @@
 
     <!-- 동적 SQL 조건을 분리 -->
     <sql id="search">
-        <if test="search.type == 'content'">
-            AND B.content LIKE CONCAT('%', #{search.keyword}, '%')
+        <if test="s.type == 'content'">
+            AND B.content LIKE CONCAT('%', #{s.keyword}, '%')
         </if>
-        <if test="search.type == 'writer'">
-            AND U.nickname LIKE CONCAT('%', #{search.keyword}, '%')
+        <if test="s.type == 'writer'">
+            AND U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
         </if>
-        <if test="search.type == 'cw'">
-            AND (U.nickname LIKE CONCAT('%', #{search.keyword}, '%')
-            OR B.content  LIKE CONCAT('%', #{search.keyword}, '%'))
+        <if test="s.type == 'cw'">
+            AND (U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{s.keyword}, '%'))
         </if>
     </sql>
     <sql id="sort">
@@ -27,7 +27,7 @@
         </if>
     </sql>
 
-    <select id="findAllFeeds" resultType="feed" parameterType="hashmap">
+    <select id="findAllFeeds" resultType="feed">
         SELECT
             B.board_id,
             B.account,
@@ -45,9 +45,11 @@
 <!--            ON B.account = D.account-->
         WHERE B.status = 'A'
             AND B.category_id = 2
-        <include refid="search" />
+            AND (U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{s.keyword}, '%'))
+<!--        <include refid="search" />-->
         <include refid="sort"/>
-        LIMIT #{search.pageStart}, #{search.amount}
+        LIMIT #{s.pageStart}, #{s.amount}
     </select>
 
     <select id="findAllByAccount" resultType="feed">

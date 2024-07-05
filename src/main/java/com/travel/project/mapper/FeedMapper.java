@@ -14,7 +14,7 @@ public interface FeedMapper {
 
     // 전체 피드 조회
     List<FeedFindAllDto> findAllFeeds(
-            @Param("search") Search search,
+            @Param("s") Search s,
             @Param("sort") String sort);
 
     // 피드 하나 조회
@@ -38,10 +38,11 @@ public interface FeedMapper {
     boolean upViewCount(long boardId);
 
     // 총 피드 수
-    int countFeeds(Search search);
+    int countFeeds(@Param("s") Search search);
 
     // 피드 총 조회수
     int sumViewCount(long boardId);
+
     // 새로운 피드 id 조회
     int getNewBoardId();
 

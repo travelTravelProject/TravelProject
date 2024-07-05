@@ -208,8 +208,7 @@ public class FeedService {
 
     // 총 피드 개수
     public int getCount(Search search) {
-        Integer result = feedMapper.countFeeds(search);
-        return result != null ? result : 0;
+        return feedMapper.countFeeds(search);
     }
 
     // 디비에 저장된 textarea 개행문자 -> br 태그
