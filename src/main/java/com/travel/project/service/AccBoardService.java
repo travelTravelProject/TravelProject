@@ -12,6 +12,7 @@ import com.travel.project.mapper.AccBoardMapper;
 import com.travel.project.mapper.BookmarkMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -24,6 +25,7 @@ public class AccBoardService {
     private final AccBoardMapper accBoardMapper;
     private final BookmarkMapper bookmarkMapper;
 
+
     // 목록 조회 요청 중간처리
     public List<AccBoardListDto> findList(Search page) {
 
@@ -34,6 +36,7 @@ public class AccBoardService {
     }
 
     // 등록 요청 중간처리
+    @Transactional
     public boolean insert(AccBoardWriteDto dto, HttpSession session) {
         AccBoard ab = dto.toEntity();
         // 계정명을 엔터티에 추가 - 세션에서 계정명 가져오기
@@ -78,8 +81,14 @@ public class AccBoardService {
         return accBoardMapper.modify(ab);
     }
 
+    // 동행게시판 전체 글 수
     public int getCount(Search search) {
         return accBoardMapper.count(search);
+    }
+
+    // board_tbl 전체 글 수
+    public long getTotalCount() {
+        return accBoardMapper.totalCount();
     }
 
     public boolean checkBookmark(HttpSession session, long boardId) {

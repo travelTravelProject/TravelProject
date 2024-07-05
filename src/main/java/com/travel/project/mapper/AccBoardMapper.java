@@ -5,6 +5,7 @@ import com.travel.project.entity.AccBoard;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -28,6 +29,9 @@ public interface AccBoardMapper {
     // 조회수 상승
     void upViewCount(long boardId);
 
-    // 총 게시물 수 조회
+    // 동행게시판 게시물 수 조회
     int count(Search search);
+
+    // tbl_board 전체 게시물 수 조회
+    long totalCount();
 }

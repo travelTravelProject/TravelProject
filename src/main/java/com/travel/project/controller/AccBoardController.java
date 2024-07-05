@@ -9,6 +9,7 @@ import com.travel.project.entity.AccBoard;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.AccBoardMapper;
 import com.travel.project.mapper.BookmarkMapper;
+import com.travel.project.service.AccBoardImageService;
 import com.travel.project.service.AccBoardService;
 import com.travel.project.service.BookmarkService;
 import com.travel.project.service.LikeService;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -39,6 +41,7 @@ public class AccBoardController {
     private final AccBoardService boardService;
     private final AccBoardMapper boardMapper;
     private final BookmarkService bookmarkService;
+    private final AccBoardImageService boardImageService;
 
 
     // 1. 목록 조회 요청 (/list : GET)
@@ -81,12 +84,21 @@ public class AccBoardController {
             return "redirect:/sign-in"; // 로그인 페이지로 리다이렉트
         }
 
-        log.debug("post image name: {}", dto.getPostImage().getOriginalFilename());
+        // 저장될 boardId =  전체 게시글수 + 1
+        long boardId = boardService.getTotalCount() + 1;
+
+        // 게시글 저장
+        boardService.insert(dto, session);
 
         // 서버 업로드 후 업로드 경로 반환
         String imagePath = FileUtil.uploadFile(dto.getPostImage());
-        System.out.println("imagePath = " + imagePath);
-        boardService.insert(dto, session);
+
+        // 이미지 정보 저장
+        if (imagePath != null) {
+            boardImageService.saveBoardImage(boardId, imagePath);
+        }
+
+        // boardService.insert가 정상적으로 동작한다면, boardImageService로 이미지 등록 요청
 
         return "redirect:/acc-board/list";
     }
