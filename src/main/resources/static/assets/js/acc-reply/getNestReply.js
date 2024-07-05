@@ -13,14 +13,23 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
       tag += `
         <div id='nestedReplyContent-${nestedReplyId}' class='card-body nested-reply-card' data-nested-rno='${nestedReplyId}'>
           <div class='row user-block'>
-            <span class='col-md-3'>
-              <b>${writer}</b>
-            </span>
-            <span class='offset-md-6 col-md-3 text-right'><b>${getRelativeTime(createAt)}</b></span>
+            <div class='nestReply-head'>
+              <div class="profile-box">
+                ${loginUser && loginUser.profileImage ? 
+                  `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
+                  `<img src="/assets/img/mimo.png" alt="profile image">`}
+              </div>
+              <div class="nestReply-body">
+                <div class='col-md-3'>
+                  <b>${writer}</b>
+                </div>
+                <div class='offset-md-6 text-right'><b>${getRelativeTime(createAt)}</b></div>
+              </div>
+            </div>
           </div><br>
           <div class='row reply-content'>
             <div class='col-md-9'>${text}</div>
-            <div class='col-md-3 text-right'>
+            <div class='col-md-3 text-right nestModDel'>
             `;
       if (loginUser) { // 로그인 유저가 존재하면~
         const {auth, account: loginUserAccount} = loginUser;
@@ -56,18 +65,19 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
 
       const form = `
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-9" style="margin: 5px 0 20px 0;">
             <div class="form-group">
               <label for="editNestedReplyText-${nestedReplyId}" hidden>대댓글 내용</label>
               <textarea rows="3" id="editNestedReplyText-${nestedReplyId}" name="editNestedReplyText"
                         class="form-control"
-                        placeholder="대댓글을 입력해주세요.">${currentText}</textarea>
+                        placeholder="대댓글을 입력해주세요."
+                        style="width: 550px;">${currentText.trim()}</textarea>
             </div>
           </div>
           <div class="col-md-3">
             <button id="nestedReplyModifyBtn-${nestedReplyId}" type="button"
                     class="btn btn-dark form-control nestedReplyModifyBtn" data-nested-rno="${nestedReplyId}">
-              수정 완료
+              수정
             </button>
           </div>
         </div>

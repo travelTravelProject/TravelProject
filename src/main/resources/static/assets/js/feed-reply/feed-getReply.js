@@ -60,16 +60,26 @@ export function appendReplies({ replies, loginUser }, reset = false) {
       tag += `
             <div id='replyContent' class='card-body' data-rno='${rno}'>
                 <div class='row user-block'>
-                    <span class='col-md-3'>
-                        <b>${writer}</b>
-                    </span>
-                    <span class='offset-md-6 col-md-3 text-right'><b>${getRelativeTime(
-                      createAt
-                    )}</b></span>
+                  <div class='reply-head'>
+                    <div class="profile-box">
+                        ${loginUser && loginUser.profileImage ? 
+                          `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
+                          `<img src="/assets/img/mimo.png" alt="profile image">`}
+                    </div>
+                    <div class="reply-body">
+                      <div class='col-md-3'>
+                          <b>${writer}</b>
+                      </div>
+                      <div class='offset-md-6 text-right'><b>${getRelativeTime(createAt)}</b></div>
+                    </div>
+                  </div>
                 </div><br>
                 <div class='row'>
                     <div class='col-md-9'>${text}</div>
                     <div class='col-md-3 text-right'>
+                    <div class="reply-reply-write">
+                      <button type="button" class="btn btn-dark form-control reply-reply-button" data-rno='${rno}'><i class="fas fa-comment"></i>답글</button>
+                    </div>
                     `;
             // 관리자이거나 내가 쓴 댓글일 경우만 조건부 렌더링
             // 로그인한 회원 권한, 로그인한 회원 계정명, 해당 댓글의 계정명
@@ -78,38 +88,26 @@ export function appendReplies({ replies, loginUser }, reset = false) {
 
               if (auth === 'ADMIN' || replyAccount === loginUserAccount) {
                 tag += `
-                  <a id='replyModBtn' class='btn btn-sm btn-outline-dark' href='#'>수정</a>&nbsp;
-                  <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>&nbsp;
+                  <div class="modDelBtn">
+                    <a id='replyModBtn' class='btn btn-sm btn-outline-dark modBtn' href='#'>수정</a>&nbsp;
+                    <a id='replyDelBtn' class='btn btn-sm btn-outline-dark delBtn' href='#'>삭제</a>&nbsp;
+                  </div>
                 `;
               }
-              tag += `          
-                      <div class="reply-reply-write">
-                      <button type="button" class="btn btn-dark form-control reply-reply-button" data-rno='${rno}'>답글</button>
-                      </div>
-                    </div>
+              tag += `
                   </div>
+                </div>
 
-                  </div>
-                  <div id="nestedReplyData-${rno}" class="nested-reply-data">
-                  </div>
-
+                </div>
+                <div id="nestedReplyData-${rno}" class="nested-reply-data">
+                </div>
+                
             </div>
 
             <div id="nestedReplyWriteSection-${rno}" class="Nestedcard hidden" data-rno='${rno}'>
-                <div class="card-body">
+                <div class="card-body"
+                style="display: flex">
                     <div class="row">
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <label for="newNestedReplyText-${rno}" hidden>대댓글 내용</label>
-                                <textarea
-                                rows="3"
-                                id="newNestedReplyText-${rno}"
-                                name="nestedReplyText"
-                                class="form-control"
-                                placeholder="대댓글을 입력해주세요."
-                                ></textarea>
-                            </div>
-                        </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="newNestedReplyWriter-${rno}" hidden>대댓글 작성자</label>
@@ -120,22 +118,36 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                                 value="${loginUser.nickname}"
                                 class="form-control"
                                 placeholder="작성자 이름"
-                                style="margin-bottom: 6px"
+                                style="width: 100px;margin-left: 13px;"
                                 readonly
                                 />
-                                <button
+                            </div>
+                            <div class="col-md-9">
+                              <div class="form-group">
+                                  <label for="newNestedReplyText-${rno}" hidden>대댓글 내용</label>
+                                  <textarea
+                                  rows="3"
+                                  id="newNestedReplyText-${rno}"
+                                  name="nestedReplyText"
+                                  class="form-control"
+                                  placeholder="대댓글을 입력해주세요."
+                                  ></textarea>
+                              </div>
+                              <button
                                 id="nestedReplyAddBtn-${rno}"
                                 type="button"
                                 class="btn btn-dark form-control nested-reply-add-btn"
                                 data-rno='${rno}'
+                                style="width: 60px;
+                                       height: 35px;"
                                 >
                                 등록
-                                </button>
+                              </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>         
             `;
 
             // 대댓글 fetch
