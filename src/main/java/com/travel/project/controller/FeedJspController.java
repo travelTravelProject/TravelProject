@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/feed")
+//@RequestMapping("/feed")
 public class FeedJspController {
 
-    @GetMapping("/list")
+    @GetMapping("/feed/list")
     public String list() {
         return "feed-list";
     }

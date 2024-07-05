@@ -22,7 +22,7 @@
 
                 <div class="profile">
                     <div class="thumbnail-box">
-                        <img src="${userDetail.profileImage != null ? userDetail.profileImage : '/assets/img/image-add.png'}"
+                        <img src="${not empty userDetail.profileImage && userDetail.profileImage != 'none' ? userDetail.profileImage : '/assets/img/image-add.png'}"
                              alt="Profile Image" class="profile-image" id="profileImagePreview">
                     </div>
 
@@ -41,6 +41,9 @@
 
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="${user.name}" required>
+
+                <label for="nickname">Nickname:</label>
+                <input type="text" id="nickname" name="nickname" value="${user.nickname}" required>
 
                 <label for="oneLiner">소개글:</label>
                 <input type="text" id="oneLiner" name="oneLiner"
@@ -68,13 +71,11 @@
                     <option value="ENTJ" ${userDetail.mbti == 'ENTJ' ? 'selected' : ''}>ENTJ</option>
                 </select>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="${user.email}" required>
+<%--                <label for="email">Email:</label>--%>
+<%--                <input type="email" id="email" name="email" value="${user.email}" required>--%>
 
-                <label for="nickname">Nickname:</label>
-                <input type="text" id="nickname" name="nickname" value="${user.nickname}" required>
 
-                <button type="submit" class="update-button">Update</button>
+                <button type="submit" class="update-button">수정</button>
             </form>
         </div>
     </div>

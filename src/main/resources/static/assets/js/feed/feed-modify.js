@@ -22,8 +22,7 @@ export function setEditModal() {
   // 기존 이미지를 미리보기로 렌더링
   addExistingImagesToPreview(detailImages, $imageBox);
 
-  // 이렇게 디비에 저장한 주소를 가져온 경우 다시 디비로 전달 시 기존 이미지는 어떻게 전달되지?
-  // console.log('modify preview 파일들: ', imageFiles)
+
 }
 
 

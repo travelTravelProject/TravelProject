@@ -1,19 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <style>
-    
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  height: 100%;
-  scroll-behavior: smooth;
-}
+    <style>
 
-  </style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -38,7 +38,6 @@ body, html {
         </c:if>
       </ul>
     </header>
-
 
 </body>
 </html>

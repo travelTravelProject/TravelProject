@@ -14,19 +14,19 @@ public interface AccBoardMapper {
     List<AccBoard> findAll(Search page);
 
     // 게시물 상세 조회
-    AccBoard findOne(int boardId);
+    AccBoard findOne(long boardId);
 
     // 게시물 등록
     boolean save(AccBoard accBoard);
 
     // 게시물 삭제
-    boolean delete(int boardId);
+    boolean delete(long boardId);
 
     // 게시물 수정
     boolean modify(AccBoard accBoard);
 
     // 조회수 상승
-    void upViewCount(int boardId);
+    void upViewCount(long boardId);
 
     // 총 게시물 수 조회
     int count(Search search);

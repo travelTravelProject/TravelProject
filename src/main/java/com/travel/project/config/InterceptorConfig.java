@@ -4,6 +4,7 @@ package com.travel.project.config;
 import com.travel.project.intercertor.AccBoardInterceptor;
 import com.travel.project.intercertor.AfterLoginInterceptor;
 import com.travel.project.intercertor.AutoLoginInterceptor;
+import com.travel.project.intercertor.FeedInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,6 +18,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     private final AutoLoginInterceptor autoLoginInterceptor;
     private final AfterLoginInterceptor afterLoginInterceptor;
     private final AccBoardInterceptor accBoardInterceptor;
+    private final FeedInterceptor feedInterceptor;
 
     // 설정 메서드
     @Override

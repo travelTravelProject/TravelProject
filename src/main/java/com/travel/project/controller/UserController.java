@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 
 @Controller
 @Slf4j
@@ -41,20 +42,14 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserMapper userMapper;
+    private final UserDetailMapper userDetailMapper;
+    private final UserService userService;
 
     @Value("${file.upload.root-path}")
     private String rootPath;
 
 //     static String rootPath = System.getProperty("user.dir")
 //             + "/src/main/resources/static/assets/upload";
-
-    private final UserDetailMapper userDetailMapper;
-
-
-
-
-    private final UserService userService;
-
 
     // 회원가입 양식 열기
     @GetMapping("/sign-up")
@@ -91,9 +86,8 @@ public class UserController {
 
         // 세션에서 로그인된 사용자 정보 가져오기
         LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
-//        log.debug("\"User information retrieved from session: {}\", user");
 
-        System.out.println("user = " + user);
+        System.out.println("LoginUserInfoDto user = " + user);
 
         if (user == null) {
             // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
@@ -104,8 +98,14 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
+        userService.updateUser(user, session);
+
+        // 생년월일 연령대 계산
+        String birthYear = userService.calculateAgeGroup(user.getAccount());
+
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
+        model.addAttribute("birthYear", birthYear); // 연령대
 
         return "mypage";
     }
@@ -125,8 +125,11 @@ public class UserController {
         UserDetail userDetail = userService.getUserDetailByAccount(user.getAccount());
         System.out.println("userDetail = " + userDetail);
 
+        userService.updateUser(user, session);
+
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
+
         System.out.println("user = " + user);
 
         return "mypage-update";
@@ -134,62 +137,55 @@ public class UserController {
 
     // 마이페이지 프로필 수정하기
     @PostMapping("/mypage/update")
-    public String myPageUpdate(@Validated UpdateProfileDto dto,
-                               @RequestParam("profileImage") MultipartFile profileImage,
-                               HttpSession session,
-                               RedirectAttributes ra) {
-        log.info("updateProfile POST: {}", dto);
+    public String myPageUpdate(@Validated UpdateProfileDto dto, HttpSession session) {
 
+        log.info("mypage POST : forwarding to mypage-update.jsp");
+
+        UserDetail existingUserDetail = userService.getUserDetailByAccount(dto.getAccount());
+
+        log.info("existingUserDetail: {}", existingUserDetail);
+
+        // 프로필 이미지 업로드 및 경로 설정
+        MultipartFile profileImage = dto.getProfileImage();
+        String profilePath = null;
+
+        if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
+            profilePath = FileUtil.uploadFile(profileImage);
+            log.info("profilePath = " + profilePath);
+        } else {
+            profilePath = existingUserDetail.getProfileImage();
+        }
+
+        userService.saveOrUpdateUserDetail(dto, session, profilePath);
+
+        // 세션에서 로그인 사용자 정보 가져오기
         LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
-        log.info("loginUser = " + loginUser);
-        log.info("loginUser.getAccount() = " + loginUser.getAccount());
-        log.info("dto.getAccount() = " + dto.getAccount());
 
-        if (!dto.getAccount().equals(loginUser.getAccount())) {
+        if (!loginUser.getAccount().equals(loginUser.getAccount())) {
             return "redirect:/sign-in";
         }
 
-        // 파일 업로드 처리
-        if (!profileImage.isEmpty()) {
-            String profileImagePath = userService.uploadProfileImage(profileImage);
-            dto.setProfileImage(profileImagePath);
-        }
-        log.debug("마이페이지 파일 업로드: dto.getProfileImage() = " + dto.getProfileImage());
+        userService.saveOrUpdateUserDetail(dto, session, profilePath);
+        userService.updateUser(loginUser, session);
+        userService.saveUpdateUser(dto);
 
-        UpdateProfileDto updatedUser = UpdateProfileDto.builder()
-                .account(dto.getAccount())
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .nickname(dto.getNickname())
-                .oneLiner(dto.getOneLiner())
-                .mbti(dto.getMbti())
-                .profileImage(dto.getProfileImage())
-                .rating(dto.getRating())
-                .build();
-//
-        // 데이터베이스에 업데이트된 사용자 정보 저장
-        userService.saveUpdateUser(updatedUser);
-        userService.saveOrUpdateUserDetail(updatedUser);
-
-        // 세션의 기존 LoginUserInfoDto 객체 업데이트
         loginUser.setName(dto.getName());
-        loginUser.setEmail(dto.getEmail());
         loginUser.setNickname(dto.getNickname());
         loginUser.setMbti(dto.getMbti());
         loginUser.setOneLiner(dto.getOneLiner());
-        loginUser.setProfileImage(dto.getProfileImage());
-        loginUser.setRating(dto.getRating());
-        log.debug("마이페이지 POST: loginUser = " + loginUser);
+        dto.setProfileImage(profileImage);
+        loginUser.setProfileImage(profilePath);
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
-//        session.setAttribute("updatedUser", updatedUser);
-//        session.setAttribute("updatedUser", new LoginUserInfoDto(updatedUser));
-        System.out.println("updatedUser = " + updatedUser);
-        log.info("Updated user profile: {}", updatedUser);
+        System.out.println("loginUser = " + loginUser);
 
-        // RedirectAttributes를 사용하여 사용자 정보 전달
-        ra.addFlashAttribute("updatedUser", updatedUser);
+        log.info("Updated user profile: {}", loginUser);
+        // Updated user profile: LoginUserInfoDto(account=kitty, name=키티키티123, nickname=헬로키티kitty,
+        // email=kitty@gmail.com, auth=COMMON, birthday=1996-06-12, gender=F, mbti=ENTP,
+        // oneLiner=하이하이 키티 헬로헬로, profileImage=/assets/upload/2024/07/04/b6242aed-3495-4871-8406-cc09f74bbdd4_다운로드 (2).jfif)
+
+        session.setAttribute("user", loginUser);
 
         return "redirect:/mypage";
     }
@@ -351,18 +347,12 @@ public class UserController {
     }
 
 
-
-
 // 임시 main.jsp
 
     @GetMapping("/feedtest")
     public String feedtest() {
         return "/feedtest"; // find-id.html 또는 find-id.jsp와 같은 뷰 이름 반환
     }
-
-
-
-
 
 
 }

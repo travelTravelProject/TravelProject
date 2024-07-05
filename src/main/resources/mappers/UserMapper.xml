@@ -40,6 +40,36 @@
         WHERE account = #{account}
     </select>
 
+    <select id="findAll" resultType="com.travel.project.entity.User">
+        SELECT
+        account,
+        password,
+        name,
+        email,
+        nickname,
+        birthday,
+        gender,
+        created_at as createdAt,
+        updated_at as updatedAt,
+        status,
+        auth
+        FROM tbl_user
+    </select>
+
+
+    <delete id="delete">
+        DELETE FROM tbl_user
+        WHERE account = #{account}
+    </delete>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_user
+        WHERE account = #{account}
+    </select>
+
+
+
     <select id="existById" resultType="boolean">
         SELECT COUNT(*)
         FROM tbl_user
@@ -83,7 +113,7 @@
     </select>
 
 
-    <update id="updateUser" parameterType="com.travel.project.dto.request.UpdateProfileDto">
+    <update id="updateUser" parameterType="com.travel.project.entity.User">
         UPDATE tbl_user
         SET name = #{name},
         email = #{email},

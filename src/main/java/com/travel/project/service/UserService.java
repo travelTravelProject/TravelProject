@@ -27,6 +27,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static com.travel.project.login.LoginUtil.AUTO_LOGIN_COOKIE;
@@ -43,7 +44,6 @@ public class UserService {
     private final UserDetailMapper userDetailMapper;
     @Autowired
     private final PasswordEncoder encoder;
-
 
     // 회원가입 중간처리
     public boolean join(SignUpDto dto) {
@@ -69,24 +69,8 @@ public class UserService {
         return userMapper.findOne(account);
     }
 
-    @Transactional
-    public void saveUpdateUser(UpdateProfileDto dto) {
-        // Update tbl_user
-        userMapper.updateUser(dto);
-        // Update tbl_user_detail
-        userDetailMapper.updateUserDetail(dto);
-    }
-
-    @Transactional
-    public void saveOrUpdateUserDetail(UpdateProfileDto dto) {
-        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
-        if (existingDetail == null) {
-            // Insert new user detail
-            userDetailMapper.insertUserDetail(dto);
-        } else {
-            // Update existing user detail
-            userDetailMapper.updateUserDetail(dto);
-        }
+    public void saveUserDetail(UserDetail userDetail) {
+        userDetailMapper.save(userDetail);
     }
 
     // 사용자 상세 정보 조회
@@ -94,9 +78,108 @@ public class UserService {
         return userDetailMapper.findUserDetailByAccount(account);
     }
 
-    // FileUtil 클래스의 uploadFile 메서드를 호출하여 파일을 업로드하고, 업로드된 파일의 URL을 반환합니다.
-    public String uploadProfileImage(MultipartFile file) {
-        return FileUtil.uploadFile(file);
+    public void updateUser(LoginUserInfoDto dto, HttpSession session) {
+
+        LoginUserInfoDto sessionUser = (LoginUserInfoDto) session.getAttribute("user");
+
+        User user = User.builder()
+                .nickname(dto.getNickname())
+                .name(sessionUser.getName())
+                .account(sessionUser.getAccount())
+                .email(sessionUser.getEmail())
+                .build();
+        UserDetail userDetail = UserDetail.builder()
+                .mbti(dto.getMbti())
+                .oneLiner(dto.getOneLiner())
+                .profileImage(String.valueOf(dto.getProfileImage()))
+                .build();
+
+        userMapper.updateUser(user);
+        userDetailMapper.updateUserDetail(userDetail);
+    }
+
+
+    @Transactional
+    public void saveUpdateUser(UpdateProfileDto dto) {
+        // Update tbl_user_detail
+        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        log.debug("saveUpdateUser  existingDetail: {}", existingDetail);
+        // saveUpdateUser  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
+        // profileImage=/assets/upload/2024/07/04/b6242aed-3495-4871-8406-cc09f74bbdd4_다운로드 (2).jfif, rating=0, account=kitty)
+
+        if (existingDetail != null) {
+            // 이미 존재하는 경우에만 업데이트
+            existingDetail.setMbti(dto.getMbti());
+            existingDetail.setOneLiner(dto.getOneLiner());
+
+            userDetailMapper.updateUserDetail(existingDetail);
+        }
+    }
+
+    @Transactional
+    public void saveOrUpdateUserDetail(UpdateProfileDto dto, HttpSession session, String profilePath) {
+
+        LoginUserInfoDto sessionUser = (LoginUserInfoDto) session.getAttribute("user");
+        log.debug("saveOrUpdateUserDetail  sessionUser: {}", sessionUser);
+        // saveOrUpdateUserDetail  sessionUser LoginUserInfoDto(account=kitty, name=키티키티123, nickname=헬로키티kitty,
+        // email=kitty@gmail.com, auth=COMMON, birthday=1996-06-12, gender=F, mbti=null, oneLiner=null, profileImage=null)
+
+        UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        log.debug("saveOrUpdateUserDetail  existingDetail: {}", existingDetail);
+        // saveOrUpdateUserDetail  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
+        // profileImage=/assets/upload/2024/07/04/e867a6ff-5907-458a-964a-4689e82ecb05_다운로드 (4).jfif, rating=0, account=kitty)
+
+        if (sessionUser == null) {
+            // 새로운 회원 정보 저장
+            UserDetail newUserDetail = UserDetail.builder()
+                    .mbti(dto.getMbti())
+                    .oneLiner(dto.getOneLiner())
+                    .profileImage(profilePath)
+                    .build();
+            userDetailMapper.insertUserDetail(newUserDetail);
+        } else {
+            // 이미 존재하는 회원 정보 수정 저장
+            existingDetail.setMbti(dto.getMbti());
+            existingDetail.setOneLiner(dto.getOneLiner());
+            existingDetail.setProfileImage(profilePath);
+            userDetailMapper.updateUserDetail(existingDetail);
+        }
+
+    }
+
+    // 생년월일 연령대 계산
+    public String calculateAgeGroup(String account) {
+        User user = userMapper.findOne(account);
+
+        LocalDate birthDate = user.getBirthday();
+        int birthYear = birthDate.getYear();
+        int currentYear = LocalDate.now().getYear();
+        int age = currentYear - birthYear;
+
+        if (age < 10) {
+            return "10대 미만";
+        } else if (age < 20) {
+            return "10대";
+        } else if (age < 30) {
+            return "20대";
+        } else if (age < 40) {
+            return "30대";
+        } else if (age < 50) {
+            return "40대";
+        } else if (age < 60) {
+            return "50대";
+        } else {
+            return "60대 이상";
+        }
+    }
+
+    // 회원 탈퇴(삭제)
+    @Transactional
+    public User remove(String account) {
+        User user = userMapper.findOne(account);
+
+        boolean flag = userMapper.delete(account);
+        return flag ? user : null;
     }
 
 
@@ -218,8 +301,6 @@ public class UserService {
         System.out.println("encodedPassword = " + encodedPassword);
         return userMapper.updatePassword(user);
     }
-
-
 
 
 }
