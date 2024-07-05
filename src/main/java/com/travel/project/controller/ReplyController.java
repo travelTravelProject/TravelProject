@@ -6,16 +6,20 @@ import com.travel.project.dto.request.ReplyRequestModifyDto;
 import com.travel.project.dto.request.ReplyRequestPostDto;
 import com.travel.project.dto.response.ReplyListDto;
 import com.travel.project.dto.response.ReplyResponseDetailDto;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.service.ReplyService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController // Controller + 반환시 JSON형식으로 변환
 @RequestMapping("/api/v1/replies")
 @RequiredArgsConstructor
+@Slf4j
 @CrossOrigin // CORS 정책 허용범위 설정, 나머지는 다 차단
 public class ReplyController {
 
@@ -28,21 +32,40 @@ public class ReplyController {
     public ResponseEntity<?> list(
             @PathVariable long boardId 
             , @PathVariable int pageNo
+            , HttpSession session
     ) {
 
-        ReplyListDto replies = replyService.getReplies(boardId, new Page(pageNo, 10 ));
+        if (boardId == 0) {
+            String message = "글 번호는 0번이 될 수 없습니다.";
+            log.warn(message);
+            return ResponseEntity
+                    .badRequest()
+                    .body(message);
+        }
 
+        log.info("/api/v1/replies/{} : GET", boardId);
+
+        ReplyListDto replies = replyService.getReplies(boardId, new Page(pageNo, 10 ));
+        replies.setLoginUser(LoginUtil.getLoggedInUser(session));
         return ResponseEntity
                 .ok()
                 .body(replies);
+
     }
+
 
     // 댓글 생성 요청 (요청할 때 JSON으로)
     @PostMapping
-    public ResponseEntity<?> posts(@RequestBody ReplyRequestPostDto dto) {
+    public ResponseEntity<?> posts(@RequestBody ReplyRequestPostDto dto
+        , HttpSession session
+    ) {
 
         // 댓글 생성
-        replyService.register(dto);
+        boolean flag = replyService.register(dto, session);
+
+        if (!flag) return ResponseEntity
+                .internalServerError()
+                .body("댓글 등록 실패!");
 
         // 댓글을 생성한 이후 게시물의 댓글 목록을 불러옴
         return ResponseEntity

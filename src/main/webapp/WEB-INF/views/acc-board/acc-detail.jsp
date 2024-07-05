@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>게시글 상세보기</title>
 
+    <link rel="stylesheet" href="/assets/css/detail.css">
     <!-- reset -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
@@ -16,10 +17,10 @@
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
 
     <!-- bootstrap css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- bootstrap js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script> -->
 
     <style>
         body {
@@ -42,7 +43,7 @@
             display: block;
         }
         #wrap input[type="text"], #wrap #content {
-            width: 100%;
+            width: 70px;
             padding: 10px;
             margin-top: 5px;
             border: 1px solid #ddd;
@@ -111,6 +112,191 @@
             color: #fff;
         }
 
+        /* 댓글 css 영역 */
+
+        /* 댓글 프로필 */
+        .profile-box {
+        width: 70px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 10px 0 0 0;
+        }
+
+        .profile-box img {
+        width: 60px;
+        height: 50px;
+        }
+
+        #replyContent {
+            /* border: 1px solid red; */
+        }
+
+        #replies {
+            /* border: 1px solid blue; */
+            padding: 0 20px;
+        }
+
+        .card .float-left {
+            font-weight: 700;
+            font-size: 16px;
+            padding-top: 10px;
+        }
+
+
+        .user-block {
+        display: flex;
+        align-items: center;
+        }
+
+        .reply-head {
+        display: flex;
+        align-items: center;
+        }
+
+        .reply-body {
+        line-height: 20px;
+        margin-top: 5px;
+        }
+
+        .reply-body .col-md-3 {
+        font-weight: 700;
+        }
+
+        .reply-body .text-right {
+            width: 100%;
+            margin-top: 2px;
+            opacity: 0.8;
+        }
+        .row .text-right {
+            display: flex;
+        }
+
+        .row .col-md-9 {
+            margin: 5px 0 20px 70px ;
+        }
+
+        /* .col-md-9 .form-control {
+            width: 100px;
+        } */
+
+        .modDelBtn {
+            text-align: right;
+            width: 610px;
+        }
+
+        .modDelBtn .btn-sm {
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+        }
+        
+        .reply-reply-write {
+            opacity: 0.8;
+            margin-left: 70px;
+        }
+        .reply-reply-write .fa-comment {
+            padding-right: 5px;
+        }
+
+        .reply-reply-button {
+            border: none;
+            outline: none;
+            background-color: inherit ;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .rows .col-md-3 {
+            display: flex;
+        }
+        .rows .col-md-90 {
+            display: flex;
+        }
+        .rows .col-md-90 .form-group .form-control {
+            width: 600px;
+        }
+        .rows .col-md-3 .form-group {
+            display: flex;
+        }
+        .rows .col-md-3 .form-group .form-control {
+            margin: 6px 0;
+            width: 600px;
+        }
+        .rows .col-md-3 .col-md-90 .form-group .form-control1 {
+            width: 50px;
+        }
+        
+
+
+        /* 대댓글 css 영역 */
+        .nested-reply-data {
+            width: 100%;
+        }
+        .nestReply-head {
+            align-items: center;
+            line-height: 20px;
+            margin-top: 5px;
+        }
+        .nestReply-body .col-md-3 {
+            font-weight: 700;
+        }
+        .Nestedcard .card-body .row .col-md-3 {
+            display: flex;
+            padding-left: 70px;
+        }
+        .Nestedcard .card-body .row .col-md-3 .form-group {
+            /* margin-left: 70px; */
+        }
+        .Nestedcard .card-body .row .col-md-3 .col-md-9 {
+            display: flex;
+            margin: 5px 0 20px 0;
+        }
+        .Nestedcard .card-body .row .col-md-3 .col-md-9 .form-group .form-control {
+            width: 530px;
+            height: 30px;
+        }
+        /* 대댓글 카드 스타일 */
+        .nested-reply-card {
+            width: 88%;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin: 10px 0 10px 70px; /* 왼쪽 여백을 추가하여 대댓글을 안쪽으로 이동 */
+            padding: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        /* 대댓글 작성자 및 시간 스타일 */
+        .nested-reply-card .user-block {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* 대댓글 내용 스타일 */
+        .nested-reply-card .reply-content {
+            margin-top: 5px;
+        }
+
+        .nestReply-head {
+            display: flex;
+        }
+
+        .reply-content .nestModDel {
+            justify-content: end;
+            margin-right: 6px;
+        }
+        .reply-content .text-right .btn-sm {
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+        }
+        .nestedReplyModBtn {
+            margin-right: 8px;
+        }
+
+        .hidden {
+            display: none;
+        }
+  
     </style>
 
 </head>
@@ -161,16 +347,105 @@
 
             </div>
 
+        </div>
+
+         <!-- 댓글 영역 -->
+
+        <div id="replies" class="row">
+            <div class="offset-md-1 col-md-10">
+            
+            <!--댓글 내용 영역-->
+            <div class="card">
+                <!-- 댓글 내용 헤더 -->
+                <div class="card-header text-white m-0">
+                <div class="float-left">댓글 (<span id="replyCnt">0</span>)</div>
+                </div>
+
+                <!-- 댓글 내용 바디 -->
+                <div id="replyCollapse" class="card">
+                <div id="replyData">
+                    <!--
+                    < JS로 댓글 정보 DIV삽입 >
+                    -->
+                    <!-- 대댓글 내용 바디 -->
+                    <div id="nestedReplyCollapse" class="card">
+                        <div id="nestedReplyData">
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+
+
+            <!-- 댓글 쓰기 영역 -->
+            <div class="card">
+            <div class="card-body">
+                <c:if test="${user == null}">
+                <a href="/sign-in">댓글은 로그인 이후에 작성 가능합니다.</a>
+                </c:if>
+                <c:if test="${user != null}">
+                <div class="rows"> 
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="newReplyWriter" hidden>댓글 작성자</label>
+                            <input
+                            id="newReplyWriter"
+                            name="replyWriter"
+                            type="text"
+                            value="${user.nickname}"
+                            class="form-control"
+                            placeholder="작성자 이름"
+                            style="margin-bottom: 6px"
+                            readonly
+                            />
+                        </div>
+                        <div class="col-md-90">
+                            <div class="form-group">
+                                <label for="newReplyText" hidden>댓글 내용</label>
+                                <input
+                                rows="3"
+                                id="newReplyText"
+                                name="replyText"
+                                class="form-control"
+                                placeholder="댓글을 입력해주세요."
+                                />
+                            </div>
+                            <button
+                            id="replyAddBtn"
+                            type="button"
+                            class="btn btn-dark form-control1"
+                            style="width: 60px;
+                                   margin: 6px 0;"
+                            >
+                            등록
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </c:if>
+            </div>
+            </div>
+            <!-- end reply write -->
+            
+
             <!-- 댓글 페이징 영역 -->
             <ul class="pagination justify-content-center">
                 <!--
                 < JS로 댓글 페이징 DIV삽입 >
                 -->
             </ul>
-
             </div>
+        </div>
+        <!-- end reply content -->
+        </div>
+        <!-- end replies row -->
 
-            <%--  댓글영역  --%>
+        <div class="spinner-container" id="loadingSpinner">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>  
+        </div>
             
 
         </div>
@@ -230,8 +505,8 @@
             // 북마크 버튼 클릭 이벤트 리스너 추가
             document.getElementById('bookmark-btn').addEventListener('click', toggleBookmark);
         </script>
-
-
+        
+        <script type="module" src="/assets/js/acc-reply.js"></script>
 
 
 </body>

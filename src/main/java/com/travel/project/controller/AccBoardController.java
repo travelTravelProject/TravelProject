@@ -42,7 +42,7 @@ public class AccBoardController {
         System.out.println("/acc-board/list GET");
         System.out.println(session.getAttribute("user"));
         // 목록 조회 요청 위임
-        List<AccBoardListDto> abList = boardService.    findList(page);
+        List<AccBoardListDto> abList = boardService.findList(page);
 
         // 페이지 정보
         PageMaker maker = new PageMaker(page, boardService.getCount(page));

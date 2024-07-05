@@ -22,12 +22,14 @@ public class ReplyResponseDetailDto {
 //    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH:mm")
     private LocalDateTime createAt; // 댓글 작성일
     private List<NestedReplyResponseDetailDto> nestedReplies; // 대댓글 목록
+    private String account;
 
     // 엔터티를 DTO로 변환하는 생성자
     public ReplyResponseDetailDto(Reply r) {
         this.replyId = r.getReplyId();
         this.text = r.getReplyText();
-        this.writer = r.getAccount(); // getReplyWriter?
+        this.writer = r.getReplyWriter();
         this.createAt = r.getCreatedAt();
+        this.account = r.getAccount();
     }
 }
