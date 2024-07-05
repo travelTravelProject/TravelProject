@@ -4,6 +4,8 @@ import com.travel.project.entity.AccBoard;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.AccBoardMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -17,6 +19,7 @@ import static com.travel.project.login.LoginUtil.isMine;
 @RequiredArgsConstructor
 public class AccBoardInterceptor implements HandlerInterceptor {
 
+    private static final Logger log = LoggerFactory.getLogger(AccBoardInterceptor.class);
     private final AccBoardMapper accBoardMapper;
 
     // preHandle을 구현하여 로그인을 안한 회원은 글쓰기, 글수정, 글삭제 요청을 거부하고 로그인 페이지로 리다이렉션
@@ -30,6 +33,7 @@ public class AccBoardInterceptor implements HandlerInterceptor {
         // 로그인 여부 확인
         if (!LoginUtil.isLoggedIn(session)) {
             // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+            log.info("로그인 여부 redirect {}", redirectUri);
             response.sendRedirect("/sign-in?message=login-required&redirect=" + redirectUri);
             return false;
         }

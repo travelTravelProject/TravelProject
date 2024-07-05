@@ -2,6 +2,7 @@ package com.travel.project.dto.request;
 
 import com.travel.project.entity.AccBoard;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,8 @@ public class AccBoardWriteDto {
     private String location;
     private String startDate;
     private String endDate;
+
+    private MultipartFile postImage; // 첨부 사진 데이터
 
 
     public AccBoard toEntity() {

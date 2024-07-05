@@ -65,6 +65,7 @@
             flex-direction: column;
             flex: 1;
             margin-right: 20px;
+            word-break: break-word;
         }
         .card-title {
             font-size: 1.2em;
@@ -81,7 +82,8 @@
             width: 100px;
             height: 100px;
             flex-shrink: 0;
-            background-color: #00CE7B;
+            /*background-color: #00CE7B;*/
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             border-radius: 10px;
         }
         .card-img img {
@@ -120,7 +122,9 @@
             width: 100%;
             text-align: center;
             padding: 10px 0;
-            background-color: #00CE7B;
+            /*background-color: #00CE7B;*/
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            /*background-color: #00f2fe;*/
             color: white;
             text-decoration: none;
             border-radius: 10px;
@@ -159,7 +163,8 @@
     </style>
 </head>
 <body>
-    <%@ include file="include/sub_header.jsp" %>
+
+<%@ include file="../include/sub_header.jsp" %>
 <div class="wrap">
     <%--  검색창 영역  --%>
         <div class="search">
@@ -169,11 +174,11 @@
             </form>
         </div>
 
-    <div class="filters">
-        <button>날짜</button>
-        <button>나이/성별</button>
-        <button>유형</button>
-    </div>
+<%--    <div class="filters">--%>
+<%--        <button>날짜</button>--%>
+<%--        <button>나이/성별</button>--%>
+<%--        <button>유형</button>--%>
+<%--    </div>--%>
 
     <c:if test="${abList.size() == 0}">
         <div class="empty">
@@ -195,7 +200,7 @@
                                         </div>
                                     </div>
                                     <div class="card-img">
-                                        <img src="#" alt="대표이미지">
+                                        <img src="/assets/img/accBoardDefaultImg.webp" alt="대표이미지">
                                     </div>
                                 </div>
                                 <div class="card-details-bot1">
