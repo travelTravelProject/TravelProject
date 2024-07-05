@@ -18,17 +18,25 @@
     /*text-decoration: underline;*/
     font-family: "Noto Sans KR", sans-serif;
 }
+/*.trip-stats {*/
+/*    border-bottom: 1px solid #e0e0e0;*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*    margin: 20px 0;*/
+/*}*/
 .trip-stats {
-    border-bottom: 1px solid #e0e0e0;
     display: flex;
     justify-content: space-around;
-    margin: 20px 0;
+    margin: 30px 0;
+    align-items: center;
 }
+
 .tab-btn {
     display: block;
     width: 218px;
     padding-bottom: 4px;
-    color: #cccccc;
+    color: gray;
+    text-align: center;
 }
 
 

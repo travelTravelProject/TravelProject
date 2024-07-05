@@ -14,5 +14,6 @@ public interface MypageMapper {
     // 내가 쓴 게시글 조회
 //    void findAllByAccount(String account);
 
-    List<AccBoardListDto> findAllByAccount(@Param("account") String account, @Param("search") Search search);
+    List<AccBoardListDto> findAllByAccount(@Param("account") String account);
+//                                           @Param("search") Search search);
 }

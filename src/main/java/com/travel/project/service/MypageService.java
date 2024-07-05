@@ -29,46 +29,16 @@ public class MypageService {
     private final MypageMapper mypageMapper;
 
     @Transactional
-    public MyBoardListDto findBoardsByAccount(Search search, HttpSession session) {
-        LoginUserInfoDto loginUser = LoginUtil.getLoggedInUser(session);
-        List<AccBoardListDto> boards = mypageMapper.findAllByAccount(loginUser.getAccount(), search);
+    public List<AccBoardListDto> findBoardsByAccount(HttpSession session) {
+        LoginUserInfoDto loggedInUser = LoginUtil.getLoggedInUser(session);
 
-        mypageMapper.findAllByAccount(loggedInUser.getAccount());
+        List<AccBoardListDto> boardList = mypageMapper.findAllByAccount(loggedInUser.getAccount());
+        log.debug("findBoardsByAccount: {}", boardList);
 
-        return new MyBoardListDto(boards.stream()
-                .map(board -> new AccBoardListDto(board))
-                .collect(Collectors.toList()));
-
-//        List<MyFeedDto> myFeeds = feedList.stream().map(f -> {
-//
-//            MyFeedDto myFeed = f.toMyFeed();
-//            long boardId = f.getBoardId();
-//
-//            // 이미지 추가 (1개)
-//            BoardImage firstOne = imageService.findFirstOne(boardId);
-//            if(firstOne == null) throw new RuntimeException("이미지가 존재하지 않습니다.");
-//            myFeed.setImage(firstOne);
-//
-//            // 좋아요 수 추가
-//            myFeed.setLikeCount(likeService.countLikes((int)boardId));
-//
-//            // 북마크 수 추가
-//            myFeed.setBookmarkCount(bookmarkService.countBookmarks((int)boardId));
-//
-//            // 댓글 수 추가 (확인 필요)
-//
-//            return myFeed;
-//        }).collect(Collectors.toList());
-//
-//        PageMaker pageMaker = new PageMaker(new Page(search.getPageNo(), search.getAmount()), myFeeds.size());
-//
-//        return MyFeedListDto.builder()
-//                .loginUser(loggedInUser)
-//                .pageInfo(pageMaker)
-//                .myFeeds(myFeeds)
-//                .build();
+        return boardList;
     }
 }
+
 
 
 
