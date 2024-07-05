@@ -110,7 +110,7 @@ export function initFeedFormEvents() {
     $imageInputPost.addEventListener('change', e => {
         console.log('post imageFiles: ', imageFiles);
         console.log('post 이미지 전: ', importedImages);
-        if(importedImages.length === 10) {
+        if(imageFiles.length === 10 || importedImages.length === 10) {
             alert("이미지는 최대 10장까지 업로드 가능합니다.");
             return;
         }
@@ -120,6 +120,10 @@ export function initFeedFormEvents() {
     });
     $imageInputEdit.addEventListener('change', e => {
         console.log("edit 모달 이미지 추가 이벤트 실행!")
+        if(imageFiles.length === 10 || importedImages.length === 10) {
+            alert("이미지는 최대 10장까지 업로드 가능합니다.");
+            return;
+        }
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxEdit);
     });
 
@@ -252,26 +256,41 @@ export function initFeedFormEvents() {
     const $textareaPost = document.getElementById('cr-content');
     const $textareaEdit = document.getElementById('ed-content');
     $textareaPost.addEventListener('keydown', e => {
-       const length = $textareaPost.value.length;
+        const text = $textareaPost.value;
+        const length = $textareaPost.value.length;
        const $typingCnt = document.querySelector('#createFeedModal .typing-count');
-        if(length > 50) {
-            alert('피드 본문은 최대 50자까지 입력 가능합니다.');
-            $textareaPost.value = $textareaPost.value.substring(0, 50);
+        if(length > 50 || e.target.clientHeight !== e.target.scrollHeight) {
+            alert('피드 본문은 최대 4줄 또는 50자까지 입력 가능합니다.');
+            length < 50 ? $textareaPost.value = text.substring(length-1, 1)
+              : $textareaPost.value = text.substring(0, 50);
        }
        $typingCnt.textContent = $textareaPost.value.length.toString();
     });
 
     $textareaEdit.addEventListener('keydown', e => {
-        const length = $textareaEdit.value.length;
+        const text = $textareaEdit.value;
+        const length = text.length;
         const $typingCnt = document.querySelector('#editFeedModal .typing-count');
         $typingCnt.textContent = length.toString();
-        if(length > 50) {
-            alert('피드 본문은 최대 50자까지 입력 가능합니다.');
-            $textareaEdit.value = $textareaEdit.value.substring(0, 50);
+        if(length > 50 || e.target.clientHeight !== e.target.scrollHeight) {
+            alert('피드 본문은 최대 4줄 또는 50자까지 입력 가능합니다.');
+            length < 50 ? $textareaEdit.value = text.substring(length-1, 1)
+            : $textareaEdit.value = text.substring(0, 50);
         }
         $typingCnt.textContent = $textareaEdit.value.length.toString();
     });
-
+    function validateTextarea(tag, className) {
+        const text = tag.value;
+        const length = text.length;
+        const $typingCnt = document.querySelector(className);
+        $typingCnt.textContent = length.toString();
+        if(length > 50 || tag.clientHeight !== tag.scrollHeight) {
+            alert('피드 본문은 최대 4줄 또는 50자까지 입력 가능합니다.');
+            length < 50 ? tag.value = text.substring(length-1, 1)
+              : tag.value = text.substring(0, 50);
+        }
+        $typingCnt.textContent = $textareaEdit.value.length.toString();
+    }
     // 검색
     document.querySelector('.search input[name="keyword"]').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {

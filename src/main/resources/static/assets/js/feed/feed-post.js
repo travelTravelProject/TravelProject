@@ -25,6 +25,7 @@ function openDetailModal(newBoardId) {
 // 작성 모달 닫을 경우 모달 입력사항 리셋
 export function resetPostModal() {
     document.getElementById('cr-content').value = '';
+    document.querySelector('#createFeedForm .typing-count').textContent = '0';
     $imageBox.innerHTML = '';
 }
 

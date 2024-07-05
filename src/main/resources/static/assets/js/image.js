@@ -63,6 +63,9 @@ export async function addExistingImagesToPreview(images, imageBox) {
 
 // 이미지 input(e) 변경 시 미리보기 및 이미지 배열 생성
 export function handleFileInputChange(e, imageList, imageBox) {
+  if(imageList.length === 10) {
+    document.querySelector('.typing-text').style.color='#4facfe';
+  }
   console.log('image.js 타입: ', typeof e.target.files, ' / 출력: ', e.target.files[0])
   const newFiles = Array.from(e.target.files);
   imageList.push(...newFiles);
@@ -111,7 +114,7 @@ function addToCarousel(tagBtn, tagImg, identifier) {
 
 // 캐러셀 인디케이터 만드는 함수
 function makeIndicateBtn(index, identifier) {
-  const firstSet = index === 0 ? 'class="active" aria-current="true"' : '';
+  const firstSet = index === 0 ? `class="active" aria-current="true"` : '';
   return `
     <button type="button" data-bs-target="#carousel${identifier}" data-bs-slide-to="${index}" aria-label="Slide ${index+1}" ${firstSet}></button>
   `;
@@ -138,11 +141,18 @@ export function renderCarousel(images, className, boardId, delimit) {
   let tagBtn = '';
   const identifier = delimit + boardId;
   console.log('렌더캐러셀: ', images);
+
   if (!images || images.length === 0) {
-    // 디폴트 이미지를 추가해줘야할 듯
+    // 이미지가 없는 경우
     tagImg = makeImgTag('/assets/img/floating.jpg', 'post-image one-pic', 0);
     tagBtn = makeIndicateBtn(0, identifier);
-  } else {
+
+  } else if(images.length === 1) {
+    // 이미지 1개인 경우
+    tagImg = makeImgTag(images[0].imagePath, className + ' one-pic', 0);
+    tagBtn = makeIndicateBtn(0, identifier);
+
+  } else{
     // 개별 이미지 img 태그 추가
     images.forEach((el, index) => {
           tagImg += makeImgTag(el.imagePath, className, index);

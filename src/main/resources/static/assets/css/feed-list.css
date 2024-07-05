@@ -135,7 +135,8 @@ ion-icon:hover {
     color: #ff627a;
 }
 .interaction-section ion-icon.bookmarked {
-    color: #ffd6a5;
+    /*color: #00f2fe;*/
+    background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
 }
 
 /* 모달 css */
@@ -156,12 +157,13 @@ ion-icon:hover {
 
 .modal-content {
     background-color: #fefefe;
-    margin: 5% auto;
-    padding: 10px 20px 20px;
-    border: 1px solid #888;
+    margin: 40px auto;
+    padding: 10px 40px 40px;
+    /*border: 1px solid #888;*/
     width: 80%;
     max-width: 550px;
     border-radius: 10px;
+    box-sizing: content-box;
 }
 
 .close {
@@ -194,6 +196,12 @@ textarea{
     border-radius: 4px;
     box-sizing: border-box;
 }
+textarea {
+    line-height: 24px;
+    word-break: break-all;
+    overflow: hidden;
+}
+
 .modal .modal-content input:focus {
     border: 1px solid #4facfe;
 }
@@ -210,6 +218,7 @@ button {
 
 button:hover {
     background-color: #4facfe;
+    background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
 }
 .one-modal-btn {
     border-radius: 5px;
@@ -318,10 +327,10 @@ body div.btn-container {
 
     /* 모달 속 이미지 미리보기 */
 .dropbox {
-    /*width: 100%;*/
-    width: 500px;
-    min-height: 98px;
-    margin: 10px auto;
+    width: 100%;
+    /*width: 500px;*/
+    min-height: 100px;
+    margin: 10px auto 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -336,8 +345,8 @@ body div.btn-container {
 
 }
 .image-item {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
 
     object-fit: cover;
 }
@@ -557,20 +566,20 @@ body div.btn-container {
     width: 20px;
     height: 20px;
     border-radius: 10px;
-    background: #ff0000;
+    color: #4facfe;
     display: none;
     position: absolute;
-    color: white;
-    top: -1px;
-    right: -1px;
+    background: white;
+    top: -5px;
+    right: -5px;
     text-align: center;
     line-height: 20px;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    /*font-weight: 500;*/
 }
 .image-frame:hover .delete-prev-image {
     display: block;
-    background: #5d5d5d;
+    background: #fff;
     cursor: pointer;
 }
 .fake-upload {
@@ -581,17 +590,19 @@ body div.btn-container {
     margin-top: 10px;
     padding: 5px 10px;
     /*background: #4CAF50;*/
+    cursor: pointer;
 }
 .fake-upload:hover {
     /*border-radius: ;*/
-    /*background: #4facfe;*/
+    border: 1px solid rgba(79, 172, 254, 0.91);
+    /*background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);*/
     background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
+    /*background-clip: text;*/
+    /*-webkit-background-clip: text;*/
     color: #ffffff;
 }
 .modal-content label {
-    margin-top: 1px;
+    margin-top: 10px;
 }
 .close-modal {
     text-align: right;
