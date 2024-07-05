@@ -38,6 +38,7 @@
         <mapper resource="mappers/UserDetailMapper.xml"/>
         <mapper resource="mappers/LikeMapper.xml" />
         <mapper resource="mappers/BookmarkMapper.xml" />
+        <mapper resource="mappers/MypageMapper.xml" />
     </mappers>
 
 </configuration>

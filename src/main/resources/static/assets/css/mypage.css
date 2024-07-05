@@ -2,19 +2,22 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #ffffff;
+    /*background-color: #f4f4f9;*/
     margin: 0;
     padding: 0;
 }
 
 .container {
     width: 50%;
-    margin: auto;
+    margin: 0 auto;
     background: #fff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     margin-top: 50px;
+    max-width: 800px;
 }
+
 
 h1, h2 {
     text-align: center;
@@ -45,9 +48,13 @@ form {
 }
 
 label {
-    font-size: 1.1em;
+    font-size: 1em;
     color: #333;
 }
+
+/*label .deleteProfileImage {*/
+/*    text-align: center;*/
+/*}*/
 
 input, select {
     padding: 10px;
@@ -57,15 +64,10 @@ input, select {
 }
 
 button {
-    /*padding: 10px;*/
-    /*font-size: 1em;*/
-    /*color: #fff;*/
-    /*background-color: #007bff;*/
-    /*border: none;*/
-    /*border-radius: 5px;*/
-    /*cursor: pointer;*/
+/*.update-button {*/
 
-    background-color: #00aaff;
+    /*background-color: #00aaff;*/
+    background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -75,11 +77,12 @@ button {
 }
 
 button:hover {
+/*.update-button:hover {*/
     background-color: #0056b3;
 }
 
 .profile {
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
     text-align: center;
 }
 
@@ -102,23 +105,7 @@ button:hover {
 }
 
 
-
-
 /*css*/
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
 
 
 .add-trip {
@@ -164,29 +151,47 @@ body {
 }
 
 .trip-info h2 {
+    font-size: 30px;
+    color: #333;
+}
+
+/*.trip-info span {*/
+/*    color: #666;*/
+/*    margin: 5px 0;*/
+/*    font-size: 16px;*/
+/*}*/
+
+/*.trip-info p {*/
+/*    color: #666;*/
+/*    margin: 5px 0;*/
+/*    font-size: 18px;*/
+/*}*/
+/*.trip-stats {*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*    margin: 30px 0;*/
+/*    align-items: end;*/
+/*}*/
+
+.trip-stats-info {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0;
+    align-items: end;
+}
+
+.trip-stats-info div {
+    text-align: center;
+}
+
+.trip-stats-info span {
+    display: block;
     font-size: 22px;
     color: #333;
 }
 
-.trip-info p {
-    color: #666;
-    margin: 5px 0;
-}
-
-.trip-stats {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
-}
-
-.trip-stats div {
-    text-align: center;
-}
-
-.trip-stats span {
-    display: block;
-    font-size: 24px;
-    color: #333;
+.trip-stats-info p {
+    font-size: 20px;
 }
 
 .trip-dates p {
@@ -223,10 +228,12 @@ body {
     /*margin: 30px auto 10px;*/
     cursor: pointer;
 }
+
 .profile-nickname {
     width: 100px;
     padding-left: 20px;
 }
+
 .profile-nickname p {
     font-size: 14px;
     width: 150px;
@@ -257,7 +264,6 @@ body {
     text-align: center;
     height: 100px;
 }
-
 
 
 .edit-profile-btn {
@@ -305,63 +311,3 @@ body {
     color: #666;
 }
 
-/* 게시글 조회 */
-.card-wrapper {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    padding: 10px;
-}
-.card-post {
-    display: flex;
-    width: 100%;
-}
-.card-content-wrapper {
-    flex: 1;
-}
-.card-details-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-.card-text {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-right: 20px;
-}
-.card-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.card-content {
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 10px;
-}
-.card-img {
-    width: 100px;
-    height: 100px;
-    flex-shrink: 0;
-    background-color: #00CE7B;
-    border-radius: 10px;
-}
-.card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-}
-.card-details-bot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 10px;
-}
-.card-details-bot .view-count {
-    margin-left: auto;
-}

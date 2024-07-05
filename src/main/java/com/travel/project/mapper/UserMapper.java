@@ -43,8 +43,7 @@ public interface UserMapper {
 
 
     // 프로필 수정 업데이트
-    void updateUser(UpdateProfileDto dto);
-//    void updateUserDetail(UpdateProfileDto dto);
+    void updateUser(User user);
 
 
     // 이름과 이메일로 사용자 아이디 조회

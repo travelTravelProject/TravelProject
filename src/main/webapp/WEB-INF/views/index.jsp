@@ -15,7 +15,7 @@
 </head>
 <body>
 
-    <%@ include file="include/static-head.jsp" %>
+    <%@ include file="include/sub_header.jsp" %>
     <%@ include file="include/header.jsp"%>
     <div class="section" id="section1">
         <video autoplay muted loop id="background-video">

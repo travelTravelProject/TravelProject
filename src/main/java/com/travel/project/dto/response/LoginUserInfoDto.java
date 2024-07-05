@@ -31,9 +31,7 @@ public class LoginUserInfoDto {
     private String mbti; // mbti
     private String oneLiner; // 소개글
     @Setter
-    private MultipartFile profileImage; // 프로필 사진
-    private int rating; // 평점
-
+    private String profileImage; // 프로필 사진
 
 
     //생성자
@@ -47,13 +45,6 @@ public class LoginUserInfoDto {
         this.birthday = user.getBirthday();
         this.gender = user.getGender().name();
 
-    }
-
-    public LoginUserInfoDto(UserDetail userDetail) {
-        this.mbti = userDetail.getMbti();
-        this.oneLiner = userDetail.getOneLiner();
-        this.rating = userDetail.getRating();
-//        this.profileImage = userDetail.getProfileImage();
     }
 
     // 성별 변환 메서드 추가
