@@ -69,8 +69,8 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
   } else{ // 게시글 없는 경우
       tag = `
         <div id="no-feed">
-            <p>모든 피드를 다 보셨거나 작성하신 피드가 없습니다.</p> <br>
-            <p>${loginUser ? loginUser.nickname : '방문자'}님 기억에 남은 여행을 공유하면 어떨까요?</p>
+            <p>모든 피드를 다 보셨거나 작성하신 피드가 없습니다.</p>
+            <p>${loginUser ? loginUser.nickname : '방문자'}님 여행을 공유해주세요.</p>
         </div>
       `;
   }
