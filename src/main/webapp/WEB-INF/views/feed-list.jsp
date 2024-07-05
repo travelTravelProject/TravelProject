@@ -86,9 +86,11 @@
 <%--    </div>--%>
   </div>
     <%-- 피드 목록 스피너 --%>
-    <div class="spinner-container" id="loadingFeedSpinner">
-        <div class="spinner-border text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
+    <div class="spinner-section">
+        <div class="spinner-container" id="loadingFeedSpinner">
+            <div class="spinner-border text-gray" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     </div>
 <%--    <div class="spinner-container-lds">--%>
