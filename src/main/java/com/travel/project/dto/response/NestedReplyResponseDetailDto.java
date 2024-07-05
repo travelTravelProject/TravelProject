@@ -19,6 +19,7 @@ public class NestedReplyResponseDetailDto {
     private String text; // 대댓글 내용
     private String writer; // 대댓글 작성자
     private LocalDateTime createAt; // 대댓글 작성일
+    private String account;
 
     // 엔터티를 DTO로 변환하는 생성자
     public NestedReplyResponseDetailDto(NestedReply r) {
@@ -27,5 +28,6 @@ public class NestedReplyResponseDetailDto {
         this.text = r.getReplyText();
         this.writer = r.getReplyWriter();
         this.createAt = r.getCreatedAt();
+        this.account = r.getAccount();
     }
 }

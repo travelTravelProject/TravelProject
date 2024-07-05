@@ -1,11 +1,6 @@
-@font-face {
-  font-family: 'MapoPeacefull';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+
 *{
-  /*font-family: 'MapoPeacefull';*/
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 16px;
 }
 
@@ -17,51 +12,53 @@ body, html {
 
 
 
-header{
+
+header {
   width: 100%;
-  padding: 20px 10px;
+  padding: 10px 10px !important;
   position: fixed;
   z-index: 9;
   top: 0;
   left: 0;
-  background-color: rgb(255,255,255,0.7);
-}
-
-.logo{
-  width: 75px;
-  height: 55px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 25px;
-  background-color: tomato;
-  text-align: center;
-  line-height: 55px;
-}
-.menu{
+  background-color: rgb(0, 0, 0, 0.1);
   display: flex;
-  align-self: center;
-  justify-content: center;
-  padding: 0;
-  float: right;
+  justify-content: space-between;
+  align-items: center;
 }
-.menu li{
-  padding: 0 50px 0 0;
-  list-style: none;
+
+  .logo{
+    width: 200px;
+  }
+  .logo img{
+    max-width: 100%;
+  }
+  .menu {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    padding: 0;
+    float: right;
+    margin: 0;
 }
-.menu li a{
-  text-decoration: none;
-  font-weight: 600;
-}
+  .menu li{
+    padding: 0 50px 0 0;
+    list-style: none;
+    margin: 0;
+  }
+  .menu li a{
+    text-decoration: none;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+  }
 
 
 
-.sub_header{
-  position: relative;
-    background-color: thistle;
-    display: inline-block;
-}
+  .sub_header{
+    position: relative;
+      background-color: thistle;
+      display: inline-block;
+  }
 
 
 

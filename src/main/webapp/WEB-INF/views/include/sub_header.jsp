@@ -17,6 +17,7 @@
       <li><a href="/feed/list">피드</a></li>
   
       <c:if test="${user.auth != 'ADMIN' && user == null}">
+
           <li><a href="/sign-in">로그인</a></li>
           <li><a href="/find-id">아이디 찾기</a></li>
           <li><a href="/find-password">비번 찾기</a></li>

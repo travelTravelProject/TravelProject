@@ -113,7 +113,7 @@
     </select>
 
 
-    <update id="updateUser" parameterType="com.travel.project.dto.request.UpdateProfileDto">
+    <update id="updateUser" parameterType="com.travel.project.entity.User">
         UPDATE tbl_user
         SET name = #{name},
         email = #{email},

@@ -3,30 +3,57 @@ import { showSpinner, hideSpinner } from "../spinner.js";
 import { getRelativeTime, fetchInfScrollReplies } from "./feed-getReply.js";
 
 // 대댓글 렌더링  
-export function appendNestedReplies({ nestedReplies }, rno) {
+export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
   const $nestedReplyData = document.getElementById(`nestedReplyData-${rno}`);
 
   let tag = "";
   if (nestedReplies && nestedReplies.length > 0) {
-    nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt }) => {
+    nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt, account: nestReplyAccount }) => {
       tag += `
-        <div id='nestedReplyContent-${nestedReplyId}' class='card-body' data-nested-rno='${nestedReplyId}'>
+        <div id='nestedReplyContent-${nestedReplyId}' class='card-body nested-reply-card' data-nested-rno='${nestedReplyId}'>
           <div class='row user-block'>
-            <span class='col-md-3'>
-              <b>${writer}</b>
-            </span>
-            <span class='offset-md-6 col-md-3 text-right'><b>${getRelativeTime(createAt)}</b></span>
+            <div class='nestReply-head'>
+              <div class="profile-box">
+                ${loginUser && loginUser.profileImage ? 
+                  `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
+                  `<img src="/assets/img/mimo.png" alt="profile image">`}
+              </div>
+              <div class="nestReply-body">
+                <div class='col-md-3'>
+                  <b>${writer}</b>
+                </div>
+                <div class='offset-md-6 text-right'><b>${getRelativeTime(createAt)}</b></div>
+              </div>
+            </div>
           </div><br>
-          <div class='row'>
+          <div class='row reply-content'>
             <div class='col-md-9'>${text}</div>
-            <div class='col-md-3 text-right'>
-              <a class='btn btn-sm btn-outline-dark nestedReplyModBtn' href='#' data-rno=${nestedReplyId}>수정</a>&nbsp;
-              <a class='btn btn-sm btn-outline-dark nestedReplyDelBtn' href='#' data-rno=${nestedReplyId}>삭제</a>
+            <div class='col-md-3 text-right nestModDel'
+            style="margin-left: 250px;
+                    width: 100%;">
+            `;
+      if (loginUser) { // 로그인 유저가 존재하면~
+        const {auth, account: loginUserAccount} = loginUser;
+
+        if (auth === 'ADMIN' || nestReplyAccount === loginUserAccount) {
+          tag += `
+              <a class='btn btn-sm btn-outline-dark nestedReplyModBtn' href='#' data-rno=${nestedReplyId}
+              style="border: none;
+                    padding-left: 10px;
+                    font-weight: 700;">수정</a>&nbsp;
+              <a class='btn btn-sm btn-outline-dark nestedReplyDelBtn' href='#' data-rno=${nestedReplyId}
+              style="border: none;
+                      padding-left: 20px;
+                      font-weight: 700;">삭제</a>
+          `;
+        }
+        tag += `
             </div>
           </div>
         </div>
       `;
-    });
+    }
+  });
   } else {
     // tag = `<div id='nestedReplyContent' class='card-body'>대댓글이 아직 없습니다! ㅠㅠ</div>`;
   }

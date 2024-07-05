@@ -78,39 +78,63 @@ public class UserService {
         return userDetailMapper.findUserDetailByAccount(account);
     }
 
+    public void updateUser(LoginUserInfoDto dto, HttpSession session) {
+
+        LoginUserInfoDto sessionUser = (LoginUserInfoDto) session.getAttribute("user");
+
+        User user = User.builder()
+                .nickname(dto.getNickname())
+                .name(sessionUser.getName())
+                .account(sessionUser.getAccount())
+                .email(sessionUser.getEmail())
+                .build();
+        UserDetail userDetail = UserDetail.builder()
+                .mbti(dto.getMbti())
+                .oneLiner(dto.getOneLiner())
+                .profileImage(String.valueOf(dto.getProfileImage()))
+                .build();
+
+        userMapper.updateUser(user);
+        userDetailMapper.updateUserDetail(userDetail);
+    }
+
+
     @Transactional
     public void saveUpdateUser(UpdateProfileDto dto) {
-        // Update tbl_user
-        userMapper.updateUser(dto);
         // Update tbl_user_detail
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
+        log.debug("saveUpdateUser  existingDetail: {}", existingDetail);
+        // saveUpdateUser  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
+        // profileImage=/assets/upload/2024/07/04/b6242aed-3495-4871-8406-cc09f74bbdd4_다운로드 (2).jfif, rating=0, account=kitty)
+
         if (existingDetail != null) {
             // 이미 존재하는 경우에만 업데이트
             existingDetail.setMbti(dto.getMbti());
             existingDetail.setOneLiner(dto.getOneLiner());
-            existingDetail.setRating(dto.getRating());
-
-            // 프로필 이미지 업로드 및 경로 설정
-            if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
-                String profilePath = FileUtil.uploadFile(dto.getProfileImage());
-                existingDetail.setProfileImage(profilePath);
-            }
 
             userDetailMapper.updateUserDetail(existingDetail);
         }
     }
 
     @Transactional
-    public void saveOrUpdateUserDetail(UpdateProfileDto dto, String profilePath) {
+    public void saveOrUpdateUserDetail(UpdateProfileDto dto, HttpSession session, String profilePath) {
+
+        LoginUserInfoDto sessionUser = (LoginUserInfoDto) session.getAttribute("user");
+        log.debug("saveOrUpdateUserDetail  sessionUser: {}", sessionUser);
+        // saveOrUpdateUserDetail  sessionUser LoginUserInfoDto(account=kitty, name=키티키티123, nickname=헬로키티kitty,
+        // email=kitty@gmail.com, auth=COMMON, birthday=1996-06-12, gender=F, mbti=null, oneLiner=null, profileImage=null)
+
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
-        if (existingDetail == null) {
+        log.debug("saveOrUpdateUserDetail  existingDetail: {}", existingDetail);
+        // saveOrUpdateUserDetail  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
+        // profileImage=/assets/upload/2024/07/04/e867a6ff-5907-458a-964a-4689e82ecb05_다운로드 (4).jfif, rating=0, account=kitty)
+
+        if (sessionUser == null) {
             // 새로운 회원 정보 저장
             UserDetail newUserDetail = UserDetail.builder()
-                    .account(dto.getAccount())
                     .mbti(dto.getMbti())
                     .oneLiner(dto.getOneLiner())
                     .profileImage(profilePath)
-                    .rating(dto.getRating())
                     .build();
             userDetailMapper.insertUserDetail(newUserDetail);
         } else {
@@ -118,9 +142,9 @@ public class UserService {
             existingDetail.setMbti(dto.getMbti());
             existingDetail.setOneLiner(dto.getOneLiner());
             existingDetail.setProfileImage(profilePath);
-            existingDetail.setRating(dto.getRating());
             userDetailMapper.updateUserDetail(existingDetail);
         }
+
     }
 
     // 생년월일 연령대 계산
@@ -210,7 +234,6 @@ public class UserService {
 
     public static void maintainLoginState(HttpSession session, User foundMember) {
         log.info("{} 님 로그인 성공 ", foundMember.getName());
-
         //세션 수명 : 설정된 시간 및 브라우져 닫기 전까지
         int maxInactiveInterval = session.getMaxInactiveInterval();
         session.setMaxInactiveInterval(60 * 60); //세션 수명 1시간 설정
@@ -278,8 +301,6 @@ public class UserService {
         System.out.println("encodedPassword = " + encodedPassword);
         return userMapper.updatePassword(user);
     }
-
-
 
 
 }

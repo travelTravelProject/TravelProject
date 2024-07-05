@@ -8,9 +8,9 @@
     <!-- // 대댓글 등록-->
     <insert id="save">
         INSERT INTO tbl_nested_reply
-        (reply_text, reply_writer, reply_id)
+        (reply_text, reply_writer, reply_id, account)
         VALUES
-        (#{replyText}, #{replyWriter}, #{replyId})
+        (#{replyText}, #{replyWriter}, #{replyId}, #{account})
     </insert>
 
     <!-- // 대댓글 수정-->

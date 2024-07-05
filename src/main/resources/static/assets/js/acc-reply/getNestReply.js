@@ -4,30 +4,49 @@ import { getRelativeTime } from "./getReply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
 
 // 대댓글 렌더링
-export function appendNestedReplies({ nestedReplies }, rno) {
+export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
   const $nestedReplyData = document.getElementById(`nestedReplyData-${rno}`);
 
   let tag = "";
   if (nestedReplies && nestedReplies.length > 0) {
-    nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt }) => {
+    nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt, account: nestReplyAccount }) => {
       tag += `
         <div id='nestedReplyContent-${nestedReplyId}' class='card-body nested-reply-card' data-nested-rno='${nestedReplyId}'>
           <div class='row user-block'>
-            <span class='col-md-3'>
-              <b>${writer}</b>
-            </span>
-            <span class='offset-md-6 col-md-3 text-right'><b>${getRelativeTime(createAt)}</b></span>
+            <div class='nestReply-head'>
+              <div class="profile-box">
+                ${loginUser && loginUser.profileImage ? 
+                  `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
+                  `<img src="/assets/img/mimo.png" alt="profile image">`}
+              </div>
+              <div class="nestReply-body">
+                <div class='col-md-3'>
+                  <b>${writer}</b>
+                </div>
+                <div class='offset-md-6 text-right'><b>${getRelativeTime(createAt)}</b></div>
+              </div>
+            </div>
           </div><br>
           <div class='row reply-content'>
             <div class='col-md-9'>${text}</div>
-            <div class='col-md-3 text-right'>
+            <div class='col-md-3 text-right nestModDel'>
+            `;
+      if (loginUser) { // 로그인 유저가 존재하면~
+        const {auth, account: loginUserAccount} = loginUser;
+
+        if (auth === 'ADMIN' || nestReplyAccount === loginUserAccount) {
+          tag += `
               <a class='btn btn-sm btn-outline-dark nestedReplyModBtn' href='#' data-rno=${nestedReplyId}>수정</a>&nbsp;
               <a class='btn btn-sm btn-outline-dark nestedReplyDelBtn' href='#' data-rno=${nestedReplyId}>삭제</a>
+          `;
+        }
+        tag += `
             </div>
           </div>
         </div>
       `;
-    });
+    }
+  });
   } else {
     // tag = `<div id='nestedReplyContent' class='card-body'>대댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
@@ -46,18 +65,19 @@ export function appendNestedReplies({ nestedReplies }, rno) {
 
       const form = `
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-9" style="margin: 5px 0 20px 0;">
             <div class="form-group">
               <label for="editNestedReplyText-${nestedReplyId}" hidden>대댓글 내용</label>
               <textarea rows="3" id="editNestedReplyText-${nestedReplyId}" name="editNestedReplyText"
                         class="form-control"
-                        placeholder="대댓글을 입력해주세요.">${currentText}</textarea>
+                        placeholder="대댓글을 입력해주세요."
+                        style="width: 550px;">${currentText.trim()}</textarea>
             </div>
           </div>
           <div class="col-md-3">
             <button id="nestedReplyModifyBtn-${nestedReplyId}" type="button"
                     class="btn btn-dark form-control nestedReplyModifyBtn" data-nested-rno="${nestedReplyId}">
-              수정 완료
+              수정
             </button>
           </div>
         </div>

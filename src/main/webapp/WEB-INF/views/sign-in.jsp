@@ -42,7 +42,7 @@
                     id="signInId"
                     class="form-control tooltipstered" 
                     required="required" 
-                    placeholder="최소 8자"
+                    placeholder=""
                     class="text-input" 
                     />
                     <label for="id">아이디</label>
@@ -56,7 +56,7 @@
                     name="password" 
                     class="form-control tooltipstered"
                     required="required"
-                    placeholder="최소 8자"
+                    placeholder=""
                     class="text-input" 
                     />
                     <label for="password">비밀번호</label>
