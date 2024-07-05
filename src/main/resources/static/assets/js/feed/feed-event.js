@@ -314,6 +314,16 @@ export function initFeedFormEvents() {
 
 
 
+    document.getElementById('replyAddBtn').onclick = async e => {
+        if (isEditModeActive()) {
+          // 수정 모드일 때
+          await fetchReplyModify();
+        } else {
+          // 일반 모드일 때
+          await fetchReplyPost();
+        }
+    }
+
     modifyReplyClickEvent();
     removeReplyClickEvent();
 }

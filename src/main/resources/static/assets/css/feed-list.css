@@ -399,6 +399,8 @@ body div.btn-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%; /* 높이 설정 */
+    overflow-y: scroll; /* 스크롤 활성화 */
 }
 
 .detail-content {
@@ -740,9 +742,6 @@ body div.btn-container {
         opacity: 0;
     }
 }
-.hidden {
-    display: none;
-}
 .warning {
     color: #fd6363;
 }
@@ -776,4 +775,179 @@ body div.btn-container {
 .text-gray {
     color: #dddddd;
     /*box-shadow: 0 6px 15px 3px rgba(0,0,0,0.5);*/
+}
+
+
+
+/* 댓글 css */
+
+        /* 댓글 프로필 */
+        .profile-box {
+            width: 70px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 10px 0 0 0;
+            }
+    
+            .profile-box img {
+            width: 60px;
+            height: 50px;
+            }
+    
+            #replyContent {
+                /* border: 1px solid red; */
+            }
+    
+            #replies {
+                width: 500px;
+                /* border: 1px solid blue; */
+                /* padding: 0 20px; */
+            }
+            #replies .col-md-10 {
+                width: 436px;
+                margin-left: 0;
+            }
+    
+            .card .float-left {
+                color: black;
+                font-weight: 700;
+                font-size: 16px;
+                padding-top: 10px;
+            }
+    
+    
+            .user-block {
+            display: flex;
+            align-items: center;
+            }
+    
+            .reply-head {
+            display: flex;
+            align-items: center;
+            }
+    
+            .reply-body {
+            line-height: 20px;
+            margin-top: 5px;
+            }
+    
+            .reply-body .col-md-3 {
+                width: 100px;
+            font-weight: 700;
+            margin-left: 20px;
+            }
+    
+            .reply-body .text-right {
+                width: 100%;
+                margin-top: 2px;
+                opacity: 0.8;
+            }
+            .row .text-right {
+                margin: 0 0 0 20px;
+                display: flex;
+            }
+            .row .text-right .modDelBtn{
+                display: flex;
+                margin-left: 110px;
+            }
+    
+            .row .col-md-9 {
+                margin: 5px 0 20px 90px ;
+            }
+    
+            /* .col-md-9 .form-control {
+                width: 100px;
+            } */
+    
+            .modDelBtn {
+                display: flex;
+                text-align: right;
+                width: 610px;
+            }
+    
+            .modDelBtn .btn-sm {
+                text-decoration: none;
+                color: black;
+                font-weight: 500;
+                border: none;
+                width: 55px;
+                padding-left: 20px;
+            }
+            
+            .reply-reply-write {
+                opacity: 0.8;
+                margin-left: 55px;
+            }
+            .reply-reply-write .reply-reply-button{
+                color: black;
+                background-color: #fff;
+                border: none;
+                width: 80px;
+            }
+            .reply-reply-write .fa-comment {
+                padding-right: 5px;
+            }
+    
+            .reply-reply-button {
+                border: none;
+                outline: none;
+                background-color: inherit ;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            .rows .col-md-3 {
+                display: flex;
+            }
+            .rows .col-md-90 {
+                display: flex;
+            }
+            .rows .col-md-90 .form-group .form-control {
+                width: 600px;
+            }
+            .rows .col-md-3 .form-group {
+                display: flex;
+            }
+            .rows .col-md-3 .form-group .form-control {
+                margin: 6px 0;
+                width: 600px;
+            }
+            .rows .col-md-3 .col-md-90 .form-group .form-control1 {
+                width: 50px;
+            }
+
+/* 대댓글 카드 스타일 */
+.nested-reply-card {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin: 10px 0 10px 30px; /* 왼쪽 여백을 추가하여 대댓글을 안쪽으로 이동 */
+    padding: 10px;
+    border: 1px solid #e9ecef;
+  }
+  
+  .nested-reply-card .user-block {
+    display: flex;
+    justify-content: space-between;
+  } 
+  .nested-reply-card .user-block .nestReply-head{
+    display: flex;
+  }
+  .nested-reply-card .user-block .nestReply-head .nestReply-body {
+    margin-top: 15px; 
+  }
+  .nested-reply-card .user-block .nestReply-head .nestReply-body .col-md-3{
+    width: 100px;
+    font-weight: 700;
+    margin-left: 20px;
+}
+  .nested-reply-card .reply-content {
+    margin-top: 5px;
+  }
+  .Nestedcard .card-body .row .col-md-3 {
+    margin-left: 15px;
+    width: 120px;
+    height: 70px;
+  }
+.hidden {
+    display: none;
 }

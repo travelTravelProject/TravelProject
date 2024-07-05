@@ -14,7 +14,7 @@ public class UserDetail {
     private String mbti; // mbti
     private String oneLiner; // 소개글
     @Setter
-    private String profileImage; // 프로필 사진 경로
+    private String profileImage; // 프로필 사진
     private int rating; // 평점
 
     // 외래 키

@@ -5,12 +5,14 @@ import com.travel.project.dto.request.NestedReplyRequestPostDto;
 import com.travel.project.dto.response.NestedReplyListDto;
 import com.travel.project.dto.response.NestedReplyResponseDetailDto;
 import com.travel.project.entity.NestedReply;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.NestedReplyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,13 +37,14 @@ public class NestedReplyService {
     }
 
     // 대댓글 생성
-    public boolean registerReply(NestedReplyRequestPostDto dto) {
+    public boolean registerReply(NestedReplyRequestPostDto dto, HttpSession session) {
 
         NestedReply nestedReply =  NestedReply.builder()
                 .replyText(dto.getText())
                 .replyWriter(dto.getAuthor())
                 .nestedReplyId(dto.getNestedReplyId())
                 .replyId(dto.getReplyId())
+                .account(LoginUtil.getLoggedInUserAccount(session))
                 .build();
 
         boolean flag = nestedReplyMapper.save(nestedReply);

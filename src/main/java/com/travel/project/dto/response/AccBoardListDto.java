@@ -48,10 +48,10 @@ public class AccBoardListDto {
     }
 
     private String makeShortContent(String content) {
-        return content.length() > 100 ? content.substring(0, 100) + "..." : content;
+        return content.length() > 50 ? content.substring(0, 50) + "..." : content;
     }
 
     private String makeShortTitle(String title) {
-        return title.length() > 30 ? title.substring(0, 30) + "..." : title;
+        return title.length() > 20 ? title.substring(0, 20) + "..." : title;
     }
 }

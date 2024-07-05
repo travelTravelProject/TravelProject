@@ -48,7 +48,7 @@ public class LoginUtil {
         if (isLoggedIn(session)) {
             auth = Auth.valueOf(loggedInUser.getAuth());
         }
-        return auth == Auth.ADMIN;
+        return auth == Auth.admin;
     }
 
     public static boolean isMine(String boardAccount, String loggedInUserAccount) {

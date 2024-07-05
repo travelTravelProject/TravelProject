@@ -8,9 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/mypage-feed.css">
     <link rel="stylesheet" href="/assets/css/mypage.css">
+    <link rel="stylesheet" href="/assets/css/mypage-board.css">
 </head>
 <body>
+
 <%@ include file="include/sub_header.jsp" %>
+
 <div class="container">
     <div class="card-profile"></div>
     <%--    <h1>My Page</h1>--%>
@@ -31,7 +34,7 @@
 
         <div class="trip-info">
             <h2>${user.name}</h2>
-            <div class="trip-stats">
+            <div class="trip-stats-info">
                 <div>
                     <span>MBTI</span>
                     <p>${userDetail.mbti}</p>
@@ -74,50 +77,27 @@
 
     <div class="trip-info">
         <div class="trip-stats">
-            <div id="my-board-btn" class="tab-btn">
+            <div id="my-board-btn" class="tab-btn" data-my-account="${user.account}">
                 <span>동행</span>
             </div>
             <div id="my-feed-btn" class="tab-btn" data-my-account="${user.account}">
                 <span>피드</span>
             </div>
-            <div id="my-like-btn" class="tab-btn">
-                <span>좋아요</span>
-            </div>
+
+<%--            <div id="my-like-btn" class="tab-btn">
+<%--                <span>좋아요</span>
+<%--            </div>--%>
         </div>
     </div>
 
-<%--    <c:if test="${abList.size() > 0}">--%>
-<%--    <c:forEach var="ab" items="${abList}">--%>
+
     <div class="board-container">
-    <div class="card-wrapper">
-        <section class="card-post" data-bno="">
-            <div class="card-content-wrapper">
-                <div class="card-details-top">
-                    <div class="card-text">
-                        <div class="card-title">제목</div>
-                        <div class="card-content">
-                                내용
-                        </div>
-                    </div>
-                    <div class="card-img">
-                        <img src="#" alt="대표이미지">
-                    </div>
-                </div>
-                <div class="card-details-bot">
-                    <span>여</span>
-                    <span class="lnr lnr-calendar-full"></span>
-                    <span class="acc-period">&nbsp;2024-06-05 - 2024-06-30</span>
-                    <span class="view-count">조회수 </span>
-                </div>
-            </div>
-        </section>
+
     </div>
 </div>
-<%--    </c:forEach>--%>
-<%--    </c:if>--%>
+
 <div class="board-container" id="my-feed-tab">
     <div class="my-tab-inner">
-
 
     </div>
     <span class="close close-modal">x</span>
@@ -127,6 +107,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script type="module" src="/assets/js/myPage.js" defer></script>
     <script type="module" src="/assets/js/feed/mypage-feed.js" defer></script>
+    <script type="module" src="/assets/js/mypage-board.js" defer></script>
 </body>
 </html>
 

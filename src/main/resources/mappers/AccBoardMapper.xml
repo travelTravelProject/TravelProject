@@ -114,4 +114,9 @@
         <include refid="search" />
     </select>
 
+    <select id="totalCount" resultType="long">
+        SELECT COUNT(*)
+        FROM tbl_board
+    </select>
+
 </mapper>

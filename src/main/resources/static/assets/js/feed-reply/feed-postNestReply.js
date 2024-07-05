@@ -33,7 +33,7 @@ const replies = await res.json();
 
 // 대댓글 입력 후 초기화
 NestTextInput.value = '';
-NestWriterInput.value = '';
+// NestWriterInput.value = '';
 
 await fetchInfScrollNestReplies(rno);
 };

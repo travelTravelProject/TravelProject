@@ -31,7 +31,7 @@ const replies = await res.json();
 
 // 댓글 입력 후 초기화
 textInput.value = '';
-writerInput.value = '';
+// writerInput.value = '';
 
 // renderReplies(replies);
 await fetchInfScrollReplies(1, true);

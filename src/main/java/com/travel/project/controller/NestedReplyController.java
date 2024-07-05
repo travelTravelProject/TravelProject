@@ -6,12 +6,14 @@ import com.travel.project.dto.request.ReplyRequestPostDto;
 import com.travel.project.dto.response.NestedReplyListDto;
 import com.travel.project.dto.response.NestedReplyResponseDetailDto;
 import com.travel.project.entity.NestedReply;
+import com.travel.project.login.LoginUtil;
 import com.travel.project.service.NestedReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -25,8 +27,11 @@ public class NestedReplyController {
 
     // 대댓글 목록 전체조회 요청
     @GetMapping("/{replyId}")
-    public ResponseEntity<?> getNestedReply(@PathVariable long replyId) {
+    public ResponseEntity<?> getNestedReply(@PathVariable long replyId
+        , HttpSession session
+    ) {
         NestedReplyListDto replies = nestedReplyService.getReplies(replyId);
+        replies.setLoginUser(LoginUtil.getLoggedInUser(session));
         return ResponseEntity
                 .ok()
                 .body(replies);
@@ -34,8 +39,15 @@ public class NestedReplyController {
 
     // 대댓글 생성
     @PostMapping
-    public ResponseEntity<?> createNestedReply(@RequestBody NestedReplyRequestPostDto dto) {
-        nestedReplyService.registerReply(dto);
+    public ResponseEntity<?> createNestedReply(@RequestBody NestedReplyRequestPostDto dto
+        , HttpSession session
+    ) {
+        boolean flag = nestedReplyService.registerReply(dto, session);
+
+        if (!flag) return ResponseEntity
+                .internalServerError()
+                .body("대댓글 등록 실패!");
+
         return ResponseEntity.ok()
                 .body(nestedReplyService.getReplies(dto.getReplyId()));
     }
