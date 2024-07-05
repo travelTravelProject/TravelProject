@@ -9,8 +9,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public enum Auth {
 
-    common, //tbl_user 테이블에서는 소문자 common 으로 되어있어서 COMMON 을 common 으로 바꿈
-    admin
+    COMMON, //tbl_user 테이블에서는 소문자 common 으로 되어있어서 COMMON 을 common 으로 바꿈
+    ADMIN
 
 
 }

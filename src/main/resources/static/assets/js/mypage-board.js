@@ -60,4 +60,22 @@ function renderBoardList(boardList) {
     });
 }
 
+// 수정하기
+
+function openFeedTab(account) {
+    const $feedTab = document.getElementById('my-board-tab');
+    const $tab = document.querySelector('.board-container');
+    $tab.classList.add('inactive-tab');
+    $tab.classList.remove('active-tab-btn');
+    fetchMyFeedList(account);
+    $feedTab.classList.add('active-tab');
+    // $myFeedBtn.style.textDecoration = 'underline';
+    $myFeedBtn.classList.add('active-tab-btn');
+}
+
+$myFeedBtn.addEventListener('click', e => {
+    const account = $myFeedBtn.dataset.myAccount
+    console.log('마이페이지 피드 클릭!')
+    openFeedTab(account);
+});
 

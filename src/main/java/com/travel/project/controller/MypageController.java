@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class MypageBoardController {
+public class MypageController {
 
     private final MypageService mypageService;
 
