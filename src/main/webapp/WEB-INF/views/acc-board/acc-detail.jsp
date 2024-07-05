@@ -24,6 +24,9 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script> -->
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
     body {
         font-family: Arial, sans-serif;
         background-color: #f8f8f8;
@@ -137,8 +140,17 @@
         0% {
             transform: scale(1);
             opacity: 0.8;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 
-    <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f8f8;
@@ -210,15 +222,7 @@
         .buttons {
             margin: 20px auto;
         }
-        50% {
-            transform: scale(1.2);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
+
 
     /* 여기부터 모달 스타일 */
     .modal {
