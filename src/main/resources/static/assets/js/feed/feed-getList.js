@@ -1,6 +1,7 @@
 import { FEED_URL } from "../feed-list.js";
-import {debounce} from "../util.js";
+import {debounce, getRelTime} from "../util.js";
 import {renderCarousel, setOneImgStyle} from "../image.js";
+import {hideFeedSpinner, showFeedSpinner} from "../spinner.js";
 
 let currentFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetchingFeed = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
@@ -21,7 +22,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
          , profileImage: profile, feedImageList
-         , likeCount, userLike
+         , likeCount, userLike, bookmarkCount, userBookmark
        }, index) => {
         console.log('피드목록렌더링 account: ', account,' /userLike: ', userLike);
       tag += `
@@ -34,7 +35,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
               </div>
               <div class="profile-column">
                 <span class="nickname">${nickname}</span>
-                <span class="created-at">${createdAt}</span>          
+                <span class="created-at">${getRelTime(createdAt)}</span>          
               </div>
             </div>
           </div>
@@ -57,14 +58,21 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
                 <ion-icon 
                     name="heart" class="${userLike ? 'liked':''}" 
                 ></ion-icon> ${likeCount}</span>
-            <span class="bookmarks"><ion-icon name="bookmark" ></ion-icon> 5</span>
+            <span class="bookmarks">
+                <ion-icon name="bookmark" class="${userBookmark ? 'bookmarked': ''}"
+                ></ion-icon> ${bookmarkCount}</span>
           </div>
         </div>
       `;
     }); // feeads.forEach 종료
 
   } else{ // 게시글 없는 경우
-
+      tag = `
+        <div id="no-feed">
+            <p>모든 피드를 다 보셨거나 작성하신 피드가 없습니다.</p>
+            <p>${loginUser ? loginUser.nickname : '방문자'}님 여행을 공유해주세요.</p>
+        </div>
+      `;
   }
   // 게시글 컨테이너에 태그 추가
   document.getElementById('feedData').innerHTML += tag;
@@ -75,17 +83,27 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
 }
 
 // 서버에서 피드 목록 가져오는 비동기 요청 함수
-export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') {
+export async function fetchFeedList(
+    pageNo = 1,
+    // keyword = '',
+    // sort='latest'
+    ) {
 
   if(isFetchingFeed) return; // 서버에서 데이터를 가져오는 중이면 return;
   isFetchingFeed = true;
+  const keyword = getSearchKeyword() || '';
+  const sort = getSortSelected();
 
-  const url = `${FEED_URL}/v1/list?pageNo=${pageNo}&type=${type}&keyword=${keyword}`;
+  const url = `${FEED_URL}/v1/list?pageNo=${pageNo}&type=cw&keyword=${keyword}&sort=${sort}`;
   console.log('fetchFeedList 실행: ', pageNo);
 
   const res = await fetch(url);
   if (!res.ok) {
-    throw new Error(`HTTP error! Status: ${res.status}`);
+    if(res.status === 204) {
+
+    } else {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
   }
   const feedListDto = await res.json();
   console.log(feedListDto);
@@ -107,6 +125,7 @@ export async function fetchFeedList(pageNo = 1, type = 'content', keyword = '') 
   // 피드 모두 가져오면 스크롤이벤트 제거
   if(loadedFeeds >= totalFeeds) {
     console.log('피드 모두 가져옴! 스크롤 이벤트 제거')
+    hideFeedSpinner();
     document.body.removeEventListener('scroll', debouncedFeedScrollHandler);
   }
 
@@ -129,11 +148,9 @@ const debouncedFeedScrollHandler = debounce(async function(e) {
   if (scrollTop + clientHeight + 200 >= scrollHeight
     && !isFetchingFeed
   ) {
-    // console.log(e);
     // 서버에서 데이터를 비동기로 불러와야 함
-    // 2초의 대기열이 생성되면 다음 대기열 생성까지 2초를 기다려야 함
     console.log("스크롤 이벤트 핸들러 함수 실행");
-    // showSpinner();
+    showFeedSpinner();
     await new Promise(resolve => setTimeout(resolve, 700));
     fetchFeedList(currentFeedPage + 1);
   }
@@ -144,4 +161,15 @@ export function setupInfiniteScroll() {
   console.log("스크롤이벤트 생성 함수 실행");
 
   document.body.addEventListener('scroll', debouncedFeedScrollHandler)
+}
+
+// 검색어 값 찾아서 반환하는 함수
+export function getSearchKeyword() {
+  const $searchInput = document.querySelector('#searchFeed .form-control')
+  return $searchInput.value;
+}
+// 정렬 선택사항 찾아서 반환하는 함수
+export function getSortSelected() {
+  const $filters = document.getElementById('filters-box');
+  return  $filters.querySelector('.active-filter').dataset.sort || 'latest';
 }

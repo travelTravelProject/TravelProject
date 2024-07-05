@@ -1,23 +1,21 @@
 import {
     clearImageFiles,
-    dataToFormData, deletePreviewAndUpdate,
+    dataToFormData,
+    deletePreviewAndUpdate,
     handleFileInputChange,
-    imageFiles as importedImages,
-    previewImages
+    imageFiles as importedImages
 } from "../image.js";
 import {fetchFeedPost, resetPostModal} from "./feed-post.js";
 import {fetchFeedDetail} from "./feed-detail.js";
 
 import {fetchFeedModify, setEditModal} from "./feed-modify.js";
-import {fetchFeedList} from "./feed-getList.js";
+import {fetchFeedList, getSearchKeyword, getSortSelected} from "./feed-getList.js";
 import {fetchFeedDelete} from "./feed-delete.js";
-import {fetchLike} from "./feed-interaction.js";
+import {fetchBookmark, fetchLike} from "./feed-interaction.js";
 
-import { initInfScroll} from "../feed-reply/feed-getReply.js";
-import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
-import { isEditModeActive, fetchReplyModify } from "../feed-reply/feed-modifyReply.js";
-import { removeReplyClickEvent } from "../feed-reply/feed-deleteReply.js";
-import { modifyReplyClickEvent } from "../feed-reply/feed-modifyReply.js";
+import {initInfScroll} from "../feed-reply/feed-getReply.js";
+import {modifyReplyClickEvent} from "../feed-reply/feed-modifyReply.js";
+import {removeReplyClickEvent} from "../feed-reply/feed-deleteReply.js";
 
 // 대댓글 작성시 boardId를 전달하기 위해 설정한 전역변수
 let currentBoardId = null;
@@ -101,6 +99,7 @@ export function initFeedFormEvents() {
         ) {
             if (!e.target.closest('.modal-content') && !e.target.closest('.detail-modal-content')) {
                 e.target.style.display = "none";
+                resetPostModal(); // 피드 작성 모달 입력사항 초기화
                 clearImageFiles(); // 모달이 닫힐 때 imageFiles 초기화
             }
         }
@@ -111,14 +110,23 @@ export function initFeedFormEvents() {
     $imageInputPost.addEventListener('change', e => {
         console.log('post imageFiles: ', imageFiles);
         console.log('post 이미지 전: ', importedImages);
+        if(imageFiles.length === 10 || importedImages.length === 10) {
+            alert("이미지는 최대 10장까지 업로드 가능합니다.");
+            return;
+        }
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxPost);
         console.log('post 이미지 추가확인: ', imageFiles);
         console.log('post 이미지 추가후 import: ', importedImages);
     });
     $imageInputEdit.addEventListener('change', e => {
         console.log("edit 모달 이미지 추가 이벤트 실행!")
+        if(imageFiles.length === 10 || importedImages.length === 10) {
+            alert("이미지는 최대 10장까지 업로드 가능합니다.");
+            return;
+        }
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxEdit);
     });
+
     // 미리보기 삭제 버튼 이벤트
     $imageBoxPost.addEventListener('click', (e) => {
         if(e.target.classList.contains('delete-prev-image')) {
@@ -144,6 +152,10 @@ export function initFeedFormEvents() {
             alert('모든 필드를 채워주세요.');
             return;
         }
+        if(createContent.length >= 50) {
+            alert('피드 분문은 최대 50자까지 입력 가능합니다.');
+            return;
+        }
 
         // fetch payload에 담아서 POST 요청
         const data = {
@@ -164,6 +176,16 @@ export function initFeedFormEvents() {
         e.preventDefault();
         const boardId = document.getElementById('editFeedModal').dataset.boardId;
         const editContent = document.getElementById('ed-content').value;
+
+        if (!editContent || importedImages.length === 0) {
+            alert('모든 필드를 채워주세요.');
+            return;
+        }
+        if(editContent.length >= 50) {
+            alert('피드 분문은 최대 50자까지 입력 가능합니다.');
+            return;
+        }
+
         const data = {
             content: editContent,
         }
@@ -190,8 +212,12 @@ export function initFeedFormEvents() {
 
     })
 
-    // TOP 버튼
+    // 스크롤 최상단으로 이동 버튼
     const topBtn = document.getElementById('goTopBtn');
+    topBtn.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.scrollTo({top: 0, behavior: 'smooth'});
+    })
     window.addEventListener('scroll', () => {
         if(document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
             topBtn.style.display = 'block';
@@ -200,12 +226,14 @@ export function initFeedFormEvents() {
         }
     });
 
-    topBtn.addEventListener('click', e => {
+    // 스크롤 최하단으로 이동 버튼
+    const bottomBtn = document.getElementById('goBottomBtn');
+    bottomBtn.addEventListener('click', e => {
         e.preventDefault();
-        document.body.scrollTo({top: 0, behavior: 'smooth'});
+        document.body.scrollTop = document.body.scrollHeight;
     })
 
-    // 좋아요 버튼
+    // 좋아요 버튼, 북마크 버튼 클릭 시 상태 업데이트
     document.addEventListener('click', e => {
         const $heartSpan = e.target.closest('.hearts');
         // 클릭된 요소가 .hearts이거나, .hearts의 자식인 경우 처리
@@ -214,7 +242,77 @@ export function initFeedFormEvents() {
             console.log('좋아요 이벤트 실행! : ', boardId);
             fetchLike($heartSpan.firstElementChild, boardId);
         }
+
     })
+    document.addEventListener('click', e=> {
+        const $bookmarkSpan = e.target.closest('.bookmarks');
+        if($bookmarkSpan) {
+            const boardId = $bookmarkSpan.closest('.feed-item').dataset.feedId;
+            fetchBookmark($bookmarkSpan.firstElementChild, boardId);
+        }
+    })
+
+    // 텍스트 입력 제한 이벤트
+    const $textareaPost = document.getElementById('cr-content');
+    const $textareaEdit = document.getElementById('ed-content');
+    $textareaPost.addEventListener('keydown', e => {
+        const text = $textareaPost.value;
+        const length = $textareaPost.value.length;
+       const $typingCnt = document.querySelector('#createFeedModal .typing-count');
+        if(length > 50 || e.target.clientHeight !== e.target.scrollHeight) {
+            alert('피드 본문은 최대 4줄 또는 50자까지 입력 가능합니다.');
+            length < 50 ? $textareaPost.value = text.substring(length-1, 1)
+              : $textareaPost.value = text.substring(0, 50);
+       }
+       $typingCnt.textContent = $textareaPost.value.length.toString();
+    });
+
+    $textareaEdit.addEventListener('keydown', e => {
+        const text = $textareaEdit.value;
+        const length = text.length;
+        const $typingCnt = document.querySelector('#editFeedModal .typing-count');
+        $typingCnt.textContent = length.toString();
+        if(length > 50 || e.target.clientHeight !== e.target.scrollHeight) {
+            alert('피드 본문은 최대 4줄 또는 50자까지 입력 가능합니다.');
+            length < 50 ? $textareaEdit.value = text.substring(length-1, 1)
+            : $textareaEdit.value = text.substring(0, 50);
+        }
+        $typingCnt.textContent = $textareaEdit.value.length.toString();
+    });
+    function validateTextarea(tag, className) {
+        const text = tag.value;
+        const length = text.length;
+        const $typingCnt = document.querySelector(className);
+        $typingCnt.textContent = length.toString();
+        if(length > 50 || tag.clientHeight !== tag.scrollHeight) {
+            alert('피드 본문은 최대 4줄 또는 50자까지 입력 가능합니다.');
+            length < 50 ? tag.value = text.substring(length-1, 1)
+              : tag.value = text.substring(0, 50);
+        }
+        $typingCnt.textContent = $textareaEdit.value.length.toString();
+    }
+    // 검색
+    document.querySelector('.search input[name="keyword"]').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            fetchFeedList();
+        }
+    });
+    // 정렬
+    document.getElementById('filters-box').addEventListener('click', e => {
+        const $latest = document.getElementById('filter-latest');
+        const $popular = document.getElementById('filter-pop');
+        if(e.target.matches('#filter-latest')) {
+            $latest.classList.add('active-filter');
+            $popular.classList.remove('active-filter');
+        } else if (e.target.matches('#filter-pop')) {
+            $latest.classList.remove('active-filter');
+            $popular.classList.add('active-filter');
+        }
+        fetchFeedList();
+    })
+
+
 
     document.getElementById('replyAddBtn').onclick = async e => {
         if (isEditModeActive()) {

@@ -7,8 +7,7 @@ import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.dto.request.FeedModifyDto;
 import com.travel.project.dto.request.FeedPostDto;
-import com.travel.project.dto.response.FeedDetailDto;
-import com.travel.project.dto.response.FeedListDto;
+import com.travel.project.dto.response.*;
 import com.travel.project.entity.Board;
 import com.travel.project.entity.BoardImage;
 import com.travel.project.login.LoginUtil;
@@ -32,39 +31,50 @@ public class FeedService {
     private final FeedMapper feedMapper;
     private final ImageService imageService;
     private final LikeService likeService;
+    private final BookmarkService bookmarkService;
 
-    public FeedListDto findAll(Search search, HttpSession session) {
-        List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search);
-//        log.debug("서비스 findAll: {}", feedList);
+    // 피드 전체 조회
+    public FeedListDto findAll(Search search, HttpSession session, String sort) {
+
+        Page page = new Page(search.getPageNo(), search.getAmount());
         String loginAccount = LoginUtil.getLoggedInUserAccount(session);
+
+        List<FeedFindAllDto> feedList = feedMapper.findAllFeeds(search, sort);
+
+        // 조건에 맞는 피드가 없는 경우
         if (feedList.isEmpty()) {
-            return null;
+            return FeedListDto.builder()
+                    .pageInfo(new PageMaker(page, 0))
+                    .build();
         }
         // 각 피드마다 이미지 리스트를 추가
         // 각 피드마다 댓글 수, 좋아요 수, 북마크 수 추가
 
         List<FeedDetailDto> detailDto = feedList.stream()
-                .map(f -> {
-                    FeedDetailDto responseDto = f.toDetailResponseDto();
-                    log.debug("피드서비스 f: {}", f);
-                    log.debug("f 글번호: {}", f.getBoardId());
+            .map(f -> {
+                log.debug("전체조회 - 피드서비스 f: {}", f);
+                FeedDetailDto responseDto = f.toDetailDto();
+                responseDto.setContent(formatContent(changeEol(f.getContent()))); // content 변경
 
-                    int boardId = (int) f.getBoardId();
-                    String account = f.getAccount();
-                    // 좋아요 수, 로그인 유저의 좋아요 여부 추가
-                    responseDto.setLikeCount(likeService.countLikes(boardId));
-                    responseDto.setUserLike(likeService.isLikedByUser(loginAccount, boardId));
+                int boardId = (int) f.getBoardId(); // like service 가 int 요구해서
 
-                    // Feed 디테일 응답객체에 이미지 담기
-                    List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());
-                    if (feedImages != null) {
-                        responseDto.setFeedImageList(feedImages);
-                    }
-                    return responseDto;
-                })
-                .collect(Collectors.toList());
+                // 좋아요 수, 로그인 유저의 좋아요 여부 추가
+                responseDto.setLikeCount(likeService.countLikes(boardId));
+                responseDto.setUserLike(likeService.isLikedByUser(loginAccount, boardId));
 
-        Page page = new Page(search.getPageNo(), search.getAmount());
+                // 북마크 수, 로그인 유저의 북마크 여부 추가
+                responseDto.setBookmarkCount(bookmarkService.countBookmarks(boardId));
+                responseDto.setUserBookmark(bookmarkService.isBookmarkByUser(loginAccount, boardId));
+
+                // Feed 디테일 응답객체에 이미지 담기
+                List<BoardImage> feedImages = imageService.findFeedImages(f.getBoardId());
+                if (feedImages != null) {
+                    responseDto.setFeedImageList(feedImages);
+                }
+                return responseDto;
+            })
+            .collect(Collectors.toList());
+
 
         return FeedListDto.builder()
                 .pageInfo(new PageMaker(page, getCount(search)))
@@ -73,15 +83,17 @@ public class FeedService {
 
     }
 
+    // 피드 상세 조회 - 글 번호로
     public FeedDetailDto findById(long boardId) {
         log.debug("글번호: {}", boardId);
 
-        // DB에서 FeedFindOneDto 받아와서 response dto에 담기
+        // DB tbl_board 조회 결과 FeedFindOneDto 에 담기
         FeedFindOneDto feedById = feedMapper.findFeedById(boardId);
         log.debug("개별조회: {}", feedById);
 
         // 피드 상세조회 응답 DTO를 생성
         FeedDetailDto responseDto = feedById.toDetailDto();
+        responseDto.setContent(changeEol(feedById.getContent())); // \r\n -> <br>
 
         // 이미지 모두 조회하여 추가
         List<BoardImage> feedImages = imageService.findFeedImages(feedById.getBoardId());
@@ -124,8 +136,8 @@ public class FeedService {
             throw new RuntimeException("피드 수정 - 이미지 파일이 없습니다.");
         }
         // file 존재하면 DB에 insert
-        // 이미지 추가 성공하면 등록한 BoardId를 리턴
-        // 이미지 추가 실패하면 트랜잭션 롤백
+        // 성공하면 등록한 BoardId를 리턴
+        // 실패하면 트랜잭션 롤백
         for (int i = 0; i < files.size(); i++) {
             MultipartFile file = files.get(i);
             BoardImage b = BoardImage.builder()
@@ -187,7 +199,7 @@ public class FeedService {
 
         boolean flag = feedMapper.deleteFeed(boardId);
         log.debug("피드서비스 삭제: {}", flag);
-        return flag ? findAll(new Search(new Page(1, 5)), session) : null;
+        return flag ? findAll(new Search(new Page(1, 5)), session,"latest") : null;
     }
     // 조회수 증가
     public boolean addViewCount(long boardId) {
@@ -196,7 +208,75 @@ public class FeedService {
 
     // 총 피드 개수
     public int getCount(Search search) {
-        Integer result = feedMapper.countFeeds(search);
-        return result != null ? result : 0;
+        return feedMapper.countFeeds(search);
+    }
+
+    // 디비에 저장된 textarea 개행문자 -> br 태그
+    public String changeEol(String content) {
+        return content.replaceAll("\r\n", "<br>");
+    }
+
+    // 피드 전체 조회 시 10글자 이상은 생략
+    public String formatContent(String content) {
+        int len = 15;
+        String[] split = content.split("<br>");
+        String result = split[0]; // 첫번째 줄
+
+        // 첫번째 줄이 10글자 보다 긴 경우
+        if(split[0].length() > len) {
+            result = split[0].substring(0, len) + " ...";
+
+        } else { // 첫번째 줄이 10글자 이하
+            if(split.length > 1) { // 두번째 줄이 있는 경우
+                result = split[0] + " ...";
+            }
+        }
+
+        return result;
+    }
+
+    @Transactional
+    public MyFeedListDto findFeedsByAccount(Search search, HttpSession session) {
+
+        LoginUserInfoDto loggedInUser = LoginUtil.getLoggedInUser(session);
+
+        List<FeedFindAllDto> feedList = feedMapper.findAllByAccount(search, loggedInUser.getAccount());
+
+        // 해당 계정이 작성한 피드가 없는 경우
+        if (feedList.isEmpty()) {
+            return MyFeedListDto.builder()
+                    .loginUser(loggedInUser)
+                    .pageInfo(new PageMaker(new Page(search.getPageNo(), search.getAmount()), 0))
+                    .myFeeds(null)
+                    .build();
+        }
+        List<MyFeedDto> myFeeds = feedList.stream().map(f -> {
+
+            MyFeedDto myFeed = f.toMyFeed();
+            long boardId = f.getBoardId();
+
+            // 이미지 조회한 결과 추가 (1개)
+            BoardImage firstOne = imageService.findFirstOne(boardId);
+            if(firstOne == null) throw new RuntimeException("이미지가 존재하지 않습니다.");
+            myFeed.setImage(firstOne);
+
+            // 좋아요 수 추가
+            myFeed.setLikeCount(likeService.countLikes((int)boardId));
+
+            // 북마크 수 추가
+            myFeed.setBookmarkCount(bookmarkService.countBookmarks((int)boardId));
+
+            // 댓글 수 추가 (확인 필요)
+
+            return myFeed;
+        }).collect(Collectors.toList());
+
+        PageMaker pageMaker = new PageMaker(new Page(search.getPageNo(), search.getAmount()), myFeeds.size());
+
+        return MyFeedListDto.builder()
+                .loginUser(loggedInUser)
+                .pageInfo(pageMaker)
+                .myFeeds(myFeeds)
+                .build();
     }
 }

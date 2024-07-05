@@ -8,6 +8,7 @@ import com.travel.project.dto.request.FeedPostDto;
 import com.travel.project.dto.response.*;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.FeedMapper;
+import com.travel.project.service.BookmarkService;
 import com.travel.project.service.FeedService;
 import com.travel.project.service.LikeService;
 import lombok.RequiredArgsConstructor;
@@ -30,27 +31,31 @@ public class FeedController {
     private final FeedService feedService;
     private final LikeService likeService;
     private final FeedMapper feedMapper;
+    private final BookmarkService bookmarkService;
 
     // 피드 전체 조회 요청
     @GetMapping("/list") // 페이지, 검색 쿼리스트링
 //    @ResponseBody
     public ResponseEntity<?> list(
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-            @RequestParam(name = "type", defaultValue = "content", required = false) String type,
-            @RequestParam(name = "keyword", defaultValue = "", required = false) String keyword
+            @RequestParam(name = "type", defaultValue = "cw", required = false) String type,
+            @RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
+            @RequestParam(name = "sort", defaultValue = "latest", required = false) String sort
             , HttpSession session
     ) {
 //        log.debug("겟: " + pageNo + "-" + type + "-" + keyword);
         Search page = new Search(new Page(pageNo, 5), type, keyword);
         page.setKeyword(keyword);
         page.setType(type);
+
         // Search type, keyword 확인 필요
-        FeedListDto feeds = feedService.findAll(page, session);
+        FeedListDto feeds = feedService.findAll(page, session, sort);
+        log.debug("서비스결과: {}",feeds);
         feeds.setLoginUser(LoginUtil.getLoggedInUser(session));
 
         log.debug("FeedListDto: {}", feeds.getFeeds().get(0));
 
-        return ResponseEntity.ok(feeds);
+        return ResponseEntity.ok().body(feeds);
     }
 
     // 피드 상세 조회 요청
@@ -64,7 +69,7 @@ public class FeedController {
 
         FeedDetailDto foundFeed = feedService.findById(boardId);
 
-        if(foundFeed == null) {
+        if (foundFeed == null) {
             return ResponseEntity.noContent().build();
         }
         String loginAccount = LoginUtil.getLoggedInUserAccount(session);
@@ -89,9 +94,9 @@ public class FeedController {
             , HttpSession session
     ) {
         log.debug("POST 컨트롤러 계정: {}", account);
-        LoginUserInfoDto user = (LoginUserInfoDto)session.getAttribute("user");
+        LoginUserInfoDto user = (LoginUserInfoDto) session.getAttribute("user");
         log.debug("POST 세션 계정: {}", user.getAccount());
-        if(!account.equals(user.getAccount())) {
+        if (!account.equals(user.getAccount())) {
             return ResponseEntity.badRequest().body("계정 불일치");
         }
         FeedPostDto dto = FeedPostDto.builder()
@@ -104,12 +109,10 @@ public class FeedController {
             // 에러 메세지 Map 필요
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
-        // 받아온 계정과 세션 계정 일치하는지 검증 필요
-        // 일치하면 Board 작성 아니면 에러메세지 리턴
 
-        // tbl_board 생성된 데이터의 boardId를 가져옴 (실패 시 -1 리턴)
+        // tbl_board 생성된 데이터의 boardId를 가져옴 (실패 시 RuntimeException)
         long newBoardId = feedService.insertFeed(dto, session);
-        if(newBoardId < 0) {
+        if (newBoardId < 0) {
             return ResponseEntity
                     .internalServerError()
                     .body("피드 등록 실패!");
@@ -120,7 +123,7 @@ public class FeedController {
     }
 
     // 수정 - 수정한 내용을 JSON으로 받도록 수정해야 함
-    @RequestMapping(value="/{boardId}", method= {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/{boardId}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<?> updateFeed(
             @PathVariable long boardId,
             @RequestPart("content") String content,
@@ -132,7 +135,7 @@ public class FeedController {
         String userAccount = LoginUtil.getLoggedInUserAccount(session);
 
         // 피드 작성자 또는 관리자가 아니면 수정 불가
-        if(!LoginUtil.isMine(boardAccount, userAccount) && !LoginUtil.isAdmin(session)) {
+        if (!LoginUtil.isMine(boardAccount, userAccount) && !LoginUtil.isAdmin(session)) {
             return ResponseEntity.badRequest().body("피드 작성자가 아니면 수정할 수 없습니다.");
         }
         FeedModifyDto dto = FeedModifyDto.builder()
@@ -145,7 +148,7 @@ public class FeedController {
         log.debug("피드수정 컨트롤러 req: {}", dto);
 
         boolean flag = feedService.updateFeed(dto);
-        if(!flag) {
+        if (!flag) {
             return ResponseEntity
                     .internalServerError()
                     .body("피드 등록 실패!");
@@ -171,26 +174,43 @@ public class FeedController {
     public ResponseEntity<?> like(@PathVariable int boardId, HttpSession session) throws SQLException {
 
         // 로그인 검증
-        if(!LoginUtil.isLoggedIn(session)) {
-            return ResponseEntity.status(403)
-                    .body("로그인이 필요합니다.");
-
+        if (!LoginUtil.isLoggedIn(session)) {
+            return ResponseEntity.status(403).body("좋아요는 로그인이 필요합니다.");
         }
-
         log.info("좋아요 async request 피드 컨트롤러!");
-
         String account = LoginUtil.getLoggedInUserAccount(session);
         FeedFindOneDto feedById = feedMapper.findFeedById((long) boardId);
         String boardAccount = feedById.getAccount();
 
         LikeDto dto = likeService.like(account, boardId, boardAccount);// 좋아요 요청 처리
 
-        if(dto == null) {
-            return ResponseEntity.status(403)
-                    .body("자신이 작성한 피드에는 좋아요를 누를 수 없습니다.");
+        if (dto == null) {
+            return ResponseEntity.status(403).body("자신이 작성한 피드에는 좋아요를 누를 수 없습니다.");
         }
-
         return ResponseEntity.ok().body(dto);
     }
+
+    // 북마크 요청 비동기 처리
+    @GetMapping("/bookmark/{boardId}")
+    @ResponseBody
+    public ResponseEntity<?> bookmark(@PathVariable int boardId, HttpSession session) throws SQLException {
+
+        // 로그인 검증
+        if (!LoginUtil.isLoggedIn(session)) {
+            return ResponseEntity.status(403).body("북마크는 로그인이 필요합니다.");
+        }
+        log.info("북마크 async request 피드 컨트롤러!");
+        String account = LoginUtil.getLoggedInUserAccount(session);
+        FeedFindOneDto feedById = feedMapper.findFeedById((long) boardId);
+        String boardAccount = feedById.getAccount();
+
+        BookmarkDto dto = bookmarkService.bookmark(account, boardId, boardAccount);// 북마크 요청 처리
+
+        if (dto == null) {
+            return ResponseEntity.status(403).body("자신이 작성한 피드에는 북마크를 누를 수 없습니다.");
+        }
+        return ResponseEntity.ok().body(dto);
+    }
+
 
 }

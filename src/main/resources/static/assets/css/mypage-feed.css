@@ -1,0 +1,112 @@
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    background-color: #fafafa;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    height: 100vh;*/
+/*    margin: 0;*/
+/*}*/
+
+/*.board-container */
+
+#my-feed-btn {
+    display: block;
+    width: 218px;
+}
+.board-container{
+    /*text-decoration: underline;*/
+    font-family: "Noto Sans KR", sans-serif;
+}
+.trip-stats {
+    border-bottom: 1px solid #e0e0e0;
+}
+.tab-btn {
+    display: block;
+    width: 218px;
+    padding-bottom: 4px;
+    color: #cccccc;
+}
+
+#my-feed-tab {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    max-width: 800px;
+    /*border: 1px solid red;*/
+    /*justify-content: space-between;*/
+}
+
+.myfeed-item {
+    position: relative;
+    width: calc(25% - 3px); /* 4 items per row, with gap adjustment */
+    /*width: 200px;*/
+    overflow: hidden;
+    /*padding-bottom: 3px;*/
+}
+
+.myfeed-item img {
+    width: 100%;
+    height: 200px;
+    /*width: 200px;*/
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.myfeed-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.0);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    transition: 700ms ease;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.myfeed-item:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    /*height: 100%;*/
+}
+
+.text {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+.active-tab {
+    display: flex;
+}
+.inactive-tab {
+    display: none;
+    color: #cccccc;
+}
+.active-tab-btn {
+    border-bottom: 1px solid rgba(0,0,0,0.9);
+    color: black;
+}
+#no-feed {
+    /*width: 80%;*/
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 10px ;
+    /*align-content: center;*/
+    /*border: 1px solid violet;*/
+    background: #f3f7f7;
+    padding: 20px 70px;
+}
+#no-feed p {
+    /*align-items: center;*/
+    text-align: center;
+    /*border: 1px solid lightgreen;*/
+
+}

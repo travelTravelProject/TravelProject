@@ -20,6 +20,17 @@
 <section id="feed-header">
   <div class="top-section">
     <!-- 검색창 영역 -->
+      <div class="search">
+          <form id="searchFeed" method="get">
+              <input type="hidden" name="type" value="cw">
+              <input type="text" class="form-control" name="keyword" placeholder="피드를 찾아보세요." >
+          </form>
+      </div>
+
+      <div class="filters" id="filters-box">
+          <button id="filter-latest" class="filter-item active-filter" data-sort="latest">최신글</button>
+          <button id="filter-pop" class="filter-item" data-sort="pop">인기글</button>
+      </div>
 <%--    <div class="search">--%>
 <%--      <form action="/feed/list" method="get">--%>
 
@@ -47,36 +58,44 @@
 </section>
 <div class="btn-container">
     <div id="createFeedBtn" class="side-btn" data-feed-user="${user != null ? user.account : ""}"> <i class="fas fa-pen"></i> </div>
-    <div id="goTopBtn" class="side-btn"> TOP </div>
+    <div id="goTopBtn" class="side-btn"><i class="fas fa-angle-double-up"></i></div>
+    <div id="goBottomBtn" class="side-btn"><i class="fas fa-angle-double-down"></i></div>
     <%--    <button id="editFeedBtn">피드 수정</button>--%>
 </div>
 <%-- 피드 헤더 끝 --%>
 <%-- 피드 목록 시작 --%>
 <section id="feed-list">
   <div class="feed-container" id="feedData">
-    <div class="feed-item">
-      <div class="profile-section">
-        <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
-        <span class="nickname">nickname123</span>
-      </div>
-      <div class="image-carousel">
-<%--        <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">--%>
-        <!-- Add more images here for carousel -->
-      </div>
-      <div class="content-section">
-        <span>너무 더워</span>
-      </div>
-      <div class="interaction-section">
-        <span class="comments"><ion-icon name="chatbubble-outline"></ion-icon> 10</span>
-        <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>
-        <span class="bookmarks"><ion-icon name="bookmark-outline"></ion-icon> 5</span>
-      </div>
-    </div>
+<%--    <div class="feed-item">--%>
+<%--      <div class="profile-section">--%>
+<%--        <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">--%>
+<%--        <span class="nickname">nickname123</span>--%>
+<%--      </div>--%>
+<%--      <div class="image-carousel">--%>
+<%--&lt;%&ndash;        <img src="/assets/img/floating.jpg" alt="Post Image" class="post-image">&ndash;%&gt;--%>
+<%--        <!-- Add more images here for carousel -->--%>
+<%--      </div>--%>
+<%--      <div class="content-section">--%>
+<%--        <span>너무 더워</span>--%>
+<%--      </div>--%>
+<%--      <div class="interaction-section">--%>
+<%--        <span class="comments"><ion-icon name="chatbubble-outline"></ion-icon> 10</span>--%>
+<%--        <span class="hearts"><ion-icon name="heart-outline"></ion-icon> 25</span>--%>
+<%--        <span class="bookmarks"><ion-icon name="bookmark-outline"></ion-icon> 5</span>--%>
+<%--      </div>--%>
+<%--    </div>--%>
   </div>
-    <%-- 스피너 --%>
-    <div class="spinner-container">
-        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    <%-- 피드 목록 스피너 --%>
+    <div class="spinner-section">
+        <div class="spinner-container" id="loadingFeedSpinner">
+            <div class="spinner-border text-gray" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
     </div>
+<%--    <div class="spinner-container-lds">--%>
+<%--        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>--%>
+<%--    </div>--%>
 
 </section>
 <%-- 피드 목록 끝 --%>
@@ -87,12 +106,14 @@
     <div id="createFeedForm">
       <label for="cr-nickname">닉네임</label>
       <input type="text" id="cr-nickname" name="nickname" required value="${user.nickname}" readonly>
-      <label for="cr-content">내용</label>
-      <textarea id="cr-content" name="content" rows="3" placeholder="본문을 입력하세요." required></textarea>
+      <label for="cr-content">본문</label>
+        <span class="typing-text"> <span class="typing-count">0</span>/50</span>
+      <textarea id="cr-content" name="content" rows="4" placeholder="최대 4줄 또는 50자까지 입력 가능합니다." required></textarea>
       <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
+        <span class="typing-text">최대 10장까지 업로드 가능합니다.</span>
       <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
       <div class="dropbox" id="post-preview"></div>
-      <button type="submit" id="feed-post-Btn" class="one-modal-btn">게시</button>
+      <button type="submit" id="feed-post-Btn" class="one-modal-btn">새로운 피드 등록하기</button>
     </div>
   </div>
 </div>
@@ -104,9 +125,11 @@
     <div id="editFeedForm">
       <label for="ed-nickname">닉네임</label>
       <input type="text" id="ed-nickname" name="nickname" required readonly>
-      <label for="ed-content">내용</label>
-        <textarea type="text" id="ed-content" name="nickname" required></textarea>
+      <label for="ed-content">본문</label>
+        <span class="typing-text"> <span class="typing-count">0</span>/50</span>
+        <textarea type="text" id="ed-content" name="nickname" rows="4" placeholder="최대 4줄 또는 50자까지 입력 가능합니다." required></textarea>
       <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
+        <span class="typing-text">최대 10장까지 업로드 가능합니다.</span>
       <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
       <div class="dropbox" id="edit-preview"></div>
       <button type="submit" id="feed-modify-Btn" class="one-modal-btn">수정 완료</button>
@@ -234,14 +257,14 @@
         </div>
       </div>
       <!-- end reply content -->
-    </div>
-    <!-- end replies row -->
-     
     <div class="spinner-container" id="loadingSpinner">
       <div class="spinner-border text-light" role="status">
           <span class="visually-hidden">Loading...</span>
-      </div>  
+      </div>
     </div>
+    </div>
+    <!-- end replies row -->
+
     <%-- 디테일 모달 닫기 - 스피너 컨테이너 형제  --%>
     <span class="close">&times;</span>
 

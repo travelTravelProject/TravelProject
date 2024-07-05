@@ -44,7 +44,7 @@ public class BookmarkService {
                 .build();
     }
 
-    public int countbookmarks(long boardId) {
+    public int countBookmarks(long boardId) {
         return bookmarkMapper.countBookmarks(boardId);
     }
 

@@ -5,6 +5,7 @@ import com.travel.project.dto.request.FeedFindAllDto;
 import com.travel.project.dto.request.FeedFindOneDto;
 import com.travel.project.entity.Board;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,13 +13,17 @@ import java.util.List;
 public interface FeedMapper {
 
     // 전체 피드 조회
-    List<FeedFindAllDto> findAllFeeds(Search s);
+    List<FeedFindAllDto> findAllFeeds(
+            @Param("s") Search s,
+            @Param("sort") String sort);
 
     // 피드 하나 조회
     FeedFindOneDto findFeedById(long boardId);
 
     // 회원이 작성한 피드 전체 조회
-    List<FeedFindAllDto> findAllByAccount(String account);
+    List<FeedFindAllDto> findAllByAccount(
+            @Param("s") Search s,
+            @Param("account") String account);
 
     // 피드 생성
     int saveFeed(Board newBoard);
@@ -33,10 +38,11 @@ public interface FeedMapper {
     boolean upViewCount(long boardId);
 
     // 총 피드 수
-    int countFeeds(Search search);
+    int countFeeds(@Param("s") Search search);
 
     // 피드 총 조회수
     int sumViewCount(long boardId);
+
     // 새로운 피드 id 조회
     int getNewBoardId();
 

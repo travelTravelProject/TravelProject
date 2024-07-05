@@ -15,15 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class LikeService {
 
     private final LikeMapper likeMapper;
-    private final FeedMapper feedMapper;
-
 
     private Like handleLike(String account, int boardId) {
 
-        // 현재 게시물에 특정 사용자가 리액션을 했는지 확인
+        // 현재 게시물에 특정 사용자가 좋아요를 했는지 확인
         Like existingLike = likeMapper.existsLike(account, boardId);
 
-        if (existingLike != null) { // 이미 like가 존재하는 경우
+        if (existingLike != null) { // 이미 좋아요가 존재하는 경우
             likeMapper.deleteLike(account, boardId);
 
         } else { // 기존의 like 없는 경우
@@ -32,7 +30,6 @@ public class LikeService {
                     .boardId(boardId)
                     .build();
             likeMapper.insertLike(newLike);
-//            return newLike;
         }
 
         return likeMapper.existsLike(account, boardId);

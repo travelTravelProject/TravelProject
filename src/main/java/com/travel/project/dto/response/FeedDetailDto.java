@@ -20,6 +20,8 @@ public class FeedDetailDto {
 
     private int categoryId; // 게시글 카테고리 id(동행 1, 피드 2) 번호
     //    private String title; // 게시글 제목
+
+    @Setter
     private String content; // 게시글 내용
     private int viewCount; // 조회수
 

@@ -7,15 +7,23 @@
 
     <!-- 동적 SQL 조건을 분리 -->
     <sql id="search">
-        <if test="type == 'content'">
-            AND B.content LIKE CONCAT('%', #{keyword}, '%')
+        <if test="s.type == 'content'">
+            AND B.content LIKE CONCAT('%', #{s.keyword}, '%')
         </if>
-        <if test="type == 'writer'">
-            AND U.nickname LIKE CONCAT('%', #{keyword}, '%')
+        <if test="s.type == 'writer'">
+            AND U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
         </if>
-        <if test="type == 'cw'">
-            AND (U.nickname LIKE CONCAT('%', #{keyword}, '%')
-            OR B.content  LIKE CONCAT('%', #{keyword}, '%'))
+        <if test="s.type == 'cw'">
+            AND (U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{s.keyword}, '%'))
+        </if>
+    </sql>
+    <sql id="sort">
+        <if test="sort == 'latest'">
+            ORDER BY B.created_at DESC
+        </if>
+        <if test="sort == 'pop'">
+            ORDER BY B.view_count DESC
         </if>
     </sql>
 
@@ -37,16 +45,17 @@
 <!--            ON B.account = D.account-->
         WHERE B.status = 'A'
             AND B.category_id = 2
-        <include refid="search" />
-        ORDER BY B.board_id DESC
-        LIMIT #{pageStart}, #{amount}
+            AND (U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{s.keyword}, '%'))
+<!--        <include refid="search" />-->
+        <include refid="sort"/>
+        LIMIT #{s.pageStart}, #{s.amount}
     </select>
 
     <select id="findAllByAccount" resultType="feed">
         SELECT
         board_id,
         account,
-        nickname,
         category_id,
         content,
         view_count,
@@ -55,7 +64,9 @@
         FROM tbl_board
         WHERE status = 'A'
         AND category_id = 2
-        AND.account = #{account}
+        AND account = #{account}
+        ORDER BY created_at DESC
+        LIMIT #{s.pageStart}, #{s.amount}
     </select>
 
     <select id="findFeedById" resultType="com.travel.project.dto.request.FeedFindOneDto">
