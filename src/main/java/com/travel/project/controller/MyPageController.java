@@ -1,42 +1,43 @@
 package com.travel.project.controller;
 
+import com.travel.project.common.Page;
 import com.travel.project.common.Search;
-import com.travel.project.dto.response.AccBoardListDto;
-import com.travel.project.dto.response.MyBoardListDto;
-import com.travel.project.service.MypageService;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.travel.project.dto.response.MyFeedListDto;
+import com.travel.project.service.FeedService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
-@Controller
-@Slf4j
-@RequiredArgsConstructor
-public class MyPageController {
+@RestController
+@RequestMapping("/mypage/v1")
+public class MypageController {
 
-   private final MypageService mypageService;
+    private final FeedService feedService;
 
-    @GetMapping("/mypage/boards/{account}")
-    public ResponseEntity<List<AccBoardListDto>> getboards(@PathVariable String account, HttpSession session) {
-
-        List<AccBoardListDto> boardsByAccount = mypageService.findBoardsByAccount(session);
-//        Search search = new Search();
-//        search.setAccount(account);
-//        MyBoardListDto myBoardList = mypageService.findBoardsByAccount(session);
-//        List<AccBoardListDto> boardList = myBoardListDto.getBoards();
-
-        log.debug("boardsByAccount: {}", boardsByAccount);
-
-        return ResponseEntity.ok().body(boardsByAccount);
+    public MypageController(FeedService feedService) {
+        this.feedService = feedService;
     }
 
+    @GetMapping("/list/{account}/{page}")
+    public ResponseEntity<?> getFeeds(
+            @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+            HttpSession session) {
 
+        Search search = new Search(new Page(pageNo, 12));
+
+        MyFeedListDto feedsById = null;
+
+        try {
+            feedsById = feedService.findFeedsByAccount(search, session);
+
+            return ResponseEntity.ok().body(feedsById);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
+    }
 
 }
