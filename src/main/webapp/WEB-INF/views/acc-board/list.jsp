@@ -154,6 +154,7 @@
     </style>
 </head>
 <body>
+    <%@ include file="include/sub_header.jsp" %>
 <div class="wrap">
     <%--  검색창 영역  --%>
     <div class="search">
