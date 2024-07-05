@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="/assets/css/mypage-board.css">
 </head>
 <body>
+
 <%@ include file="include/sub_header.jsp" %>
+
 <div class="container">
     <div class="card-profile"></div>
     <%--    <h1>My Page</h1>--%>
