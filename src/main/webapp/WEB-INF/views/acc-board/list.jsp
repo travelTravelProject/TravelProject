@@ -167,18 +167,18 @@
 <%@ include file="../include/sub_header.jsp" %>
 <div class="wrap">
     <%--  검색창 영역  --%>
-        <div class="search">
-            <form id="searchForm" action="/acc-board/list" method="get">
-                <input type="hidden" name="type" value="tc">
-                <input type="text" class="form-control" name="keyword" placeholder="동행을 찾아보세요." >
-            </form>
-        </div>
+    <div class="search">
+        <form id="searchForm" action="/acc-board/list" method="get">
+            <input type="hidden" name="type" value="tc">
+            <input type="text" class="form-control" name="keyword" placeholder="동행을 찾아보세요." >
+        </form>
+    </div>
 
-<%--    <div class="filters">--%>
-<%--        <button>날짜</button>--%>
-<%--        <button>나이/성별</button>--%>
-<%--        <button>유형</button>--%>
-<%--    </div>--%>
+    <%--    <div class="filters">--%>
+    <%--        <button>날짜</button>--%>
+    <%--        <button>나이/성별</button>--%>
+    <%--        <button>유형</button>--%>
+    <%--    </div>--%>
 
     <c:if test="${abList.size() == 0}">
         <div class="empty">
@@ -186,41 +186,48 @@
         </div>
     </c:if>
 
-        <div class="card-container">
-            <c:if test="${abList.size() > 0}">
-                <c:forEach var="ab" items="${abList}">
-                    <div class="card-wrapper">
-                        <section class="card-post" data-bno="${ab.boardId}">
-                            <div class="card-content-wrapper">
-                                <div class="card-details-top">
-                                    <div class="card-text">
-                                        <div class="card-title">${ab.shortTitle}</div>
-                                        <div class="card-content">
-                                                ${ab.shortContent}
-                                        </div>
-                                    </div>
-                                    <div class="card-img">
-                                        <img src="/assets/img/accBoardDefaultImg.webp" alt="대표이미지">
+    <div class="card-container">
+        <c:if test="${abList.size() > 0}">
+            <c:forEach var="ab" items="${abList}">
+                <div class="card-wrapper">
+                    <section class="card-post" data-bno="${ab.boardId}">
+                        <div class="card-content-wrapper">
+                            <div class="card-details-top">
+                                <div class="card-text">
+                                    <div class="card-title">${ab.shortTitle}</div>
+                                    <div class="card-content">
+                                            ${ab.shortContent}
                                     </div>
                                 </div>
-                                <div class="card-details-bot1">
+                                <div class="card-img">
+                                    <c:choose>
+                                        <c:when test="${ab.imagePath != null}">
+                                            <img src="${ab.imagePath}" alt="대표이미지">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="/assets/img/accBoardDefaultImg.webp" alt="기본이미지">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            <div class="card-details-bot1">
                                     <span>${ab.writer} ·
                                         <c:choose>
                                             <c:when test="${ab.gender == 'M'}">남자</c:when>
                                             <c:when test="${ab.gender == 'F'}">여자</c:when>
                                         </c:choose>
                                     </span>
-                                </div>
-                                <div class="card-details-bot2">
-                                    <span class="lnr lnr-calendar-full">&nbsp;${ab.startDate} - ${ab.endDate}</span>
-                                    <span class="view-count">조회수 ${ab.view}</span>
-                                </div>
                             </div>
-                        </section>
-                    </div>
-                </c:forEach>
-            </c:if>
-        </div>
+                            <div class="card-details-bot2">
+                                <span class="lnr lnr-calendar-full">&nbsp;${ab.startDate} - ${ab.endDate}</span>
+                                <span class="view-count">조회수 ${ab.view}</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </c:forEach>
+        </c:if>
+    </div>
 
     <!-- 페이지 버튼 영역 -->
     <div class="paging">
@@ -280,13 +287,13 @@
     const cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
 
     $cardContainer?.addEventListener('click', e => {
-            console.log(e.target);
+        console.log(e.target);
 
-            // section태그에 붙은 글번호 읽기
-            const bno = e.target.closest('section.card-post').dataset.bno;
-            // 요청 보내기
-            window.location.href= '/acc-board/detail?bno=' + bno;
-            console.log(window.location.href);
+        // section태그에 붙은 글번호 읽기
+        const bno = e.target.closest('section.card-post').dataset.bno;
+        // 요청 보내기
+        window.location.href= '/acc-board/detail?bno=' + bno;
+        console.log(window.location.href);
     });
 
     // 전역 이벤트로 모달창 닫기

@@ -26,6 +26,7 @@ public class AccBoardListDto {
     private String endDate; // 동행 종료일
     private String writer; // 닉네임
     private String gender; // 작성자 성별
+    private String imagePath; // 이미지 경로 추가
 
     // 엔터티를 DTO로 변환
     public AccBoardListDto (AccBoard ab) {
@@ -39,6 +40,7 @@ public class AccBoardListDto {
         this.endDate = dateFormatting(ab.getEndDate());
         this.writer = ab.getWriter();
         this.gender = ab.getGender().name();
+        this.imagePath = ab.getImagePath(); // 이미지 경로 설정
 
     }
 
@@ -52,6 +54,6 @@ public class AccBoardListDto {
     }
 
     private String makeShortTitle(String title) {
-        return title.length() > 20 ? title.substring(0, 20) + "..." : title;
+        return title.length() > 20 ? title.substring(0, 20) + "…" : title;
     }
 }

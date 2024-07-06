@@ -25,4 +25,5 @@ public class AccBoard {
     private LocalDateTime endDate; // 동행 종료일
     private String writer; // 작성자
     private Gender gender; // 성별
+    private String imagePath; // 이미지 경로
 }

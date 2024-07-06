@@ -20,6 +20,7 @@ public class AccBoardDetailDto {
     private int viewCount;
     private String account;
     private String location;
+    private String imagePath;
 
     @Setter
     private int likeCount; // 총 좋아요 수
@@ -33,6 +34,7 @@ public class AccBoardDetailDto {
         this.content = ab.getContent();
         this.account = ab.getAccount();
         this.location = ab.getLocation();
+        this.imagePath = ab.getImagePath();
 
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 a hh시 mm분 ss초");
         this.createdAt = pattern.format(ab.getCreatedAt());

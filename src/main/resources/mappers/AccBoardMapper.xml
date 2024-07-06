@@ -28,28 +28,29 @@
 
     <select id="findAll" resultType="accBoard">
         SELECT
-            B.board_id,
-            B.account,
-            B.category_id,
-            B.title,
-            B.content,
-            B.writer,
-            B.view_count,
-            B.created_at,
-            B.updated_at,
-            B.status,
-            B.location,
-            B.start_date,
-            B.end_date,
-            COUNT(R.reply_id) AS reply_count,
-            U.gender
+        B.board_id,
+        B.account,
+        B.category_id,
+        B.title,
+        B.content,
+        B.writer,
+        B.view_count,
+        B.created_at,
+        B.updated_at,
+        B.status,
+        B.location,
+        B.start_date,
+        B.end_date,
+        COUNT(R.reply_id) AS reply_count,
+        U.gender,
+        I.image_path
         FROM tbl_board B
         LEFT OUTER JOIN tbl_reply R
         ON B.board_id = R.board_id
-        JOIN tbl_user U
-        ON B.account = U.account
+        JOIN tbl_user U ON B.account = U.account
+        LEFT JOIN tbl_board_image I ON B.board_id = I.board_id
         WHERE B.status = 'A'
-            AND B.category_id = '1'
+        AND B.category_id = '1'
         <include refid="search" />
         GROUP BY B.board_id
         ORDER BY B.board_id DESC
@@ -58,22 +59,24 @@
 
     <select id="findOne" resultType="accBoard">
         SELECT
-            B.board_id,
-            B.account,
-            B.category_id,
-            B.title,
-            B.content,
-            B.writer,
-            B.view_count,
-            B.created_at,
-            B.updated_at,
-            B.status,
-            B.location,
-            B.start_date,
-            B.end_date,
-            U.gender AS gender
+        B.board_id,
+        B.account,
+        B.category_id,
+        B.title,
+        B.content,
+        B.writer,
+        B.view_count,
+        B.created_at,
+        B.updated_at,
+        B.status,
+        B.location,
+        B.start_date,
+        B.end_date,
+        U.gender AS gender,
+        I.image_path
         FROM tbl_board B
         JOIN tbl_user U ON B.account = U.account
+        LEFT JOIN tbl_board_image I ON B.board_id = I.board_id
         WHERE B.board_id = #{boardId}
     </select>
 
