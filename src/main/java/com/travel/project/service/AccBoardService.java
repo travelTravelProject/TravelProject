@@ -10,6 +10,7 @@ import com.travel.project.entity.Bookmark;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.AccBoardMapper;
 import com.travel.project.mapper.BookmarkMapper;
+import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ public class AccBoardService {
 
     private final AccBoardMapper accBoardMapper;
     private final BookmarkMapper bookmarkMapper;
+    private final AccBoardImageService accBoardImageService;
 
 
     // 목록 조회 요청 중간처리
@@ -38,12 +40,28 @@ public class AccBoardService {
     // 등록 요청 중간처리
     @Transactional
     public boolean insert(AccBoardWriteDto dto, HttpSession session) {
+        String imagePath = null;
+
+        // 이미지 업로드가 있는 경우
+        if (dto.getPostImage() != null && !dto.getPostImage().isEmpty()) {
+            imagePath = FileUtil.uploadFile(dto.getPostImage());
+        }
+
+        // AccBoard 엔티티 생성
         AccBoard ab = dto.toEntity();
-        // 계정명을 엔터티에 추가 - 세션에서 계정명 가져오기
         ab.setAccount(LoginUtil.getLoggedInUserAccount(session));
         ab.setCategoryId(1);
         ab.setWriter(LoginUtil.getLoggedInUserNickname(session));
-        return accBoardMapper.save(ab);
+
+        // 게시글 저장
+        boolean boardSaved = accBoardMapper.save(ab);
+
+        // 게시글이 성공적으로 저장되면 이미지도 저장
+        if (boardSaved && imagePath != null) {
+            accBoardImageService.saveBoardImage(ab.getBoardId(), imagePath); // 이미지 저장 서비스 호출
+        }
+
+        return boardSaved;
     }
 
     // 삭제 요청 중간처리
@@ -67,9 +85,6 @@ public class AccBoardService {
     public AccBoardModifyDto getModifyForm(long boardId) {
         // 수정할 게시글 조회
         AccBoard ab = accBoardMapper.findOne(boardId);
-//        if (ab == null) {
-//            throw new IllegalArgumentException("Invalid board ID: " + boardId);
-//        }
         AccBoardModifyDto dto = new AccBoardModifyDto();
         dto.setFromEntity(ab); // 필드를 개별적으로 설정
         return dto;

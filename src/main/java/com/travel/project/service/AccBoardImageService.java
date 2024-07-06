@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AccBoardImageService {
 
-    private static final Logger log = LoggerFactory.getLogger(AccBoardImageService.class);
     // 이미지 등록
     private final ImageMapper imageMapper;
 
     // 이미지 등록
     public void saveBoardImage(long boardId, String imagePath) {
-        BoardImage boardImage = BoardImage.builder()
-                .boardId(boardId)
-                .imagePath(imagePath)
-                .imageOrder(1)
-                .build();
-        imageMapper.insertImage(boardImage);
-        System.out.println("boardId: " + boardImage.getBoardId());
+        if (imagePath != null) {
+            BoardImage boardImage = BoardImage.builder()
+                    .boardId(boardId)
+                    .imagePath(imagePath)
+                    .imageOrder(1)
+                    .build();
+            imageMapper.insertImage(boardImage);
+        }
     }
 
     // 이미지 삭제?
