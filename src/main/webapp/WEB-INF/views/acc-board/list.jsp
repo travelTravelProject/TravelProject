@@ -159,6 +159,11 @@
             /*color: #00CE7B;*/
             color: #000;
         }
+        .paging .pagination .page-item.active .page-link {
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%) !important;
+            border-color: #DEE2E6 !important;
+            color: #fff !important;
+        }
 
     </style>
 </head>
