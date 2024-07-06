@@ -147,24 +147,23 @@ public class UserController {
         // 프로필 이미지 업로드 및 경로 설정
         MultipartFile profileImage = dto.getProfileImage();
         String profilePath = null;
-        String DEFAULT_PROFILE_IMAGE_PATH = "assets/img/anonymous.jpg";
+//        String DEFAULT_PROFILE_IMAGE_PATH = "/assets/img/anonymous.jpg";
 
         if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
             profilePath = FileUtil.uploadFile(profileImage);
             log.info("profilePath = " + profilePath);
         } else if (existingUserDetail == null || existingUserDetail.getProfileImage() == null) {
             // 새로 가입한 회원이거나 기존 회원의 프로필 이미지가 없을 경우 기본 이미지 사용
-            profilePath = DEFAULT_PROFILE_IMAGE_PATH;
+//            profilePath = DEFAULT_PROFILE_IMAGE_PATH;
         } else {
             profilePath = existingUserDetail.getProfileImage();
         }
 
-//        existingUserDetail.setProfileImage(profilePath);
-//        userService.saveUserDetail(existingUserDetail);
 //        userService.saveOrUpdateUserDetail(dto, session, profilePath);
 
         // 세션에서 로그인 사용자 정보 가져오기
         LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
+        log.debug("\n\n\n\nloginUser = " + loginUser);
 
         if (!loginUser.getAccount().equals(loginUser.getAccount())) {
             return "redirect:/sign-in";
@@ -183,12 +182,10 @@ public class UserController {
 
         // 세션에 업데이트된 사용자 정보 저장
         session.setAttribute("user", loginUser);
+        session.setAttribute("userDetail", loginUser);
         System.out.println("loginUser = " + loginUser);
 
         log.info("Updated user profile: {}", loginUser);
-        // Updated user profile: LoginUserInfoDto(account=kitty, name=키티키티123, nickname=헬로키티kitty,
-        // email=kitty@gmail.com, auth=COMMON, birthday=1996-06-12, gender=F, mbti=ENTP,
-        // oneLiner=하이하이 키티 헬로헬로, profileImage=/assets/upload/2024/07/04/b6242aed-3495-4871-8406-cc09f74bbdd4_다운로드 (2).jfif)
 
         session.setAttribute("user", loginUser);
 

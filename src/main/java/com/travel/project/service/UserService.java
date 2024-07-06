@@ -46,6 +46,7 @@ public class UserService {
     private final PasswordEncoder encoder;
 
     // 회원가입 중간처리
+    @Transactional
     public boolean join(SignUpDto dto) {
 
         User user = dto.toEntity();
@@ -96,6 +97,7 @@ public class UserService {
 
         userMapper.updateUser(user);
         userDetailMapper.updateUserDetail(userDetail);
+        log.debug("\n\n\n\n\n\nupdateUser userDetail: {}", userDetail);
     }
 
 
@@ -104,14 +106,12 @@ public class UserService {
         // Update tbl_user_detail
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
         log.debug("saveUpdateUser  existingDetail: {}", existingDetail);
-        // saveUpdateUser  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
-        // profileImage=/assets/upload/2024/07/04/b6242aed-3495-4871-8406-cc09f74bbdd4_다운로드 (2).jfif, rating=0, account=kitty)
 
         if (existingDetail != null) {
             // 이미 존재하는 경우에만 업데이트
             existingDetail.setMbti(dto.getMbti());
             existingDetail.setOneLiner(dto.getOneLiner());
-
+//            existingDetail.setProfileImage(dto.getProfileImage());
             userDetailMapper.updateUserDetail(existingDetail);
         }
     }
@@ -121,40 +121,33 @@ public class UserService {
 
         LoginUserInfoDto sessionUser = (LoginUserInfoDto) session.getAttribute("user");
         log.debug("saveOrUpdateUserDetail  sessionUser: {}", sessionUser);
-        // saveOrUpdateUserDetail  sessionUser LoginUserInfoDto(account=kitty, name=키티키티123, nickname=헬로키티kitty,
-        // email=kitty@gmail.com, auth=COMMON, birthday=1996-06-12, gender=F, mbti=null, oneLiner=null, profileImage=null)
+
+        String account = sessionUser.getAccount();
 
         UserDetail existingDetail = userDetailMapper.findUserDetailByAccount(dto.getAccount());
         log.debug("saveOrUpdateUserDetail  existingDetail: {}", existingDetail);
-        // saveOrUpdateUserDetail  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
-        // profileImage=/assets/upload/2024/07/04/e867a6ff-5907-458a-964a-4689e82ecb05_다운로드 (4).jfif, rating=0, account=kitty)
 
-        if (sessionUser == null && existingDetail == null) {
+        if (existingDetail == null) {
             // 새로운 회원 정보 저장
             UserDetail newUserDetail = UserDetail.builder()
+                    .account(account)
                     .mbti(dto.getMbti() != null ? dto.getMbti() : "")
                     .oneLiner(dto.getOneLiner() != null ? dto.getOneLiner() : "")
-                    .profileImage(profilePath != null ? profilePath : "assets/img/anonymous.jpg")
-                    .account(dto.getAccount()) // 계정 정보를 설정해야 합니다.
+                    .profileImage(profilePath != null ? profilePath : "/assets/img/anonymous.jpg")
                     .build();
             userDetailMapper.insertUserDetail(newUserDetail);
-        } else if (existingDetail != null && sessionUser != null) {
-            // 이미 존재하는 회원 정보 수정 저장
-            if (dto.getMbti() != null) {
-                existingDetail.setMbti(dto.getMbti());
-                sessionUser.setMbti(dto.getMbti());
-            }
-            if (dto.getOneLiner() != null) {
-                existingDetail.setOneLiner(dto.getOneLiner());
-                sessionUser.setOneLiner(dto.getOneLiner());
-            }
-            if (profilePath != null) {
-                existingDetail.setProfileImage(profilePath);
-                sessionUser.setProfileImage(profilePath);
-            }
+            log.debug("New user detail saved: {}", newUserDetail);
+        } else {
+            existingDetail.setMbti(dto.getMbti());
+            existingDetail.setOneLiner(dto.getOneLiner());
+            existingDetail.setProfileImage(profilePath);
+//            existingDetail.setProfileImage(String.valueOf(dto.getProfileImage()));
             userDetailMapper.updateUserDetail(existingDetail);
         }
+        log.debug("Updating existing UserDetail: {}", existingDetail);
+        log.info("Existing user detail updated: {}", existingDetail);
     }
+
 
     // 생년월일 연령대 계산
     public String calculateAgeGroup(String account) {
@@ -195,7 +188,7 @@ public class UserService {
 //    =================================== yj ========================================
 
     //로그인 검증 처리
-    public LoginResult authenticate(LoginDto dto, HttpSession session, HttpServletResponse response){
+    public LoginResult authenticate(LoginDto dto, HttpSession session, HttpServletResponse response) {
         //회원가입 여부 확인
         String account = dto.getAccount();
         User foundMember = userMapper.findOne(account); //디비에서 회원정보 조회ㅘㅁ
@@ -214,7 +207,7 @@ public class UserService {
         }
 
         //자동 로그인 추가 처리
-        if(dto.isAutoLogin()){
+        if (dto.isAutoLogin()) {
             //1. 자동 로그인 쿠키 생성
             // 쿠키 내부에 절대로 중복 되지 않는 유니크한 값을 저장해야 됨, ssion.getId() 는 절대로 중복이 될 수 없다
             String sessionId = session.getId();

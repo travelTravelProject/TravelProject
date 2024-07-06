@@ -212,7 +212,7 @@ button:hover {
 
 .profile-box {
     width: 200px;
-    height: 100px;
+    height: 70px;
     border-radius: 50%;
     /*overflow: hidden;*/
     margin: 10px;
@@ -249,7 +249,7 @@ button:hover {
 .profile-info {
     flex: 1;
     margin-left: 20px;
-    height: 200px;
+    height: 80px;
 }
 
 .profile-info h2 {

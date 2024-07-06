@@ -1,13 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="KO">
 <head>
+    <%@ include file="include/static-head.jsp" %>
     <meta charset="UTF-8">
-    <title>My Page</title>
+<%--    <title>My Page</title>--%>
     <link rel="stylesheet" href="/assets/css/mypage.css">
 </head>
 <body>
+<%@ include file="include/sub_header.jsp" %>
+
 <div class="container">
     <h1>프로필 수정</h1>
     <div class="update-form">
@@ -22,8 +25,16 @@
 
                 <div class="profile">
                     <div class="thumbnail-box">
-                        <img src="${not empty userDetail.profileImage && userDetail.profileImage != 'none' ? userDetail.profileImage : '/assets/img/image-add.png'}"
-                             alt="Profile Image" class="profile-image" id="profileImagePreview">
+                        <c:choose>
+                            <c:when test="${not empty userDetail.profileImage && userDetail.profileImage != 'none'}">
+                                <img src="${userDetail.profileImage}" alt="profile image">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="/assets/img/anonymous.jpg" alt="Anonymous Profile Image">
+                            </c:otherwise>
+                        </c:choose>
+<%--                        <img src="${not empty userDetail.profileImage && userDetail.profileImage != 'none' ? userDetail.profileImage : '/assets/img/image-add.png'}"--%>
+<%--                             alt="Profile Image" class="profile-image" id="profileImagePreview">--%>
                     </div>
 
                     <label>프로필 이미지 추가</label>
