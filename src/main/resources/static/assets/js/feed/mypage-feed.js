@@ -7,7 +7,7 @@ let isFetchingMyFeed = false; // 데이터 불러오는 중에는 더 가져오�
 let totalMyFeeds = 0;  // 총 게시글 수
 let loadedMyFeeds = 0;  // 로딩된 게시글 수
 
-
+// 마이페이지 피드 탭 열기
 function openFeedTab(account) {
   const $feedTab = document.getElementById('my-feed-tab');
   const $tab = document.querySelector('.board-container');
@@ -18,7 +18,7 @@ function openFeedTab(account) {
   // $myFeedBtn.style.textDecoration = 'underline';
   $myFeedBtn.classList.add('active-tab-btn');
 }
-
+// 피드 탭 열기 이벤트
 $myFeedBtn.addEventListener('click', e => {
   const account = $myFeedBtn.dataset.myAccount
   console.log('마이페이지 피드 클릭!')
@@ -35,6 +35,7 @@ function appendMyFeeds(myFeedListDto) {
       <div id="no-feed">
         <p>모든 피드를 다 보셨거나 작성하신 피드가 없습니다.</p>
         <p>${loginUser ? loginUser.nickname : '방문자'}님 기억에 남은 여행을 공유하면 어떨까요?</p>
+        <a href="/feed/list"><p>피드 작성하러 가기 →</p></a>
       </div>
       `;
   } else { // 작성한 피드가 존재하면
