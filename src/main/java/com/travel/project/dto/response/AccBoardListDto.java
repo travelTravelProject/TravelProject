@@ -27,6 +27,7 @@ public class AccBoardListDto {
     private String writer; // 닉네임
     private String gender; // 작성자 성별
     private String imagePath; // 이미지 경로 추가
+    private int replyCount; // 총 댓글 수
 
     // 엔터티를 DTO로 변환
     public AccBoardListDto (AccBoard ab) {
@@ -41,6 +42,7 @@ public class AccBoardListDto {
         this.writer = ab.getWriter();
         this.gender = ab.getGender().name();
         this.imagePath = ab.getImagePath(); // 이미지 경로 설정
+        this.replyCount = ab.getReplyCount();
 
     }
 

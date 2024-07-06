@@ -247,6 +247,56 @@
             margin: 20px auto;
         }
 
+        /* 여행장 정보 스타일 */
+        .acc-master {
+            font-size: 0.81em;
+        }
+        .acc-master-section {
+            background-color: #f8f8f8;
+            font-size: 0.9em;
+            padding: 15px 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .info-card {
+            display: flex;
+            align-items: center;
+            /*margin-bottom: 10px;*/
+        }
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .simple-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .writer {
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .simple-info-detail {
+            font-size: 0.9em;
+            color: #999;
+        }
+        .location-description {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px solid #ccc;
+        }
+
+
 
         /* 여기부터 모달 스타일 */
         .modal {
@@ -541,7 +591,7 @@
                 ${abd.title}
             </div>
             <div class="sub-title">
-                <scan class="view-count">조회수 ${abd.viewCount}</scan>
+                <scan class="counter">조회수 ${abd.viewCount} · 댓글 ${abd.replyCount}</scan>
             </div>
         </div>
         <div id="detail-travel">
@@ -559,6 +609,33 @@
             <div class="text">
                 ${abd.content}
             </div>
+        </div>
+
+        <!-- 여행장 정보 -->
+        <p class="acc-master">여행장</p>
+        <div class="acc-master-section">
+            <div class="info-card">
+                <div class="profile-img">
+                    <img src="/assets/img/accBoardDefaultImg.webp" alt="여행장 대표 이미지">
+<%--                    ${abd.profileImage}--%>
+                </div>
+                <div class="simple-info">
+                    <div class="writer">
+                        <strong>${abd.writer}</strong>
+                    </div>
+                    <div class="simple-info-detail">
+                        ${abd.ageGroup} ·
+                        <c:choose>
+                            <c:when test="${abd.gender == 'M'}">남자</c:when>
+                            <c:when test="${abd.gender == 'F'}">여자</c:when>
+                        </c:choose>
+                    </div>
+                </div>
+            </div>
+                <div class="location-description">
+                    <br> 사용자 소개글이 들어갈 공간
+<%--                    ${abd.oneLiner}--%>
+                </div>
         </div>
 
         <div class="buttons">

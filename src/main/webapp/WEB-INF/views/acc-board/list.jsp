@@ -104,7 +104,7 @@
             font-size: 0.9em;
             color: #666;
         }
-        .card-details-bot .view-count {
+        .card-details-bot2 .counter {
             margin-left: auto;
         }
         .add-btn-box {
@@ -220,7 +220,8 @@
                             </div>
                             <div class="card-details-bot2">
                                 <span class="lnr lnr-calendar-full">&nbsp;${ab.startDate} - ${ab.endDate}</span>
-                                <span class="view-count">조회수 ${ab.view}</span>
+                                <span class=""></span>
+                                <span class="counter">댓글 ${ab.replyCount} · 조회수 ${ab.view}</span>
                             </div>
                         </div>
                     </section>

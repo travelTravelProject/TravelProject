@@ -45,8 +45,7 @@
         U.gender,
         I.image_path
         FROM tbl_board B
-        LEFT OUTER JOIN tbl_reply R
-        ON B.board_id = R.board_id
+        LEFT OUTER JOIN tbl_reply R ON B.board_id = R.board_id
         JOIN tbl_user U ON B.account = U.account
         LEFT JOIN tbl_board_image I ON B.board_id = I.board_id
         WHERE B.status = 'A'
@@ -73,10 +72,16 @@
         B.start_date,
         B.end_date,
         U.gender AS gender,
-        I.image_path
+        U.birthday AS birthday,
+<!--        UD.one_liner AS oneLiner,-->
+<!--        UD.profile_image AS profileImage,-->
+        I.image_path,
+        COUNT(R.reply_id) AS reply_count
         FROM tbl_board B
         JOIN tbl_user U ON B.account = U.account
+<!--        JOIN tbl_user_detail UD ON U.account = UD.account-->
         LEFT JOIN tbl_board_image I ON B.board_id = I.board_id
+        LEFT OUTER JOIN tbl_reply R ON B.board_id = R.board_id
         WHERE B.board_id = #{boardId}
     </select>
 
