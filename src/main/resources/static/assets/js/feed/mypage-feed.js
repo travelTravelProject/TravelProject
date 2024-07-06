@@ -7,7 +7,7 @@ let isFetchingMyFeed = false; // 데이터 불러오는 중에는 더 가져오�
 let totalMyFeeds = 0;  // 총 게시글 수
 let loadedMyFeeds = 0;  // 로딩된 게시글 수
 
-// 마이페이지 피드 탭 열기
+// 마이페이지 동행 탭 닫고 피드 탭 열기
 function openFeedTab(account) {
   const $feedTab = document.getElementById('my-feed-tab');
   const $tab = document.querySelector('.board-container');
@@ -15,7 +15,6 @@ function openFeedTab(account) {
   $tab.classList.remove('active-tab-btn');
   fetchMyFeedList(account);
   $feedTab.classList.add('active-tab');
-  // $myFeedBtn.style.textDecoration = 'underline';
   $myFeedBtn.classList.add('active-tab-btn');
 }
 // 피드 탭 열기 이벤트
