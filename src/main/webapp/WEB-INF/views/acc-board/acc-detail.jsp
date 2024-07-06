@@ -63,6 +63,7 @@
             font-size: 0.9em;
         }
         #inner-wrapper .text {
+            margin-top: 10px;
             margin-bottom: 20px;
             font-size: 0.9em;
         }
@@ -114,6 +115,7 @@
             align-items: center;
             margin: 20px auto;
         }
+
         .reaction-buttons {
             flex: 1;
         }
@@ -129,11 +131,30 @@
             border-radius: 10px;
             cursor: pointer;
         }
+        .buttons .action-buttons .btn {
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttons .action-buttons .btn:hover {
+            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
+        }
+
+        .buttons .action-buttons #del-btn {
+            background-image: linear-gradient(to right, #ff6b6b 0%, #ff4757 100%);
+        }
+        .buttons .action-buttons #del-btn:hover {
+            background-image: linear-gradient(to right, #e63946 0%, #d90429 100%);
+        }
+
         .reaction-buttons button.active {
-            background-color: #00CE7B;
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             color: #fff;
             animation: bookmark-animation 0.5s ease-in-out;
-
+            border: transparent;
         }
 
         @keyframes bookmark-animation {
@@ -213,6 +234,9 @@
             border-radius: 10px;
             margin-bottom: 30px;
         }
+        #detail-travel .travel-info .travel-destination {
+            margin-bottom: 5px;
+        }
         #detail-travel .travel-info .fas {
             color: #999;
         }
@@ -237,6 +261,9 @@
             background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.4);
             padding-top: 60px;
+            border-radius: 5px;
+            justify-content: center;
+            align-items: center;
         }
         .modal-content {
             background-color: #fefefe;
@@ -246,6 +273,7 @@
             width: 80%;
             max-width: 400px;
             text-align: center;
+
         }
         .close {
             color: #aaa;
@@ -261,6 +289,29 @@
         }
         .modal .btn {
             margin: 10px;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #deleteModal .modal-content p {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+        #deleteModal .confirmDelete {
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+        }
+        #deleteModal .confirmDelete:hover {
+            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
+        }
+        #deleteModal .cancelDelete {
+            background-image: linear-gradient(to right, #ff6b6b 0%, #ff4757 100%);
+        }
+        #deleteModal .cancelDelete:hover {
+            background-image: linear-gradient(to right, #e63946 0%, #d90429 100%);
         }
 
         /* 이미지 모달 스타일 */
@@ -517,14 +568,15 @@
                     <i class="fas fa-bookmark" style="display: none;"></i>
                 </button>
             </div>
+
             <div class="action-buttons">
                 <c:if test="${isOwnerOrAdmin}">
-                    <button class="del-btn btn btn-danger" type="button">삭제</button>
-                    <button class="edit-btn btn btn-secondary" type="button"
+                    <button id="del-btn" class="btn del-btn" type="button">삭제</button>
+                    <button class="btn edit-btn" type="button"
                             onclick="window.location.href='/acc-board/modify?bno=${abd.boardId}'">수정
                     </button>
                 </c:if>
-                <button class="list-btn btn btn-secondary" type="button" onclick="window.location.href='${ref}'">목록
+                <button class="btn list-btn" type="button" onclick="window.location.href='${ref}'">목록
                 </button>
             </div>
         </div>
@@ -639,8 +691,8 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <p>정말로 삭제하시겠습니까?</p>
-        <button id="confirmDelete" class="btn btn-danger">삭제</button>
-        <button id="cancelDelete" class="btn btn-secondary">취소</button>
+        <button class="btn confirmDelete" >삭제</button>
+        <button class="btn cancelDelete" >취소</button>
     </div>
 </div>
 
@@ -713,7 +765,7 @@
 
     // 삭제버튼 클릭이벤트 - 모달창
     document.querySelector('.del-btn')?.addEventListener('click', function () {
-        $modal.style.display = 'block';
+        $modal.style.display = 'flex';
     });
 
     // 모달 창 닫기 이벤트 (X 버튼)
