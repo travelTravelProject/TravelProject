@@ -151,4 +151,15 @@
         ORDER BY B.board_id DESC
     </select>
 
+    <select id="getTotalReplies" resultType="int">
+        SELECT
+        COUNT(DISTINCT r.reply_id) + COUNT(nr.nested_reply_id) AS total_comments
+        FROM
+        tbl_reply r
+        LEFT JOIN
+        tbl_nested_reply nr ON r.reply_id = nr.reply_id
+        WHERE
+        r.board_id = #{boardId};
+    </select>
+
 </mapper>
