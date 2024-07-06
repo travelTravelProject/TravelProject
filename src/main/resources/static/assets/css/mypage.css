@@ -242,6 +242,8 @@ button:hover {
 
 .profile-nickname h2 {
     text-align: left;
+    font-size: 22px;
+    width: 150px;
 }
 
 .profile-info {

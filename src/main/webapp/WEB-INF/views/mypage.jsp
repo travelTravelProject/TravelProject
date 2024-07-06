@@ -37,7 +37,7 @@
             <div class="trip-stats-info">
                 <div>
                     <span>MBTI</span>
-                    <p>${userDetail.mbti}</p>
+                    <p>${userDetail.mbti != null ? userDetail.mbti : 'MBTI 선택해주세요.'}</p>
                 </div>
                 <div>
                     <span>내 정보</span>

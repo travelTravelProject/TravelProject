@@ -129,22 +129,31 @@ public class UserService {
         // saveOrUpdateUserDetail  existingDetail UserDetail(userDetailId=1, mbti=ENTP, oneLiner=하이하이 키티 헬로헬로,
         // profileImage=/assets/upload/2024/07/04/e867a6ff-5907-458a-964a-4689e82ecb05_다운로드 (4).jfif, rating=0, account=kitty)
 
-        if (sessionUser == null) {
+        if (sessionUser == null && existingDetail == null) {
             // 새로운 회원 정보 저장
             UserDetail newUserDetail = UserDetail.builder()
-                    .mbti(dto.getMbti())
-                    .oneLiner(dto.getOneLiner())
-                    .profileImage(profilePath)
+                    .mbti(dto.getMbti() != null ? dto.getMbti() : "")
+                    .oneLiner(dto.getOneLiner() != null ? dto.getOneLiner() : "")
+                    .profileImage(profilePath != null ? profilePath : "assets/img/anonymous.jpg")
+                    .account(dto.getAccount()) // 계정 정보를 설정해야 합니다.
                     .build();
             userDetailMapper.insertUserDetail(newUserDetail);
-        } else {
+        } else if (existingDetail != null && sessionUser != null) {
             // 이미 존재하는 회원 정보 수정 저장
-            existingDetail.setMbti(dto.getMbti());
-            existingDetail.setOneLiner(dto.getOneLiner());
-            existingDetail.setProfileImage(profilePath);
+            if (dto.getMbti() != null) {
+                existingDetail.setMbti(dto.getMbti());
+                sessionUser.setMbti(dto.getMbti());
+            }
+            if (dto.getOneLiner() != null) {
+                existingDetail.setOneLiner(dto.getOneLiner());
+                sessionUser.setOneLiner(dto.getOneLiner());
+            }
+            if (profilePath != null) {
+                existingDetail.setProfileImage(profilePath);
+                sessionUser.setProfileImage(profilePath);
+            }
             userDetailMapper.updateUserDetail(existingDetail);
         }
-
     }
 
     // 생년월일 연령대 계산

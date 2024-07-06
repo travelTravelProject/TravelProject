@@ -142,21 +142,26 @@ public class UserController {
         log.info("mypage POST : forwarding to mypage-update.jsp");
 
         UserDetail existingUserDetail = userService.getUserDetailByAccount(dto.getAccount());
-
         log.info("existingUserDetail: {}", existingUserDetail);
 
         // 프로필 이미지 업로드 및 경로 설정
         MultipartFile profileImage = dto.getProfileImage();
         String profilePath = null;
+        String DEFAULT_PROFILE_IMAGE_PATH = "assets/img/anonymous.jpg";
 
         if (dto.getProfileImage() != null && !dto.getProfileImage().isEmpty()) {
             profilePath = FileUtil.uploadFile(profileImage);
             log.info("profilePath = " + profilePath);
+        } else if (existingUserDetail == null || existingUserDetail.getProfileImage() == null) {
+            // 새로 가입한 회원이거나 기존 회원의 프로필 이미지가 없을 경우 기본 이미지 사용
+            profilePath = DEFAULT_PROFILE_IMAGE_PATH;
         } else {
             profilePath = existingUserDetail.getProfileImage();
         }
 
-        userService.saveOrUpdateUserDetail(dto, session, profilePath);
+//        existingUserDetail.setProfileImage(profilePath);
+//        userService.saveUserDetail(existingUserDetail);
+//        userService.saveOrUpdateUserDetail(dto, session, profilePath);
 
         // 세션에서 로그인 사용자 정보 가져오기
         LoginUserInfoDto loginUser = (LoginUserInfoDto) session.getAttribute("user");
