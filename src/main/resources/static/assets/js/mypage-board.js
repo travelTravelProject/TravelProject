@@ -7,6 +7,8 @@ $myBoardBtn.addEventListener('click', async e => {
     console.log('마이페이지 동행 클릭!');
     console.log('account: ', account);
 
+    // openBoardTab(account);
+
     try {
         const response = await fetch(`http://localhost:8181/mypage/boards/${account}`);
         console.log('response: ', response);
@@ -60,22 +62,45 @@ function renderBoardList(boardList) {
     });
 }
 
+const $boardTab = document.getElementById('my-board-tab');
+$boardTab.addEventListener('click', e => {
+    console.log('게시글 클릭!');
+
+    const boardElement = e.target.closest('.card-post');
+
+    if (boardElement) {
+        // 클릭된 게시글의 데이터 속성에서 게시글 ID를 가져옴
+        const boardId = boardElement.dataset.bno;
+
+        if (boardId) {
+            console.log('게시글 클릭! 게시글 ID:', boardId);
+
+            // 게시글로 넘어가는 동작을 수행하는 로직을 추가
+            // 예를 들어, 페이지 이동
+            window.location.href = `/acc-board/detail?bno=${boardId}`;
+        } else {
+            console.log('게시글 ID를 찾을 수 없습니다.');
+        }
+    }
+});
+
+
 // 수정하기
 
-function openFeedTab(account) {
-    const $feedTab = document.getElementById('my-board-tab');
+function openBoardTab(account) {
+    const $boardTab = document.getElementById('my-board-tab');
     const $tab = document.querySelector('.board-container');
     $tab.classList.add('inactive-tab');
     $tab.classList.remove('active-tab-btn');
-    fetchMyFeedList(account);
-    $feedTab.classList.add('active-tab');
+    // fetchMyFeedList(account);
+    $boardTab.classList.add('active-tab');
     // $myFeedBtn.style.textDecoration = 'underline';
-    $myFeedBtn.classList.add('active-tab-btn');
+    $myBoardBtn.classList.add('active-tab-btn');
 }
 
-$myFeedBtn.addEventListener('click', e => {
-    const account = $myFeedBtn.dataset.myAccount
-    console.log('마이페이지 피드 클릭!')
-    openFeedTab(account);
-});
+// $myFeedBtn.addEventListener('click', e => {
+//     const account = $myFeedBtn.dataset.myAccount
+//     console.log('마이페이지 피드 클릭!')
+//     openFeedTab(account);
+// });
 

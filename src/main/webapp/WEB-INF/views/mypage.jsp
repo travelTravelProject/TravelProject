@@ -90,8 +90,10 @@
         </div>
     </div>
 
+    <div class="board-container" id="my-board-tab">
+        <div class="my-tab-inner">
 
-    <div class="board-container">
+        </div>
 
     </div>
 </div>
