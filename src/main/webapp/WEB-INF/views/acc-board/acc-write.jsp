@@ -68,7 +68,7 @@
             justify-content: space-between;
         }
         .buttons button {
-            background-color: #00CE7B;
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -76,20 +76,14 @@
             cursor: pointer;
         }
         .buttons button:hover {
-            background-color: #00A86B;
-        }
-        .list-btn {
-            background-color: #6c757d;
-        }
-        .list-btn:hover {
-            background-color: #00A86B;
+            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
         }
 
         /* 사진 업로드 관련 스타일 */
         .image-box {
             position: relative;
             margin-top: 5px;
-            border: 2px dashed #33B897;
+            border: 2px dashed #28cffe;
             border-radius: 5px;
             text-align: center;
             position: relative;
@@ -109,7 +103,7 @@
         }
         .image-upload-btn i {
             font-size: 20px;
-            color: #33B897;
+            color: #28cffe;
         }
         #upload-image {
             display: none;
@@ -190,14 +184,14 @@
             flex: 0 0 calc(50% - 10px);
             margin: 5px;
             padding: 10px;
-            background-color: #00CE7B;
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         .modal .modal-buttons button:hover {
-            background-color: #00b56a;
+            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
         }
     </style>
 </head>
