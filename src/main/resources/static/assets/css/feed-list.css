@@ -780,141 +780,150 @@ body div.btn-container {
 
 
 /* 댓글 css */
+a:hover {
+    background-color: #4facfe;
+    background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+}
 
-        /* 댓글 프로필 */
-        .profile-box {
-            width: 70px;
-            height: 60px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 10px 0 0 0;
-            }
-    
-            .profile-box img {
-            width: 60px;
-            height: 50px;
-            }
-    
-            #replyContent {
-                /* border: 1px solid red; */
-            }
-    
-            #replies {
-                width: 500px;
-                /* border: 1px solid blue; */
-                /* padding: 0 20px; */
-            }
-            #replies .col-md-10 {
-                width: 436px;
-                margin-left: 0;
-            }
-    
-            .card .float-left {
-                color: black;
-                font-weight: 700;
-                font-size: 16px;
-                padding-top: 10px;
-            }
-    
-    
-            .user-block {
-            display: flex;
-            align-items: center;
-            }
-    
-            .reply-head {
-            display: flex;
-            align-items: center;
-            }
-    
-            .reply-body {
-            line-height: 20px;
-            margin-top: 5px;
-            }
-    
-            .reply-body .col-md-3 {
-                width: 100px;
-            font-weight: 700;
-            margin-left: 20px;
-            }
-    
-            .reply-body .text-right {
-                width: 100%;
-                margin-top: 2px;
-                opacity: 0.8;
-            }
-            .row .text-right {
-                margin: 0 0 0 20px;
-                display: flex;
-            }
-            .row .text-right .modDelBtn{
-                display: flex;
-                margin-left: 110px;
-            }
-    
-            .row .col-md-9 {
-                margin: 5px 0 20px 90px ;
-            }
-    
-            /* .col-md-9 .form-control {
-                width: 100px;
-            } */
-    
-            .modDelBtn {
-                display: flex;
-                text-align: right;
-                width: 610px;
-            }
-    
-            .modDelBtn .btn-sm {
-                text-decoration: none;
-                color: black;
-                font-weight: 500;
-                border: none;
-                width: 55px;
-                padding-left: 20px;
-            }
-            
-            .reply-reply-write {
-                opacity: 0.8;
-                margin-left: 55px;
-            }
-            .reply-reply-write .reply-reply-button{
-                color: black;
-                background-color: #fff;
-                border: none;
-                width: 80px;
-            }
-            .reply-reply-write .fa-comment {
-                padding-right: 5px;
-            }
-    
-            .reply-reply-button {
-                border: none;
-                outline: none;
-                background-color: inherit ;
-                cursor: pointer;
-                font-size: 16px;
-            }
-            .rows .col-md-3 {
-                display: flex;
-            }
-            .rows .col-md-90 {
-                display: flex;
-            }
-            .rows .col-md-90 .form-group .form-control {
-                width: 600px;
-            }
-            .rows .col-md-3 .form-group {
-                display: flex;
-            }
-            .rows .col-md-3 .form-group .form-control {
-                margin: 6px 0;
-                width: 600px;
-            }
-            .rows .col-md-3 .col-md-90 .form-group .form-control1 {
-                width: 50px;
-            }
+/* 댓글 프로필 */
+.profile-box {
+width: 50px;
+height: 50px;
+border-radius: 50%;
+overflow: hidden;
+/* margin: 10px 0 0 0; */
+border: none;
+}
+
+.profile-box img {
+width: 60px;
+height: 50px;
+}
+
+#replyContent {
+    /* border: 1px solid red; */
+}
+
+#replies {
+    width: 500px;
+    box-shadow: none;
+    /* border: 1px solid blue; */
+    /* padding: 0 20px; */
+}
+#replies .col-md-10 {
+    width: 446px;
+    margin-left: 0;
+}
+
+.card .float-left {
+    color: black;
+    font-weight: 700;
+    font-size: 16px;
+    padding-top: 10px;
+}
+
+
+.user-block {
+display: flex;
+align-items: center;
+}
+
+.reply-head {
+display: flex;
+align-items: center;
+}
+
+.reply-body {
+line-height: 20px;
+margin-top: 5px;
+}
+
+.reply-body .col-md-3 {
+    width: 100px;
+font-weight: 700;
+margin-left: 20px;
+}
+
+.reply-body .text-right {
+    width: 100%;
+    margin-top: 2px;
+    opacity: 0.8;
+}
+.row .text-right {
+    margin: 0 0 0 5px;
+    display: flex;
+}
+.row .text-right .modDelBtn{
+    display: flex;
+    margin-left: 110px;
+    margin-bottom: 3px;
+}
+
+.row .col-md-9 {
+    margin: 5px 0 20px 75px ;
+}
+
+/* .col-md-9 .form-control {
+    width: 100px;
+} */
+
+.modDelBtn {
+    display: flex;
+    text-align: right;
+    width: 610px;
+}
+
+.modDelBtn .btn-sm {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    border: none;
+    width: 60px;
+    padding-left: 8px;
+    font-size: 16px;
+    box-shadow: none;
+}
+
+.reply-reply-write {
+    opacity: 0.8;
+    margin-left: 55px;
+}
+.reply-reply-write .reply-reply-button{
+    color: black;
+    background-color: #fff;
+    border: none;
+    width: 80px;
+}
+.reply-reply-write .fa-comment {
+    padding-right: 5px;
+}
+
+.reply-reply-button {
+    border: none;
+    outline: none;
+    background-color: inherit ;
+    cursor: pointer;
+    font-size: 16px;
+}
+.rows .col-md-3 {
+    display: flex;
+}
+.rows .col-md-90 {
+    display: flex;
+}
+.rows .col-md-90 .form-group .form-control {
+    width: 600px;
+}
+.rows .col-md-3 .form-group {
+    display: flex;
+}
+.rows .col-md-3 .form-group .form-control {
+    margin: 6px 0;
+    width: 600px;
+}
+.rows .col-md-3 .col-md-90 .form-group .form-control1 {
+    width: 50px;
+}
 
 /* 대댓글 카드 스타일 */
 .nested-reply-card {
@@ -930,10 +939,12 @@ body div.btn-container {
     justify-content: space-between;
   } 
   .nested-reply-card .user-block .nestReply-head{
+    margin-left: 30px;
     display: flex;
   }
   .nested-reply-card .user-block .nestReply-head .nestReply-body {
-    margin-top: 15px; 
+    margin-top: 10px; 
+    line-height: 19px;
   }
   .nested-reply-card .user-block .nestReply-head .nestReply-body .col-md-3{
     width: 100px;
@@ -944,6 +955,7 @@ body div.btn-container {
     margin-top: 5px;
   }
   .Nestedcard .card-body .row .col-md-3 {
+    display: flex;
     margin-left: 15px;
     width: 120px;
     height: 70px;

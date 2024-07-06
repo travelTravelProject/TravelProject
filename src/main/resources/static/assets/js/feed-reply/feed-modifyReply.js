@@ -12,6 +12,16 @@ export function modifyReplyClickEvent() {
 
     if (!e.target.matches('#replyModBtn')) return;
 
+    const clickedRno = e.target.closest('#replyContent').dataset.rno;
+
+    if (isModifyMode && modifyRno === clickedRno) {
+      // 수정 모드일 때 수정버튼을 한 번 더 누르게되면 수정모드 취소
+      isModifyMode = false;
+      modifyRno = null;
+      document.getElementById('newReplyText').value = '';
+      return;
+    }
+
     // 수정 전 텍스트 읽기
     const text = e.target.closest('.row').querySelector('.col-md-9').textContent;
 
@@ -30,6 +40,9 @@ export function modifyReplyClickEvent() {
     modifyRno = e.target.closest('#replyContent').dataset.rno;
     
     isModifyMode = true;
+
+     // 댓글 입력창으로 스크롤
+     document.getElementById('newReplyText').scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 }
 
@@ -57,7 +70,7 @@ export async function fetchReplyModify() {
     return;
   }
 
-  // window.scrollTo(0, 0); // 수정 후 페이지 상단으로 이동
+  window.scrollTo(0, 0); // 수정 후 페이지 상단으로 이동
   await fetchInfScrollReplies(1, true, boardId); // 전체 댓글 목록 다시 불러오기
 
   // 수정 모드 해제

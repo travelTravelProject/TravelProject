@@ -58,7 +58,8 @@ export function appendReplies({ replies, loginUser }, reset = false) {
   if (replies && replies.length > 0) {
     replies.forEach(({ replyId: rno, writer, text, createAt, account: replyAccount }) => {
       tag += `
-            <div id='replyContent' class='card-body' data-rno='${rno}'>
+            <div id='replyContent' class='card-body' data-rno='${rno}' style="
+    height: 190px">
                 <div class='row user-block'>
                   <div class='reply-head'>
                     <div class="profile-box">
@@ -70,7 +71,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                       <div class='col-md-3'>
                           <b>${writer}</b>
                       </div>
-                      <div class='offset-md-6 text-right'><b>${getRelativeTime(createAt)}</b></div>
+                      <div class='offset-md-6 text-right' style="margin-left: 20px;"><b>${getRelativeTime(createAt)}</b></div>
                     </div>
                   </div>
                 </div><br>
@@ -78,7 +79,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                     <div class='col-md-9'>${text}</div>
                     <div class='col-md-3 text-right'>
                     <div class="reply-reply-write">
-                      <button type="button" class="btn btn-dark form-control reply-reply-button" data-rno='${rno}'><i class="fas fa-comment"></i>답글</button>
+                      <button type="button" class="btn btn-dark form-control reply-reply-button" data-rno='${rno}' style="box-shadow:none;"><i class="fas fa-comment"></i>답글</button>
                     </div>
                     `;
             // 관리자이거나 내가 쓴 댓글일 경우만 조건부 렌더링
@@ -89,8 +90,8 @@ export function appendReplies({ replies, loginUser }, reset = false) {
               if (auth === 'ADMIN' || replyAccount === loginUserAccount) {
                 tag += `
                   <div class="modDelBtn">
-                    <a id='replyModBtn' class='btn btn-sm btn-outline-dark modBtn' href='#'>수정</a>&nbsp;
-                    <a id='replyDelBtn' class='btn btn-sm btn-outline-dark delBtn' href='#'>삭제</a>&nbsp;
+                    <a id='replyModBtn' class='btn btn-sm btn-outline-dark modBtn' href='#' style="box-shadow:none;">수정</a>&nbsp;
+                    <a id='replyDelBtn' class='btn btn-sm btn-outline-dark delBtn' href='#' style="box-shadow:none;">삭제</a>&nbsp;
                   </div>
                 `;
               }
@@ -106,7 +107,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
 
             <div id="nestedReplyWriteSection-${rno}" class="Nestedcard hidden" data-rno='${rno}'>
                 <div class="card-body"
-                style="display: flex">
+                style="display: flex; height: 140px;">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -118,11 +119,11 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                                 value="${loginUser.nickname}"
                                 class="form-control"
                                 placeholder="작성자 이름"
-                                style="width: 100px;margin-left: 13px;"
+                                style="width: 100px;margin-left: 13px;box-shadow:none;"
                                 readonly
                                 />
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-9" style="margin: 0;">
                               <div class="form-group">
                                   <label for="newNestedReplyText-${rno}" hidden>대댓글 내용</label>
                                   <textarea
@@ -131,6 +132,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                                   name="nestedReplyText"
                                   class="form-control"
                                   placeholder="대댓글을 입력해주세요."
+                                  style="width: 256px;height: 46px;margin-top: 5px;box-shadow:none;"
                                   ></textarea>
                               </div>
                               <button
@@ -138,9 +140,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                                 type="button"
                                 class="btn btn-dark form-control nested-reply-add-btn"
                                 data-rno='${rno}'
-                                style="width: 60px;
-                                       height: 35px;"
-                                >
+                                style="margin-top: 8px;margin-left: 195px;width: 60px;height: 35px;background-color:#d9d9d9;border: none; box-shadow:none">
                                 등록
                               </button>
                             </div>
@@ -174,6 +174,9 @@ export function appendReplies({ replies, loginUser }, reset = false) {
     button.addEventListener("click", async (event) => {
       const rno = event.target.dataset.rno;
       await fetchNestedReplyPost(rno);
+      // 대댓글 입력 후 입력창 닫기
+      const nestedReplySection = document.getElementById(`nestedReplyWriteSection-${rno}`);
+      nestedReplySection.classList.add("hidden");
     });
   });
 
@@ -229,7 +232,7 @@ export async function fetchInfScrollReplies(pageNo = 1, reset = false) {
 async function scrollHandler(e) {
   const $rightSide = document.querySelector('.feed-right-side');
   if (
-    $rightSide.scrollTop + $rightSide.clientHeight >= $rightSide.scrollHeight &&
+    $rightSide.scrollTop + $rightSide.clientHeight >= $rightSide.scrollHeight - 10 &&
     !isFetching
   ) {
     await fetchInfScrollReplies(currentPage + 1);

@@ -35,5 +35,5 @@ textInput.value = '';
 // writerInput.value = '';
 
 // renderReplies(replies);
-await fetchInfScrollReplies(1, true, boardId);
+await fetchInfScrollReplies(boardId);
 };
