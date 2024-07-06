@@ -32,7 +32,7 @@
             B.board_id,
             B.account,
             U.nickname,
-<!--            D.profile_image,-->
+            D.profile_image,
             B.category_id,
             B.content,
             B.view_count,
@@ -41,8 +41,8 @@
         FROM tbl_board B
         JOIN tbl_user U
             ON B.account = U.account
-<!--        JOIN tbl_user_detail D-->
-<!--            ON B.account = D.account-->
+        LEFT JOIN tbl_user_detail D
+            ON U.account = D.account
         WHERE B.status = 'A'
             AND B.category_id = 2
             AND (U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
@@ -74,7 +74,7 @@
             B.board_id,
             B.account,
             U.nickname,
-<!--            D.profile_image,-->
+            D.profile_image,
             B.category_id,
             B.content,
             B.view_count,
@@ -83,15 +83,13 @@
         FROM tbl_board B
         JOIN tbl_user U
             ON B.account = U.account
-<!--        JOIN tbl_user_detail D-->
-<!--            ON B.account = D.account-->
+        LEFT JOIN tbl_user_detail D
+            ON U.account = D.account
         WHERE B.status = 'A'
             AND B.category_id = 2
             AND B.board_id = #{boardId}
     </select>
 
-<!--    <insert id="saveFeed" parameterType="com.travel.project.entity.Board"-->
-<!--            useGeneratedKeys="true" keyProperty="boardId">-->
     <insert id="saveFeed">
         INSERT INTO tbl_board
         (
