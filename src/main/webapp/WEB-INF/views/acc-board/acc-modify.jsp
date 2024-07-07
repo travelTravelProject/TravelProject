@@ -315,6 +315,27 @@
     // 삭제 버튼
     const $removeImage = document.querySelector('.removeImage');
 
+    // 초기 로드 시 기존 이미지가 있는 경우 처리
+    document.addEventListener('DOMContentLoaded', () => {
+        const imagePath = '${abm.imagePath}';
+
+        if (imagePath) {
+            // 이미지 요소 생성 및 src 설정
+            const imgElement = document.createElement('img');
+            imgElement.src = imagePath;
+
+            // 이미지 업로드 버튼 안에 이미지 요소 추가
+            const uploadBtn = document.querySelector('.image-upload-btn');
+            uploadBtn.appendChild(imgElement);
+
+
+            document.querySelector('.image-upload-btn i').style.display = 'none';
+            document.querySelector('.image-box').style.border = 'none';
+            $removeImage.style.display = 'flex';
+        }
+    });
+
+
     $upload.addEventListener('click', e => {
         $uploadImage.click();
     });
@@ -334,8 +355,7 @@
             // 첨부파일이 등록되는 순간 img 태그에 이미지를 세팅
             reader.onloadend = e => {
                 // 1. img태그 없으면 img태그 먼저 만들기
-                // let $isImg = $uploadImage.querySelector('img');
-                if ($uploadImage.querySelector('img') === null) {
+                if ($upload.querySelector('img') === null) {
                     document.querySelector('.image-upload-btn').appendChild(document.createElement('img'));
                 }
                 const $img = document.querySelector('.image-upload-btn img')
@@ -361,9 +381,10 @@
         }
         // i태그 보이기, 보더라인 보이기, 삭제버튼 숨기기
         document.querySelector('.image-upload-btn i').style.display = 'block';
-        document.querySelector('.image-box').style.border = '2px dashed #33B897';
+        document.querySelector('.image-box').style.border = '2px dashed #28cffe';
         $removeImage.style.display = 'none';
     });
+
 </script>
 
 </body>

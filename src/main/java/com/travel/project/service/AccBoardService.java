@@ -91,9 +91,24 @@ public class AccBoardService {
     }
 
     // 게시글 수정 요청 처리
+    @Transactional
     public boolean modify(AccBoardModifyDto dto) {
         AccBoard ab = dto.toEntity();
-        return accBoardMapper.modify(ab);
+        String newImagePath = null;
+
+        // 이미지 업로드가 있는 경우
+        if (dto.getPostImage() != null && !dto.getPostImage().isEmpty()) {
+            newImagePath = FileUtil.uploadFile(dto.getPostImage());
+        }
+
+        boolean boardModified = accBoardMapper.modify(ab);
+
+        // 게시글이 성공적으로 수정되면 이미지도 수정
+        if (boardModified && newImagePath != null) {
+            accBoardImageService.updateBoardImage(ab.getBoardId(), newImagePath);
+        }
+
+        return boardModified;
     }
 
     // 동행게시판 전체 글 수

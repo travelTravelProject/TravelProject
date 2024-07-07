@@ -2,6 +2,7 @@ package com.travel.project.dto.response;
 
 import com.travel.project.entity.AccBoard;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,6 +23,8 @@ public class AccBoardModifyDto {
     private String location;
     private String startDate;
     private String endDate;
+    private String imagePath;
+    private MultipartFile postImage;
 
     public void setFromEntity(AccBoard ab) {
         this.boardId = ab.getBoardId();
@@ -34,6 +37,7 @@ public class AccBoardModifyDto {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.startDate = ab.getStartDate().format(formatter);
         this.endDate = ab.getEndDate().format(formatter);
+        this.imagePath = ab.getImagePath();
     }
 
     public AccBoard toEntity() {
@@ -49,6 +53,8 @@ public class AccBoardModifyDto {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         ab.setStartDate(LocalDate.parse(this.startDate, formatter).atStartOfDay());
         ab.setEndDate(LocalDate.parse(this.endDate, formatter).atStartOfDay());
+
+        ab.setImagePath(this.imagePath); // 이미지 경로 설정
 
         return ab;
     }

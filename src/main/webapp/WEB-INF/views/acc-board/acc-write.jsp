@@ -354,7 +354,7 @@
         }
         // i태그 보이기, 보더라인 보이기, 삭제버튼 숨기기
         document.querySelector('.image-upload-btn i').style.display = 'block';
-        document.querySelector('.image-box').style.border = '2px dashed #33B897';
+        document.querySelector('.image-box').style.border = '2px dashed #28cffe';
         $removeImage.style.display = 'none';
     })
 
