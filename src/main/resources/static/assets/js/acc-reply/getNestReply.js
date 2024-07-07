@@ -1,5 +1,5 @@
 import { NEST_BASE_URL } from "../acc-reply.js";
-import { fetchInfScrollReplies } from "./getReply.js";
+import { initInfScroll } from "./getReply.js";
 import { getRelativeTime } from "./getReply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
 
@@ -71,13 +71,19 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
               <textarea rows="3" id="editNestedReplyText-${nestedReplyId}" name="editNestedReplyText"
                         class="form-control"
                         placeholder="대댓글을 입력해주세요."
-                        style="width: 550px;">${currentText.trim()}</textarea>
+                        style="width: 550px;">${currentText}</textarea>
             </div>
           </div>
           <div class="col-md-3">
             <button id="nestedReplyModifyBtn-${nestedReplyId}" type="button"
-                    class="btn btn-dark form-control nestedReplyModifyBtn" data-nested-rno="${nestedReplyId}">
+                    class="btn btn-dark form-control nestedReplyModifyBtn" data-nested-rno="${nestedReplyId}"
+                    style="background-color: inherit;border: none;font-weight: 500;border-radius: 5px;">
               수정
+            </button>
+            <button id="nestedReplyCancelBtn-${nestedReplyId}" type="button"
+                    class="btn btn-secondary form-control nestedReplyCancelBtn" data-nested-rno="${nestedReplyId}"
+                    style="color: black;box-shadow:none;margin:5px;border: none;background-color: inherit;font-weight: 500;border-radius: 5px;">
+              취소
             </button>
           </div>
         </div>
@@ -108,10 +114,15 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
         console.log('response: ', response);
 
         if (response.ok) {
-          await fetchInfScrollReplies(1, true);
+          // await fetchInfScrollReplies(1, true);
+          await initInfScroll();
         } else {
           console.error('대댓글 수정 실패');
         }
+      });
+      // 대댓글 취소 버튼 클릭 이벤트
+      document.getElementById(`nestedReplyCancelBtn-${nestedReplyId}`).addEventListener("click", () => {
+        fetchInfScrollNestReplies(rno); // 원래 대댓글 목록 다시 불러오기
       });
     });
   });
@@ -141,7 +152,8 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
       console.log('response: ', response);
 
       if (response.ok) {
-        await fetchInfScrollReplies(1, true);
+        // await fetchInfScrollReplies(1, true);
+        await initInfScroll();
       } else {
         console.error('대댓글 삭제 실패');
       }

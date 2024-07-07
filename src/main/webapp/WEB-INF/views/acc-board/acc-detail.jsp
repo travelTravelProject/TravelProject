@@ -298,6 +298,14 @@
         height: 50px;
         }
 
+        button:hover {
+        background-color: #4facfe;
+        background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+        }
+        a:hover {
+        background-color: #4facfe;
+        background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+        }
         #replyContent {
             /* border: 1px solid red; */
         }
@@ -352,13 +360,20 @@
 
         .modDelBtn {
             text-align: right;
-            width: 610px;
+            width: 590px;
         }
 
         .modDelBtn .btn-sm {
+            display: inline-block;
             text-decoration: none;
             color: black;
             font-weight: 500;
+            width: 50px;
+            height: 35px;
+            text-align: center;
+            padding-top: 10px;
+            border-radius: 5px;
+        
         }
         
         .reply-reply-write {
@@ -375,6 +390,8 @@
             background-color: inherit ;
             cursor: pointer;
             font-size: 16px;
+            border-radius: 5px;
+            margin-top: 6px;
         }
         .rows .col-md-3 {
             display: flex;
@@ -423,7 +440,7 @@
         }
         .Nestedcard .card-body .row .col-md-3 .col-md-9 .form-group .form-control {
             width: 530px;
-            height: 30px;
+            height: 35px;
         }
         /* 대댓글 카드 스타일 */
         .nested-reply-card {
@@ -452,12 +469,19 @@
 
         .reply-content .nestModDel {
             justify-content: end;
-            margin-right: 6px;
+            margin-right: 9px;
         }
         .reply-content .text-right .btn-sm {
+            display: inline-block;
+            width: 50px;
+            height: 35px;
+            padding-top: 10px;
+            margin-right: 1px;
+            text-align: center;
             text-decoration: none;
             color: black;
             font-weight: 500;
+            border-radius: 5px;
         }
         .nestedReplyModBtn {
             margin-right: 8px;
@@ -524,110 +548,110 @@
 
         </div>
 
-         <!-- 댓글 영역 -->
+        <!-- 댓글 영역 -->
 
         <div id="replies" class="row">
-            <div class="offset-md-1 col-md-10">
-            
-            <!--댓글 내용 영역-->
-            <div class="card">
-                <!-- 댓글 내용 헤더 -->
-                <div class="card-header text-white m-0">
-                <div class="float-left">댓글 (<span id="replyCnt">0</span>)</div>
-                </div>
-
-                <!-- 댓글 내용 바디 -->
-                <div id="replyCollapse" class="card">
-                <div id="replyData">
-                    <!--
-                    < JS로 댓글 정보 DIV삽입 >
-                    -->
-                    <!-- 대댓글 내용 바디 -->
-                    <div id="nestedReplyCollapse" class="card">
-                        <div id="nestedReplyData">
-                        </div>
-                    </div>
-                </div>
-                </div>
-
+        <div class="offset-md-1 col-md-10">
+        
+        <!--댓글 내용 영역-->
+        <div class="card">
+            <!-- 댓글 내용 헤더 -->
+            <div class="card-header text-white m-0">
+            <div class="float-left">댓글 (<span id="replyCnt">0</span>)</div>
             </div>
 
+            <!-- 댓글 내용 바디 -->
+            <div id="replyCollapse" class="card">
+            <div id="replyData">
+                <!--
+                < JS로 댓글 정보 DIV삽입 >
+                -->
+                <!-- 대댓글 내용 바디 -->
+                <div id="nestedReplyCollapse" class="card">
+                    <div id="nestedReplyData">
+                    </div>
+                </div>
+            </div>
+            </div>
 
-            <!-- 댓글 쓰기 영역 -->
-            <div class="card">
-            <div class="card-body">
-                <c:if test="${user == null}">
-                <a href="/sign-in">댓글은 로그인 이후에 작성 가능합니다.</a>
-                </c:if>
-                <c:if test="${user != null}">
-                <div class="rows"> 
-                    <div class="col-md-3">
+        </div>
+
+
+        <!-- 댓글 쓰기 영역 -->
+        <div class="card">
+        <div class="card-body">
+            <c:if test="${user == null}">
+            <a href="/sign-in">댓글은 로그인 이후에 작성 가능합니다.</a>
+            </c:if>
+            <c:if test="${user != null}">
+            <div class="rows"> 
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="newReplyWriter" hidden>댓글 작성자</label>
+                        <input
+                        id="newReplyWriter"
+                        name="replyWriter"
+                        type="text"
+                        value="${user.nickname}"
+                        class="form-control"
+                        placeholder="작성자 이름"
+                        style="margin-bottom: 6px"
+                        readonly
+                        />
+                    </div>
+                    <div class="col-md-90">
                         <div class="form-group">
-                            <label for="newReplyWriter" hidden>댓글 작성자</label>
+                            <label for="newReplyText" hidden>댓글 내용</label>
                             <input
-                            id="newReplyWriter"
-                            name="replyWriter"
-                            type="text"
-                            value="${user.nickname}"
+                            rows="3"
+                            id="newReplyText"
+                            name="replyText"
                             class="form-control"
-                            placeholder="작성자 이름"
-                            style="margin-bottom: 6px"
-                            readonly
+                            placeholder="댓글을 입력해주세요."
                             />
                         </div>
-                        <div class="col-md-90">
-                            <div class="form-group">
-                                <label for="newReplyText" hidden>댓글 내용</label>
-                                <input
-                                rows="3"
-                                id="newReplyText"
-                                name="replyText"
-                                class="form-control"
-                                placeholder="댓글을 입력해주세요."
-                                />
-                            </div>
-                            <button
-                            id="replyAddBtn"
-                            type="button"
-                            class="btn btn-dark form-control1"
-                            style="width: 60px;
-                                   margin: 6px 0;"
-                            >
-                            등록
-                            </button>
-                        </div>
+                        <button
+                        id="replyAddBtn"
+                        type="button"
+                        class="btn btn-dark form-control1"
+                        style="width: 60px;
+                                margin: 6px 0;"
+                        >
+                        등록
+                        </button>
                     </div>
                 </div>
-                </c:if>
             </div>
-            </div>
-            <!-- end reply write -->
-            
+            </c:if>
+        </div>
+        </div>
+        <!-- end reply write -->
+        
 
-            <!-- 댓글 페이징 영역 -->
-            <ul class="pagination justify-content-center">
-                <!--
-                < JS로 댓글 페이징 DIV삽입 >
-                -->
-            </ul>
-            </div>
+        <!-- 댓글 페이징 영역 -->
+        <ul class="pagination justify-content-center">
+            <!--
+            < JS로 댓글 페이징 DIV삽입 >
+            -->
+        </ul>
         </div>
-        <!-- end reply content -->
-        </div>
-        <!-- end replies row -->
+    </div>
+    <!-- end reply content -->
+    </div>
+    <!-- end replies row -->
 
         <div class="spinner-container" id="loadingSpinner">
             <div class="spinner-border text-light" role="status">
-                <span class="visually-hidden">Loading...</span>
+                <span class="visually-hidden">Loading…</span>
             </div>  
         </div>
            
-<!-- 이미지 모달 -->
+<!— 이미지 모달 —>
 <div id="imgModal" class="img-modal">
     <img src="/assets/img/accBoardDefaultImg.webp" class="img-modal-content" id="modalImage">
 </div>
   
-<!-- 삭제 확인 모달 -->
+<!— 삭제 확인 모달 —>
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -751,3 +775,4 @@
 
 </body>
 </html>
+

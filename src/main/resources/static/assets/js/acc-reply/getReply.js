@@ -177,34 +177,6 @@ export function appendReplies({ replies, loginUser }, reset = false) {
       await fetchNestedReplyPost(rno);
     });
   });
-
-
-
-  // // 대댓글 더보기 버튼 클릭시 이벤트 리스너 추가
-  // document.querySelectorAll(".load-more-nested-replies").forEach(button => {
-  //   button.addEventListener("click", async (e) => {
-  //     const rno = e.target.dataset.rno;
-  //     const nestedReplyData = document.getElementById(`nestedReplyData-${rno}`);
-  //     nestedReplyData.classList.toggle("hidden");
-
-  //     if (!nestedReplyData.classList.contains("hidden")) {
-  //       await fetchInfScrollNestReplies(rno);
-  //       button.textContent = "△ 답글0개"; // 버튼 텍스트 변경
-  //     } else {
-  //       button.textContent = "▽ 답글0개"; // 버튼 텍스트 변경
-  //     }
-  //   });
-  // });
-
-  //   // 대댓글이 없는 경우 버튼 숨기기
-  // document.querySelectorAll(".load-more-nested-replies").forEach(button => {
-  //   const rno = button.dataset.rno;
-  //   const nestedReplyCount = document.getElementById(`nestedReplyData-${rno}`).childElementCount;
-  //   if (nestedReplyCount === 0) {
-  //     button.style.display = "none";
-  //   }
-  // });
-
   
 }
 
@@ -260,7 +232,7 @@ async function scrollHandler(e) {
   // 스크롤이 최하단부로 내려갔을 때만 이벤트 발생시켜야 함
   //  현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
   if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight + 100
+    window.innerHeight + window.scrollY >= document.body.offsetHeight + 20
     && !isFetching
   ) {
     // showSpinner();

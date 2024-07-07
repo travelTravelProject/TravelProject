@@ -1,4 +1,4 @@
-import { fetchInfScrollReplies } from "./feed-getReply.js";
+import { initInfScroll } from "./feed-getReply.js";
 import { BASE_URL } from "../feed-reply.js";
 
 // 서버에 댓글 등록을 요청하는 비동기 함수
@@ -35,5 +35,6 @@ textInput.value = '';
 // writerInput.value = '';
 
 // renderReplies(replies);
-await fetchInfScrollReplies(boardId);
+await initInfScroll(boardId);
+// await fetchInfScrollReplies(boardId);
 };

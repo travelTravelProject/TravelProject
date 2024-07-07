@@ -1,9 +1,11 @@
+// feed-getNestReply.js
+
 import { NEST_BASE_URL } from "../feed-reply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
 import { getRelativeTime, fetchInfScrollReplies } from "./feed-getReply.js";
 
 // 대댓글 렌더링  
-export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
+export function appendNestedReplies({ nestedReplies, loginUser, boardId }, rno) {
   const $nestedReplyData = document.getElementById(`nestedReplyData-${rno}`);
 
   let tag = "";
@@ -11,7 +13,7 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
     // "답글 보기" 버튼 추가
     tag += `
       <div class='text-right' style="margin-top: 10px;">
-        <button id='toggleNestedRepliesBtn-${rno}' class='btn btn-outline-dark' style="box-shadow: none;border: none;width: 275px;display: inline-block"><i class="fas fa-arrow-right"></i> 답글 ${nestedReplies.length}개 보기</button>
+        <button id='toggleNestedRepliesBtn-${rno}' class='btn btn-outline-dark' style="box-shadow: none;border: none;width: 135px;display: inline-block; margin-left: 80px;"><i class="fas fa-arrow-right"></i> 답글 ${nestedReplies.length}개 보기</button>
       </div>
     `;
 
@@ -75,7 +77,7 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
         button.innerText = '답글 숨기기';
 
         // 대댓글 수정 및 삭제 버튼에 이벤트 리스너 추가
-        addNestedReplyEventListeners(rno, loginUser);
+        addNestedReplyEventListeners(rno, loginUser, boardId);
       }
     });
   } else {
@@ -84,7 +86,7 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
 }
 
 // 대댓글 수정 및 삭제 버튼에 이벤트 리스너 추가 함수
-function addNestedReplyEventListeners(rno, loginUser) {
+function addNestedReplyEventListeners(rno, loginUser, boardId) {
   // 대댓글 수정버튼에 이벤트 리스너 추가
   document.querySelectorAll(`#nestedReplyData-${rno} .nestedReplyModBtn`).forEach((button) => {
     button.addEventListener("click", function (e) {
@@ -99,7 +101,7 @@ function addNestedReplyEventListeners(rno, loginUser) {
             <div class="form-group">
               <label for="editNestedReplyText-${nestedReplyId}" hidden>대댓글 내용</label>
               <textarea rows="3" id="editNestedReplyText-${nestedReplyId}" name="editNestedReplyText"
-                        class="form-control" style="border: none;width: 280px;height: 40px;box-shadow: none;"
+                        class="form-control" style="width: 280px;height: 40px;box-shadow: none;"
                         placeholder="대댓글을 입력해주세요.">${currentText}</textarea>
             </div>
           </div>
@@ -130,6 +132,7 @@ function addNestedReplyEventListeners(rno, loginUser) {
           nestedReplyId: nestedReplyId,
           newText: newText,
           replyId: rno, // 수정 후 댓글 조회를 위한 댓글 번호
+          boardId: boardId // 수정 후 댓글 조회를 위한 게시판 번호
         }
 
         const response = await fetch(`${NEST_BASE_URL}`, {
@@ -170,7 +173,7 @@ function addNestedReplyEventListeners(rno, loginUser) {
         nestedReplyId: nestedReplyId,
       }
 
-      const response = await fetch(`${NEST_BASE_URL}/${nestedReplyId}?replyId=${rno}`, {
+      const response = await fetch(`${NEST_BASE_URL}/${nestedReplyId}?replyId=${rno}&boardId=${boardId}`, {
         method: 'DELETE',
         headers: {
           'content-type': 'application/json'
@@ -190,13 +193,13 @@ function addNestedReplyEventListeners(rno, loginUser) {
 }
 
 // 서버에서 대댓글 데이터 페칭 (가져오는 함수)
-export async function fetchInfScrollNestReplies(rno) {
+export async function fetchInfScrollNestReplies(rno, boardId) {
   showSpinner();
 
   // const rno = document.getElementById("replyContent").dataset.rno; // 댓글 번호
-  const res = await fetch(`${NEST_BASE_URL}/${rno}`);
+  const res = await fetch(`${NEST_BASE_URL}/${rno}?boardId=${boardId}`);
   const nestedReplyResponse = await res.json();
 
   hideSpinner();
-  appendNestedReplies(nestedReplyResponse, rno);
+  appendNestedReplies(nestedReplyResponse, rno, boardId);
 }

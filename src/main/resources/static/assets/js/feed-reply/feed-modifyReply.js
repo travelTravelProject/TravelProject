@@ -1,5 +1,5 @@
 import { BASE_URL } from "../feed-reply.js";
-import { fetchInfScrollReplies } from "./feed-getReply.js";
+import { initInfScroll } from "./feed-getReply.js";
 
 let isModifyMode = false; // 수정 모드를 설정하는 변수
 let modifyRno = null; // 수정할 댓글의 rno
@@ -71,7 +71,8 @@ export async function fetchReplyModify() {
   }
 
   window.scrollTo(0, 0); // 수정 후 페이지 상단으로 이동
-  await fetchInfScrollReplies(1, true, boardId); // 전체 댓글 목록 다시 불러오기
+  await initInfScroll(boardId);
+  // await fetchInfScrollReplies(1, true, boardId); // 전체 댓글 목록 다시 불러오기
 
   // 수정 모드 해제
   isModifyMode = false;

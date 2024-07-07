@@ -1,6 +1,6 @@
 import { NEST_BASE_URL } from "../acc-reply.js";
-// import { fetchInfScrollReplies } from "./getReply.js";
-import { fetchInfScrollNestReplies } from "../feed-reply/feed-getNestReply.js";
+import { initInfScroll } from "./getReply.js";
+import { fetchInfScrollNestReplies } from "./getNestReply.js";
 
 // 서버에 대댓글 등록을 요청하는 비동기 함수
 export const fetchNestedReplyPost = async (rno) => {
@@ -33,7 +33,7 @@ const replies = await res.json();
 NestTextInput.value = '';
 // NestWriterInput.value = '';
 
-// 대댓글 데이터 페칭
-await fetchInfScrollNestReplies(rno);
+// 대댓글 데이터 페칭 대신 전체 다시 실행해서 무한스크롤까지 적용
+await initInfScroll();
 };
 

@@ -1,3 +1,5 @@
+// feed-getReply.js
+
 import { BASE_URL } from "../feed-reply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
 import { debounce } from "../util.js";
@@ -38,7 +40,7 @@ export function getRelativeTime(createAt) {
   } else if (weeks < 52) {
     return `${weeks}주 전`;
   } else {
-    return `${years}년 전}`;
+    return `${years}년 전`;
   }
 }
 
@@ -173,7 +175,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
   document.querySelectorAll(".nested-reply-add-btn").forEach(button => {
     button.addEventListener("click", async (event) => {
       const rno = event.target.dataset.rno;
-      await fetchNestedReplyPost(rno);
+      await fetchNestedReplyPost(rno, currentBoardId); // currentBoardIdf를 fetchNestedReplyPost로 전달
       // 대댓글 입력 후 입력창 닫기
       const nestedReplySection = document.getElementById(`nestedReplyWriteSection-${rno}`);
       nestedReplySection.classList.add("hidden");
@@ -225,8 +227,6 @@ export async function fetchInfScrollReplies(pageNo = 1, reset = false) {
     isFetching = false;
   }, spinnerMinTime);
 }
-
-
 
 // 스크롤 이벤트 핸들러 함수
 async function scrollHandler(e) {
