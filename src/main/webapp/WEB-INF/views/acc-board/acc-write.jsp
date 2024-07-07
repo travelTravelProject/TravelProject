@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <title>동행 게시판 글쓰기</title>
 
+    <%@ include file="../include/static-head.jsp" %>
+
+
     <!-- reset -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 

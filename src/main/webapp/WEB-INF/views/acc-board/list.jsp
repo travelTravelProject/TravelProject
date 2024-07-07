@@ -4,6 +4,8 @@
 <html lang="ko">
 <head>
 
+    <%@ include file="../include/static-head.jsp" %>
+
     <!-- reset -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
@@ -20,7 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
 
-    <title>동행 모집</title>
+    <title>동행게시판</title>
     <style>
         body {
             font-family: Arial, sans-serif;

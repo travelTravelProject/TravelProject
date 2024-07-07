@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>${abd.title}</title>
 
+    <%@ include file="../include/static-head.jsp" %>
 
     <!--     <link rel="stylesheet" href="/assets/css/detail.css"> -->
     <!-- reset -->
@@ -35,11 +36,10 @@
         }
         #wrap {
             width: 60%;
-            max-width: 800px;
+            /*max-width: 800px;*/
             background-color: #fff;
             margin: 0 auto;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            height: 100vh;
         }
         #wrap p {
             font-weight: bold;
