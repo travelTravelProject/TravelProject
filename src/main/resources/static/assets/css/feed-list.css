@@ -284,7 +284,7 @@ button:hover {
 }
 .top-section .filters div:hover {
     /*background-color: #ddd;*/
-    background-color: #dae0e8;;
+    background-color: #91e5ff;;
 
 }
 
@@ -617,12 +617,6 @@ body div.btn-container {
     /*-webkit-background-clip: text;*/
     color: #ffffff;
 }
-.modal-content label {
-    margin-top: 10px;
-}
-.close-modal {
-    text-align: right;
-}
 .modal-content .hidden {
     display: none;
     height: 5px;
@@ -630,22 +624,39 @@ body div.btn-container {
     margin: 0 0 20px;
     padding: 0;
 }
-.confirm-modal {
-    display: none;
-    position: fixed;
-    z-index: 11;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+/* 부트스트랩 모달 */
+.modal-content label {
+    margin-top: 10px;
 }
-.confirm-modal .confirm {
-    height: 300px;
-    /*border: 1px solid blue;*/
-    position: relative;
-    top: 200px;
+.modal-dialog .modal-content {
+    padding: 10px 20px 20px 20px;
+}
+.close-modal {
+    text-align: right;
+}
+.modal-content .modal-footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.modal-footer .btn-primary {
+    background: #4facfe;
+    border: 1px solid #4facfe;
+}
+.modal-footer .btn-secondary {
+    background: #ddd;
+    border: 1px solid #ddd;
+}
+.modal-footer .btn-primary:hover {
+    background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+    border: 1px solid #4facfe;
+}
+.modal-footer .btn-secondary:hover {
+    background: #ccc;
+    border: 1px solid #ccc;
+}
+.confirm-modal {
+    background: transparent;
 }
 .modal-buttons {
     display: flex;
@@ -679,12 +690,6 @@ body div.btn-container {
     /*z-index: 1050;*/
 }
 
-/*.spinner-container-lds {*/
-/*    width: 100%;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    border: 1px solid lawngreen;*/
-/*}*/
 
 .warning {
     color: #fd6363;

@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <%--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">--%>
 </head>
 <body>
 <%@ include file="include/sub_header.jsp" %>
@@ -66,10 +65,10 @@
             <label for="cr-nickname">닉네임</label>
             <input type="text" id="cr-nickname" name="nickname" required value="${user.nickname}" readonly>
             <label for="cr-content">내용</label>
-            <span class="typing-text"> <span class="typing-count">0</span>/50</span>
+            <span class="typing-text"> <span class="typing-count">0</span>/50</span> <span class="typing-text hidden">최대 4줄 또는 50자까지 입력 가능합니다.</span>
             <textarea id="cr-content" name="content" rows="4" placeholder="최대 4줄 또는 50자까지 입력 가능합니다." required></textarea>
             <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
-            <span class="typing-text">최대 10장까지 업로드 가능합니다.</span>
+            <span class="typing-text">최소 1장 ~ 최대 10장까지 업로드 가능합니다.</span>
             <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
             <div class="dropbox" id="post-preview"></div>
             <button type="submit" id="feed-post-Btn" class="one-modal-btn">새로운 피드 등록하기</button>
@@ -224,20 +223,33 @@
         </div>
         <!-- end replies row -->
 
-        <%-- 디테일 모달 닫기 - 스피너 컨테이너 형제  --%>
+        <%-- 디테일 모달 닫기 --%>
         <span class="close">&times;</span>
 
     </div>
 </div>
 <%-- 피드 상세조회 모달 끝 --%>
 <%-- 삭제 확인 모달 --%>
-<div id="deleteFeedModal" class="confirm-modal">
-    <div class="modal-content confirm">
-        <span class="close close-modal">&times;</span>
-        <p>정말 삭제하시겠습니까?</p>
-        <div class="modal-buttons">
-            <button id="confirmDeleteBtn" class="confirm-btn">삭제</button>
-            <button id="cancelDeleteBtn" class="cancel-btn">취소</button>
+<!-- Button trigger modal -->
+<%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">--%>
+<%--    Launch demo modal--%>
+<%--</button>--%>
+
+<!-- Modal -->
+<div class="modal fade confirm-modal" id="deleteFeedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">피드 삭제</h1>
+                <div class="btn-close" data-bs-dismiss="modal" aria-label="Close"></div>
+            </div>
+            <div class="modal-body">
+                <p>정말 삭제하시겠습니까?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelDeleteBtn" class="btn btn-secondary cancel-btn" data-bs-dismiss="modal">취소</button>
+                <button type="button" id="confirmDeleteBtn" class="btn btn-primary confirm-btn">삭제</button>
+            </div>
         </div>
     </div>
 </div>
