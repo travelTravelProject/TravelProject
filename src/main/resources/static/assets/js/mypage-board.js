@@ -31,6 +31,14 @@ function renderBoardList(boardList) {
     const boardContainer = document.querySelector('.board-container');
     boardContainer.innerHTML = '';
 
+    if (boardList.length === 0) {
+        const noBoardMessage = document.createElement('div');
+        noBoardMessage.className = 'no-board-message';
+        noBoardMessage.textContent = '작성한 게시글이 없습니다.';
+        boardContainer.appendChild(noBoardMessage);
+        return;
+    }
+
     boardList.forEach(board => {
         const boardElement = document.createElement('div');
         boardElement.className = 'board';
@@ -45,12 +53,12 @@ function renderBoardList(boardList) {
                                 <div class="card-content">${board.shortContent}</div>
                             </div>
                             <div class="card-img">
-                                <img src="#" alt="대표이미지">
+                                <img src="/assets/img/accBoardDefaultImg.webp" alt="대표이미지">
                             </div>
                         </div>
                         <div class="card-details-bot">
                             <span>${board.gender}</span>
-                            <span class="lnr lnr-calendar-full"></span>
+<!--                            <span class="lnr lnr-calendar-full"></span>-->
                             <span class="acc-period">&nbsp;${board.startDate} - ${board.endDate}</span>
                             <span class="view-count">${board.view}</span>
                         </div>
@@ -58,8 +66,10 @@ function renderBoardList(boardList) {
                 </section>
             </div>
 `;
+
         boardContainer.appendChild(boardElement);
     });
+
 }
 
 const $boardTab = document.getElementById('my-board-tab');
@@ -94,7 +104,7 @@ function openBoardTab(account) {
     $tab.classList.remove('active-tab-btn');
     // fetchMyFeedList(account);
     $boardTab.classList.add('active-tab');
-    // $myFeedBtn.style.textDecoration = 'underline';
+    $myBoardBtn.style.textDecoration = 'underline';
     $myBoardBtn.classList.add('active-tab-btn');
 }
 

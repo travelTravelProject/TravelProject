@@ -25,17 +25,10 @@
 
                 <div class="profile">
                     <div class="thumbnail-box">
-                        <c:choose>
-                            <c:when test="${not empty userDetail.profileImage && userDetail.profileImage != 'none'}">
-                                <img src="${userDetail.profileImage}" alt="profile image">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="/assets/img/anonymous.jpg" alt="Anonymous Profile Image">
-                            </c:otherwise>
-                        </c:choose>
-<%--                        <img src="${not empty userDetail.profileImage && userDetail.profileImage != 'none' ? userDetail.profileImage : '/assets/img/image-add.png'}"--%>
-<%--                             alt="Profile Image" class="profile-image" id="profileImagePreview">--%>
+                        <img src="${not empty userDetail.profileImage && userDetail.profileImage != 'none' ? userDetail.profileImage : '/assets/img/anonymous.jpg'}"
+                             alt="Profile Image" class="profile-image" id="profileImagePreview">
                     </div>
+
 
                     <label>프로필 이미지 추가</label>
 
