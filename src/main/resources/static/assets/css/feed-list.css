@@ -689,8 +689,9 @@ body div.btn-container {
     /*background-color: rgba(0, 0, 0, 0.5);*/
     /*z-index: 1050;*/
 }
-
-
+.strong {
+    color: #4facfe;
+}
 .warning {
     color: #fd6363;
 }
@@ -736,22 +737,11 @@ body div.btn-container {
 }
 .cr-btn-container #createFeedBtn:hover {
     background: linear-gradient(-45deg, #4facfe, #39caff, #00f2fe);
-    /*animation: bgColorChange 3s ease infinite;*/
 }
 #createFeedBtn i {
     padding-left: 5px;
 }
-/*@keyframes bgColorChange{*/
-/*    0%{*/
-/*        background-position: 0% 50%;*/
-/*    }*/
-/*    50%{*/
-/*        background-position: 100% 50%;*/
-/*    }*/
-/*    100%{*/
-/*        background-position: 0% 50%;*/
-/*    }*/
-/*}*/
+
 /*-------------- 피드 CSS 끝 ---------------------*/
 
 /* 댓글 css */
