@@ -837,8 +837,8 @@
     // 삭제 스크립트
     const $modal = document.getElementById('deleteModal'); // 모달창
     const $span = document.getElementsByClassName('close')[0];
-    const $confirmDelete = document.getElementById('confirmDelete'); // 모달 삭제 확인 버튼
-    const $cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
+    const $confirmDelete = document.querySelector('.confirmDelete'); // 모달 삭제 확인 버튼
+    const $cancelDelete = document.querySelector('.cancelDelete'); // 모달 삭제 취소 버튼
 
     // 삭제버튼 클릭이벤트 - 모달창
     document.querySelector('.del-btn')?.addEventListener('click', function () {
