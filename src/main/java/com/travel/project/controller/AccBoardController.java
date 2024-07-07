@@ -185,10 +185,11 @@ public class AccBoardController {
 
     // 7. 게시글 수정 요청 (/modify : POST)
     @PostMapping("/modify")
-    public String modify(AccBoardModifyDto dto) {
+    public String modify(AccBoardModifyDto dto, @RequestParam("removeImage") boolean removeImage) {
         System.out.println("/acc-board/modify POST");
 
-        boardService.modify(dto);
+        // 게시글 수정
+        boardService.modify(dto, removeImage);
 
         return "redirect:/acc-board/detail?bno=" + dto.getBoardId();
     }

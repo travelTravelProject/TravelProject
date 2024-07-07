@@ -92,7 +92,7 @@ public class AccBoardService {
 
     // 게시글 수정 요청 처리
     @Transactional
-    public boolean modify(AccBoardModifyDto dto) {
+    public boolean modify(AccBoardModifyDto dto, boolean imageDeleted) {
         AccBoard ab = dto.toEntity();
         String newImagePath = null;
 
@@ -104,8 +104,13 @@ public class AccBoardService {
         boolean boardModified = accBoardMapper.modify(ab);
 
         // 게시글이 성공적으로 수정되면 이미지도 수정
-        if (boardModified && newImagePath != null) {
-            accBoardImageService.updateBoardImage(ab.getBoardId(), newImagePath);
+        if (boardModified) {
+            if (imageDeleted) {
+                accBoardImageService.deleteBoardImage(ab.getBoardId());
+            }
+            if (newImagePath != null) {
+                accBoardImageService.updateBoardImage(ab.getBoardId(), newImagePath);
+            }
         }
 
         return boardModified;

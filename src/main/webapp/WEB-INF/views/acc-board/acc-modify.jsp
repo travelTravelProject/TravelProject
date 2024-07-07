@@ -207,6 +207,9 @@
     <form action="/acc-board/modify" method="post" enctype="multipart/form-data">
         <input type="hidden" name="boardId" value="${abm.boardId}">
 
+        <!-- 이미지 삭제 여부를 나타내는 hidden input 추가 -->
+        <input type="hidden" id="removeImage" name="removeImage" value="false">
+
         <label for="location">장소</label>
         <input type="text" id="location" name="location" value="${abm.location}" readonly required onclick="openModal()">
 
@@ -383,6 +386,9 @@
         document.querySelector('.image-upload-btn i').style.display = 'block';
         document.querySelector('.image-box').style.border = '2px dashed #28cffe';
         $removeImage.style.display = 'none';
+
+        // 이미지 삭제 여부 설정
+        document.getElementById('removeImage').value = "true"; // 추가된 부분
     });
 
 </script>
