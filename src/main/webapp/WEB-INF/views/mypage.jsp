@@ -77,7 +77,7 @@
 
     <div class="trip-info">
         <div class="trip-stats">
-            <div id="my-board-btn" class="tab-btn" data-my-account="${user.account}">
+            <div id="my-board-btn" class="tab-btn active-tab-btn" data-my-account="${user.account}">
                 <span>동행</span>
             </div>
             <div id="my-feed-btn" class="tab-btn" data-my-account="${user.account}">
@@ -90,19 +90,19 @@
         </div>
     </div>
 
-    <div class="board-container" id="my-board-tab">
+    <div class="board-container active-tab" id="my-board-tab">
         <div class="my-tab-inner">
-
         </div>
-
     </div>
-<div class="board-container" id="my-feed-tab">
-    <div class="my-tab-inner">
-
+    <div class="board-container inactive-tab" id="my-feed-tab">
+        <div class="my-tab-inner">
+        </div>
+<%--        <span class="close close-modal">x</span>--%>
     </div>
-<%--    <span class="close close-modal">x</span>--%>
+
 </div>
 </div>
+
 
 
     <%-- 아이콘 --%>

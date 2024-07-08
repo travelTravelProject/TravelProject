@@ -1,39 +1,32 @@
 // 이미지
 export let imageFiles = [];
+// DataTransfer 객체 생성
+const dataTransfer = new DataTransfer();
 
-// 비동기 순서대로 미리보기 렌더링
+// 이미지 배열 순서대로 미리보기 렌더링
 function readFile(file, index, imageBox) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const imgTag = `
-                <div class="image-frame"> 
-                    <img src="${e.target.result}" class="image-item" data-image-order="${index}" alt="preview image">
-                    <div class="delete-prev-image" data-image-order="${index}">x</div>
-                </div>
-            `;
-      imageBox.innerHTML += imgTag;
-      resolve(); // 파일 읽기가 완료되었음
-    };
-    reader.onerror = () => {
-      reject(reader.error); // 파일 읽기 중 에러가 발생했음
-    }
-    // 파일을 Data URL로 읽기 완료하면 reader.onload 콜백함수 실행
-    reader.readAsDataURL(file);
-  });
+
+  const imgUrl = URL.createObjectURL(file);
+  const imgTag = `
+        <div class="image-frame" data-img-src="${imgUrl}"> 
+            <img src="${imgUrl}" class="image-item" data-image-order="${index}" alt="preview image">
+            <div class="delete-prev-image" data-image-order="${index}">취소</div>
+        </div>
+  `;
+  imageBox.innerHTML += imgTag;
 }
 
 
 // input 업로드된 파일 미리보기 렌더링 함수
 // imageBox는 미리보기 이미지가 렌더링될 DOM
-export async function previewImages(files, imageBox) {
+export function previewImages(files, imageBox) {
   imageBox.innerHTML = ''; // 기존 미리보기 초기화
   if(!files) return; // 업로드 할 이미지가 없으면 종료
 
   console.log('미리보기 files: ', files);
 
   for (let i = 0; i < files.length; i++) {
-    await readFile(files[i], i, imageBox);
+    readFile(files[i], i, imageBox);
   }
 }
 
@@ -55,7 +48,7 @@ export async function addExistingImagesToPreview(images, imageBox) {
     const blob = await res.blob();
     const file = new File([blob], getOriginalFileName(src), { type: blob.type });
     imageFiles.push(file);
-    await readFile(file, i, imageBox);
+    readFile(file, i, imageBox);
   }
 
   console.log('기존미리보기 imageFiles: ', imageFiles)
@@ -64,11 +57,13 @@ export async function addExistingImagesToPreview(images, imageBox) {
 // 이미지 input(e) 변경 시 미리보기 및 이미지 배열 생성
 export function handleFileInputChange(e, imageList, imageBox) {
   if(imageList.length === 10) {
-    document.querySelector('.typing-text').style.color='#4facfe';
+    document.querySelector('.fake-upload + .typing-text').classList.add('strong');
+    return;
+  } else {
+    document.querySelector('.fake-upload + .typing-text').classList.remove('strong');
   }
-  console.log('image.js 타입: ', typeof e.target.files, ' / 출력: ', e.target.files[0])
-  const newFiles = Array.from(e.target.files);
-  imageList.push(...newFiles);
+
+  imageList.push(...e.target.files);
   console.log('image.js handle 이미지들 : ', imageList);
   previewImages(imageList, imageBox);
   e.target.value = '';
@@ -177,8 +172,14 @@ export function clearImageFiles() {
 
 // preview 삭제 후 업데이트
 export function deletePreviewAndUpdate(e, $box) {
-  const index = e.target.dataset.imageOrder;
+  const index = +e.target.dataset.imageOrder;
+  const imgSrc = e.target.closest('.image-frame').dataset.imgSrc;
   imageFiles.splice(index, 1);
+
+  // url 해제
+  URL.revokeObjectURL(imgSrc);
+  // DataTransfer 에서 파일 제거
+  dataTransfer.items.remove(index);
   console.log('미리보기삭제이벤 imageFiles: ', imageFiles);
   previewImages(imageFiles, $box);
 }

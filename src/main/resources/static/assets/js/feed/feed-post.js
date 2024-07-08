@@ -47,7 +47,7 @@ export const fetchFeedPost = async (payload) => {
             // document.getElementById('createFeedForm').reset();
             $imageBox.innerHTML = '';
 
-            alert('게시글이 성공적으로 등록되었습니다.');
+            // alert('게시글이 성공적으로 등록되었습니다.');
             const newBoardId = result.boardId;
             openDetailModal(newBoardId);
 

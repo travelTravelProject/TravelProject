@@ -43,9 +43,7 @@ public class FeedService {
 
         // 조건에 맞는 피드가 없는 경우
         if (feedList.isEmpty()) {
-            return FeedListDto.builder()
-                    .pageInfo(new PageMaker(page, 0))
-                    .build();
+            return null;
         }
         // 각 피드마다 이미지 리스트를 추가
         // 각 피드마다 댓글 수, 좋아요 수, 북마크 수 추가
@@ -56,7 +54,10 @@ public class FeedService {
                 FeedDetailDto responseDto = f.toDetailDto();
                 responseDto.setContent(formatContent(changeEol(f.getContent()))); // content 변경
 
-                int boardId = (int) f.getBoardId(); // like service 가 int 요구해서
+                int boardId = (int) f.getBoardId(); // like service 가 int 요구하므로 다운캐스팅
+
+                // 댓글 수 추가
+                responseDto.setReplyCount(feedMapper.getTotalReplies(boardId));
 
                 // 좋아요 수, 로그인 유저의 좋아요 여부 추가
                 responseDto.setLikeCount(likeService.countLikes(boardId));
@@ -133,7 +134,7 @@ public class FeedService {
         List<MultipartFile> files = newFeed.getImages();
 
         if (files == null || files.isEmpty()) {
-            throw new RuntimeException("피드 수정 - 이미지 파일이 없습니다.");
+            throw new RuntimeException("피드 등록 - 이미지 파일이 없습니다.");
         }
         // file 존재하면 DB에 insert
         // 성공하면 등록한 BoardId를 리턴
@@ -148,7 +149,7 @@ public class FeedService {
             // DB insert 성공 ? 등록 이미지의 수 : -1
             int result = imageService.addImage(b);
             if (result < 0) {
-                log.debug("file 추가 실패: ", file);
+                log.debug("file 추가 실패: {}", file);
                 throw new RuntimeException("피드 등록 - 이미지 저장에 실패했습니다.");
             }
         }
@@ -211,22 +212,23 @@ public class FeedService {
         return feedMapper.countFeeds(search);
     }
 
-    // 디비에 저장된 textarea 개행문자 -> br 태그
+    // 디비에 저장된 textarea 개행문자를 br 태그로 변환
     public String changeEol(String content) {
         return content.replaceAll("\r\n", "<br>");
     }
 
-    // 피드 전체 조회 시 10글자 이상은 생략
+    // 피드 전체 조회 시 정해진 글자수 이상은 생략
     public String formatContent(String content) {
-        int len = 15;
+        int len = 20; // 정해진 글자수
+
         String[] split = content.split("<br>");
         String result = split[0]; // 첫번째 줄
 
-        // 첫번째 줄이 10글자 보다 긴 경우
+        // 첫번째 줄이 n글자 보다 긴 경우
         if(split[0].length() > len) {
             result = split[0].substring(0, len) + " ...";
 
-        } else { // 첫번째 줄이 10글자 이하
+        } else { // 첫번째 줄이 n글자 이하
             if(split.length > 1) { // 두번째 줄이 있는 경우
                 result = split[0] + " ...";
             }
@@ -253,20 +255,21 @@ public class FeedService {
         List<MyFeedDto> myFeeds = feedList.stream().map(f -> {
 
             MyFeedDto myFeed = f.toMyFeed();
-            long boardId = f.getBoardId();
+            int boardId = (int) f.getBoardId();
 
             // 이미지 조회한 결과 추가 (1개)
-            BoardImage firstOne = imageService.findFirstOne(boardId);
+            BoardImage firstOne = imageService.findFirstOne(f.getBoardId());
             if(firstOne == null) throw new RuntimeException("이미지가 존재하지 않습니다.");
             myFeed.setImage(firstOne);
 
             // 좋아요 수 추가
-            myFeed.setLikeCount(likeService.countLikes((int)boardId));
+            myFeed.setLikeCount(likeService.countLikes(boardId));
 
             // 북마크 수 추가
-            myFeed.setBookmarkCount(bookmarkService.countBookmarks((int)boardId));
+            myFeed.setBookmarkCount(bookmarkService.countBookmarks(boardId));
 
             // 댓글 수 추가 (확인 필요)
+            myFeed.setReplyCount(feedMapper.getTotalReplies(boardId));
 
             return myFeed;
         }).collect(Collectors.toList());
