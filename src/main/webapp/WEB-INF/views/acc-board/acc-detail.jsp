@@ -755,7 +755,7 @@
     <img src="/assets/img/accBoardDefaultImg.webp" class="img-modal-content" id="modalImage">
 </div>
   
-<!-- 삭제 확인 모달 -->
+<!-- 게시글 삭제 확인 모달 -->
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>

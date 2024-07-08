@@ -281,13 +281,33 @@
                 firstDay: 0
             },
             minDate: moment().startOf('day'), // 오늘 이전 날짜 선택 불가
-            startDate: moment(), // 기본 시작 날짜를 오늘로 설정
-            endDate: moment() // 기본 종료 날짜를 오늘로 설정
+            autoUpdateInput: false // 기본값 비활성화
         }, function(start, end, label) {
             $('#startDate').val(start.format('YYYY-MM-DD'));
             $('#endDate').val(end.format('YYYY-MM-DD'));
+            $('input[name="dateRange"]').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+        });
+
+        $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+            $('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
+            $('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
+        });
+
+        $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            $('#startDate').val('');
+            $('#endDate').val('');
+        });
+
+        $('form').on('submit', function(e) {
+            if (!$('#startDate').val() || !$('#endDate').val()) {
+                e.preventDefault();
+                alert('동행 기간을 선택해 주세요.');
+            }
         });
     });
+
 
     // 지역 선택 모달 관련 스크립트
     function openModal() {
