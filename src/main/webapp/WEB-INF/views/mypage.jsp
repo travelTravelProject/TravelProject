@@ -37,7 +37,7 @@
             <div class="trip-stats-info">
                 <div>
                     <span>MBTI</span>
-                    <p>${userDetail.mbti}</p>
+                    <p>${userDetail.mbti != null ? userDetail.mbti : 'MBTI 선택해주세요.'}</p>
                 </div>
                 <div>
                     <span>내 정보</span>
@@ -90,17 +90,19 @@
         </div>
     </div>
 
-
     <div class="board-container active-tab" id="my-board-tab">
-
+        <div class="my-tab-inner">
+        </div>
     </div>
     <div class="board-container inactive-tab" id="my-feed-tab">
         <div class="my-tab-inner">
-
         </div>
 <%--        <span class="close close-modal">x</span>--%>
     </div>
+
 </div>
+</div>
+
 
 
     <%-- 아이콘 --%>

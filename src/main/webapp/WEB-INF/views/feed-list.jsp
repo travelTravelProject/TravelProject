@@ -225,6 +225,7 @@
         </div>
         <!-- end replies row -->
 
+
         <%-- 디테일 모달 닫기 --%>
         <span class="close">&times;</span>
 

@@ -23,4 +23,6 @@ public interface ImageMapper {
     // 한 게시글의 첫번째 이미지 조회
     BoardImage findFirstOne(long boardId);
 
+    // 게시글 이미지 조회
+    BoardImage findImageByBoardId(long boardId);
 }

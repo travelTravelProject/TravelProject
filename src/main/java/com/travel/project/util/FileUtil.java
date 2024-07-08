@@ -18,6 +18,9 @@ public class FileUtil {
     // 현재 working dir까지 가져오고 그 다음 경로 추가해 줌
 
     public static String uploadFile(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return null; // 이미지 업로드가 없는 경우 null 반환
+        }
         // 원본파일명을 중복이 없는 랜덤파일명으로 변경
         String newFileName = UUID.randomUUID() +"_"+ file.getOriginalFilename();
 
