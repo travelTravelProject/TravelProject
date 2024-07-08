@@ -12,10 +12,17 @@
 <body>
     <%@ include file="include/sub_header.jsp" %>
     <div class="login_wrap">
-        <div class="login">
-            <h1>너의 아이디는</h1>
+        <div class="login" style="    padding: 50px;
+        border: 1px solid #ddd;
+        border-radius: 20px;">
+            <c:if test="${not empty result}"></c:if>
+            <p style="    
+            text-align: center;
+            font-size: 22px;
+            padding-bottom: 50px;">귀하의 아이디는 : <span style="font-size: 25px; font-weight: 900;">${result.id}</span> </p>
+            <!-- <h1>귀하의 아이디는 :  </h1>
             <c:if test="${not empty result}">
-        <p>${result.id}</p>
+            <p>${result.id}</p> -->
     </c:if>
     
     <c:if test="${not empty error}">
