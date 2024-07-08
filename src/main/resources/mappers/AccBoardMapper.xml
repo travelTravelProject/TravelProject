@@ -89,7 +89,7 @@
         WHERE B.board_id = #{boardId}
     </select>
 
-    <insert id="save">
+    <insert id="save" parameterType="AccBoard" useGeneratedKeys="true" keyProperty="boardId">
         INSERT INTO tbl_board
         (account, category_id, title, content, writer, location, start_date, end_date)
         VALUES

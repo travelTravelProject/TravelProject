@@ -78,18 +78,14 @@ public class AccBoardController {
             return "redirect:/sign-in"; // 로그인 페이지로 리다이렉트
         }
 
-        // 저장될 boardId =  전체 게시글수 + 1
-        long boardId = boardService.getTotalCount() + 1;
-
         // 게시글 저장
-        boardService.insert(dto, session);
+        AccBoard savedBoard = boardService.insert(dto, session);
 
         // 서버 업로드 후 업로드 경로 반환
         String imagePath = FileUtil.uploadFile(dto.getPostImage());
 
-        // 이미지 정보 저장
         if (imagePath != null) {
-            boardImageService.saveBoardImage(boardId, imagePath);
+            boardImageService.saveBoardImage(savedBoard.getBoardId(), imagePath);
         }
 
         // boardService.insert가 정상적으로 동작한다면, boardImageService로 이미지 등록 요청
