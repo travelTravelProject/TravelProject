@@ -53,8 +53,12 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
 
   $nestedReplyData.innerHTML = tag;
 
-  // 나중에 modifyNestReply.js로 모듈화
+  // 대댓글 이벤트 리스너 추가
+  addNestedReplyEventListeners(rno);
+}
 
+// 대댓글 이벤트 리스너 추가 함수
+function addNestedReplyEventListeners(rno) {
   // 대댓글 수정버튼에 이벤트 리스너 추가
   document.querySelectorAll(`#nestedReplyData-${rno} .nestedReplyModBtn`).forEach((button) => {
     button.addEventListener("click", function (e) {
@@ -122,6 +126,7 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
       });
       // 대댓글 취소 버튼 클릭 이벤트
       document.getElementById(`nestedReplyCancelBtn-${nestedReplyId}`).addEventListener("click", () => {
+        console.log('취소');
         fetchInfScrollNestReplies(rno); // 원래 대댓글 목록 다시 불러오기
       });
     });
@@ -159,7 +164,6 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
       }
     });
   });
-
 }
 
 // 서버에서 대댓글 데이터 페칭 (가져오는 함수)

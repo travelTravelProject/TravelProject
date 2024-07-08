@@ -347,7 +347,7 @@
             opacity: 0.8;
         }
         .row .text-right {
-            display: flex;
+            /* display: flex; */
         }
 
         .row .col-md-9 {
@@ -359,7 +359,9 @@
         } */
 
         .modDelBtn {
-            text-align: right;
+            position: relative;
+            top: -29px;
+            left: 580px;
             width: 590px;
         }
 
@@ -468,6 +470,8 @@
         }
 
         .reply-content .nestModDel {
+            position: relative;
+            left: 500px;
             justify-content: end;
             margin-right: 9px;
         }
@@ -546,105 +550,118 @@
             </div>
         </div>
 
-        </div>
+        <!-- </div> -->
 
         <!-- 댓글 영역 -->
 
         <div id="replies" class="row">
-        <div class="offset-md-1 col-md-10">
+            <div class="offset-md-1 col-md-10">
         
-        <!--댓글 내용 영역-->
-        <div class="card">
-            <!-- 댓글 내용 헤더 -->
-            <div class="card-header text-white m-0">
-            <div class="float-left">댓글 (<span id="replyCnt">0</span>)</div>
-            </div>
+            <!--댓글 내용 영역-->
+            <div class="card">
+                <!-- 댓글 내용 헤더 -->
+                <div class="card-header text-white m-0">
+                <div class="float-left">댓글 (<span id="replyCnt">0</span>)</div>
+                </div>
 
-            <!-- 댓글 내용 바디 -->
-            <div id="replyCollapse" class="card">
-            <div id="replyData">
-                <!--
-                < JS로 댓글 정보 DIV삽입 >
-                -->
-                <!-- 대댓글 내용 바디 -->
-                <div id="nestedReplyCollapse" class="card">
-                    <div id="nestedReplyData">
+                <!-- 댓글 내용 바디 -->
+                <div id="replyCollapse" class="card">
+                <div id="replyData">
+                    <!--
+                    < JS로 댓글 정보 DIV삽입 >
+                    -->
+                    <!-- 대댓글 내용 바디 -->
+                    <div id="nestedReplyCollapse" class="card">
+                        <div id="nestedReplyData">
+                        </div>
                     </div>
                 </div>
+                </div>
+
             </div>
-            </div>
-
-        </div>
 
 
-        <!-- 댓글 쓰기 영역 -->
-        <div class="card">
-        <div class="card-body">
-            <c:if test="${user == null}">
-            <a href="/sign-in">댓글은 로그인 이후에 작성 가능합니다.</a>
-            </c:if>
-            <c:if test="${user != null}">
-            <div class="rows"> 
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="newReplyWriter" hidden>댓글 작성자</label>
-                        <input
-                        id="newReplyWriter"
-                        name="replyWriter"
-                        type="text"
-                        value="${user.nickname}"
-                        class="form-control"
-                        placeholder="작성자 이름"
-                        style="margin-bottom: 6px"
-                        readonly
-                        />
-                    </div>
-                    <div class="col-md-90">
+            <!-- 댓글 쓰기 영역 -->
+            <div class="card">
+            <div class="card-body">
+                <c:if test="${user == null}">
+                <a href="/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
+                </c:if>
+                <c:if test="${user != null}">
+                <div class="rows"> 
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="newReplyText" hidden>댓글 내용</label>
+                            <label for="newReplyWriter" hidden>댓글 작성자</label>
                             <input
-                            rows="3"
-                            id="newReplyText"
-                            name="replyText"
+                            id="newReplyWriter"
+                            name="replyWriter"
+                            type="text"
+                            value="${user.nickname}"
                             class="form-control"
-                            placeholder="댓글을 입력해주세요."
+                            placeholder="작성자 이름"
+                            style="margin-bottom: 6px"
+                            readonly
                             />
                         </div>
-                        <button
-                        id="replyAddBtn"
-                        type="button"
-                        class="btn btn-dark form-control1"
-                        style="width: 60px;
-                                margin: 6px 0;"
-                        >
-                        등록
-                        </button>
+                        <div class="col-md-90">
+                            <div class="form-group">
+                                <label for="newReplyText" hidden>댓글 내용</label>
+                                <input
+                                rows="3"
+                                id="newReplyText"
+                                name="replyText"
+                                class="form-control"
+                                placeholder="댓글을 입력해주세요."
+                                />
+                            </div>
+                            <button
+                            id="replyAddBtn"
+                            type="button"
+                            class="btn btn-dark form-control1"
+                            style="width: 60px;
+                                    margin: 6px 0;"
+                            >
+                            등록
+                            </button>
+                        </div>
                     </div>
                 </div>
+                </c:if>
             </div>
-            </c:if>
-        </div>
-        </div>
-        <!-- end reply write -->
+            </div>
+            <!-- end reply write -->
         
 
-        <!-- 댓글 페이징 영역 -->
-        <ul class="pagination justify-content-center">
-            <!--
-            < JS로 댓글 페이징 DIV삽입 >
-            -->
-        </ul>
+            <!-- 댓글 페이징 영역 -->
+            <ul class="pagination justify-content-center">
+                <!--
+                < JS로 댓글 페이징 DIV삽입 >
+                -->
+            </ul>
+            </div>
         </div>
-    </div>
-    <!-- end reply content -->
-    </div>
-    <!-- end replies row -->
+        <!-- end reply content -->
+        </div>
+        <!-- end replies row -->
+
+        <!-- Modal HTML -->
+        <div id="deleteConfirmModal" class="modal">
+            <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>정말 삭제할까요?</p>
+            <button id="confirmDeleteBtn">삭제</button>
+            <button id="cancelDeleteBtn">취소</button>
+            </div>
+        </div>
 
         <div class="spinner-container" id="loadingSpinner">
             <div class="spinner-border text-light" role="status">
                 <span class="visually-hidden">Loading…</span>
             </div>  
         </div>
+
+    </div>
+</div>
            
 <!— 이미지 모달 —>
 <div id="imgModal" class="img-modal">

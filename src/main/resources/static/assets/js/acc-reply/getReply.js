@@ -58,6 +58,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
   let tag = "";
   if (replies && replies.length > 0) {
     replies.forEach(({ replyId: rno, writer, text, createAt, account: replyAccount }) => {
+
       tag += `
             <div id='replyContent' class='card-body' data-rno='${rno}'>
                 <div class='row user-block'>
@@ -155,7 +156,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
     }
   });
   } else {
-    tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
+    // tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
 
   $replyData.innerHTML += tag;
@@ -232,7 +233,7 @@ async function scrollHandler(e) {
   // 스크롤이 최하단부로 내려갔을 때만 이벤트 발생시켜야 함
   //  현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
   if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight + 20
+    window.innerHeight + window.scrollY >= document.body.offsetHeight + 500
     && !isFetching
   ) {
     // showSpinner();
