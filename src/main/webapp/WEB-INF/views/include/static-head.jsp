@@ -5,7 +5,7 @@
 <head>
 
   <link rel="stylesheet" href="/assets/css/common.css">
-
+  <link rel="icon" href="/assets/img/favi.png" type="image/x-icon">
 <!-- fontawesome css: https://fontawesome.com -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 <!-- https://linearicons.com/free#cdn -->
