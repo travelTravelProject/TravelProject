@@ -168,7 +168,7 @@ public class AccBoardController {
 
     // 6. 수정 화면 요청 (/modify : GET)
     @GetMapping("/modify")
-    public String modify(@RequestParam("bno") Integer boardId, Model model) {
+    public String modify(@RequestParam("boardId") Integer boardId, Model model) {
         System.out.println("/acc-board/modify GET");
 
         // 글번호 조회

@@ -6,6 +6,7 @@ import com.travel.project.mapper.AccBoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -21,6 +22,7 @@ public class AccBoardInterceptor implements HandlerInterceptor {
 
     private static final Logger log = LoggerFactory.getLogger(AccBoardInterceptor.class);
     private final AccBoardMapper accBoardMapper;
+    private final DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
 
     // preHandle을 구현하여 로그인을 안한 회원은 글쓰기, 글수정, 글삭제 요청을 거부하고 로그인 페이지로 리다이렉션
     @Override
@@ -45,7 +47,9 @@ public class AccBoardInterceptor implements HandlerInterceptor {
                 return true;
             }
             // 2. 삭제 또는 수정하려는 글의 작성자인지 확인
-            long boardId = Integer.parseInt(request.getParameter("bno"));
+            System.out.println("1" + request.getParameter("boardId"));
+            long boardId = Integer.parseInt(request.getParameter("boardId"));
+            System.out.println("boardId = " + boardId);
             AccBoard accBoard = accBoardMapper.findOne(boardId);
             String accBoardAccount = accBoard.getAccount();
             // 현재 로그인한 회원의 계정명
