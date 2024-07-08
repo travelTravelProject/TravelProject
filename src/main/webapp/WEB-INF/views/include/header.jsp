@@ -14,6 +14,10 @@
         }
 
     </style>
+    <!-- 파비콘 넣기 -->
+    <link rel="icon" href="assets/img/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/img/favicon.ico">
+    <title>With Trip</title>
 </head>
 <body>
 
@@ -21,15 +25,15 @@
       <!-- <p style="    position: absolute;
       z-index: 2;">임시 : ${user.nickname} 반갑다</p> -->
       <div class="logo">
-        <img src="../assets/img/logo.png" alt="">
+        <a href="/">
+          <img src="../assets/img/logo.png" alt="">
+        </a>
       </div>
       <ul class="menu">
         <li><a href="/acc-board/list">동행게시판</a></li>
-        <li><a href="/feedtest">피드</a></li>
+        <li><a href="/feed/list">피드</a></li>
         <c:if test="${user == null}">
             <li><a href="/sign-in">로그인</a></li>
-            <li><a href="/find-id">아이디 찾기</a></li>
-            <li><a href="/find-password">비번 찾기</a></li>
             <li><a href="/sign-up">회원가입</a></li>
         </c:if>
         <c:if test="${user != null}">

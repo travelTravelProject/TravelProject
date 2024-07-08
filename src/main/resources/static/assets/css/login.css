@@ -49,13 +49,13 @@
 }
 
 .input-container input:focus + label {
-  color: rgb(161, 66, 249);
+  color: #2B96D9;
   transform: scale(1.2);
   transform: translateX(0.5rem);
 }
 
 .input-container input {
-  border: 2px rgb(161, 66, 249) solid;
+  border: 2px solid #2B96D9;
   padding: 8px;
 }
 
@@ -189,7 +189,7 @@
 
 
 .button {
-  --color: #00A97F;
+  --color: #2B96D9;
   padding: 15px 90px;
   background-color: transparent;
   border-radius: .3em;
@@ -243,9 +243,23 @@
  }
  
 
-
-
-
+.id_pw_find_box{
+  display: flex;
+  align-items: center;
+  justify-content :space-between;
+  padding: 0 0 30px 0;
+  margin: 0;
+}
+.id_pw_find_box li{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.id_pw_find_box li a{
+  text-decoration: none;
+  font-weight: 500;;
+  color: #000;
+}
 
 
 

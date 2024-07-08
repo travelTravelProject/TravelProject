@@ -27,7 +27,7 @@ const updateButtonState = () => {
 
     if (isFormValid) {
         signupButton.disabled = false;
-        signupButton.style.backgroundColor = 'blue';
+        signupButton.style.backgroundColor = '#00A97F';
     } else {
         signupButton.disabled = true;
         signupButton.style.backgroundColor = '#fff';

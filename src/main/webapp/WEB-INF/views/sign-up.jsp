@@ -152,34 +152,9 @@
                     </p> 
                 </div>
 
-<%--                <tr>--%>
-<%--                    <td class="text-left">--%>
-<%--                        <p>--%>
-<%--                            <strong>성별을 입력해주세요.</strong>&nbsp;&nbsp;&nbsp;--%>
-<%--                            <span id="genderChk"></span>--%>
-<%--                        </p>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>--%>
-<%--                        <label>--%>
-<%--                            <input type="radio" name="gender" value="M" required ${user.gender == 'M' ? 'checked' : ''}>--%>
-<%--                            남성--%>
-<%--                        </label>--%>
-<%--                        &nbsp;&nbsp;--%>
-<%--                        <label>--%>
-<%--                            <input type="radio" name="gender" value="F" required ${user.gender == 'F' ? 'checked' : ''}>--%>
-<%--                            여성--%>
-<%--                        </label>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
 
-
-                <div>
+                <div class="gender_boxs">
                     <label class="gender_title" >성별</label>
-                    <p>
-                        <span id="genderChk"></span>
-                    </p> 
                     <div class="gender_box">
                         <div class="Radio">
                           <input 
@@ -204,6 +179,9 @@
                           <label for="Radio2">여성</label>
                         </div>
                       </div>
+                      <p>
+                          <span id="genderChk"></span>
+                      </p> 
                       
                 </div>
             </div>
@@ -220,6 +198,9 @@
         </div>
     </div>
 
+    
+    <%@ include file="include/footer.jsp" %>
+    
     <script type="module" src="/assets/js/signUp.js" defer></script>
 </body>
 </html>

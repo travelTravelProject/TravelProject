@@ -4,12 +4,15 @@
 <html lang="ko">
 <head>
 
+
     <%@ include file="include/static-head.jsp" %>
     <link rel="stylesheet" type="text/css" href="/assets/css/fullPage.css">
     <link rel="stylesheet" href="/assets/css/index.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/assets/css/weather.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="/assets/css/aos.css">
+    <link rel="stylesheet" href="/assets/css/lightslider.css">
 
 </head>
 <body style="overflow: hidden; height: 100%;" class="fp-viewing-firstPage-0">
@@ -18,7 +21,7 @@
 
 <div id="main" class="scroll-container fullpage-wrapper" style="height: 100%; position: relative; touch-action: none; transform: translate3d(0px, 0px, 0px);">
 
-<section class="section1 section fp-section active fp-completely" style="height: 843px;" data-anchor="firstPage">
+<section class="section1 section fp-section active fp-completely" style="height: 843px;" data-anchor="section1">
 
 
   <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -90,13 +93,14 @@
 
 
 
-<section class="section3 section fp-section fp-table" id="company" style="height: 843px;" data-anchor="3rdPage">
+<section class="section3 section fp-section fp-table" id="company" style="height: 843px;" data-anchor="section2">
   <div class="d-flex justify-content-between align-items-center  container">
     <div class="w-100 text-center feed_wrap">
       <div class="d-flex justify-content-center align-items-center flex-column text_box">
         <h1># With Trip 여행자 이야기</h1>
         <div class="line"></div>
-        <p>보물섬 남해를 먼저 방문한 사람들의 다양하고 유익한 이야기들을 피드로 구경해보세요!  </p>
+        <p>위드트립에서 먼저 여행을 떠난 사람들의 다양하고 유익한 이야기들을 피드로 구경해보세요!  </p>
+        
       </div>
       <div class="d-flex justify-content-between align-items-center feed_box">
         <div class="col-2 bounce">
@@ -111,8 +115,9 @@
           </div>
           <div class="feed_text_box">
             <p>
-              위드트립 친구들이랑 해운대 해수욕장!<br>
-              바다뷰 장난아님..!
+              위드트립 덕분에 친구도 사귀고<br/>
+              캠핑여행도 성공~!
+              ...
             </p>
           </div>
         </div>
@@ -128,8 +133,8 @@
           </div>
           <div class="feed_text_box">
             <p>
-              위드트립 친구들이랑 해운대 해수욕장!<br>
-              바다뷰 장난아님..!
+              분위기 무엇..? <br/>
+              분위기 맛집이네 강원도 산골짝..
             </p>
           </div>
         </div>
@@ -145,8 +150,8 @@
           </div>
           <div class="feed_text_box">
             <p>
-              위드트립 친구들이랑 해운대 해수욕장!<br>
-              바다뷰 장난아님..!
+              혼자 제주도 갈뻔했는데<br/>
+              동행자 덕분에 맛집탐방 대성공
             </p>
           </div>
         </div>
@@ -162,8 +167,8 @@
           </div>
           <div class="feed_text_box">
             <p>
-              위드트립 친구들이랑 해운대 해수욕장!<br>
-              바다뷰 장난아님..!
+              같이 저녁먹을 사람 필요했는데<br/>
+              소중한 인연을 만들고 갑니다~
             </p>
           </div>
         </div>
@@ -174,9 +179,71 @@
 
 
 
+<section class="section4 section fp-section fp-table" id="kakao" style="height: 843px;" data-anchor="section3">
+  <div class="left_img_box">
+    <img src="../assets/img/img.png" class="img-fluid">
+    <!-- <img src="../assets/img/img2.jpg" class="img-fluid"> -->
+  </div>
+  <div class="right_wrap">
+    <h1>
+      위드 트립과 여행을 떠나기 전 날씨를 알아보세요!
+    </h1>
+    <div class="weather_wrap">
+      <div class="weather_container">
+        <div class="search-box">
+            <i class='bx bxs-map'></i>
+            <input type="text" placeholder="목적지를 입력하세요!">
+            <button class="bx bx-search"></button>
+        </div>
+    
+        <p class="city-hide">city hide</p>
+    
+        <div class="weather-box">
+          <div class="box">
+            <div class="info-weather">
+              <div class="weather">
+                <img src="../assets/img/weather/cloud.png">
+                <p class="temperature">0<span>°C</span></p>
+                <p class="description">Broken Clouds</p>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="weather-details">
+          <div class="humidity">
+            <i class="bx bx-water"></i>
+            <div class="text">
+              <div class="info-humidity">
+                <span>0%</span>
+              </div>
+              <p>습도</p>
+            </div>
+          </div>
+    
+          <div class="wind">
+              <i class="bx bx-wind"></i>
+              <div class="text">
+                <div class="info-wind">
+                  <span>0Km/h</span>
+                </div>
+                <p>풍속</p>
+              </div>
+          </div>
+        </div>
+    
+        <div class="not-found">
+          <div class="box">
+            <img src="../assets/img/weather/404.png">
+            <p>없는 지역입니다!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<section class="section4 section fp-section fp-table" id="kakao" style="height: 843px;" data-anchor="4rdPage">
-   
+<!-- <section class="section4 section fp-section fp-table" id="kakao" style="height: 843px;" data-anchor="4rdPage">
   <div class="left_img_box">
     <img src="../assets/img/img.png" class="img-fluid">
   </div>
@@ -198,19 +265,12 @@
         <div></div>
         <div></div>
       </div>
-      <!-- <div class="d-flex align-items-center t_box2 t_box">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div> -->
     </div>
   </div>
-  
-</section>
+</section> -->
 
 
-<section class="section2 section fp-section fp-table" id="service" style="height: 843px;" data-anchor="secondPage">
+<!-- <section class="section2 section fp-section fp-table" id="service" style="height: 843px;" data-anchor="section4">
    <div class="fp-tableCell" style="height: 843px;">
     <div class="weather_wrap">
       <div class="weather_container">
@@ -265,7 +325,7 @@
       </div>
     </div>
    </div>
-</section>
+</section> -->
 
 
 
@@ -275,30 +335,33 @@
       <div class="container">
         <div class="d-flex justify-content-between footer_top ">
           <p class="footer_title">
-            온전한 쉼과 여유를 위해 <br/>
-            자연 속에 깃든 완벽한 공간
+            바쁜 일상을 벗어나 온전한 휴식과<br/>
+             힐링이 만나는 곳, 위드트립
           </p>
           <div class="scroll-top">
-            탑버튼
+            <a href="#firstPage">
+              <img src="../assets/img/logo2.png" class="img-fluid">
+            </a>
           </div>
         </div>
         <div class="footer_info">
           <ul class="d-flex">
-            <li>대표 <span>김니모</span></li>
-            <li>주식회사 여행 중독자</li>
-            <li>주소 <span>경기도 안양시 동안구 타워팰리스 18층</span></li>
+            <li>대표자 <span>위드트립</span></li>
+            <li>주식회사 위드트립</li>
+            <li>주소 <span>서울 마포구 신촌로 176 중앙빌딩</span></li>
           </ul>
           <ul class="d-flex">
-            <li>대표번호 <span>02-1234-5678</span></li>
-            <li>이메일 <span>mail@mail.com</span></li>
-            <li>팩스 <span>02-1995-0323</span></li>
+            <li>대표번호 <span>02-704-1711</span></li>
+            <li>이메일 <span>WithTrip@WithTrip.com</span></li>
+            <li>팩스 <span>02-704-1711</span></li>
           </ul>
-          <p class="Copyright">Copyright ⓒ Century21 Country Club All Rights Reserved.</p>
+          <p class="Copyright">Copyright ⓒ Century24 Country Club All Rights Reserved.</p>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 </div>
 
 
@@ -307,6 +370,8 @@
 <script src="/assets/js/fullpage.js"></script>
 <script src="/assets/js/index.js"></script>
 <script src="/assets/js/weather.js"></script>
+<script src="/assets/js/aos.js"></script>
+<script src="/assets/js/lightslider.js"></script>
 
 </body>
 </html>

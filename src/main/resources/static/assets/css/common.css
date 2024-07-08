@@ -56,9 +56,14 @@ header {
 
   .sub_header{
     position: relative;
-      background-color: thistle;
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      background-color: transparent;
   }
 
-
+  header.sub_header .menu li a{
+    color: #000;
+    background-color: transparent;
+    text-shadow: none;
+  }
 

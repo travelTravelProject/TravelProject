@@ -6,22 +6,21 @@ var sts = 0;
 			if(sts === 0){
 			
 			$("#main").fullpage({
-				anchors: ['firstPage', 'secondPage', '3rdPage','4rdPage','5rdPage'],
+				anchors: ['firstPage', 'secondPage', '3rdPage','4rdPage'],
 				menu: '#menu',
 				navigation:true,
 				navigationPosition: 'right',
-				navigationTooltips: ['메인1', '메인2','메인3','메인4','푸터'],
+				// navigationTooltips: ['메인1', '메인2','메인3','푸터'],
 				afterResize: function(width, height){}
 			});
 			
 				}
 				
 			else{
-				$("#dwb_Mobile_Menu>ul>li").eq(0).children('a').attr('href','?page_id=#service');
-				$("#dwb_Mobile_Menu>ul>li").eq(1).children('a').attr('href','?page_id=#company');
-				$("#dwb_Mobile_Menu>ul>li").eq(2).children('a').attr('href','?page_id=#kakao');
-				$("#dwb_Mobile_Menu>ul>li").eq(5).children('a').attr('href','?page_id=#car');
-				$("#dwb_Mobile_Menu>ul>li").eq(6).children('a').attr('href','?page_id=#option');
+				$("#dwb_Mobile_Menu>ul>li").eq(0).children('a').attr('href','?page_id=#section1');
+				$("#dwb_Mobile_Menu>ul>li").eq(1).children('a').attr('href','?page_id=#section2');
+				$("#dwb_Mobile_Menu>ul>li").eq(2).children('a').attr('href','?page_id=#section3');
+				$("#dwb_Mobile_Menu>ul>li").eq(6).children('a').attr('href','?page_id=#section4');
 			}
 			
 		});
