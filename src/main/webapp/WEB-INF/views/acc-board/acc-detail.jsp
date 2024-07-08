@@ -628,7 +628,7 @@
                 <c:if test="${isOwnerOrAdmin}">
                     <button id="del-btn" class="btn del-btn" type="button">삭제</button>
                     <button class="btn edit-btn" type="button"
-                            onclick="window.location.href='/acc-board/modify?bno=${abd.boardId}'">수정
+                            onclick="window.location.href='/acc-board/modify?boardId=${abd.boardId}'">수정
                     </button>
                 </c:if>
                 <button class="btn list-btn" type="button" onclick="window.location.href='${ref}'">목록
@@ -857,6 +857,7 @@
     // 모달 창 - 게시글 삭제 이벤트
     $confirmDelete.addEventListener('click', function() {
         const bno = document.getElementById('wrap').dataset.bno;
+        // console.log('bno: ', bno)
         window.location.href = `/acc-board/delete?boardId=\${bno}`;
     });
 

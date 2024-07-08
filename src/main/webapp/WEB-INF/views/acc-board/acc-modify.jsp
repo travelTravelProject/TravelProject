@@ -216,7 +216,7 @@
 
 <div id="wrap" class="form-container">
     <h1>게시글 수정</h1>
-    <form action="/acc-board/modify?bno=${abm.boardId}" method="post" enctype="multipart/form-data">
+    <form action="/acc-board/modify?boardId=${abm.boardId}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="boardId" value="${abm.boardId}">
 
         <!-- 이미지 삭제 여부를 나타내는 hidden input 추가 -->
@@ -344,7 +344,10 @@
             // 유효성 검사를 통과하면 폼 제출
             if (isValid) {
                 try {
-                    const response = await submitForm(new FormData(this));
+                    let formData = new FormData(this);
+                    formData.append("bno", "${abm.boardId}"); // boardId를 FormData에 추가
+
+                    const response = await submitForm(formData);
                     if (response.ok) {
                         window.location.href = '/acc-board/list'; // 성공 시 목록 페이지로 이동
                     } else {
