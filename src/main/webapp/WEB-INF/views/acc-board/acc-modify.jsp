@@ -24,9 +24,12 @@
     <!-- daterangepicker css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 
+    <%--    폰트--%>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Noto Sans KR", sans-serif;
             background-color: #f8f8f8;
             margin: 0;
             padding: 0;
@@ -236,7 +239,7 @@
         </div>
 
         <div class="buttons">
-            <button class="list-btn" type="button" onclick="cancelModify(${abm.boardId})">취소</button>
+            <button class="list-btn" type="button" onclick="cancelModify('${abm.boardId}')">취소</button>
             <button type="submit">수정하기</button>
         </div>
     </form>
@@ -257,7 +260,7 @@
             <button onclick="selectLocation('경기도')">경기도</button>
             <button onclick="selectLocation('충청도')">충청도</button>
             <button onclick="selectLocation('인천')">인천</button>
-            <button onclick="selectLocation('울릉도')">울릉도</button>
+            <button onclick="selectLocation('전국')">전국</button>
         </div>
     </div>
 </div>

@@ -21,11 +21,14 @@
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
+    <%--    폰트--%>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
 
     <title>동행게시판</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Noto Sans KR", sans-serif;
             background-color: #f8f8f8;
         }
         a {
