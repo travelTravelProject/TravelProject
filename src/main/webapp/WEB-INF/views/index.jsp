@@ -340,7 +340,7 @@
           </p>
           <div class="scroll-top">
             <a href="#firstPage">
-              <img src="../assets/img/logo2.png" class="img-fluid">
+              <img src="../assets/img/logo_white.png" class="img-fluid">
             </a>
           </div>
         </div>
