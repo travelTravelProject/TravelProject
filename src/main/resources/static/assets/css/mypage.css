@@ -130,9 +130,10 @@ button:hover {
 .trip-card {
     background-color: #e0f7fa;
     border-radius: 10px;
-    padding: 20px;
+    padding: 0px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    height: 350px;
 }
 
 .trip-add p {
@@ -211,7 +212,7 @@ button:hover {
 
 .profile-box {
     width: 200px;
-    height: 100px;
+    height: 70px;
     border-radius: 50%;
     /*overflow: hidden;*/
     margin: 10px;
@@ -241,12 +242,14 @@ button:hover {
 
 .profile-nickname h2 {
     text-align: left;
+    font-size: 22px;
+    width: 150px;
 }
 
 .profile-info {
     flex: 1;
     margin-left: 20px;
-    height: 200px;
+    height: 80px;
 }
 
 .profile-info h2 {
@@ -262,7 +265,7 @@ button:hover {
 
 .profile-stats {
     text-align: center;
-    height: 100px;
+    height: 50px;
 }
 
 
