@@ -41,12 +41,12 @@ const validateField = async (field) => {
 
     if (isValid.valid) {
         $input.style.borderColor = 'blue';
-        $errorSpan.innerHTML = '<b class="success">[사용 가능합니다.]</b>';
+        $errorSpan.innerHTML = '<b class="success">사용 가능합니다.</b>';
         $errorSpan.style.color = 'gray';
         field.valid = true;
     } else {
         $input.style.borderColor = 'red';
-        $errorSpan.innerHTML = `<b class="warning">[${isValid.message}]</b>`;
+        $errorSpan.innerHTML = `<b class="warning">${isValid.message}</b>`;
         $errorSpan.style.color = 'gray';
         field.valid = false;
     }

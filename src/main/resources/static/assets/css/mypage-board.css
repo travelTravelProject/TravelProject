@@ -13,7 +13,15 @@
 #my-board-btn {
     display: block;
     width: 218px;
+    cursor: pointer;
+    flex-direction: column;
 }
+
+#my-board-tab {
+    display: flex;
+    flex-direction: column;
+}
+
 .board-container{
     /*text-decoration: underline;*/
     font-family: "Noto Sans KR", sans-serif;
@@ -46,6 +54,7 @@
     border-radius: 10px;
     margin-bottom: 20px;
     padding: 10px;
+    cursor: pointer;
 }
 .card-post {
     display: flex;
@@ -95,7 +104,7 @@
     align-items: center;
     font-size: 0.9em;
     color: #666;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 .card-details-bot .view-count {
     margin-left: auto;
@@ -111,7 +120,7 @@
     display: flex;
 }
 
-.inactive-tab {
+.inactive-tab * {
     display: none;
     color: #cccccc;
 }
@@ -121,6 +130,6 @@
     color: black;
 }
 
-.no-board-message {
+#my-board-tab .no-board-message {
     text-align: center;
 }

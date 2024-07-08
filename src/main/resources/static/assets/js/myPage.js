@@ -1,4 +1,10 @@
 
+import {boardList, renderBoardList} from "./mypage-board.js";
+
+document.addEventListener('DOMContentLoaded', () => {
+    boardList();
+    // renderBoardList();
+});
 
 const $modifyButton = document.querySelector('.modify');
 
