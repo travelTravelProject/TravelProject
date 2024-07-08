@@ -4,7 +4,9 @@ import com.travel.project.entity.AccBoard;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 // 화면에 필요한 데이터만 모아놓은 클래스
@@ -28,6 +30,8 @@ public class AccBoardListDto {
     private String gender; // 작성자 성별
     private String imagePath; // 이미지 경로 추가
     private int replyCount; // 총 댓글 수
+    private LocalDate birthday; // 생년월일
+    private String ageGroup; // 연령대 추가
 
     // 엔터티를 DTO로 변환
     public AccBoardListDto (AccBoard ab) {
@@ -43,6 +47,13 @@ public class AccBoardListDto {
         this.gender = ab.getGender().name();
         this.imagePath = ab.getImagePath(); // 이미지 경로 설정
         this.replyCount = ab.getReplyCount();
+        this.birthday = ab.getBirthday(); // 생년월일 설정
+
+        // 연령대 계산
+        if (this.birthday != null) {
+            int age = Period.between(this.birthday, LocalDate.now()).getYears();
+            this.ageGroup = (age / 10) * 10 + "대";
+        }
 
     }
 
@@ -58,4 +69,5 @@ public class AccBoardListDto {
     private String makeShortTitle(String title) {
         return title.length() > 20 ? title.substring(0, 20) + "…" : title;
     }
+
 }

@@ -218,7 +218,7 @@
                                 </div>
                             </div>
                             <div class="card-details-bot1">
-                                    <span>${ab.writer} ·
+                                    <span>${ab.writer} · ${ab.ageGroup} ·
                                         <c:choose>
                                             <c:when test="${ab.gender == 'M'}">남자</c:when>
                                             <c:when test="${ab.gender == 'F'}">여자</c:when>

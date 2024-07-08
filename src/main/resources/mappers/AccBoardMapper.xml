@@ -43,6 +43,7 @@
         B.end_date,
         COUNT(R.reply_id) AS reply_count,
         U.gender,
+        U.birthday AS birthday,
         I.image_path
         FROM tbl_board B
         LEFT OUTER JOIN tbl_reply R ON B.board_id = R.board_id

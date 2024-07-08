@@ -33,8 +33,7 @@
         }
         #wrap {
             width: 60%;
-            max-width: 800px;
-            margin: 50px auto;
+            margin: 0px auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
