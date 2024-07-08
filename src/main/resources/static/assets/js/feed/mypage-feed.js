@@ -11,20 +11,40 @@ let loadedMyFeeds = 0;  // 로딩된 게시글 수
 // 마이페이지 동행 탭 닫고 피드 탭 열기
 function openFeedTab(account) {
   const $feedTab = document.getElementById('my-feed-tab');
-  const $tab = document.querySelector('.board-container');
-  $tab.classList.add('inactive-tab');
-  $tab.classList.remove('active-tab-btn');
+  const $boardTab = document.getElementById('my-board-tab');
   fetchMyFeedList(account);
+  $boardTab.classList.add('inactive-tab');
+  $boardTab.classList.remove('active-tab')
+  $myBoardBtn.classList.remove('active-tab-btn');
+
   $feedTab.classList.add('active-tab');
+  $feedTab.classList.remove('inactive-tab');
   $myFeedBtn.classList.add('active-tab-btn');
-  $myBoardBtn.classList.remove('active-tab-btn')
 }
+function openBoardTab(account) {
+  const $feedTab = document.getElementById('my-feed-tab');
+  const $boardTab = document.getElementById('my-board-tab');
+  console.log('openBoardTab 실행!')
+  fetchMyFeedList(account);
+  $feedTab.classList.add('inactive-tab');
+  $feedTab.classList.remove('active-tab');
+  $myFeedBtn.classList.remove('active-tab-btn');
+
+  $boardTab.classList.add('active-tab');
+  $boardTab.classList.remove('inactive-tab');
+  $myBoardBtn.classList.add('active-tab-btn')
+}
+
 // 피드 탭 열기 이벤트
 $myFeedBtn.addEventListener('click', e => {
   const account = $myFeedBtn.dataset.myAccount
   console.log('마이페이지 피드 클릭!')
   openFeedTab(account);
 });
+$myBoardBtn.addEventListener('click', e => {
+  const account = $myBoardBtn.dataset.myAccount
+  openBoardTab(account);
+})
 
 // 마이페이지 피드 탭에 태그 추가
 function appendMyFeeds(myFeedListDto) {
