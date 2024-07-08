@@ -53,7 +53,7 @@ function appendMyFeeds(myFeedListDto) {
 
   if (myFeeds === null) { // 작성한 피드가 없는 경우
     tag = `
-      <div id="no-feed">
+      <div class="no-feed">
         <p>모든 피드를 다 보셨거나 작성하신 피드가 없습니다.</p>
         <p>${loginUser ? loginUser.nickname : '방문자'}님 기억에 남은 여행을 공유하면 어떨까요?</p>
         <a href="/feed/list"><p>피드 작성하러 가기 →</p></a>

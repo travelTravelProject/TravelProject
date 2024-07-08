@@ -2,19 +2,10 @@
 
 const $myBoardBtn = document.getElementById('my-board-btn');
 
-$myBoardBtn.addEventListener('click', async e => {
+async function boardList () {
     const account = $myBoardBtn.dataset.myAccount;
     console.log('마이페이지 동행 클릭!');
     console.log('account: ', account);
-
-    // openBoardTab(account);
-    // const $boardTab = document.getElementById('my-board-tab');
-    // const $FeedTab = document.getElementById('my-feed-tab');
-    // $boardTab.classList.add('active-tab');
-    // $FeedTab.classList.remove('active-tab-btn');
-    // $FeedTab.classList.add('inactive-tab');
-    // $myBoardBtn.classList.add('active-tab-btn');
-    // $FeedTab.classList.remove('inactive-tab');
 
     try {
         const response = await fetch(`http://localhost:8181/mypage/boards/${account}`);
@@ -31,8 +22,12 @@ $myBoardBtn.addEventListener('click', async e => {
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
     }
+}
 
+$myBoardBtn.addEventListener('click', async e => {
+    boardList();
 });
+
 
 function renderBoardList(boardList) {
     const boardContainer = document.querySelector('.board-container');
@@ -101,24 +96,15 @@ $boardTab.addEventListener('click', e => {
         }
     }
 });
+// openBoardTab(account);
+// const $boardTab = document.getElementById('my-board-tab');
+// const $FeedTab = document.getElementById('my-feed-tab');
+// $boardTab.classList.add('active-tab');
+// $FeedTab.classList.remove('active-tab-btn');
+// $FeedTab.classList.add('inactive-tab');
+// $myBoardBtn.classList.add('active-tab-btn');
+// $FeedTab.classList.remove('inactive-tab');
 
+export {boardList, renderBoardList} ;
 
-// 수정하기
-
-function openBoardTab(account) {
-    const $boardTab = document.getElementById('my-board-tab');
-    const $FeedTab = document.getElementById('my-feed-tab');
-    $FeedTab.classList.add('inactive-tab');
-    $FeedTab.classList.remove('active-tab-btn');
-    // fetchMyFeedList(account);
-    $boardTab.classList.add('active-tab');
-    $myBoardBtn.style.textDecoration = 'underline';
-    $myBoardBtn.classList.add('active-tab-btn');
-}
-
-// $myFeedBtn.addEventListener('click', e => {
-//     const account = $myFeedBtn.dataset.myAccount
-//     console.log('마이페이지 피드 클릭!')
-//     openFeedTab(account);
-// });
 
