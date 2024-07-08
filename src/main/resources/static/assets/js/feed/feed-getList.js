@@ -31,7 +31,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
           <div class="profile-section">
             <div class="profile-row">
               <div class="profile-box">
-                  <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">     
+                  <img src="${profile ? profile : '/assets/img/anonymous.jpg'}" alt="Profile Picture" class="profile-pic">     
               </div>
               <div class="profile-column">
                 <span class="nickname">${nickname}</span>

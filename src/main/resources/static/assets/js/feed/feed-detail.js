@@ -13,7 +13,7 @@ function setDetailModal(dto) {
 
   // 프로필 사진 적용
   const $profile = document.querySelector('.feed-right-side .profile-pic');
-  $profile.src = profileImage || '/assets/img/mimo.png';
+  $profile.src = profileImage || '/assets/img/anonymous.jpg';
 
   // 닉네임 적용
   const $nickname = document.querySelector('.feed-right-side .nickname');

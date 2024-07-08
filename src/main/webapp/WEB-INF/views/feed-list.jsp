@@ -111,7 +111,7 @@
             <div class="profile-section">
                 <div class="profile-row">
                     <div class="profile-box">
-                        <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+                        <img src="/assets/img/anonymous.jpg" alt="Profile Picture" class="profile-pic">
                     </div>
                     <div class="profile-column">
                         <span class="nickname">nickname</span>
