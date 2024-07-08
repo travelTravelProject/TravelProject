@@ -11,8 +11,6 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static com.travel.project.entity.Auth.*;
-
 @Setter @Getter @ToString
 @AllArgsConstructor
 @NoArgsConstructor

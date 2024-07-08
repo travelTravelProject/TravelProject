@@ -1,9 +1,10 @@
 import { NEST_BASE_URL } from "../feed-reply.js";
 // import { fetchInfScrollReplies } from "./feed-getReply.js";
 import { fetchInfScrollNestReplies } from "./feed-getNestReply.js";
+import { initInfScroll } from "./feed-getReply.js";
 
 // 서버에 대댓글 등록을 요청하는 비동기 함수
-export const fetchNestedReplyPost = async (rno) => {
+export const fetchNestedReplyPost = async (rno, boardId) => {
   
   const NestTextInput = document.getElementById(`newNestedReplyText-${rno}`);
   const NestWriterInput = document.getElementById(`newNestedReplyWriter-${rno}`);
@@ -14,7 +15,8 @@ export const fetchNestedReplyPost = async (rno) => {
     text: NestTextInput.value.trim(),
     author: NestWriterInput.value.trim(),
     // replyId: document.getElementById("replyContent").dataset.rno
-    replyId: rno
+    replyId: rno,
+    boardId: boardId
   }
   console.log(payload);
 
@@ -34,6 +36,6 @@ const replies = await res.json();
 // 대댓글 입력 후 초기화
 NestTextInput.value = '';
 // NestWriterInput.value = '';
-
-await fetchInfScrollNestReplies(rno);
+await initInfScroll(boardId);
+// await fetchInfScrollNestReplies(rno);
 };

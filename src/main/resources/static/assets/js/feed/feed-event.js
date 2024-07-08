@@ -14,7 +14,8 @@ import {fetchFeedDelete} from "./feed-delete.js";
 import {fetchBookmark, fetchLike} from "./feed-interaction.js";
 
 import {initInfScroll} from "../feed-reply/feed-getReply.js";
-import {modifyReplyClickEvent} from "../feed-reply/feed-modifyReply.js";
+import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
+import {modifyReplyClickEvent, isEditModeActive, fetchReplyModify} from "../feed-reply/feed-modifyReply.js";
 import {removeReplyClickEvent} from "../feed-reply/feed-deleteReply.js";
 
 // 대댓글 작성시 boardId를 전달하기 위해 설정한 전역변수

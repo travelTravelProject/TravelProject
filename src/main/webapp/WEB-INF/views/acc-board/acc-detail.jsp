@@ -298,6 +298,14 @@
         height: 50px;
         }
 
+        button:hover {
+        background-color: #4facfe;
+        background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+        }
+        a:hover {
+        background-color: #4facfe;
+        background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+        }
         #replyContent {
             /* border: 1px solid red; */
         }
@@ -339,7 +347,7 @@
             opacity: 0.8;
         }
         .row .text-right {
-            display: flex;
+            /* display: flex; */
         }
 
         .row .col-md-9 {
@@ -351,14 +359,23 @@
         } */
 
         .modDelBtn {
-            text-align: right;
-            width: 610px;
+            position: relative;
+            top: -29px;
+            left: 580px;
+            width: 590px;
         }
 
         .modDelBtn .btn-sm {
+            display: inline-block;
             text-decoration: none;
             color: black;
             font-weight: 500;
+            width: 50px;
+            height: 35px;
+            text-align: center;
+            padding-top: 10px;
+            border-radius: 5px;
+        
         }
         
         .reply-reply-write {
@@ -375,6 +392,8 @@
             background-color: inherit ;
             cursor: pointer;
             font-size: 16px;
+            border-radius: 5px;
+            margin-top: 6px;
         }
         .rows .col-md-3 {
             display: flex;
@@ -423,7 +442,7 @@
         }
         .Nestedcard .card-body .row .col-md-3 .col-md-9 .form-group .form-control {
             width: 530px;
-            height: 30px;
+            height: 35px;
         }
         /* 대댓글 카드 스타일 */
         .nested-reply-card {
@@ -451,13 +470,22 @@
         }
 
         .reply-content .nestModDel {
+            position: relative;
+            left: 500px;
             justify-content: end;
-            margin-right: 6px;
+            margin-right: 9px;
         }
         .reply-content .text-right .btn-sm {
+            display: inline-block;
+            width: 50px;
+            height: 35px;
+            padding-top: 10px;
+            margin-right: 1px;
+            text-align: center;
             text-decoration: none;
             color: black;
             font-weight: 500;
+            border-radius: 5px;
         }
         .nestedReplyModBtn {
             margin-right: 8px;
@@ -522,13 +550,13 @@
             </div>
         </div>
 
-        </div>
+        <!-- </div> -->
 
-         <!-- 댓글 영역 -->
+        <!-- 댓글 영역 -->
 
         <div id="replies" class="row">
             <div class="offset-md-1 col-md-10">
-            
+        
             <!--댓글 내용 영역-->
             <div class="card">
                 <!-- 댓글 내용 헤더 -->
@@ -557,7 +585,7 @@
             <div class="card">
             <div class="card-body">
                 <c:if test="${user == null}">
-                <a href="/sign-in">댓글은 로그인 이후에 작성 가능합니다.</a>
+                <a href="/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
                 </c:if>
                 <c:if test="${user != null}">
                 <div class="rows"> 
@@ -591,7 +619,7 @@
                             type="button"
                             class="btn btn-dark form-control1"
                             style="width: 60px;
-                                   margin: 6px 0;"
+                                    margin: 6px 0;"
                             >
                             등록
                             </button>
@@ -602,7 +630,7 @@
             </div>
             </div>
             <!-- end reply write -->
-            
+        
 
             <!-- 댓글 페이징 영역 -->
             <ul class="pagination justify-content-center">
@@ -616,18 +644,31 @@
         </div>
         <!-- end replies row -->
 
+        <!-- Modal HTML -->
+        <div id="deleteConfirmModal" class="modal">
+            <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>정말 삭제할까요?</p>
+            <button id="confirmDeleteBtn">삭제</button>
+            <button id="cancelDeleteBtn">취소</button>
+            </div>
+        </div>
+
         <div class="spinner-container" id="loadingSpinner">
             <div class="spinner-border text-light" role="status">
-                <span class="visually-hidden">Loading...</span>
+                <span class="visually-hidden">Loading…</span>
             </div>  
         </div>
+
+    </div>
+</div>
            
-<!-- 이미지 모달 -->
+<!— 이미지 모달 —>
 <div id="imgModal" class="img-modal">
     <img src="/assets/img/accBoardDefaultImg.webp" class="img-modal-content" id="modalImage">
 </div>
   
-<!-- 삭제 확인 모달 -->
+<!— 삭제 확인 모달 —>
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -751,3 +792,4 @@
 
 </body>
 </html>
+
