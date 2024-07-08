@@ -23,7 +23,7 @@ initInfScroll();
 modifyReplyClickEvent();
 
 // 댓글 작성/수정 이벤트 등록 (POST)
-document.getElementById('replyAddBtn').onclick = async e => {
+document.getElementById('replyAddBtn').onclick = async () => {
     if (isEditModeActive()) {
       // 수정 모드일 때
       await fetchReplyModify();
@@ -31,8 +31,45 @@ document.getElementById('replyAddBtn').onclick = async e => {
       // 일반 모드일 때
       await fetchReplyPost();
     }
-}
+};
 
 // 댓글 삭제 이벤트 등록
 removeReplyClickEvent();
 
+// Input field and Add button elements
+const newReplyText = document.getElementById('newReplyText');
+const replyAddBtn = document.getElementById('replyAddBtn');
+
+// Function to toggle the visibility of the replyAddBtn
+const toggleReplyAddBtnVisibility = () => {
+  if (newReplyText.value.trim() !== "") {
+    replyAddBtn.style.display = "block"; // Show button
+  } else {
+    replyAddBtn.style.display = "none"; // Hide button
+  }
+};
+
+// Attach input event listener to show/hide the add button
+newReplyText.addEventListener('input', toggleReplyAddBtnVisibility);
+
+// Attach keydown event listener to submit on Enter key
+newReplyText.addEventListener('keydown', async e => {
+  if (e.key === 'Enter') {
+    if (newReplyText.value.trim() !== "") {
+      if (isEditModeActive()) {
+        // 수정 모드일 때
+        await fetchReplyModify();
+      } else {
+        // 일반 모드일 때
+        await fetchReplyPost();
+      }
+      // Clear input field after submission (optional)
+      newReplyText.value = "";
+      // Hide the button after submission (optional)
+      replyAddBtn.style.display = "none";
+    }
+  }
+});
+
+// Initially hide the add button
+replyAddBtn.style.display = "none";

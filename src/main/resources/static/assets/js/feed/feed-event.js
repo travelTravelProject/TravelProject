@@ -354,7 +354,7 @@ export function initFeedFormEvents() {
 
     // 댓글 관련 이벤트
 
-    document.getElementById('replyAddBtn').onclick = async e => {
+    document.getElementById('replyAddBtn').onclick = async () => {
         if (isEditModeActive()) {
           // 수정 모드일 때
           await fetchReplyModify();
@@ -362,7 +362,40 @@ export function initFeedFormEvents() {
           // 일반 모드일 때
           await fetchReplyPost();
         }
-    }
+    };
+
+    
+    const newReplyText = document.getElementById('newReplyText');
+    const replyAddBtn = document.getElementById('replyAddBtn');
+    
+    const toggleReplyAddBtnVisibility = () => {
+      if (newReplyText.value.trim() !== "") {
+        replyAddBtn.style.display = "block"; // Show button
+      } else {
+        replyAddBtn.style.display = "none"; // Hide button
+      }
+    };
+    
+    newReplyText.addEventListener('input', toggleReplyAddBtnVisibility);
+    
+    newReplyText.addEventListener('keydown', async e => {
+      if (e.key === 'Enter') {
+        if (newReplyText.value.trim() !== "") {
+          if (isEditModeActive()) {
+            // 수정 모드일 때
+            await fetchReplyModify();
+          } else {
+            // 일반 모드일 때
+            await fetchReplyPost();
+          }
+          newReplyText.value = "";
+          replyAddBtn.style.display = "none";
+        }
+      }
+    });
+    
+    replyAddBtn.style.display = "none";
+    
 
     modifyReplyClickEvent();
     removeReplyClickEvent();

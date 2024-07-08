@@ -27,9 +27,12 @@
 
     <!-- // 특정 댓글에 달린 대댓글 목록 조회-->
     <select id="findAll" resultType="nestedReply">
-        SELECT * FROM tbl_nested_reply
-        WHERE reply_id = #{replyId}
-        ORDER BY nested_reply_id
+        SELECT R.*, M.profile_image
+        FROM tbl_nested_reply R
+        LEFT OUTER JOIN tbl_user_detail M
+        ON R.account = M.account
+        WHERE R.reply_id = #{replyId}
+        ORDER BY R.reply_id
     </select>
 
     <!-- // 총 대댓글 수 조회-->

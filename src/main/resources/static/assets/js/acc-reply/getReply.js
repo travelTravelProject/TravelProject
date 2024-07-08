@@ -134,7 +134,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                                   <button
                                   id="nestedReplyAddBtn-${rno}"
                                   type="button"
-                                  class="btn btn-dark form-control nested-reply-add-btn"
+                                  class="btn btn-dark form-control nested-reply-add-btn hidden"
                                   data-rno='${rno}'
                                   style="width: 60px;
                                         height: 35px;
@@ -171,13 +171,34 @@ export function appendReplies({ replies, loginUser }, reset = false) {
     });
   });
 
-  // 대댓글 등록 버튼 클릭시 이벤트 리스너 추가
-  document.querySelectorAll(".nested-reply-add-btn").forEach(button => {
-    button.addEventListener("click", async (event) => {
-      const rno = event.target.dataset.rno;
-      await fetchNestedReplyPost(rno);
-    });
+// 대댓글 등록 버튼 클릭시 이벤트 리스너 추가
+document.querySelectorAll(".nested-reply-add-btn").forEach(button => {
+  const rno = button.dataset.rno;
+  const textarea = document.getElementById(`newNestedReplyText-${rno}`);
+
+  // textarea의 내용 변경시 버튼 보여주기/숨기기
+  textarea.addEventListener("input", () => {
+    if (textarea.value.trim() === '') {
+      button.classList.add('hidden');
+    } else {
+      button.classList.remove('hidden');
+    }
   });
+
+  // 엔터키가 눌렸을 때도 대댓글 등록 버튼을 클릭하도록 설정
+  textarea.addEventListener("keydown", async (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // 기본 엔터키 동작을 막음 (줄바꿈 방지)
+      await fetchNestedReplyPost(rno);
+    }
+  });
+
+  button.addEventListener("click", async (event) => {
+    await fetchNestedReplyPost(rno);
+  });
+});
+
+  
   
 }
 
@@ -233,7 +254,7 @@ async function scrollHandler(e) {
   // 스크롤이 최하단부로 내려갔을 때만 이벤트 발생시켜야 함
   //  현재창에 보이는 세로길이 + 스크롤을 내린 길이 >= 브라우저 전체 세로길이
   if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight + 500
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 10
     && !isFetching
   ) {
     // showSpinner();

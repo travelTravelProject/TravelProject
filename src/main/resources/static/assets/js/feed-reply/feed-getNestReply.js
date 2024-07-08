@@ -1,5 +1,3 @@
-// feed-getNestReply.js
-
 import { NEST_BASE_URL } from "../feed-reply.js";
 import { showSpinner, hideSpinner } from "../spinner.js";
 import { getRelativeTime, fetchInfScrollReplies } from "./feed-getReply.js";
@@ -30,15 +28,13 @@ export function appendNestedReplies({ nestedReplies, loginUser, boardId }, rno) 
         button.innerHTML = `<i class="fas fa-arrow-right"></i> 답글 ${nestedReplies.length}개 보기`;
       } else {
         // 대댓글 보기
-        let nestedRepliesTag = nestedReplies.map(({ nestedReplyId, text, writer, createAt, account: nestReplyAccount }) => `
+        let nestedRepliesTag = nestedReplies.map(({ nestedReplyId, text, writer, createAt, account: nestReplyAccount, profileImage }) => `
           <div id='nestedReplyContent-${nestedReplyId}' class='card-body nested-reply-card' data-nested-rno='${nestedReplyId}' style="
         height: 190px; background-color: #fff;border: none;">
             <div class='row user-block'>
               <div class='nestReply-head'>
                 <div class="profile-box">
-                  ${loginUser && loginUser.profileImage ? 
-                    `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
-                    `<img src="/assets/img/mimo.png" alt="profile image">`}
+                  <img src="${profileImage ? profileImage : "/assets/img/mimo.png"}" alt="profileImage image" style="border-radius: 50%;">
                 </div>
                 <div class="nestReply-body">
                   <div class='col-md-3'>
@@ -168,33 +164,48 @@ function addNestedReplyEventListeners(rno, loginUser, boardId) {
 
   // 대댓글 삭제버튼에 이벤트 리스너 추가
   document.querySelectorAll(`#nestedReplyData-${rno} .nestedReplyDelBtn`).forEach((button) => {
-    button.addEventListener("click", async function (e) {
+    button.addEventListener("click", function (e) {
       e.preventDefault();
       const nestedReplyId = button.dataset.rno;
       console.log('nestedReplyId: ', nestedReplyId);
 
-      const confirmDelete = confirm("정말로 이 대댓글을 삭제하시겠습니까?");
-      if (!confirmDelete) return;
+      // 모달 열기
+      const modal = document.getElementById('deleteConfirmModal');
+      modal.style.display = "block";
 
-      const payload = {
-        nestedReplyId: nestedReplyId,
-      }
+      // 모달에서 삭제 확인 버튼 클릭 이벤트
+      document.getElementById('confirmDeleteBtn').onclick = async function () {
+        const payload = {
+          nestedReplyId: nestedReplyId,
+        }
 
-      const response = await fetch(`${NEST_BASE_URL}/${nestedReplyId}?replyId=${rno}&boardId=${boardId}`, {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
+        const response = await fetch(`${NEST_BASE_URL}/${nestedReplyId}?replyId=${rno}&boardId=${boardId}`, {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
 
-      console.log('response: ', response);
+        console.log('response: ', response);
 
-      if (response.ok) {
-        await fetchInfScrollReplies(1, true);
-      } else {
-        console.error('대댓글 삭제 실패');
-      }
+        if (response.ok) {
+          await fetchInfScrollReplies(1, true);
+        } else {
+          console.error('대댓글 삭제 실패');
+        }
+        modal.style.display = "none";
+      };
+
+      // 모달에서 삭제 취소 버튼 클릭 이벤트
+      document.getElementById('cancelDeleteBtn').onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // 모달에서 닫기 버튼 클릭 이벤트
+      document.querySelector('.modal .close').onclick = function () {
+        modal.style.display = "none";
+      };
     });
   });
 }

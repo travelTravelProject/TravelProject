@@ -217,6 +217,23 @@
                 </div>
             </div>
             <!-- end reply content -->
+
+            <!-- 댓글, 대댓글 삭제모달 -->
+            <div id="deleteConfirmModal" class="modal">
+                <div class="modal-content" style="bottom: -190px;">
+                    <span class="close" style="text-align: end;">&times;</span>
+                    <p style="
+                    font-size: 30px;
+                    text-align: center;
+                ">정말 삭제하시겠습니까?</p>
+                    <div class="modal-buttons" style="
+                    top: 25px;">
+                        <button id="confirmDeleteBtn">삭제</button>
+                        <button id="cancelDeleteBtn">취소</button>
+                    </div>
+                </div>
+            </div>           
+
             <div class="spinner-container" id="loadingSpinner">
                 <div class="spinner-border text-light" role="status">
                     <span class="visually-hidden">Loading...</span>

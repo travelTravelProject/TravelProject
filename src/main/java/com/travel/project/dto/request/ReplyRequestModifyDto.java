@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Getter @Setter @ToString
 @NoArgsConstructor
@@ -21,6 +22,7 @@ public class ReplyRequestModifyDto {
     @NotNull
     private Long boardId; // 글 번호 -> 수정 후 목록조회를 위해 필요
     private Long parentReplyId; // 부모 댓글번호 (대댓글일 경우에만 사용)
+    private LocalDateTime updatedAt; // 댓글 수정일
 
     // DTO -> 엔터티로 변환하는 메서드
     public Reply toEntity() {
@@ -28,6 +30,7 @@ public class ReplyRequestModifyDto {
                 .replyText(this.newText)
                 .replyId(this.replyId)
                 .boardId(this.boardId)
+                .updatedAt(this.updatedAt != null ? this.updatedAt : LocalDateTime.now()) // 수정 시간을 업데이트
 //                .parentReplyId(this.parentReplyId)
                 .build();
     }
