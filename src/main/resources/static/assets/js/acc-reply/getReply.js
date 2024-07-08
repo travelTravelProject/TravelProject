@@ -57,16 +57,14 @@ export function appendReplies({ replies, loginUser }, reset = false) {
 
   let tag = "";
   if (replies && replies.length > 0) {
-    replies.forEach(({ replyId: rno, writer, text, createAt, account: replyAccount }) => {
+    replies.forEach(({ replyId: rno, writer, text, createAt, account: replyAccount, profileImage }) => {
 
       tag += `
             <div id='replyContent' class='card-body' data-rno='${rno}'>
                 <div class='row user-block'>
                   <div class='reply-head'>
                     <div class="profile-box">
-                        ${loginUser && loginUser.profileImage ? 
-                          `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
-                          `<img src="/assets/img/mimo.png" alt="profile image">`}
+                        <img src="${profileImage ? profileImage : "/assets/img/mimo.png"}" alt="profileImage image">
                     </div>
                     <div class="reply-body">
                       <div class='col-md-3'>
@@ -77,7 +75,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                   </div>
                 </div><br>
                 <div class='row'>
-                    <div class='col-md-9'>${text}</div>
+                    <div class='col-md-9' style="margin: 5px 0 20px 90px;">${text}</div>
                     <div class='col-md-3 text-right'>
                     <div class="reply-reply-write">
                       <button type="button" class="reply-reply-button" data-rno='${rno}'><i class="fas fa-comment"></i>답글</button>

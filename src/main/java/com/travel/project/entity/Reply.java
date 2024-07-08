@@ -38,4 +38,5 @@ public class Reply {
     private LocalDateTime updatedAt; // 댓글 수정일
     private STATUS status; // 댓글의 상태
     private String replyWriter; // 댓글 작성자
+    private String profileImage; // 프로필 사진
 }

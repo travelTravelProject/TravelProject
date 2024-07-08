@@ -23,6 +23,7 @@ public class ReplyResponseDetailDto {
     private LocalDateTime createAt; // 댓글 작성일
     private List<NestedReplyResponseDetailDto> nestedReplies; // 대댓글 목록
     private String account;
+    private String profileImage;
 
     // 엔터티를 DTO로 변환하는 생성자
     public ReplyResponseDetailDto(Reply r) {
@@ -31,5 +32,6 @@ public class ReplyResponseDetailDto {
         this.writer = r.getReplyWriter();
         this.createAt = r.getCreatedAt();
         this.account = r.getAccount();
+        this.profileImage = r.getProfileImage();
     }
 }

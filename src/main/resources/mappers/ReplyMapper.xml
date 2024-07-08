@@ -25,9 +25,12 @@
     </delete>
 
     <select id="findAll" resultType="reply">
-        SELECT * FROM tbl_reply
-        WHERE board_id = #{boardId}
-        ORDER BY reply_id
+        SELECT R.*, M.profile_image
+        FROM tbl_reply R
+        LEFT OUTER JOIN tbl_user_detail M
+        ON R.account = M.account
+        WHERE R.board_id = #{boardId}
+        ORDER BY R.reply_id
         LIMIT #{p.pageStart}, #{p.amount}
     </select>
 

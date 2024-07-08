@@ -322,7 +322,7 @@
 
         /* 댓글 프로필 */
         .profile-box {
-            width: 70px;
+            width: 60px;
             height: 60px;
             border-radius: 50%;
             overflow: hidden;
@@ -370,15 +370,17 @@
         .reply-head {
             display: flex;
             align-items: center;
+            margin: 20px 0 0 20px;
         }
 
         .reply-body {
+            margin-left: 15px;
             line-height: 20px;
             margin-top: 5px;
         }
 
         .reply-body .col-md-3 {
-            width: 50px;
+            width: 100px;
             font-weight: 700;
         }
 
@@ -393,7 +395,7 @@
         }
 
         .row .col-md-9 {
-            margin: 5px 0 20px 70px ;
+            margin: 5px 0 20px 80px ;
         }
 
         /* .col-md-9 .form-control {
@@ -423,7 +425,7 @@
 
         .reply-reply-write {
             opacity: 0.8;
-            margin-left: 70px;
+            margin-left: 90px;
         }
         .reply-reply-write .fa-comment {
             padding-right: 5px;
@@ -472,10 +474,11 @@
             line-height: 20px;
             margin-top: 5px;
             padding-left: 0;
+            margin-left: 20px;
         }
         .nestReply-body .col-md-3 {
             font-weight: 700;
-            width: 50px;
+            width: 100px;
         }
         .Nestedcard .card-body .row .col-md-3 {
             padding-left: 70px;
