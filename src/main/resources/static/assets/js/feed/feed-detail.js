@@ -38,8 +38,9 @@ function setDetailModal(dto) {
   if( mine === true || admin === true ) {
     const btnTag = `
     <button class="edit-feed detail-set-btn" id="editFeedBtn">수정</button>
-    <button class="delete-feed detail-set-btn" id="deleteFeedBtn" data-bs-toggle="modal" data-bs-target="#deleteFeedModal">삭제</button>`;
+    <button class="delete-feed detail-set-btn" id="deleteFeedBtn">삭제</button>`;
     $btnContainer.innerHTML = btnTag;
+//    <button class="delete-feed detail-set-btn" id="deleteFeedBtn" data-bs-toggle="modal" data-bs-target="#deleteFeedModal">삭제</button>`;
   }
   console.log('디테일: ',mine === true,' / ', admin === true,' / ',loginAccount);
 }

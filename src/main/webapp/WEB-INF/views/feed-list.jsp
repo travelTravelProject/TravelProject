@@ -239,20 +239,14 @@
 <%--</button>--%>
 
 <!-- Modal -->
-<div class="modal fade confirm-modal" id="deleteFeedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">피드 삭제</h1>
-                <div class="btn-close" data-bs-dismiss="modal" aria-label="Close"></div>
-            </div>
-            <div class="modal-body">
-                <p>정말 삭제하시겠습니까?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="cancelDeleteBtn" class="btn btn-secondary cancel-btn" data-bs-dismiss="modal">취소</button>
-                <button type="button" id="confirmDeleteBtn" class="btn btn-primary confirm-btn">삭제</button>
-            </div>
+<div id="deleteFeedModal" class="confirm-modal">
+    <div class="modal-content confirm">
+        <span class="close close-modal">&times;</span>
+        <h3>피드 삭제</h3>
+        <p>정말 삭제하시겠습니까?</p>
+        <div class="modal-buttons">
+            <button id="cancelDeleteBtn" class="cancel-btn">취소</button>
+            <button id="confirmDeleteBtn" class="confirm-btn">삭제</button>
         </div>
     </div>
 </div>
