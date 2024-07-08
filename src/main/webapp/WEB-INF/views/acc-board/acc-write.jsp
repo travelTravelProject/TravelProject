@@ -65,7 +65,7 @@
             cursor: auto;
         }
         textarea {
-            min-height: 180px;
+            min-height: 200px;
         }
         .buttons {
             margin-top: 20px;

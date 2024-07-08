@@ -69,6 +69,7 @@
             margin-top: 10px;
             margin-bottom: 20px;
             font-size: 0.9em;
+            line-height: 1.5;
         }
         .card-img {
             width: 100%;
@@ -587,9 +588,7 @@
 
             </div>
             <p class="content">여행 소개</p>
-            <div class="text">
-                ${abd.content}
-            </div>
+            <div class="text" style="white-space: pre-wrap;">${abd.content}</div>
         </div>
 
         <!-- 여행장 정보 -->

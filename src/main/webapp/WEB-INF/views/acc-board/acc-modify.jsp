@@ -65,7 +65,7 @@
             cursor: auto; /* 읽기 전용이 아닌 텍스트 필드는 기본 커서 사용 */
         }
         textarea {
-            min-height: 100px;
+            min-height: 200px;
         }
         .buttons {
             margin-top: 20px;
