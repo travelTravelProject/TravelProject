@@ -22,7 +22,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
          , profileImage: profile, feedImageList
-         , likeCount, userLike, bookmarkCount, userBookmark
+         , replyCount, likeCount, userLike, bookmarkCount, userBookmark
        }, index) => {
         console.log('피드목록렌더링 account: ', account,' /userLike: ', userLike);
       tag += `
@@ -51,7 +51,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
             <span class="show-detail">더보기</span>
           </div>
           <div class="interaction-section">
-            <span class="comments show-detail"><ion-icon name="chatbubble" ></ion-icon> ${pageInfo.totalCount}</span>`;
+            <span class="comments show-detail"><ion-icon name="chatbubble" ></ion-icon> ${replyCount}</span>`;
 
       tag+= `
             <span class="hearts">
