@@ -409,8 +409,8 @@ body div.btn-container {
     flex-direction: column;
     /*justify-content: space-between;*/
     height: 100%; /* 높이 설정 */
-    /*overflow-y: scroll; !* 스크롤 활성화 *!*/
-    overflow: hidden; /* 스크롤 활성화 */
+    overflow-y: scroll;
+    /* overflow: hidden; */
 }
 
 .detail-content {
@@ -795,6 +795,7 @@ border: none;
 }
 
 .profile-box img {
+border-radius: 50%;
 width: 60px;
 height: 50px;
 }
@@ -863,7 +864,7 @@ margin-left: 20px;
 }
 
 .row .col-md-9 {
-    margin: 5px 0 20px 75px ;
+    margin: 5px 0 20px 90px ;
 }
 
 /* .col-md-9 .form-control {
@@ -893,7 +894,7 @@ margin-left: 20px;
 
 .reply-reply-write {
     opacity: 0.8;
-    margin-left: 55px;
+    margin-left: 73px;
 }
 .reply-reply-write .reply-reply-button{
     color: black;

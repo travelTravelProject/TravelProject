@@ -58,15 +58,13 @@ export function appendReplies({ replies, loginUser }, reset = false) {
   // 댓글 목록 렌더링
   let tag = "";
   if (replies && replies.length > 0) {
-    replies.forEach(({ replyId: rno, writer, text, createAt, account: replyAccount }) => {
+    replies.forEach(({ replyId: rno, writer, text, createAt, account: replyAccount, profileImage }) => {
       tag += `
             <div id='replyContent' class='card-body' data-rno='${rno}'>
-                <div class='row user-block' style="margin-top: 10px;">
+                <div class='row user-block' style="margin-top: 20px; margin-left: 5px">
                   <div class='reply-head' style="height: 60px;">
                     <div class="profile-box">
-                        ${loginUser && loginUser.profileImage ? 
-                          `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
-                          `<img src="/assets/img/mimo.png" alt="profile image">`}
+                          <img src="${profileImage ? profileImage : "/assets/img/mimo.png"}" alt="profileImage image">
                     </div>
                     <div class="reply-body">
                       <div class='col-md-3'>
