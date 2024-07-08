@@ -36,11 +36,9 @@
         }
         #wrap {
             width: 60%;
-            max-width: 800px;
-            margin: 50px auto;
+            margin: 0 auto;
             background-color: #fff;
             padding: 20px;
-            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
@@ -73,7 +71,7 @@
             justify-content: space-between;
         }
         .buttons button {
-            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            background-color: #4facfe;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -81,7 +79,7 @@
             cursor: pointer;
         }
         .buttons button:hover {
-            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
         }
         .list-btn {
             background-color: #6c757d;
@@ -92,8 +90,9 @@
         .error-message {
             color: red;
             display: none;
-            margin-left: 10px; /* 메시지를 라벨 텍스트와 약간 띄움 */
+            margin-left: 10px;
             font-size: 0.9em;
+            font-weight: lighter;
         }
         .error-border {
             border-color: red !important;
@@ -102,7 +101,7 @@
         .image-box {
             position: relative;
             margin-top: 5px;
-            border: 2px dashed #28cffe;
+            border: 2px dashed #4facfe;
             border-radius: 5px;
             text-align: center;
             position: relative;
@@ -119,10 +118,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+            transition: transform 0.1s ease-in-out;
+        }
+        .image-upload-btn:active {
+            transform: scale(0.90);
         }
         .image-upload-btn i {
             font-size: 20px;
-            color: #28cffe;
+            color: #4facfe;
         }
         #upload-image {
             display: none;
@@ -210,9 +214,15 @@
         .modal .modal-buttons button:hover {
             background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
         }
+
+        /* 버튼 클릭 시 애니메이션 효과 */
+        button:active {
+            transform: scale(0.95); /* 버튼을 약간 줄어들게 함 */
+        }
     </style>
 </head>
 <body>
+<%@ include file="../include/sub_header.jsp" %>
 
 <div id="wrap" class="form-container">
     <h1>게시글 수정</h1>
@@ -480,7 +490,7 @@
         }
         // i태그 보이기, 보더라인 보이기, 삭제버튼 숨기기
         document.querySelector('.image-upload-btn i').style.display = 'block';
-        document.querySelector('.image-box').style.border = '2px dashed #28cffe';
+        document.querySelector('.image-box').style.border = '2px dashed #4facfe';
         $removeImage.style.display = 'none';
 
         // 이미지 삭제 여부 설정

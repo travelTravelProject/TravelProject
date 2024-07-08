@@ -139,7 +139,7 @@
             cursor: pointer;
         }
         .buttons .action-buttons .btn {
-            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            background-color: #4facfe;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -147,7 +147,7 @@
             cursor: pointer;
         }
         .buttons .action-buttons .btn:hover {
-            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
         }
 
         .buttons .action-buttons #del-btn {
@@ -548,6 +548,11 @@
 
         .hidden {
             display: none;
+        }
+
+        /* 버튼 클릭 시 애니메이션 효과 */
+        button:active {
+            transform: scale(0.95); /* 버튼을 약간 줄어들게 함 */
         }
 
     </style>

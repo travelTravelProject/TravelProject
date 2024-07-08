@@ -128,30 +128,20 @@
             width: 100%;
             text-align: center;
             padding: 10px 0;
-            /*background-color: #00CE7B;*/
             background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-            /*background-color: #00f2fe;*/
             color: white;
             text-decoration: none;
             border-radius: 10px;
+            transition: transform 0.2s ease; /* 애니메이션 효과 추가 */
         }
         .add-btn:hover {
+            background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
             color: #fff;
         }
-        .filters {
-            margin-bottom: 20px;
+        .add-btn:active {
+            transform: scale(0.95); /* 클릭 시 눌리는 애니메이션 효과 */
         }
-        .filters button {
-            margin-right: 10px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        .filters button:hover {
-            background-color: #e0e0e0;
-        }
+
         .paging {
             display: flex;
             width: fit-content;
@@ -166,7 +156,7 @@
             color: #000;
         }
         .paging .pagination .page-item.active .page-link {
-            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%) !important;
+            background-color: #4facfe !important;
             border-color: #DEE2E6 !important;
             color: #fff !important;
         }
@@ -184,12 +174,6 @@
             <input type="text" class="form-control" name="keyword" placeholder="동행을 찾아보세요." >
         </form>
     </div>
-
-    <%--    <div class="filters">--%>
-    <%--        <button>날짜</button>--%>
-    <%--        <button>나이/성별</button>--%>
-    <%--        <button>유형</button>--%>
-    <%--    </div>--%>
 
     <c:if test="${abList.size() == 0}">
         <div class="empty">
