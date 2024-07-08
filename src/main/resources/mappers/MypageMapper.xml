@@ -43,10 +43,14 @@
         B.start_date AS startDate,
         B.end_date AS endDate,
         COUNT(R.reply_id) AS replyCount,
-        U.gender
+        U.gender,
+        I.image_path AS imagePath
         FROM tbl_board B
+
         LEFT OUTER JOIN tbl_reply R ON B.board_id = R.board_id
         JOIN tbl_user U ON B.account = U.account
+        LEFT JOIN tbl_board_image I ON B.board_id = I.board_id
+
         WHERE B.status = 'A'
         AND B.category_id = '1'
         AND B.account = #{account}
@@ -54,4 +58,6 @@
         ORDER BY B.board_id DESC
         <!--    LIMIT #{search.pageStart}, #{search.amount}-->
     </select>
+
+
 </mapper>

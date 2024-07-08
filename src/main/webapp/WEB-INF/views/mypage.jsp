@@ -96,14 +96,14 @@
         </div>
 
     </div>
-</div>
-
 <div class="board-container" id="my-feed-tab">
     <div class="my-tab-inner">
 
     </div>
-    <span class="close close-modal">x</span>
+<%--    <span class="close close-modal">x</span>--%>
 </div>
+</div>
+
 
     <%-- 아이콘 --%>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

@@ -106,13 +106,16 @@
     font-size: 20px;
     text-align: center;
 }
+
 .active-tab {
     display: flex;
 }
+
 .inactive-tab {
     display: none;
     color: #cccccc;
 }
+
 .active-tab-btn {
     border-bottom: 1px solid rgba(0,0,0,0.9);
     color: black;

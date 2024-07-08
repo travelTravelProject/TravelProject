@@ -8,6 +8,13 @@ $myBoardBtn.addEventListener('click', async e => {
     console.log('account: ', account);
 
     // openBoardTab(account);
+    // const $boardTab = document.getElementById('my-board-tab');
+    // const $FeedTab = document.getElementById('my-feed-tab');
+    // $boardTab.classList.add('active-tab');
+    // $FeedTab.classList.remove('active-tab-btn');
+    // $FeedTab.classList.add('inactive-tab');
+    // $myBoardBtn.classList.add('active-tab-btn');
+    // $FeedTab.classList.remove('inactive-tab');
 
     try {
         const response = await fetch(`http://localhost:8181/mypage/boards/${account}`);
@@ -52,21 +59,22 @@ function renderBoardList(boardList) {
                                 <div class="card-title">${board.shortTitle}</div>
                                 <div class="card-content">${board.shortContent}</div>
                             </div>
-                            <div class="card-img">
-                                <img src="/assets/img/accBoardDefaultImg.webp" alt="대표이미지">
+                            <div class="card-img"> 
+                            <img src="${board.imagePath != null ? board.imagePath : '/assets/img/accBoardDefaultImg.webp'}" alt="대표이미지" >
+                           
                             </div>
                         </div>
                         <div class="card-details-bot">
                             <span>${board.gender}</span>
 <!--                            <span class="lnr lnr-calendar-full"></span>-->
                             <span class="acc-period">&nbsp;${board.startDate} - ${board.endDate}</span>
-                            <span class="view-count">${board.view}</span>
+                            <span class="view-count"> 조회수 ${board.view}</span>
                         </div>
                     </div>
                 </section>
             </div>
+          
 `;
-
         boardContainer.appendChild(boardElement);
     });
 
@@ -99,9 +107,9 @@ $boardTab.addEventListener('click', e => {
 
 function openBoardTab(account) {
     const $boardTab = document.getElementById('my-board-tab');
-    const $tab = document.querySelector('.board-container');
-    $tab.classList.add('inactive-tab');
-    $tab.classList.remove('active-tab-btn');
+    const $FeedTab = document.getElementById('my-feed-tab');
+    $FeedTab.classList.add('inactive-tab');
+    $FeedTab.classList.remove('active-tab-btn');
     // fetchMyFeedList(account);
     $boardTab.classList.add('active-tab');
     $myBoardBtn.style.textDecoration = 'underline';
