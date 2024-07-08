@@ -82,7 +82,7 @@ export const validateInput = {
         // 빈 값 검사
         if (!value.trim()) return {valid: false, message: '닉네임은 필수입니다.'};
         // 정규표현식 검사
-        if(!nicknamePattern.test(value)) return {valid: false, message: '닉네임은 최대 8글자로 입력해주세요. (영문 대소문자, 숫자, 밑줄(_), 하이픈(-) 허용)'};
+        if(!nicknamePattern.test(value)) return {valid: false, message: '닉네임은 최대 8글자로 입력해주세요.'};
 
         return {valid: true} ;
     },
