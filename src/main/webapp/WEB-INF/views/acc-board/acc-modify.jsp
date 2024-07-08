@@ -24,9 +24,12 @@
     <!-- daterangepicker css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 
+    <%--    폰트--%>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Noto Sans KR", sans-serif;
             background-color: #f8f8f8;
             margin: 0;
             padding: 0;
@@ -85,6 +88,15 @@
         }
         .list-btn:hover {
             background-color: #5a6268;
+        }
+        .error-message {
+            color: red;
+            display: none;
+            margin-left: 10px; /* 메시지를 라벨 텍스트와 약간 띄움 */
+            font-size: 0.9em;
+        }
+        .error-border {
+            border-color: red !important;
         }
         /* 사진 업로드 관련 스타일 */
         .image-box {
@@ -211,19 +223,19 @@
         <input type="hidden" id="removeImage" name="removeImage" value="false">
 
         <label for="location">장소</label>
-        <input type="text" id="location" name="location" value="${abm.location}" readonly required onclick="openModal()">
+        <input type="text" id="location" name="location" value="${abm.location}" readonly onclick="openModal()">
 
-        <label for="dateRange">동행 기간</label>
-        <input type="text" id="dateRange" name="dateRange" readonly required>
+        <label for="dateRange">동행 기간 <span id="dateRangeError" class="error-message"></span></label>
+        <input type="text" id="dateRange" name="dateRange" readonly>
 
         <input type="hidden" id="startDate" name="startDate" value="${abm.startDate}">
         <input type="hidden" id="endDate" name="endDate" value="${abm.endDate}">
 
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" value="${abm.title}" required>
+        <label for="title">제목 <span id="titleError" class="error-message"></span></label>
+        <input type="text" id="title" name="title" value="${abm.title}">
 
-        <label for="content">내용</label>
-        <textarea id="content" name="content" required>${abm.content}</textarea>
+        <label for="content">내용 <span id="contentError" class="error-message"></span></label>
+        <textarea id="content" name="content">${abm.content}</textarea>
 
         <!-- 사진 첨부 관련 태그 -->
         <label>사진 첨부</label>
@@ -236,7 +248,7 @@
         </div>
 
         <div class="buttons">
-            <button class="list-btn" type="button" onclick="cancelModify(${abm.boardId})">취소</button>
+            <button class="list-btn" type="button" onclick="cancelModify('${abm.boardId}')">취소</button>
             <button type="submit">수정하기</button>
         </div>
     </form>
@@ -257,7 +269,7 @@
             <button onclick="selectLocation('경기도')">경기도</button>
             <button onclick="selectLocation('충청도')">충청도</button>
             <button onclick="selectLocation('인천')">인천</button>
-            <button onclick="selectLocation('울릉도')">울릉도</button>
+            <button onclick="selectLocation('전국')">전국</button>
         </div>
     </div>
 </div>
@@ -291,6 +303,89 @@
             $('#startDate').val(start.format('YYYY-MM-DD'));
             $('#endDate').val(end.format('YYYY-MM-DD'));
         });
+
+        $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+            $('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
+            $('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
+            removeError($(this), $('#dateRangeError'));
+        });
+
+        $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            $('#startDate').val('');
+            $('#endDate').val('');
+        });
+
+        $('form').on('submit', async function(e) {
+            // 기본 제출 이벤트 방지
+            e.preventDefault();
+
+            let isValid = true;
+
+            // 동행 기간 필드 검사
+            if (!$('#startDate').val() || !$('#endDate').val()) {
+                showError($('#dateRange'), $('#dateRangeError'), '동행 기간을 선택해 주세요.');
+                isValid = false;
+            }
+
+            // 제목 필드 검사
+            if (!$('#title').val()) {
+                showError($('#title'), $('#titleError'), '제목을 입력해 주세요.');
+                isValid = false;
+            }
+
+            // 내용 필드 검사
+            if (!$('#content').val()) {
+                showError($('#content'), $('#contentError'), '내용을 입력해 주세요.');
+                isValid = false;
+            }
+
+            // 유효성 검사를 통과하면 폼 제출
+            if (isValid) {
+                try {
+                    const response = await submitForm(new FormData(this));
+                    if (response.ok) {
+                        window.location.href = '/acc-board/list'; // 성공 시 목록 페이지로 이동
+                    } else {
+                        console.error('Error submitting form:', error);
+                        alert('폼 제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    alert('폼 제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                }
+            }
+        });
+
+        function showError(input, errorElement, errorMessage) {
+            input.addClass('error-border');
+            errorElement.text(errorMessage).show();
+        }
+
+        function removeError(input, errorElement) {
+            input.removeClass('error-border');
+            errorElement.hide();
+        }
+
+        // 이벤트 리스너 추가 (입력 시 에러 메시지 제거)
+        $('#title').on('input', function() {
+            removeError($(this), $('#titleError'));
+        });
+        $('#content').on('input', function() {
+            removeError($(this), $('#contentError'));
+        });
+
+        async function submitForm(formData) {
+            const response = await fetch('/acc-board/modify', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            return response;
+        }
     });
 
     function openModal() {
@@ -331,13 +426,11 @@
             const uploadBtn = document.querySelector('.image-upload-btn');
             uploadBtn.appendChild(imgElement);
 
-
             document.querySelector('.image-upload-btn i').style.display = 'none';
             document.querySelector('.image-box').style.border = 'none';
             $removeImage.style.display = 'flex';
         }
     });
-
 
     $upload.addEventListener('click', e => {
         $uploadImage.click();

@@ -18,6 +18,9 @@
     <!-- https://linearicons.com/free#cdn -->
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
 
+    <%--    폰트--%>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
     <!-- bootstrap css -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
@@ -29,7 +32,7 @@
             box-sizing: border-box;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Noto Sans KR", sans-serif;
             background-color: #f8f8f8;
             margin: 0;
             padding: 0;
@@ -758,7 +761,7 @@
     <img src="/assets/img/accBoardDefaultImg.webp" class="img-modal-content" id="modalImage">
 </div>
   
-<!-- 삭제 확인 모달 -->
+<!-- 게시글 삭제 확인 모달 -->
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
