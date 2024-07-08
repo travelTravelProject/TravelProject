@@ -35,7 +35,7 @@
         B.title AS shortTitle,
         B.content AS shortContent,
         B.writer,
-        B.view_count AS viewCount,
+        B.view_count AS view,
         B.created_at AS date,
         B.updated_at AS updatedAt,
         B.status,

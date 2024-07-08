@@ -59,17 +59,25 @@ function renderBoardList(boardList) {
                            
                             </div>
                         </div>
+                      
+                        
                         <div class="card-details-bot">
-                            <span>${board.gender}</span>
-<!--                            <span class="lnr lnr-calendar-full"></span>-->
+                            <span>${board.writer} 
+<!--                                        <span>${board.gender == 'M' ? '남자' : '여자'}</span>-->
+                                            
+                                    </span>
+                                    </div>
+                                    <div class="card-details-bot">
+                            <span class="lnr lnr-calendar-full"></span>
                             <span class="acc-period">&nbsp;${board.startDate} - ${board.endDate}</span>
-                            <span class="view-count"> 조회수 ${board.view}</span>
+                            <span class="view-count">댓글 ${board.replyCount} · 조회수 ${board.view}</span>
                         </div>
                     </div>
                 </section>
             </div>
           
 `;
+
         boardContainer.appendChild(boardElement);
     });
 

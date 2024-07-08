@@ -104,7 +104,7 @@
     align-items: center;
     font-size: 0.9em;
     color: #666;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 .card-details-bot .view-count {
     margin-left: auto;
