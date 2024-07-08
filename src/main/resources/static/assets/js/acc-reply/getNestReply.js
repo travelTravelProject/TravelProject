@@ -23,7 +23,7 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
                 <div class='col-md-3'>
                   <b>${writer}</b>
                 </div>
-                <div class='offset-md-6 text-right'><b>${getRelativeTime(createAt)}</b></div>
+                <div class='offset-md-6 text-right' style="width: 100px;margin: 0;"><b>${getRelativeTime(createAt)}</b></div>
               </div>
             </div>
           </div><br>
@@ -75,18 +75,18 @@ function addNestedReplyEventListeners(rno) {
               <textarea rows="3" id="editNestedReplyText-${nestedReplyId}" name="editNestedReplyText"
                         class="form-control"
                         placeholder="대댓글을 입력해주세요."
-                        style="width: 550px;">${currentText}</textarea>
+                        style="width: 550px;height: 50px;">${currentText}</textarea>
             </div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" style="display: flex;">
             <button id="nestedReplyModifyBtn-${nestedReplyId}" type="button"
                     class="btn btn-dark form-control nestedReplyModifyBtn" data-nested-rno="${nestedReplyId}"
-                    style="background-color: inherit;border: none;font-weight: 500;border-radius: 5px;">
+                    style="margin-top: 25px;margin-left: 75px;background-color: inherit;color: black;border: none;font-weight: 500;border-radius: 5px;width: 60px;height: 30px;">
               수정
             </button>
             <button id="nestedReplyCancelBtn-${nestedReplyId}" type="button"
                     class="btn btn-secondary form-control nestedReplyCancelBtn" data-nested-rno="${nestedReplyId}"
-                    style="color: black;box-shadow:none;margin:5px;border: none;background-color: inherit;font-weight: 500;border-radius: 5px;">
+                    style="color: black;box-shadow:none;border: none;background-color: inherit;font-weight: 500;border-radius: 5px;width: 60px;height: 30px;margin-top: 25px;">
               취소
             </button>
           </div>

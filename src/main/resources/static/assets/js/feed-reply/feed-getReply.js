@@ -60,10 +60,9 @@ export function appendReplies({ replies, loginUser }, reset = false) {
   if (replies && replies.length > 0) {
     replies.forEach(({ replyId: rno, writer, text, createAt, account: replyAccount }) => {
       tag += `
-            <div id='replyContent' class='card-body' data-rno='${rno}' style="
-    height: 190px">
-                <div class='row user-block'>
-                  <div class='reply-head'>
+            <div id='replyContent' class='card-body' data-rno='${rno}'>
+                <div class='row user-block' style="margin-top: 10px;">
+                  <div class='reply-head' style="height: 60px;">
                     <div class="profile-box">
                         ${loginUser && loginUser.profileImage ? 
                           `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
@@ -77,7 +76,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                     </div>
                   </div>
                 </div><br>
-                <div class='row'>
+                <div class='row' style="width: 420px;">
                     <div class='col-md-9'>${text}</div>
                     <div class='col-md-3 text-right'>
                     <div class="reply-reply-write">
