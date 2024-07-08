@@ -51,23 +51,30 @@ export function appendNestedReplies({ nestedReplies, loginUser, boardId }, rno) 
             <div class='row reply-content'>
               <div class='col-md-9' style="margin-left: 105px;">${text}</div>
               <div class='col-md-3 text-right nestModDel'
-              style="margin-left: 222px;
-                      width: 100%;">
+              style="width: 100%;">
               ${loginUser && (loginUser.auth === 'ADMIN' || nestReplyAccount === loginUser.account) ? `
                 <a class='btn btn-sm btn-outline-dark nestedReplyModBtn' href='#' data-rno=${nestedReplyId}
-                style="border: none;
-                      width: 60px;
+                style="
+                      left: 239px;
+                      position: relative;
+                      border: none;
                       font-size: 16px;
+                      width: 60px;
                       padding-left: 8px;
                       font-weight: 500;
-                      box-shadow:none;">수정</a>&nbsp;
+                      box-shadow:none;
+                      ">수정</a>&nbsp;
                 <a class='btn btn-sm btn-outline-dark nestedReplyDelBtn' href='#' data-rno=${nestedReplyId}
-                style="border: none;
+                style="
+                      left: 221px;
+                      position: relative;
+                      border: none;
                       font-size: 16px;
                       width: 60px;
                       padding-left: 8px;
                       font-weight: 500;
-                      box-shadow:none;">삭제</a>` : ''}
+                      box-shadow:none;
+                      ">삭제</a>` : ''}
               </div>
             </div>
           </div>

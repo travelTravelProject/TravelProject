@@ -334,16 +334,22 @@
             height: 50px;
         }
 
-        button:hover {
+        .reply-reply-button:hover,
+        a.btn:hover,
+        .nested-reply-add-btn:hover,
+        .nestedReplyModifyBtn:hover,
+        .nestedReplyCancelBtn:hover,
+        .form-control1:hover
+         {
         background-color: #4facfe;
         background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
         }
-        a:hover {
+        /* a:hover {
         background-color: #4facfe;
-        background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
-        }
+        background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%); */
+        /* } */
         #replyContent {
-            /* border: 1px solid red; */
+            padding: 0;
         }
 
         #replies {
@@ -352,9 +358,10 @@
         }
 
         .card .float-left {
+            color: black;
             font-weight: 700;
             font-size: 16px;
-            padding-top: 10px;
+            padding: 10px 0;
         }
 
 
@@ -374,6 +381,7 @@
         }
 
         .reply-body .col-md-3 {
+            width: 50px;
             font-weight: 700;
         }
 
@@ -384,6 +392,7 @@
         }
         .row .text-right {
             /* display: flex; */
+            width: 100%;
         }
 
         .row .col-md-9 {
@@ -396,16 +405,17 @@
 
         .modDelBtn {
             position: relative;
-            top: -29px;
-            left: 580px;
+            top: -36px;
+            left: 880px;
             width: 590px;
         }
 
         .modDelBtn .btn-sm {
+            font-size: 16px;
+            border: none;
             display: inline-block;
             text-decoration: none;
             color: black;
-            font-weight: 500;
             width: 50px;
             height: 35px;
             text-align: center;
@@ -423,6 +433,9 @@
         }
 
         .reply-reply-button {
+            display: inline-block;
+            width: 65px;
+            height: 30px;
             border: none;
             outline: none;
             background-color: inherit ;
@@ -461,33 +474,33 @@
             align-items: center;
             line-height: 20px;
             margin-top: 5px;
+            padding-left: 0;
         }
         .nestReply-body .col-md-3 {
             font-weight: 700;
+            width: 50px;
         }
         .Nestedcard .card-body .row .col-md-3 {
-            display: flex;
             padding-left: 70px;
         }
-        .Nestedcard .card-body .row .col-md-3 .form-group {
-            /* margin-left: 70px; */
-        }
+
         .Nestedcard .card-body .row .col-md-3 .col-md-9 {
             display: flex;
             margin: 5px 0 20px 0;
         }
+        .Nestedcard .card-body .row .col-md-3 .col-md-9 .form-group {
+            display: flex;
+        }
         .Nestedcard .card-body .row .col-md-3 .col-md-9 .form-group .form-control {
             width: 530px;
-            height: 35px;
+            height: 38px;
         }
         /* 대댓글 카드 스타일 */
         .nested-reply-card {
             width: 88%;
-            background-color: #f8f9fa;
             border-radius: 5px;
             margin: 10px 0 10px 70px; /* 왼쪽 여백을 추가하여 대댓글을 안쪽으로 이동 */
             padding: 10px;
-            border: 1px solid #e9ecef;
         }
 
         /* 대댓글 작성자 및 시간 스타일 */
@@ -507,11 +520,13 @@
 
         .reply-content .nestModDel {
             position: relative;
-            left: 500px;
+            left: 803px;
             justify-content: end;
             margin-right: 9px;
         }
         .reply-content .text-right .btn-sm {
+            font-size: 16px;
+            border: none;
             display: inline-block;
             width: 50px;
             height: 35px;
@@ -626,12 +641,12 @@
     <!-- 댓글 영역 -->
 
     <div id="replies" class="row">
-        <div class="offset-md-1 col-md-10">
+        <div class="offset-md-1 col-md-10" style="margin: 0;width: 100%;">
 
             <!--댓글 내용 영역-->
             <div class="card">
                 <!-- 댓글 내용 헤더 -->
-                <div class="card-header text-white m-0">
+                <div class="card-header text-white m-0" style="color: black;">
                     <div class="float-left">댓글 (<span id="replyCnt">0</span>)</div>
                 </div>
 
@@ -656,7 +671,7 @@
             <div class="card">
             <div class="card-body">
                 <c:if test="${user == null}">
-                <a href="/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
+                    <a href="/sign-in" style="text-decoration-line: none;font-weight: 700;">댓글은 로그인 이후에 작성해주세요! :)</a>
                 </c:if>
                 <c:if test="${user != null}">
                 <div class="rows"> 
@@ -670,7 +685,7 @@
                             value="${user.nickname}"
                             class="form-control"
                             placeholder="작성자 이름"
-                            style="margin-bottom: 6px"
+                            style="width: 100px;margin-bottom: 6px;"
                             readonly
                             />
                         </div>
@@ -683,6 +698,7 @@
                                 name="replyText"
                                 class="form-control"
                                 placeholder="댓글을 입력해주세요."
+                                style="width: 800px;"
                                 />
                             </div>
                             <button
@@ -690,13 +706,17 @@
                             type="button"
                             class="btn btn-dark form-control1"
                             style="width: 60px;
-                                    margin: 6px 0;"
+                                    margin: 6px 0;
+                                    background-color: #d9d9d9;
+                                    border: none;"
                             >
                             등록
                             </button>
                         </div>
-                    </c:if>
+                    </div>
                 </div>
+                </c:if>
+            </div>
             </div>
             <!-- end reply write -->
 
@@ -708,29 +728,28 @@
             </ul>
             </div>
         </div>
-    </div>
-    <!-- end reply content -->
-    </div>
-    <!-- end replies row -->
+         <!-- end reply content -->
+        </div>
+        <!-- end replies row -->
 
-      <!-- 댓글 삭제모달 -->
-      <div id="deleteConfirmModal" class="modal">
-          <div class="modal-content">
-          <span class="close">&times;</span>
-          <p>정말 삭제할까요?</p>
-          <button id="confirmDeleteBtn">삭제</button>
-          <button id="cancelDeleteBtn">취소</button>
-          </div>
-      </div>
+        <!-- 댓글 삭제모달 -->
+        <div id="deleteConfirmModal" class="modal">
+            <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>정말 삭제할까요?</p>
+            <button id="confirmDeleteBtn">삭제</button>
+            <button id="cancelDeleteBtn">취소</button>
+            </div>
+        </div>
 
-      <div class="spinner-container" id="loadingSpinner">
-          <div class="spinner-border text-light" role="status">
-              <span class="visually-hidden">Loading...</span>
-          </div>
-      </div>
+        <div class="spinner-container" id="loadingSpinner">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
   
-  </div>
-</div>
+    </div>
+</div>  
 
 
 

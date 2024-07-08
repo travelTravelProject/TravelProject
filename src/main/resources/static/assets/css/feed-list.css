@@ -749,8 +749,15 @@ body div.btn-container {
 
 /*-------------- 피드 CSS 끝 ---------------------*/
 
+.feed-right-side::-webkit-scrollbar {
+    display: none;
+  }
+
 /* 댓글 css */
-a:hover {
+.modBtn:hover,
+.delBtn:hover,
+.nestedReplyModBtn:hover,
+.nestedReplyDelBtn:hover {
     background-color: #4facfe;
     background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
 }
@@ -760,7 +767,7 @@ a:hover {
 width: 50px;
 height: 50px;
 border-radius: 50%;
-overflow: hidden;
+/* overflow: hidden; */
 /* margin: 10px 0 0 0; */
 border: none;
 }
@@ -771,17 +778,17 @@ height: 50px;
 }
 
 #replyContent {
-    /* border: 1px solid red; */
+    padding: 0;
 }
 
 #replies {
-    width: 500px;
+    width: 427px;
     box-shadow: none;
     /* border: 1px solid blue; */
     /* padding: 0 20px; */
 }
 #replies .col-md-10 {
-    width: 446px;
+    width: 100%;
     margin-left: 0;
 }
 
@@ -796,16 +803,20 @@ height: 50px;
 .user-block {
 display: flex;
 align-items: center;
+margin-top: 10px;
 }
 
 .reply-head {
-display: flex;
+/* display: flex; */
 align-items: center;
 }
 
 .reply-body {
-line-height: 20px;
-margin-top: 5px;
+    position: relative;
+    left: 55px;
+    top: -48px;
+    line-height: 20px;
+    margin-top: 5px;
 }
 
 .reply-body .col-md-3 {
@@ -815,13 +826,13 @@ margin-left: 20px;
 }
 
 .reply-body .text-right {
-    width: 100%;
+    width: 100px;
     margin-top: 2px;
     opacity: 0.8;
 }
 .row .text-right {
-    margin: 0 0 0 5px;
-    display: flex;
+    /* margin: 0 0 0 5px; */
+    /* display: flex; */
 }
 .row .text-right .modDelBtn{
     display: flex;
@@ -838,12 +849,16 @@ margin-left: 20px;
 } */
 
 .modDelBtn {
+    position: relative;
+    left: 180px;
     display: flex;
     text-align: right;
-    width: 610px;
+    width: 100px;
 }
 
 .modDelBtn .btn-sm {
+    position: relative;
+    bottom: 35px;
     text-decoration: none;
     color: black;
     font-weight: 500;
@@ -877,6 +892,7 @@ margin-left: 20px;
 }
 .rows .col-md-3 {
     display: flex;
+    width: 0;
 }
 .rows .col-md-90 {
     display: flex;

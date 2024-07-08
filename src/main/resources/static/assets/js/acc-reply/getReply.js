@@ -72,7 +72,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                       <div class='col-md-3'>
                           <b>${writer}</b>
                       </div>
-                      <div class='offset-md-6 text-right'><b>${getRelativeTime(createAt)}</b></div>
+                      <div class='offset-md-6 text-right' style="margin: 0;"><b>${getRelativeTime(createAt)}</b></div>
                     </div>
                   </div>
                 </div><br>
@@ -133,17 +133,19 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                                   class="form-control"
                                   placeholder="대댓글을 입력해주세요."
                                   ></textarea>
+                                  <button
+                                  id="nestedReplyAddBtn-${rno}"
+                                  type="button"
+                                  class="btn btn-dark form-control nested-reply-add-btn"
+                                  data-rno='${rno}'
+                                  style="width: 60px;
+                                        height: 35px;
+                                        background-color: #d9d9d9;
+                                        border: none;"
+                                  >
+                                  등록
+                                </button>
                               </div>
-                              <button
-                                id="nestedReplyAddBtn-${rno}"
-                                type="button"
-                                class="btn btn-dark form-control nested-reply-add-btn"
-                                data-rno='${rno}'
-                                style="width: 60px;
-                                       height: 35px;"
-                                >
-                                등록
-                              </button>
                             </div>
                         </div>
                     </div>

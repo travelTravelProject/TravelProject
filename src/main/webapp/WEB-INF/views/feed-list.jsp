@@ -132,14 +132,14 @@
                 <div class="offset-md-1 col-md-10">
 
                     <!--댓글 내용 영역-->
-                    <div class="card">
+                    <div class="card" style="width: 427px">
                         <!-- 댓글 내용 헤더 -->
-                        <div class="card-header text-white m-0">
-                            <div class="float-left">댓글 (<span id="replyCnt">0</span>)</div>
+                        <div class="card-header text-white m-0" style="width: 427px;">
+                            <div class="float-left">댓글 (<span id="replyCnt" style="padding: 0;">0</span>)</div>
                         </div>
 
                         <!-- 댓글 내용 바디 -->
-                        <div id="replyCollapse" class="card">
+                        <div id="replyCollapse" class="card" style="width: 427px;">
                             <div id="replyData">
                                 <!--
                                 < JS로 댓글 정보 DIV삽입 >
@@ -156,10 +156,10 @@
 
 
                     <!-- 댓글 쓰기 영역 -->
-                    <div class="card">
+                    <div class="card" style="width: 427px;">
                         <div class="card-body">
                             <c:if test="${user == null}">
-                                <a href="/sign-in">댓글은 로그인 이후에 작성 가능합니다.</a>
+                                <a href="/sign-in" style="text-decoration-line: none; font-weight: 700;">댓글은 로그인 이후에 작성해주세요! :)</a>
                             </c:if>
                             <c:if test="${user != null}">
                                 <div class="rows">
