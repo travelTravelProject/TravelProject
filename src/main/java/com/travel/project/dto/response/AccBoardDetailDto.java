@@ -29,6 +29,7 @@ public class AccBoardDetailDto {
     private String ageGroup; // 연령대 추가
     private String oneLiner; // 소개글
     private String profileImage; // 프로필 사진
+    private String mbti; // mbti
 
     @Setter
     private int likeCount; // 총 좋아요 수
@@ -48,6 +49,7 @@ public class AccBoardDetailDto {
         this.birthday = ab.getBirthday(); // 생년월일 설정
         this.oneLiner = ab.getOneLiner();
         this.profileImage = ab.getProfileImage();
+        this.mbti = ab.getMbti();
 
 
 

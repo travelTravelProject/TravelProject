@@ -44,10 +44,12 @@
         COUNT(R.reply_id) AS reply_count,
         U.gender,
         U.birthday AS birthday,
+        UD.mbti,
         I.image_path
         FROM tbl_board B
         LEFT OUTER JOIN tbl_reply R ON B.board_id = R.board_id
         JOIN tbl_user U ON B.account = U.account
+        LEFT JOIN tbl_user_detail UD ON U.account = UD.account
         LEFT JOIN tbl_board_image I ON B.board_id = I.board_id
         WHERE B.status = 'A'
         AND B.category_id = '1'
@@ -76,6 +78,7 @@
         U.birthday AS birthday,
         COALESCE(UD.one_liner, '자기소개를 입력하고 마음에 맞는 동행을 구해보세요!') AS oneLiner,
         COALESCE(UD.profile_image, '/assets/img/anonymous.jpg') AS profileImage,
+        UD.mbti AS mbti,
         I.image_path,
         COUNT(R.reply_id) AS reply_count
         FROM tbl_board B

@@ -583,6 +583,8 @@
                             <c:when test="${abd.gender == 'M'}">남자</c:when>
                             <c:when test="${abd.gender == 'F'}">여자</c:when>
                         </c:choose>
+                            <c:if test="${not empty abd.mbti}"> · ${abd.mbti}
+                            </c:if>
                     </div>
                 </div>
             </div>
