@@ -24,9 +24,12 @@
     <!-- daterangepicker css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 
+    <%--    폰트--%>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Noto Sans KR", sans-serif;
             background-color: #f8f8f8;
             margin: 0;
             padding: 0;
@@ -79,6 +82,16 @@
         }
         .buttons button:hover {
             background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
+        }
+
+        .error-message {
+            color: red;
+            display: none;
+            margin-left: 10px; /* 메시지를 라벨 텍스트와 약간 띄움 */
+            font-size: 0.9em;
+        }
+        .error-border {
+            border-color: red !important;
         }
 
         /* 사진 업로드 관련 스타일 */
@@ -205,20 +218,20 @@
     <h1>동행 게시판 글쓰기</h1>
     <form action="/acc-board/write" method="post" enctype="multipart/form-data">
 
-        <label for="location">장소</label>
-        <input type="text" id="location" name="location" readonly required onclick="openModal()">
+        <label for="location">장소 </label>
+        <input type="text" id="location" name="location" value="전국" readonly>
 
-        <label for="dateRange">동행 기간</label>
-        <input type="text" id="dateRange" name="dateRange" readonly required>
+        <label for="dateRange">동행 기간 <span id="dateRangeError" class="error-message"></span></label>
+        <input type="text" id="dateRange" name="dateRange" readonly>
 
         <input type="hidden" id="startDate" name="startDate">
         <input type="hidden" id="endDate" name="endDate">
 
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" required style="cursor: auto;">
+        <label for="title">제목 <span id="titleError" class="error-message"></span></label>
+        <input type="text" id="title" name="title" style="cursor: auto;">
 
-        <label for="content">내용</label>
-        <textarea id="content" name="content" maxlength="200" required style="cursor: auto;"></textarea>
+        <label for="content">내용 <span id="contentError" class="error-message"></span></label>
+        <textarea id="content" name="content" maxlength="200" style="cursor: auto;"></textarea>
 
         <%-- 사진 첨부 관련 태그--%>
         <label>사진 첨부</label>
@@ -252,7 +265,7 @@
             <button onclick="selectLocation('경기도')">경기도</button>
             <button onclick="selectLocation('충청도')">충청도</button>
             <button onclick="selectLocation('인천')">인천</button>
-            <button onclick="selectLocation('울릉도')">울릉도</button>
+            <button onclick="selectLocation('전국')">전국</button>
         </div>
     </div>
 </div>
@@ -281,18 +294,108 @@
                 firstDay: 0
             },
             minDate: moment().startOf('day'), // 오늘 이전 날짜 선택 불가
-            startDate: moment(), // 기본 시작 날짜를 오늘로 설정
-            endDate: moment() // 기본 종료 날짜를 오늘로 설정
+            autoUpdateInput: false // 기본값 비활성화
         }, function(start, end, label) {
             $('#startDate').val(start.format('YYYY-MM-DD'));
             $('#endDate').val(end.format('YYYY-MM-DD'));
+            $('input[name="dateRange"]').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
         });
+
+        $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+            $('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
+            $('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
+        });
+
+        $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            $('#startDate').val('');
+            $('#endDate').val('');
+        });
+
+        $('form').on('submit', async function(e) {
+            // 기본 제출 이벤트 방지
+            e.preventDefault();
+
+            let isValid = true;
+
+            // 동행 기간 필드 검사
+            if (!$('#startDate').val() || !$('#endDate').val()) {
+                showError($('#dateRange'), $('#dateRangeError'), '동행 기간을 선택해 주세요.');
+                isValid = false;
+            }
+
+            // 제목 필드 검사
+            if (!$('#title').val()) {
+                showError($('#title'), $('#titleError'), '제목을 입력해 주세요.');
+                isValid = false;
+            }
+
+            // 내용 필드 검사
+            if (!$('#content').val()) {
+                showError($('#content'), $('#contentError'), '내용을 입력해 주세요.');
+                isValid = false;
+            }
+
+            // 유효성 검사를 통과하면 폼 제출
+            if (isValid) {
+                try {
+                    const response = await submitForm(new FormData(this));
+                    if (response.ok) {
+                        window.location.href = '/acc-board/list'; // 성공 시 목록 페이지로 이동
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    // alert('폼 제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                }
+            }
+        });
+
+        function showError(input, errorElement, errorMessage) {
+            input.addClass('error-border');
+            errorElement.text(errorMessage).show();
+        }
+
+        function removeError(input, errorElement) {
+            input.removeClass('error-border');
+            errorElement.hide();
+        }
+
+        // 이벤트 리스너 추가 (입력 시 에러 메시지 제거)
+        $('#dateRange').on('apply.daterangepicker', function(ev, picker) {
+            removeError($(this), $('#dateRangeError'));
+        });
+        $('#title').on('input', function() {
+            removeError($(this), $('#titleError'));
+        });
+        $('#content').on('input', function() {
+            removeError($(this), $('#contentError'));
+        });
+
+        async function submitForm(formData) {
+            const response = await fetch('/acc-board/write', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            return response;
+        }
     });
 
+
     // 지역 선택 모달 관련 스크립트
-    function openModal() {
-        document.getElementById('locationModal').style.display = 'block';
-    }
+    const $location = document.getElementById('location');
+    const $locationModal = document.getElementById('locationModal')
+
+    $location.addEventListener('click', e => {
+        $locationModal.style.display = 'block';
+    });
+
+    // function openModal() {
+    //     document.getElementById('locationModal').style.display = 'block';
+    // }
     function closeModal() {
         document.getElementById('locationModal').style.display = 'none';
     }
