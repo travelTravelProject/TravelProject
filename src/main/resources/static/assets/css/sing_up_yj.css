@@ -35,8 +35,10 @@
 }
 .input-container p{
   position: absolute;
-    top: -10px;
+    top: 0;
     right: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .input-container label {
@@ -55,13 +57,13 @@
 }
 
 .input-container input:focus + label {
-  color: rgb(161, 66, 249);
+  color: #2B96D9;
   transform: scale(1.2);
   transform: translateX(0.5rem);
 }
 
 .input-container input {
-  border: 2px rgb(161, 66, 249) solid;
+  border: 2px solid #2B96D9;
   padding: 8px;
 }
 
@@ -195,7 +197,7 @@
 
 
 .button {
-  --color: #00A97F;
+  --color: #2B96D9;
   padding: 15px 90px;
   background-color: transparent;
   border-radius: .3em;
@@ -273,10 +275,13 @@
 .birth_title, .gender_title{
   display: inline-block;;
   margin-bottom: 20px;
+  font-size: 20px;
 }
 
 
-
+.gender_boxs{
+  width: 150px;
+}
 .Radio input[type="radio"] {
   position: absolute;
   left: -100px;
@@ -287,7 +292,7 @@
   /* line-height: 3rem; */
   cursor: pointer;
   white-space: nowrap;
-  color: #61cea5;
+  color: #2B96D9;
 }
 
 .Radio input[type="radio"] + label::before,
@@ -302,14 +307,14 @@
 }
 
 .Radio input[type="radio"] + label {
-  padding-left: 3rem;
+  padding-left: 30px;
 }
 
 .Radio input[type="radio"] + label::before {
   width: 20px;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: #61cea5;
+  background: #2B96D9;
 }
 
 .Radio input[type="radio"] + label::after {

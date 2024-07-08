@@ -71,6 +71,11 @@
                         </label>
                     </label>
                 </div>
+
+                <ul class="id_pw_find_box">
+                    <li><a href="/find-id">아이디 찾기</a></li>
+                    <li><a href="/find-password">비번 찾기</a></li>
+                </ul>
                   
                     
                 <!-- <label class="auto-label" for="auto-login">
@@ -86,6 +91,10 @@
         </div>
     </div>
     
+
+    <%@ include file="include/footer.jsp" %>
+
+
     <script>
         //서버에 전송된 로그인 검증 메세지
         const result = '${result}';

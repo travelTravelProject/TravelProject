@@ -157,7 +157,7 @@ html.fp-enabled,
     width: 17px;
     margin: -8px 0 0 -12px;
     border-radius: 100%;
-	background:#f8ae00;
+	background:#2B96D9;
 	border:none; 
  }
 #fp-nav ul li a span,
@@ -167,8 +167,8 @@ html.fp-enabled,
     z-index: 1;
     height: 10px;
     width: 10px;
-    border: 1px solid #333;
-    background-color: #777;
+    border: 1px solid #fff;
+    background-color: #fff;
     left: 50%;
     top: 50%;
     margin: -6px 0 0 -10px; 
@@ -183,7 +183,7 @@ html.fp-enabled,
     width: 17px;
     margin: -8px 0 0 -12px;
     border-radius: 100%;
-	background:#f8ae00;
+	background:#113366;
 	border:none;
     
 }
@@ -215,7 +215,7 @@ html.fp-enabled,
     transition: opacity 0.2s ease-in;
     width: auto;
     opacity: 1;
-	color: #f8ae00;
+	color: #2B96D9;
 }
 #fp-nav ul li .fp-tooltip.right {
     left: 20px;
