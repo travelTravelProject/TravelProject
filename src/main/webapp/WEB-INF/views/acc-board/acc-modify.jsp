@@ -216,7 +216,7 @@
 
 <div id="wrap" class="form-container">
     <h1>게시글 수정</h1>
-    <form action="/acc-board/modify" method="post" enctype="multipart/form-data">
+    <form action="/acc-board/modify?bno=${abm.boardId}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="boardId" value="${abm.boardId}">
 
         <!-- 이미지 삭제 여부를 나타내는 hidden input 추가 -->
