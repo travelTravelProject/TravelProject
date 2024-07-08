@@ -298,7 +298,7 @@
 
 
 
-        /* 여기부터 모달 스타일 */
+        /* 모달 스타일 */
         .modal {
             display: none;
             position: fixed;
@@ -311,25 +311,27 @@
             background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.4);
             padding-top: 60px;
-            border-radius: 5px;
             justify-content: center;
             align-items: center;
         }
         .modal-content {
             background-color: #fefefe;
             margin: 5% auto;
-            padding: 20px;
+            padding: 30px 30px 20px 30px;
             border: 1px solid #888;
             width: 80%;
             max-width: 400px;
+            position: relative;
             text-align: center;
-
         }
         .close {
             color: #aaa;
-            float: right;
+            position: absolute;
+            top: 10px;
+            right: 10px;
             font-size: 28px;
             font-weight: bold;
+            cursor: pointer;
         }
         .close:hover,
         .close:focus {
@@ -345,6 +347,11 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* 버튼 간의 간격을 설정 */
+        }
         #deleteModal .modal-content p {
             font-size: 1.5em;
             font-weight: bold;
@@ -352,16 +359,16 @@
             margin-bottom: 20px;
         }
         #deleteModal .confirmDelete {
-            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-        }
-        #deleteModal .confirmDelete:hover {
-            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
-        }
-        #deleteModal .cancelDelete {
             background-image: linear-gradient(to right, #ff6b6b 0%, #ff4757 100%);
         }
-        #deleteModal .cancelDelete:hover {
+        #deleteModal .confirmDelete:hover {
             background-image: linear-gradient(to right, #e63946 0%, #d90429 100%);
+        }
+        #deleteModal .cancelDelete {
+            background: #999999;
+        }
+        #deleteModal .cancelDelete:hover {
+            background: #888888;
         }
 
         /* 이미지 모달 스타일 */
@@ -768,8 +775,10 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <p>정말로 삭제하시겠습니까?</p>
-        <button class="btn confirmDelete" >삭제</button>
-        <button class="btn cancelDelete" >취소</button>
+        <div class="modal-buttons">
+            <button class="btn confirmDelete">삭제</button>
+            <button class="btn cancelDelete">취소</button>
+        </div>
     </div>
 </div>
 
