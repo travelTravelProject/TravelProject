@@ -98,7 +98,7 @@
         <div class="my-tab-inner">
 
         </div>
-        <span class="close close-modal">x</span>
+<%--        <span class="close close-modal">x</span>--%>
     </div>
 </div>
 

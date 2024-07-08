@@ -118,8 +118,8 @@ ion-icon {
     cursor: pointer;
 }
 ion-icon:hover {
-    /*color: #cccccc;*/
-    color: rgba(0,0,0,0.4);
+    color: #cccccc;
+    /*color: rgba(0,0,0,0.2);*/
     /*color: transparent;*/
     /*background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);*/
     /*background-clip: text;*/
@@ -284,7 +284,7 @@ button:hover {
 }
 .top-section .filters div:hover {
     /*background-color: #ddd;*/
-    background-color: #91e5ff;;
+    background-color: #d9ebf8;;
 
 }
 
@@ -579,19 +579,20 @@ body div.btn-container {
     /*border: 1px solid deeppink;*/
 }
 .delete-prev-image {
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    color: #4facfe;
+    width: 50px;
+    height: 25px;
+    border-radius: 3px;
     display: none;
     position: absolute;
     background: white;
-    top: -5px;
-    right: -5px;
+    top: 50%;
+    left: 50%;
+    color: #4facfe;
     text-align: center;
-    line-height: 20px;
-    font-size: 1.1rem;
+    line-height: 25px;
+    /*font-size: 1.1rem;*/
     /*font-weight: 500;*/
+    transform: translateX(-50%) translateY(-50%);
 }
 .image-frame:hover .delete-prev-image {
     display: block;
@@ -694,6 +695,10 @@ body div.btn-container {
 }
 .warning {
     color: #fd6363;
+}
+.stop-msg {
+    /*margin-bottom: 5px;*/
+    padding-bottom: 5px;
 }
 .active-filter {
     background: #a0f9fe;

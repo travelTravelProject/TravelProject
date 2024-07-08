@@ -10,7 +10,7 @@ function readFile(file, index, imageBox) {
   const imgTag = `
         <div class="image-frame" data-img-src="${imgUrl}"> 
             <img src="${imgUrl}" class="image-item" data-image-order="${index}" alt="preview image">
-            <div class="delete-prev-image" data-image-order="${index}">x</div>
+            <div class="delete-prev-image" data-image-order="${index}">취소</div>
         </div>
   `;
   imageBox.innerHTML += imgTag;

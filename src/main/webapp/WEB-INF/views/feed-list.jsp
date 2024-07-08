@@ -68,9 +68,10 @@
             <span class="typing-text"> <span class="typing-count">0</span>/50</span> <span class="typing-text hidden">최대 4줄 또는 50자까지 입력 가능합니다.</span>
             <textarea id="cr-content" name="content" rows="4" placeholder="최대 4줄 또는 50자까지 입력 가능합니다." required></textarea>
             <label for="postImage" class="fake-upload">+ 이미지 업로드</label>
-            <span class="typing-text">최소 1장 ~ 최대 10장까지 업로드 가능합니다.</span>
+            <span class="typing-text img-msg">최대 10장까지 업로드 가능합니다.</span>
             <input type="file" id="postImage" name="postImage" class="hidden" accept="image/*" required>
             <div class="dropbox" id="post-preview"></div>
+            <span class="hidden warning stop-msg">내용 또는 이미지가 없습니다!</span>
             <button type="submit" id="feed-post-Btn" class="one-modal-btn">새로운 피드 등록하기</button>
         </div>
     </div>
@@ -87,9 +88,10 @@
             <span class="typing-text"> <span class="typing-count">0</span>/50</span>
             <textarea type="text" id="ed-content" name="nickname" rows="4" placeholder="최대 4줄 또는 50자까지 입력 가능합니다." required></textarea>
             <label for="editPostImage" class="fake-upload">+ 이미지 업로드</label>
-            <span class="typing-text">최대 10장까지 업로드 가능합니다.</span>
+            <span class="typing-text img-msg">최대 10장까지 업로드 가능합니다.</span>
             <input type="file" id="editPostImage" name="postImage" class="hidden" accept="image/*">
             <div class="dropbox" id="edit-preview"></div>
+            <span class="hidden warning stop-msg">내용 또는 이미지가 없습니다!</span>
             <button type="submit" id="feed-modify-Btn" class="one-modal-btn">수정 완료</button>
         </div>
     </div>

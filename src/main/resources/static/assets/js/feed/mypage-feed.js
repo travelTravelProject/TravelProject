@@ -1,6 +1,7 @@
 import {debounce} from "../util.js";
 
 const $myFeedBtn = document.getElementById('my-feed-btn');
+const $myBoardBtn = document.getElementById('my-board-btn');
 
 let currentMyFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetchingMyFeed = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
@@ -16,6 +17,7 @@ function openFeedTab(account) {
   fetchMyFeedList(account);
   $feedTab.classList.add('active-tab');
   $myFeedBtn.classList.add('active-tab-btn');
+  $myBoardBtn.classList.remove('active-tab-btn')
 }
 // 피드 탭 열기 이벤트
 $myFeedBtn.addEventListener('click', e => {
@@ -45,9 +47,9 @@ function appendMyFeeds(myFeedListDto) {
           <img src="${image.imagePath}" alt="Image 1">
           <div class="overlay">
             <div class="text">
+              <ion-icon name="chatbubble" ></ion-icon> ${replyCount}
               <ion-icon name="heart"></ion-icon> ${likeCount}  
               <ion-icon name="bookmark"></ion-icon> ${bookmarkCount}
-              <ion-icon name="chatbubble" ></ion-icon> ${replyCount}
             </div>
           </div>
         </div>          
