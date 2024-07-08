@@ -103,6 +103,9 @@
             border-radius: 10px;
             margin-bottom: 20px;
         }
+        #detail-travel .travel-info .travel-destination {
+            margin-bottom: 5px;
+        }
         #detail-travel .travel-info .fas {
             color: #999;
         }
@@ -170,81 +173,6 @@
                 transform: scale(1);
                 opacity: 1;
             }
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-            padding: 0;
-        }
-        #wrap {
-            width: 60%;
-            max-width: 800px;
-            background-color: #fff;
-            margin: 0 auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            height: 100vh;
-        }
-        #wrap p {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
-        #wrap input[type="text"], #wrap #content {
-            width: 70px;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f8f8f8;
-        }
-        #inner-wrapper {
-            width: 100%;
-            padding: 20px;
-        }
-        #inner-wrapper .content {
-            font-size: 0.9em;
-        }
-        #inner-wrapper .text {
-            margin-bottom: 30px;
-        }
-        .card-img {
-            height: 150px;
-            background-color: #00CE7B;
-        }
-        #title .main-title{
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        #title .sub-title{
-            font-size: 0.9em;
-            color: #999;
-            padding: 10px 0px 30px;
-        }
-        #detail-travel .title {
-            font-size: 0.9em;
-            font-weight: bold;
-        }
-        #detail-travel .travel-info {
-            margin-top: 10px;
-            font-size: 0.9em;
-            background-color: #f8f8f8;
-            padding: 15px 10px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        #detail-travel .travel-info .travel-destination {
-            margin-bottom: 5px;
-        }
-        #detail-travel .travel-info .fas {
-            color: #999;
-        }
-        #detail-travel {
-            font-size: 0.9em;
-        }
-        .buttons {
-            margin: 20px auto;
         }
 
         /* 여행장 정보 스타일 */
