@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <title>게시글 수정</title>
 
+    <%@ include file="../include/static-head.jsp" %>
+
+
     <!-- reset -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
@@ -67,7 +70,7 @@
             justify-content: space-between;
         }
         .buttons button {
-            background-color: #00CE7B;
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -75,13 +78,66 @@
             cursor: pointer;
         }
         .buttons button:hover {
-            background-color: #00b56a;
+            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
         }
         .list-btn {
             background-color: #6c757d;
         }
         .list-btn:hover {
             background-color: #5a6268;
+        }
+        /* 사진 업로드 관련 스타일 */
+        .image-box {
+            position: relative;
+            margin-top: 5px;
+            border: 2px dashed #28cffe;
+            border-radius: 5px;
+            text-align: center;
+            position: relative;
+            width: 20%;
+            aspect-ratio: 1 / 1.2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-upload-btn {
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-upload-btn i {
+            font-size: 20px;
+            color: #28cffe;
+        }
+        #upload-image {
+            display: none;
+        }
+        .image-upload-btn img {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        /* 사진 제거 버튼 */
+        .removeImage {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 50%;
+            font-size: 15px;
+            cursor: pointer;
+            user-select: none;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
         }
         /* 모달 스타일 */
         .modal {
@@ -133,14 +189,14 @@
             flex: 0 0 calc(50% - 10px);
             margin: 5px;
             padding: 10px;
-            background-color: #00CE7B;
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         .modal .modal-buttons button:hover {
-            background-color: #00b56a;
+            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
         }
     </style>
 </head>
@@ -148,8 +204,11 @@
 
 <div id="wrap" class="form-container">
     <h1>게시글 수정</h1>
-    <form action="/acc-board/modify" method="post">
+    <form action="/acc-board/modify" method="post" enctype="multipart/form-data">
         <input type="hidden" name="boardId" value="${abm.boardId}">
+
+        <!-- 이미지 삭제 여부를 나타내는 hidden input 추가 -->
+        <input type="hidden" id="removeImage" name="removeImage" value="false">
 
         <label for="location">장소</label>
         <input type="text" id="location" name="location" value="${abm.location}" readonly required onclick="openModal()">
@@ -166,6 +225,15 @@
         <label for="content">내용</label>
         <textarea id="content" name="content" required>${abm.content}</textarea>
 
+        <!-- 사진 첨부 관련 태그 -->
+        <label>사진 첨부</label>
+        <div class="image-box">
+            <div class="image-upload-btn">
+                <i class="fas fa-upload"></i>
+            </div>
+            <input type="file" id="upload-image" accept="image/*" name="postImage">
+            <div class="removeImage">X</div>
+        </div>
 
         <div class="buttons">
             <button class="list-btn" type="button" onclick="cancelModify(${abm.boardId})">취소</button>
@@ -201,8 +269,8 @@
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script>
+    // 동행 기간 선택기 초기화
     $(function() {
-        // 동행 기간 선택기 초기화
         $('input[name="dateRange"]').daterangepicker({
             locale: {
                 format: 'YYYY-MM-DD',
@@ -242,6 +310,87 @@
     function cancelModify(boardId) {
         window.location.href = '/acc-board/detail?bno=' + boardId;
     }
+
+    // 사진 업로드 관련 스크립트
+    const $upload = document.querySelector('.image-upload-btn');
+    // 실제 사진 업로드 될 input
+    const $uploadImage = document.getElementById('upload-image');
+    // 삭제 버튼
+    const $removeImage = document.querySelector('.removeImage');
+
+    // 초기 로드 시 기존 이미지가 있는 경우 처리
+    document.addEventListener('DOMContentLoaded', () => {
+        const imagePath = '${abm.imagePath}';
+
+        if (imagePath) {
+            // 이미지 요소 생성 및 src 설정
+            const imgElement = document.createElement('img');
+            imgElement.src = imagePath;
+
+            // 이미지 업로드 버튼 안에 이미지 요소 추가
+            const uploadBtn = document.querySelector('.image-upload-btn');
+            uploadBtn.appendChild(imgElement);
+
+
+            document.querySelector('.image-upload-btn i').style.display = 'none';
+            document.querySelector('.image-box').style.border = 'none';
+            $removeImage.style.display = 'flex';
+        }
+    });
+
+
+    $upload.addEventListener('click', e => {
+        $uploadImage.click();
+    });
+
+    // 사진 선택 시 미리보기 보여주기
+    $uploadImage.addEventListener('change', e => {
+        if (e.target.classList.contains('removeImage')) {
+            return;
+        } else {
+            // 첨부한 파일 데이터 읽기
+            const fileData = $uploadImage.files[0];
+            console.log(fileData);
+            // 첨부파일 이미지의 로우데이터(바이트)를 읽는 객체 생성
+            const reader = new FileReader();
+            // 파일 데이터 읽어 img 태그 src 속성에 넣기 위해 url 형태로 변경
+            reader.readAsDataURL(fileData);
+            // 첨부파일이 등록되는 순간 img 태그에 이미지를 세팅
+            reader.onloadend = e => {
+                // 1. img태그 없으면 img태그 먼저 만들기
+                if ($upload.querySelector('img') === null) {
+                    document.querySelector('.image-upload-btn').appendChild(document.createElement('img'));
+                }
+                const $img = document.querySelector('.image-upload-btn img')
+                $img.src = reader.result;
+
+                // i태그 숨기기, 보더라인 숨기기, 삭제버튼 보이기
+                document.querySelector('.image-upload-btn i').style.display = 'none';
+                document.querySelector('.image-box').style.border = 'none';
+                $removeImage.style.display = 'flex';
+            }
+        }
+    });
+
+    // 사진 삭제버튼 클릭 이벤트
+    $removeImage.addEventListener('click', e => {
+        console.log('삭제버튼 클릭!');
+        // 파일 입력 초기화
+        $uploadImage.value = "";
+        // 미리보기 이미지 제거
+        const $img = document.querySelector('.image-upload-btn img');
+        if ($img) {
+            $img.remove();
+        }
+        // i태그 보이기, 보더라인 보이기, 삭제버튼 숨기기
+        document.querySelector('.image-upload-btn i').style.display = 'block';
+        document.querySelector('.image-box').style.border = '2px dashed #28cffe';
+        $removeImage.style.display = 'none';
+
+        // 이미지 삭제 여부 설정
+        document.getElementById('removeImage').value = "true"; // 추가된 부분
+    });
+
 </script>
 
 </body>
