@@ -195,21 +195,21 @@ public class UserController {
 //===============================================================================
 
     @GetMapping("/sign-in")
-    public String signIn(HttpSession session
-            , @RequestParam(required = false) String redirect,
-                         HttpServletRequest request) {
+    public String signIn(HttpSession session, @RequestParam(required = false) String redirect, HttpServletRequest request) {
         log.info("/sign-in GET : forwarding to sign-in jsp");
 
-        //session.setAttribute("redirect", redirect);
-
-        //직전 페이지 주소 (https://blog.naver.com/varkiry05/221312360666)
         String referrer = request.getHeader("Referer");
-        session.setAttribute("redirect", referrer);
 
+        // 현재 페이지가 비밀번호 변경 페이지나 로그인 페이지가 아닌 경우에만 리다이렉트 설정
+        // 현재 페이지가 아이디 찾기 페이지가 아니고, 비밀번호 변경 페이지나 로그인 페이지가 아닌 경우에만 리다이렉트 설정
+        if (referrer != null && (!referrer.contains("/find-id") && !referrer.contains("/change-password") && !referrer.contains("/sign-in"))) {
+            session.setAttribute("redirect", referrer);
+        }
 
         log.info("/sign-in GET : forwarding to sign-in.jsp");
         return "/sign-in";
     }
+
 
     //로그인 요청 처리
     @PostMapping("/sign-in")
