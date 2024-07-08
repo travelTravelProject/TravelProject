@@ -9,17 +9,15 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
 
   let tag = "";
   if (nestedReplies && nestedReplies.length > 0) {
-    nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt, account: nestReplyAccount }) => {
+    nestedReplies.forEach(({ nestedReplyId, replyId, text, writer, createAt, account: nestReplyAccount, profileImage }) => {
       tag += `
         <div id='nestedReplyContent-${nestedReplyId}' class='card-body nested-reply-card' data-nested-rno='${nestedReplyId}'>
           <div class='row user-block'>
             <div class='nestReply-head'>
               <div class="profile-box">
-                ${loginUser && loginUser.profileImage ? 
-                  `<img src="${loginUser.profileImage}" alt="profileImage image">` : 
-                  `<img src="/assets/img/mimo.png" alt="profile image">`}
+                <img src="${profileImage ? profileImage : "/assets/img/mimo.png"}" alt="profileImage image">
               </div>
-              <div class="nestReply-body">
+              <div class="nestReply-body" style="margin-left: 10px;">
                 <div class='col-md-3'>
                   <b>${writer}</b>
                 </div>
@@ -32,7 +30,7 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
             <div class='col-md-3 text-right nestModDel'>
             `;
       if (loginUser) { // 로그인 유저가 존재하면~
-        const {auth, account: loginUserAccount} = loginUser;
+        const { auth, account: loginUserAccount } = loginUser;
 
         if (auth === 'ADMIN' || nestReplyAccount === loginUserAccount) {
           tag += `
@@ -45,8 +43,8 @@ export function appendNestedReplies({ nestedReplies, loginUser }, rno) {
           </div>
         </div>
       `;
-    }
-  });
+      }
+    });
   } else {
     // tag = `<div id='nestedReplyContent' class='card-body'>대댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
@@ -100,7 +98,7 @@ function addNestedReplyEventListeners(rno) {
       // 대댓글 수정 완료 버튼 클릭 이벤트
       document.getElementById(`nestedReplyModifyBtn-${nestedReplyId}`).addEventListener("click", async () => {
         const newText = document.getElementById(`editNestedReplyText-${nestedReplyId}`).value.trim();
-        
+
         const payload = {
           nestedReplyId: nestedReplyId,
           newText: newText,
@@ -132,36 +130,53 @@ function addNestedReplyEventListeners(rno) {
     });
   });
 
-   // 대댓글 삭제버튼에 이벤트 리스너 추가
-   document.querySelectorAll(`#nestedReplyData-${rno} .nestedReplyDelBtn`).forEach((button) => {
-    button.addEventListener("click", async function (e) {
+  // 대댓글 삭제버튼에 이벤트 리스너 추가
+  document.querySelectorAll(`#nestedReplyData-${rno} .nestedReplyDelBtn`).forEach((button) => {
+    button.addEventListener("click", function (e) {
       e.preventDefault();
       const nestedReplyId = button.dataset.rno;
       console.log('nestedReplyId: ', nestedReplyId);
-      
-      const confirmDelete = confirm("정말로 이 대댓글을 삭제하시겠습니까?");
-      if (!confirmDelete) return;
 
-      const payload = {
-        nestedReplyId: nestedReplyId,
-      }
+      // 모달 열기
+      const modal = document.getElementById('deleteConfirmModal');
+      modal.style.display = "block";
 
-      const response = await fetch(`${NEST_BASE_URL}/${nestedReplyId}?replyId=${rno}`, {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
+      // 모달에서 삭제 확인 버튼 클릭 이벤트
+      document.getElementById('confirmDeleteBtn').onclick = async function () {
+        const payload = {
+          nestedReplyId: nestedReplyId,
+        };
 
-      console.log('response: ', response);
+        const response = await fetch(`${NEST_BASE_URL}/${nestedReplyId}?replyId=${rno}`, {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
 
-      if (response.ok) {
-        // await fetchInfScrollReplies(1, true);
-        await initInfScroll();
-      } else {
-        console.error('대댓글 삭제 실패');
-      }
+        console.log('response: ', response);
+
+        if (response.ok) {
+          // await fetchInfScrollReplies(1, true);
+          await initInfScroll();
+        } else {
+          console.error('대댓글 삭제 실패');
+        }
+
+        // 모달 닫기
+        modal.style.display = "none";
+      };
+
+      // 모달에서 삭제 취소 버튼 클릭 이벤트
+      document.getElementById('cancelDeleteBtn').onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // 모달에서 닫기 버튼 클릭 이벤트
+      document.querySelector('.modal .close').onclick = function () {
+        modal.style.display = "none";
+      };
     });
   });
 }

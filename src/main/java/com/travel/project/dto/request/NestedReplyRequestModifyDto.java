@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Getter @Setter @ToString
 @NoArgsConstructor
@@ -18,6 +19,7 @@ public class NestedReplyRequestModifyDto {
     private Long nestedReplyId; // 수정할 대댓글의 댓글번호
     private String newText; // 새로운 댓글 내용
     private Long replyId; // 댓글 번호 -> 수정 후 댓글조회를 위해 필요
+    private LocalDateTime updatedAt; // 댓글 수정일
 
     // DTO -> 엔터티로 변환하는 메서드
     public NestedReply toEntity() {
@@ -25,6 +27,7 @@ public class NestedReplyRequestModifyDto {
                 .nestedReplyId(this.nestedReplyId)
                 .replyText(this.newText)
                 .replyId(this.replyId)
+                .updatedAt(this.updatedAt)
                 .build();
     }
 }

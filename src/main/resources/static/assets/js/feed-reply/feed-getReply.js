@@ -64,7 +64,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
                 <div class='row user-block' style="margin-top: 20px; margin-left: 5px">
                   <div class='reply-head' style="height: 60px;">
                     <div class="profile-box">
-                          <img src="${profileImage ? profileImage : "/assets/img/mimo.png"}" alt="profileImage image">
+                          <img src="${profileImage ? profileImage : "/assets/img/mimo.png"}" alt="profileImage image" style="border-radius: 50%;">
                     </div>
                     <div class="reply-body">
                       <div class='col-md-3'>
@@ -154,7 +154,7 @@ export function appendReplies({ replies, loginUser }, reset = false) {
     }
   });
   } else {
-    tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
+    // tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
 
   $replyData.innerHTML += tag;
@@ -179,7 +179,6 @@ export function appendReplies({ replies, loginUser }, reset = false) {
     });
   });
 
-  // loadedReplies += replies.length;
 }
 
 // 서버에서 댓글 데이터를 페칭

@@ -344,7 +344,9 @@
         .nested-reply-add-btn:hover,
         .nestedReplyModifyBtn:hover,
         .nestedReplyCancelBtn:hover,
-        .form-control1:hover{
+        .form-control1:hover,
+        #confirmDeleteBtn:hover,
+        #cancelDeleteBtn:hover {
         background-color: #4facfe;
         background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
         }
@@ -399,7 +401,7 @@
         }
 
         .row .col-md-9 {
-            margin: 5px 0 20px 80px ;
+            margin: 5px 0 20px 70px ;
         }
 
         /* .col-md-9 .form-control {
@@ -739,13 +741,36 @@
         </div>
         <!-- end replies row -->
 
-        <!-- 댓글 삭제모달 -->
+        <!-- 댓글, 대댓글 삭제모달 -->
         <div id="deleteConfirmModal" class="modal">
-            <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>정말 삭제할까요?</p>
-            <button id="confirmDeleteBtn">삭제</button>
-            <button id="cancelDeleteBtn">취소</button>
+            <div class="modal-content" style="bottom: -285px;height: 180px;border-radius: 15px;">
+                <span class="close" style="text-align: end;">&times;</span>
+                <p style="
+                font-weight: 500;
+                font-size: 26px;
+                text-align: center;
+                position: relative;
+                top: 19px;
+            ">정말 삭제하시겠습니까?</p>
+                <div class="modal-buttons" style="
+                position: relative;
+                top: 64px;">
+                    <button id="confirmDeleteBtn" style="
+                    border: none;
+                    color: white;
+                    background-color: #4facfe;
+                    height: 43px;
+                    width: 70px;
+                    border-radius: 7px;
+                ">삭제</button>
+                    <button id="cancelDeleteBtn" style="
+                    border: none;
+                    color: white;
+                    background-color: #4facfe;
+                    border-radius: 7px;
+                    width: 70px;
+                ">취소</button>
+                </div>
             </div>
         </div>
 

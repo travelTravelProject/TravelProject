@@ -20,4 +20,6 @@ public class NestedReply {
     private LocalDateTime createdAt; // 대댓글 작성일
     private String replyWriter; // 대댓글 작성자
     private String account; // 대댓글 쓴 회원의 계정
+    private LocalDateTime updatedAt; // 대댓글 수정일
+    private String profileImage; // 프로필 사진
 }
