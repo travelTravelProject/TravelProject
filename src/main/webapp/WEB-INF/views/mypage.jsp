@@ -37,7 +37,7 @@
             <div class="trip-stats-info">
                 <div>
                     <span>MBTI</span>
-                    <p>${userDetail.mbti}</p>
+                    <p>${userDetail.mbti != null ? userDetail.mbti : 'MBTI 선택해주세요.'}</p>
                 </div>
                 <div>
                     <span>내 정보</span>
@@ -90,18 +90,20 @@
         </div>
     </div>
 
+    <div class="board-container" id="my-board-tab">
+        <div class="my-tab-inner">
 
-    <div class="board-container">
+        </div>
 
     </div>
-</div>
-
 <div class="board-container" id="my-feed-tab">
     <div class="my-tab-inner">
 
     </div>
-    <span class="close close-modal">x</span>
+<%--    <span class="close close-modal">x</span>--%>
 </div>
+</div>
+
 
     <%-- 아이콘 --%>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
