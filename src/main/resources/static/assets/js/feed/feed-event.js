@@ -14,7 +14,8 @@ import {fetchFeedDelete} from "./feed-delete.js";
 import {fetchBookmark, fetchLike} from "./feed-interaction.js";
 
 import {initInfScroll} from "../feed-reply/feed-getReply.js";
-import {modifyReplyClickEvent} from "../feed-reply/feed-modifyReply.js";
+import { fetchReplyPost } from "../feed-reply/feed-postReply.js";
+import {modifyReplyClickEvent, isEditModeActive, fetchReplyModify} from "../feed-reply/feed-modifyReply.js";
 import {removeReplyClickEvent} from "../feed-reply/feed-deleteReply.js";
 
 // 대댓글 작성시 boardId를 전달하기 위해 설정한 전역변수
@@ -110,21 +111,44 @@ export function initFeedFormEvents() {
     $imageInputPost.addEventListener('change', e => {
         console.log('post imageFiles: ', imageFiles);
         console.log('post 이미지 전: ', importedImages);
+        const $span = document.querySelector('#createFeedModal .stop-msg');
+        $span.classList.add('hidden');
+
+        const $imgMsg = document.querySelector('#createFeedModal .img-msg');
+
         if(imageFiles.length === 10 || importedImages.length === 10) {
-            alert("이미지는 최대 10장까지 업로드 가능합니다.");
+            $imgMsg.classList.add('warning');
             return;
+        } else {
+            if($imgMsg.classList.contains('warning')) {
+                $imgMsg.classList.remove('warning');
+            }
         }
+
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxPost);
-        console.log('post 이미지 추가확인: ', imageFiles);
-        console.log('post 이미지 추가후 import: ', importedImages);
+
+        if(imageFiles.length === 0) {
+            $imgMsg.classList.add('warning');
+        }
     });
     $imageInputEdit.addEventListener('change', e => {
         console.log("edit 모달 이미지 추가 이벤트 실행!")
+        const $span = document.querySelector('#editFeedModal .stop-msg');
+        $span.classList.add('hidden');
+        const $imgMsg = document.querySelector('#editFeedModal .img-msg');
+
         if(imageFiles.length === 10 || importedImages.length === 10) {
-            alert("이미지는 최대 10장까지 업로드 가능합니다.");
+            $imgMsg.classList.add('warning');
             return;
+        } else {
+            if($imgMsg.classList.contains('warning')) {
+                $imgMsg.classList.remove('warning');
+            }
         }
         imageFiles = handleFileInputChange(e, importedImages, $imageBoxEdit);
+        if(imageFiles.length === 0) {
+            $imgMsg.classList.add('warning');
+        }
     });
 
     // 미리보기 삭제 버튼 이벤트
@@ -147,10 +171,14 @@ export function initFeedFormEvents() {
         const createContent = document.getElementById('cr-content').value;
         // createModal
         const loginUser = createModal.dataset.feedUser
+        const $span = document.querySelector('#createFeedModal .stop-msg');
 
         if (!createContent || importedImages.length === 0) {
-            alert('모든 필드를 채워주세요.');
+            $span.classList.remove('hidden');
+            // alert('모든 필드를 채워주세요.');
             return;
+        } else {
+            $span.classList.add('hidden');
         }
         if(createContent.length >= 50) {
             alert('피드 분문은 최대 50자까지 입력 가능합니다.');
@@ -176,10 +204,14 @@ export function initFeedFormEvents() {
         e.preventDefault();
         const boardId = document.getElementById('editFeedModal').dataset.boardId;
         const editContent = document.getElementById('ed-content').value;
+        const $span = document.querySelector('#editFeedModal .stop-msg');
 
         if (!editContent || importedImages.length === 0) {
-            alert('모든 필드를 채워주세요.');
+            $span.classList.remove('hidden');
+            // alert('모든 필드를 채워주세요.');
             return;
+        } else {
+            $span.classList.add('hidden');
         }
         if(editContent.length >= 50) {
             alert('피드 분문은 최대 50자까지 입력 가능합니다.');
@@ -259,6 +291,10 @@ export function initFeedFormEvents() {
         const text = $textareaPost.value;
         const length = $textareaPost.value.length;
        const $typingCnt = document.querySelector('#createFeedModal .typing-count');
+
+        const $span = document.querySelector('#createFeedModal .stop-msg');
+        $span.classList.add('hidden');
+
         if(length > 50 || e.target.clientHeight !== e.target.scrollHeight) {
             alert('피드 본문은 최대 4줄 또는 50자까지 입력 가능합니다.');
             length < 50 ? $textareaPost.value = text.substring(length-1, 1)
@@ -271,6 +307,10 @@ export function initFeedFormEvents() {
         const text = $textareaEdit.value;
         const length = text.length;
         const $typingCnt = document.querySelector('#editFeedModal .typing-count');
+
+        const $span = document.querySelector('#editFeedModal .stop-msg');
+        $span.classList.add('hidden');
+
         $typingCnt.textContent = length.toString();
         if(length > 50 || e.target.clientHeight !== e.target.scrollHeight) {
             alert('피드 본문은 최대 4줄 또는 50자까지 입력 가능합니다.');
@@ -312,7 +352,7 @@ export function initFeedFormEvents() {
         fetchFeedList();
     })
 
-
+    // 댓글 관련 이벤트
 
     document.getElementById('replyAddBtn').onclick = async e => {
         if (isEditModeActive()) {

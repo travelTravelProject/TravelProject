@@ -37,7 +37,7 @@
             <div class="trip-stats-info">
                 <div>
                     <span>MBTI</span>
-                    <p>${userDetail.mbti}</p>
+                    <p>${userDetail.mbti != null ? userDetail.mbti : 'MBTI 선택해주세요.'}</p>
                 </div>
                 <div>
                     <span>내 정보</span>
@@ -77,7 +77,7 @@
 
     <div class="trip-info">
         <div class="trip-stats">
-            <div id="my-board-btn" class="tab-btn" data-my-account="${user.account}">
+            <div id="my-board-btn" class="tab-btn active-tab-btn" data-my-account="${user.account}">
                 <span>동행</span>
             </div>
             <div id="my-feed-btn" class="tab-btn" data-my-account="${user.account}">
@@ -90,18 +90,20 @@
         </div>
     </div>
 
-
-    <div class="board-container">
-
+    <div class="board-container active-tab" id="my-board-tab">
+        <div class="my-tab-inner">
+        </div>
     </div>
+    <div class="board-container inactive-tab" id="my-feed-tab">
+        <div class="my-tab-inner">
+        </div>
+<%--        <span class="close close-modal">x</span>--%>
+    </div>
+
+</div>
 </div>
 
-<div class="board-container" id="my-feed-tab">
-    <div class="my-tab-inner">
 
-    </div>
-    <span class="close close-modal">x</span>
-</div>
 
     <%-- 아이콘 --%>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

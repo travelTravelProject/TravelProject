@@ -1,29 +1,50 @@
 import {debounce} from "../util.js";
 
 const $myFeedBtn = document.getElementById('my-feed-btn');
+const $myBoardBtn = document.getElementById('my-board-btn');
 
 let currentMyFeedPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetchingMyFeed = false; // 데이터 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
 let totalMyFeeds = 0;  // 총 게시글 수
 let loadedMyFeeds = 0;  // 로딩된 게시글 수
 
-
+// 마이페이지 동행 탭 닫고 피드 탭 열기
 function openFeedTab(account) {
   const $feedTab = document.getElementById('my-feed-tab');
-  const $tab = document.querySelector('.board-container');
-  $tab.classList.add('inactive-tab');
-  $tab.classList.remove('active-tab-btn');
+  const $boardTab = document.getElementById('my-board-tab');
   fetchMyFeedList(account);
+  $boardTab.classList.add('inactive-tab');
+  $boardTab.classList.remove('active-tab')
+  $myBoardBtn.classList.remove('active-tab-btn');
+
   $feedTab.classList.add('active-tab');
-  // $myFeedBtn.style.textDecoration = 'underline';
+  $feedTab.classList.remove('inactive-tab');
   $myFeedBtn.classList.add('active-tab-btn');
 }
+function openBoardTab(account) {
+  const $feedTab = document.getElementById('my-feed-tab');
+  const $boardTab = document.getElementById('my-board-tab');
+  console.log('openBoardTab 실행!')
+  fetchMyFeedList(account);
+  $feedTab.classList.add('inactive-tab');
+  $feedTab.classList.remove('active-tab');
+  $myFeedBtn.classList.remove('active-tab-btn');
 
+  $boardTab.classList.add('active-tab');
+  $boardTab.classList.remove('inactive-tab');
+  $myBoardBtn.classList.add('active-tab-btn')
+}
+
+// 피드 탭 열기 이벤트
 $myFeedBtn.addEventListener('click', e => {
   const account = $myFeedBtn.dataset.myAccount
   console.log('마이페이지 피드 클릭!')
   openFeedTab(account);
 });
+$myBoardBtn.addEventListener('click', e => {
+  const account = $myBoardBtn.dataset.myAccount
+  openBoardTab(account);
+})
 
 // 마이페이지 피드 탭에 태그 추가
 function appendMyFeeds(myFeedListDto) {
@@ -35,6 +56,7 @@ function appendMyFeeds(myFeedListDto) {
       <div id="no-feed">
         <p>모든 피드를 다 보셨거나 작성하신 피드가 없습니다.</p>
         <p>${loginUser ? loginUser.nickname : '방문자'}님 기억에 남은 여행을 공유하면 어떨까요?</p>
+        <a href="/feed/list"><p>피드 작성하러 가기 →</p></a>
       </div>
       `;
   } else { // 작성한 피드가 존재하면
@@ -45,9 +67,9 @@ function appendMyFeeds(myFeedListDto) {
           <img src="${image.imagePath}" alt="Image 1">
           <div class="overlay">
             <div class="text">
+              <ion-icon name="chatbubble" ></ion-icon> ${replyCount}
               <ion-icon name="heart"></ion-icon> ${likeCount}  
               <ion-icon name="bookmark"></ion-icon> ${bookmarkCount}
-              <ion-icon name="chatbubble" ></ion-icon> ${replyCount}
             </div>
           </div>
         </div>          

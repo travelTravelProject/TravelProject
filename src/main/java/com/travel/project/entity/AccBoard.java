@@ -2,6 +2,7 @@ package com.travel.project.entity;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter @Setter @ToString
@@ -25,4 +26,9 @@ public class AccBoard {
     private LocalDateTime endDate; // 동행 종료일
     private String writer; // 작성자
     private Gender gender; // 성별
+    private String imagePath; // 이미지 경로
+    private int replyCount; // 총 댓글 수
+    private LocalDate birthday; // 생년월일
+    private String oneLiner; // 소개글
+    private String profileImage; // 프로필 사진
 }

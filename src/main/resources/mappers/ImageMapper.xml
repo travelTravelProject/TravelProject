@@ -38,4 +38,12 @@
         GROUP BY board_id
     </select>
 
+    <select id="findImageByBoardId" resultType="boardImage">
+        SELECT *
+        FROM tbl_board_image
+        WHERE board_id = #{boardId}
+        ORDER BY image_order
+        LIMIT 1
+    </select>
+
 </mapper>

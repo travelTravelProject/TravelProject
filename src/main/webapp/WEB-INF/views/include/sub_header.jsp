@@ -30,6 +30,12 @@
           <li><a href="/mypage">마이페이지</a></li>
           <li><a href="/sign-out">로그아웃</a></li>
       </c:if>
+      
+      
+<%--      <c:if test="${user.auth == 'ADMIN'}">--%>
+<%--          <li><a href="/admin">관리자페이지</a></li>--%>
+<%--          <li><a href="/sign-out">로그아웃</a></li>--%>
+<%--      </c:if>--%>
     </ul>
   </header>
 
@@ -37,3 +43,4 @@
 
 </body>
 </html>
+

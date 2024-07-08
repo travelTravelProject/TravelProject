@@ -1,6 +1,5 @@
 package com.travel.project.controller;
 
-import com.travel.project.common.Page;
 import com.travel.project.common.PageMaker;
 import com.travel.project.common.Search;
 import com.travel.project.dto.request.AccBoardWriteDto;
@@ -8,15 +7,12 @@ import com.travel.project.dto.response.*;
 import com.travel.project.entity.AccBoard;
 import com.travel.project.login.LoginUtil;
 import com.travel.project.mapper.AccBoardMapper;
-import com.travel.project.mapper.BookmarkMapper;
 import com.travel.project.service.AccBoardImageService;
 import com.travel.project.service.AccBoardService;
 import com.travel.project.service.BookmarkService;
-import com.travel.project.service.LikeService;
 import com.travel.project.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -191,10 +185,11 @@ public class AccBoardController {
 
     // 7. 게시글 수정 요청 (/modify : POST)
     @PostMapping("/modify")
-    public String modify(AccBoardModifyDto dto) {
+    public String modify(AccBoardModifyDto dto, @RequestParam("removeImage") boolean removeImage) {
         System.out.println("/acc-board/modify POST");
 
-        boardService.modify(dto);
+        // 게시글 수정
+        boardService.modify(dto, removeImage);
 
         return "redirect:/acc-board/detail?bno=" + dto.getBoardId();
     }

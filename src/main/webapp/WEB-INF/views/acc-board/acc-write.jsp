@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <title>동행 게시판 글쓰기</title>
 
+    <%@ include file="../include/static-head.jsp" %>
+
+
     <!-- reset -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
@@ -30,8 +33,7 @@
         }
         #wrap {
             width: 60%;
-            max-width: 800px;
-            margin: 50px auto;
+            margin: 0px auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
@@ -68,7 +70,7 @@
             justify-content: space-between;
         }
         .buttons button {
-            background-color: #00CE7B;
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -76,20 +78,14 @@
             cursor: pointer;
         }
         .buttons button:hover {
-            background-color: #00A86B;
-        }
-        .list-btn {
-            background-color: #6c757d;
-        }
-        .list-btn:hover {
-            background-color: #00A86B;
+            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
         }
 
         /* 사진 업로드 관련 스타일 */
         .image-box {
             position: relative;
             margin-top: 5px;
-            border: 2px dashed #33B897;
+            border: 2px dashed #28cffe;
             border-radius: 5px;
             text-align: center;
             position: relative;
@@ -109,7 +105,7 @@
         }
         .image-upload-btn i {
             font-size: 20px;
-            color: #33B897;
+            color: #28cffe;
         }
         #upload-image {
             display: none;
@@ -190,14 +186,14 @@
             flex: 0 0 calc(50% - 10px);
             margin: 5px;
             padding: 10px;
-            background-color: #00CE7B;
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         .modal .modal-buttons button:hover {
-            background-color: #00b56a;
+            background-image: linear-gradient(to right, #4086d9 0%, #00c8da 100%);
         }
     </style>
 </head>
@@ -357,7 +353,7 @@
         }
         // i태그 보이기, 보더라인 보이기, 삭제버튼 숨기기
         document.querySelector('.image-upload-btn i').style.display = 'block';
-        document.querySelector('.image-box').style.border = '2px dashed #33B897';
+        document.querySelector('.image-box').style.border = '2px dashed #28cffe';
         $removeImage.style.display = 'none';
     })
 

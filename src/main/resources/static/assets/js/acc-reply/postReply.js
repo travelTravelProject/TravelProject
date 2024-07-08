@@ -1,4 +1,4 @@
-import { fetchInfScrollReplies } from "./getReply.js";
+import { initInfScroll } from "./getReply.js";
 import { BASE_URL } from "../acc-reply.js";
 
 // 서버에 댓글 등록을 요청하는 비동기 함수
@@ -34,5 +34,6 @@ textInput.value = '';
 // writerInput.value = '';
 
 // renderReplies(replies);
-await fetchInfScrollReplies(1, true);
+// await fetchInfScrollReplies(1, true);
+await initInfScroll();
 };

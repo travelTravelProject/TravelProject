@@ -13,6 +13,7 @@ import com.travel.project.service.FeedService;
 import com.travel.project.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -43,13 +44,20 @@ public class FeedController {
             @RequestParam(name = "sort", defaultValue = "latest", required = false) String sort
             , HttpSession session
     ) {
-//        log.debug("겟: " + pageNo + "-" + type + "-" + keyword);
+        //  log.debug("겟: " + pageNo + "-" + type + "-" + keyword);
         Search page = new Search(new Page(pageNo, 5), type, keyword);
         page.setKeyword(keyword);
         page.setType(type);
 
-        // Search type, keyword 확인 필요
+        // DB 조회한 결과를 DTO에 담기
         FeedListDto feeds = feedService.findAll(page, session, sort);
+
+        // 조회 결과가 없는 경우
+        if(feeds == null && !keyword.isEmpty()) { // 검색 키워드가 존재하면 검색결과가 없는 경우
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("검색 결과가 없습니다.");
+        } else if(feeds == null) { // 검색 키워드가 없다면
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("첫 번째 피드의 주인공이 되어주세요!");
+        }
         log.debug("서비스결과: {}",feeds);
         feeds.setLoginUser(LoginUtil.getLoggedInUser(session));
 

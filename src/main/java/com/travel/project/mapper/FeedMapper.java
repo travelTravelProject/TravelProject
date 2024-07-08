@@ -46,4 +46,7 @@ public interface FeedMapper {
     // 새로운 피드 id 조회
     int getNewBoardId();
 
+    // 피드 하나의 총 댓글 수 (댓글 + 대댓글)
+    int getTotalReplies(long boardId);
+
 }
