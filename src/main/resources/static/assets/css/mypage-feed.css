@@ -84,9 +84,10 @@
 .active-tab {
     display: flex;
 }
-.inactive-tab {
+.inactive-tab * {
     display: none;
-    color: #cccccc;
+    /*color: #cccccc;*/
+    /*overflow: hidden;*/
 }
 .active-tab-btn {
     border-bottom: 1px solid rgba(0,0,0,0.9);

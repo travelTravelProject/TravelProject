@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Web Study</title>
+    <title>피드 : 위드트립</title>
     <%@ include file="include/static-head.jsp" %>
     <link rel="stylesheet" href="/assets/css/feed-list.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

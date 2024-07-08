@@ -414,9 +414,10 @@ body div.btn-container {
 }
 
 .detail-content {
-    /*flex: 1;*/
+    flex: 1;
+    /*display: block;*/
     height: 120px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     border-top: 1px solid #E9E9EAFF;
     border-bottom: 1px solid #E9E9EAFF;
     /*border: 1px solid pink;*/
@@ -427,25 +428,25 @@ body div.btn-container {
     padding: 5px 5px 10px 10px;
 }
 
-.feed-comments {
-    flex: 7;
-    overflow-y: auto;
-}
+/*.feed-comments {*/
+/*    flex: 7;*/
+/*    overflow-y: auto;*/
+/*}*/
 
-.feed-comments h3 {
-    margin-top: 0;
-}
+/*.feed-comments h3 {*/
+/*    margin-top: 0;*/
+/*}*/
 
-.comment {
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
+/*.comment {*/
+/*    background-color: #f9f9f9;*/
+/*    padding: 10px;*/
+/*    margin-bottom: 10px;*/
+/*    border-radius: 5px;*/
+/*}*/
 
-.comment p {
-    margin: 0;
-}
+/*.comment p {*/
+/*    margin: 0;*/
+/*}*/
 
 .feed-right-side .profile-section {
     display: flex;
@@ -748,10 +749,29 @@ body div.btn-container {
     padding-left: 5px;
 }
 
+#no-feed {
+    /*width: 80%;*/
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 10px ;
+    /*align-content: center;*/
+    /*border: 1px solid violet;*/
+    background: #f3f7f7;
+    padding: 20px 70px;
+}
+#no-feed p {
+    /*align-items: center;*/
+    text-align: center;
+    /*border: 1px solid lightgreen;*/
+
+}
+
 /*-------------- 피드 CSS 끝 ---------------------*/
 
 /* 댓글 css */
-a:hover {
+#replies a:hover {
     background-color: #4facfe;
     background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
 }
