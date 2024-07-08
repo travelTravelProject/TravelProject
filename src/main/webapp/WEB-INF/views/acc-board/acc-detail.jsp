@@ -334,14 +334,6 @@
             height: 50px;
         }
 
-        button:hover {
-        background-color: #4facfe;
-        background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
-        }
-        a:hover {
-        background-color: #4facfe;
-        background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
-        }
         #replyContent {
             /* border: 1px solid red; */
         }
@@ -579,8 +571,7 @@
         <div class="acc-master-section">
             <div class="info-card">
                 <div class="profile-img">
-                    <img src="/assets/img/accBoardDefaultImg.webp" alt="여행장 대표 이미지">
-<%--                    ${abd.profileImage}--%>
+                    <img src="${abd.profileImage}" alt="여행장 대표 이미지">
                 </div>
                 <div class="simple-info">
                     <div class="writer">
@@ -592,12 +583,13 @@
                             <c:when test="${abd.gender == 'M'}">남자</c:when>
                             <c:when test="${abd.gender == 'F'}">여자</c:when>
                         </c:choose>
+                            <c:if test="${not empty abd.mbti}"> · ${abd.mbti}
+                            </c:if>
                     </div>
                 </div>
             </div>
                 <div class="location-description">
-                    <br> 사용자 소개글이 들어갈 공간
-<%--                    ${abd.oneLiner}--%>
+                    <br> ${abd.oneLiner}
                 </div>
         </div>
 

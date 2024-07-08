@@ -32,6 +32,7 @@ public class AccBoardListDto {
     private int replyCount; // 총 댓글 수
     private LocalDate birthday; // 생년월일
     private String ageGroup; // 연령대 추가
+    private String mbti; // mbti
 
     // 엔터티를 DTO로 변환
     public AccBoardListDto (AccBoard ab) {
@@ -48,6 +49,7 @@ public class AccBoardListDto {
         this.imagePath = ab.getImagePath(); // 이미지 경로 설정
         this.replyCount = ab.getReplyCount();
         this.birthday = ab.getBirthday(); // 생년월일 설정
+        this.mbti = ab.getMbti();
 
         // 연령대 계산
         if (this.birthday != null) {

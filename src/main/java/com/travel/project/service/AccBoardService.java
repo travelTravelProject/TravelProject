@@ -37,9 +37,8 @@ public class AccBoardService {
                 .collect(Collectors.toList());
     }
 
-    // 등록 요청 중간처리
     @Transactional
-    public boolean insert(AccBoardWriteDto dto, HttpSession session) {
+    public AccBoard insert(AccBoardWriteDto dto, HttpSession session) {
         String imagePath = null;
 
         // 이미지 업로드가 있는 경우
@@ -61,7 +60,7 @@ public class AccBoardService {
             accBoardImageService.saveBoardImage(ab.getBoardId(), imagePath); // 이미지 저장 서비스 호출
         }
 
-        return boardSaved;
+        return ab;
     }
 
     // 삭제 요청 중간처리
