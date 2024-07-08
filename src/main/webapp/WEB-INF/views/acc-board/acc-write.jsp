@@ -343,12 +343,10 @@
                     const response = await submitForm(new FormData(this));
                     if (response.ok) {
                         window.location.href = '/acc-board/list'; // 성공 시 목록 페이지로 이동
-                    } else {
-                        alert('폼 제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
                     }
                 } catch (error) {
                     console.error('Error submitting form:', error);
-                    alert('폼 제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                    // alert('폼 제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
                 }
             }
         });
