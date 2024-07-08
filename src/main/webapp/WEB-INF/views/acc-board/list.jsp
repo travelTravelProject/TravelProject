@@ -223,6 +223,8 @@
                                             <c:when test="${ab.gender == 'M'}">남자</c:when>
                                             <c:when test="${ab.gender == 'F'}">여자</c:when>
                                         </c:choose>
+                                        <c:if test="${not empty ab.mbti}"> · ${ab.mbti}
+                                        </c:if>
                                     </span>
                             </div>
                             <div class="card-details-bot2">

@@ -22,7 +22,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
     feeds.forEach(
       ({boardId, nickname, content, createdAt, account
          , profileImage: profile, feedImageList
-         , likeCount, userLike, bookmarkCount, userBookmark
+         , replyCount, likeCount, userLike, bookmarkCount, userBookmark
        }, index) => {
         console.log('피드목록렌더링 account: ', account,' /userLike: ', userLike);
       tag += `
@@ -31,7 +31,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
           <div class="profile-section">
             <div class="profile-row">
               <div class="profile-box">
-                  <img src="${profile ? profile : '/assets/img/mimo.png'}" alt="Profile Picture" class="profile-pic">     
+                  <img src="${profile ? profile : '/assets/img/anonymous.jpg'}" alt="Profile Picture" class="profile-pic">     
               </div>
               <div class="profile-column">
                 <span class="nickname">${nickname}</span>
@@ -51,7 +51,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
             <span class="show-detail">더보기</span>
           </div>
           <div class="interaction-section">
-            <span class="comments show-detail"><ion-icon name="chatbubble" ></ion-icon> ${pageInfo.totalCount}</span>`;
+            <span class="comments show-detail"><ion-icon name="chatbubble" ></ion-icon> ${replyCount}</span>`;
 
       tag+= `
             <span class="hearts">
@@ -64,7 +64,7 @@ function appendFeeds({ feeds, pageInfo, loginUser }) {
           </div>
         </div>
       `;
-    }); // feeads.forEach 종료
+    }); // feeds.forEach 종료
 
   } else{ // 게시글 없는 경우
       tag = `
@@ -98,12 +98,20 @@ export async function fetchFeedList(
   console.log('fetchFeedList 실행: ', pageNo);
 
   const res = await fetch(url);
-  if (!res.ok) {
-    if(res.status === 204) {
-
-    } else {
+  if (res.status === 204) {
+    // const message = await res.text(); // 응답 본문을 텍스트로 읽음
+    console.log(res);
+    const tag = `
+        <div id="no-feed">
+          <p>'${keyword}'(으)로 검색한 결과가 없습니다.</p>
+        </div>
+        `;
+    document.getElementById('feedData').innerHTML = tag;
+    isFetchingFeed = false; // isFetchingFeed를 false로 초기화
+    return;
+  } else if(!res.ok) {
+    isFetchingFeed = false; // isFetchingFeed를 false로 초기화
       throw new Error(`HTTP error! Status: ${res.status}`);
-    }
   }
   const feedListDto = await res.json();
   console.log(feedListDto);

@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Web Study</title>
+    <title>피드 : 위드트립</title>
     <%@ include file="include/static-head.jsp" %>
     <link rel="stylesheet" href="/assets/css/feed-list.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -111,7 +111,7 @@
             <div class="profile-section">
                 <div class="profile-row">
                     <div class="profile-box">
-                        <img src="/assets/img/mimo.png" alt="Profile Picture" class="profile-pic">
+                        <img src="/assets/img/anonymous.jpg" alt="Profile Picture" class="profile-pic">
                     </div>
                     <div class="profile-column">
                         <span class="nickname">nickname</span>

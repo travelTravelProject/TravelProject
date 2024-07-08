@@ -13,6 +13,7 @@
 #my-feed-btn {
     display: block;
     width: 218px;
+    cursor: pointer;
 }
 .board-container{
     /*text-decoration: underline;*/
@@ -84,15 +85,16 @@
 .active-tab {
     display: flex;
 }
-.inactive-tab {
+.inactive-tab * {
     display: none;
-    color: #cccccc;
+    /*color: #cccccc;*/
+    /*overflow: hidden;*/
 }
 .active-tab-btn {
     border-bottom: 1px solid rgba(0,0,0,0.9);
     color: black;
 }
-#no-feed {
+.no-feed {
     /*width: 80%;*/
     margin: 0 auto;
     display: flex;
@@ -104,7 +106,7 @@
     background: #f3f7f7;
     padding: 20px 70px;
 }
-#no-feed p {
+.no-feed p {
     /*align-items: center;*/
     text-align: center;
     /*border: 1px solid lightgreen;*/

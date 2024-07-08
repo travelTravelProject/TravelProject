@@ -31,4 +31,5 @@ public class AccBoard {
     private LocalDate birthday; // 생년월일
     private String oneLiner; // 소개글
     private String profileImage; // 프로필 사진
+    private String mbti;
 }

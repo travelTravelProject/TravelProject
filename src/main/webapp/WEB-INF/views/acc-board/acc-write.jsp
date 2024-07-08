@@ -102,6 +102,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
         .image-upload-btn i {
             font-size: 20px;

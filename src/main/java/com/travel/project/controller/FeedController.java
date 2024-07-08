@@ -54,14 +54,14 @@ public class FeedController {
 
         // 조회 결과가 없는 경우
         if(feeds == null && !keyword.isEmpty()) { // 검색 키워드가 존재하면 검색결과가 없는 경우
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("검색 결과가 없습니다.");
+            return ResponseEntity.noContent().build();
         } else if(feeds == null) { // 검색 키워드가 없다면
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("첫 번째 피드의 주인공이 되어주세요!");
+            return ResponseEntity.noContent().build();
         }
-        log.debug("서비스결과: {}",feeds);
+//        log.debug("서비스결과: {}",feeds);
         feeds.setLoginUser(LoginUtil.getLoggedInUser(session));
 
-        log.debug("FeedListDto: {}", feeds.getFeeds().get(0));
+//        log.debug("FeedListDto: {}", feeds.getFeeds().get(0));
 
         return ResponseEntity.ok().body(feeds);
     }
