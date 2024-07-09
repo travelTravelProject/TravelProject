@@ -37,7 +37,7 @@
                     <label for="name">이메일</label>
                 </div>
                 
-                <button type="submit" class="button"> 로그인하기</button>
+                <button type="submit" class="button"> 확인</button>
 
                 
 
