@@ -5,8 +5,8 @@
 <head>
 
     <!-- 파비콘 넣기 -->
-    <link rel="icon" href="/assets/img/favicon.ico">
-    <link rel="apple-touch-icon" href="/assets/img/favicon.ico">
+<%--    <link rel="icon" href="/assets/img/favicon.ico">--%>
+<%--    <link rel="apple-touch-icon" href="/assets/img/favicon.ico">--%>
     <title>With Trip</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
 <header class="sub_header">
     <div class="logo">
       <a href="/">
-      <img src="../assets/img/logo.png" alt="">
+      <img src="../assets/img/logo_blue.png" alt="">
       </a>
     </div>
     <ul class="menu">

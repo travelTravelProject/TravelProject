@@ -61,7 +61,7 @@
              힐링이 만나는 곳, 위드트립
           </p>
           <div class="scroll-top">
-            <img src="../assets/img/logo2.png" class="img-fluid">
+            <img src="../assets/img/logo_white.png" class="img-fluid">
           </div>
         </div>
         <div class="footer_info">
