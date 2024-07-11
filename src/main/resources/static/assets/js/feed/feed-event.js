@@ -26,6 +26,7 @@ export function initFeedFormEvents() {
     const $feedPostBtn = document.getElementById('feed-post-Btn');
     const $feedEditBtn = document.getElementById('feed-modify-Btn');
     const $feedDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const $feedDelCancelBtn = document.getElementById('cancelDeleteBtn');
     const $imageInputPost = document.getElementById('postImage');
     const $imageInputEdit = document.getElementById('editPostImage');
     const $imageBoxPost = document.getElementById('post-preview');
@@ -88,6 +89,7 @@ export function initFeedFormEvents() {
                 clearImageFiles();
             } else if(modalConfirm) {
                 modalConfirm.style.display = "none";
+                detailModal.style.display = "none";
             }
 
         }

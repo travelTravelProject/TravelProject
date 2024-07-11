@@ -23,8 +23,6 @@ export function previewImages(files, imageBox) {
   imageBox.innerHTML = ''; // 기존 미리보기 초기화
   if(!files) return; // 업로드 할 이미지가 없으면 종료
 
-  console.log('미리보기 files: ', files);
-
   for (let i = 0; i < files.length; i++) {
     readFile(files[i], i, imageBox);
   }

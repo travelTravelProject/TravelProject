@@ -676,6 +676,9 @@ body div.btn-container {
 .confirm-modal .confirm-btn:hover {
     background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
 }
+.confirm-modal .close {
+    font-size: 1rem;
+}
 .modal-buttons {
     display: flex;
     flex-direction: row;

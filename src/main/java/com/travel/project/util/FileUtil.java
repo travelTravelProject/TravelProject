@@ -29,11 +29,8 @@ public class FileUtil {
         }
         // 원본파일명을 중복이 없는 랜덤파일명으로 변경
         String newFileName = UUID.randomUUID() +"_"+ file.getOriginalFilename();
-        log.debug("루트: {}", rootPath);
-        log.debug("스태틱루트: {}", rootPath);
 
         // 이 첨부파일을 날짜별로 관리하기 위해 날짜 폴더를 생성
-//        String newUploadPath = makeDateFormatDirectory(rootPath);
         String newUploadPath = makeDateFormatDirectory(rootPath);
 
         // 파일 업로드 수행
@@ -62,7 +59,7 @@ public class FileUtil {
 
         List<String> dateList = List.of(year+"", len2(month), len2(day));
 
-        // rootPath - E:/spring_prj/upload
+        // rootPath
         String newDirectoryPath = rootPath;
 
         // rootPath/2024/06/05
