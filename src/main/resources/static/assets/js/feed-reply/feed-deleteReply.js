@@ -10,7 +10,7 @@ const fetchDeleteReply = async (rno) => {
     });
 
     if (res.status !== 200) {
-        alert("삭제에 실패했습니다!")
+        alert("삭제에 실패했습니다!");
         return; 
     }
 
@@ -25,27 +25,26 @@ export function removeReplyClickEvent() {
         e.preventDefault();
         if (!e.target.matches('#replyDelBtn')) return;
 
-        // console.log('삭제버튼 클릭!');
         const rno = e.target.closest('#replyContent').dataset.rno;
         console.log(rno);
 
         // 모달 열기
-        const modal = document.getElementById('deleteConfirmModal');
+        const modal = document.getElementById('deleteConfirmModal1');
         modal.style.display = "block";
 
         // 모달에서 삭제 확인 버튼 클릭 이벤트
-        document.getElementById('confirmDeleteBtn').onclick = async function () {
+        document.getElementById('confirmDeleteBtn1').onclick = async function () {
             await fetchDeleteReply(rno);
             modal.style.display = "none";
         };
 
         // 모달에서 삭제 취소 버튼 클릭 이벤트
-        document.getElementById('cancelDeleteBtn').onclick = function () {
+        document.getElementById('cancelDeleteBtn1').onclick = function () {
             modal.style.display = "none";
         };
 
         // 모달에서 닫기 버튼 클릭 이벤트
-        document.querySelector('.modal .close').onclick = function () {
+        document.querySelector('.modal1 .close1').onclick = function () {
             modal.style.display = "none";
         };
     });

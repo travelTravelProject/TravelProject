@@ -123,6 +123,7 @@
         SELECT COUNT(*)
         FROM tbl_board
         WHERE status = 'A'
+            AND category_id = '1'
         <include refid="search" />
     </select>
 
