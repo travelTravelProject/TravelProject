@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.project.mapper.FeedMapper">
+
+    <!-- 동적 SQL 조건을 분리 -->
+    <sql id="search">
+        <if test="s.type == 'content'">
+            AND B.content LIKE CONCAT('%', #{s.keyword}, '%')
+        </if>
+        <if test="s.type == 'writer'">
+            AND U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
+        </if>
+        <if test="s.type == 'cw'">
+            AND (U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{s.keyword}, '%'))
+        </if>
+    </sql>
+    <sql id="sort">
+        <if test="sort == 'latest'">
+            ORDER BY B.created_at DESC
+        </if>
+        <if test="sort == 'pop'">
+            ORDER BY B.view_count DESC
+        </if>
+    </sql>
+
+    <select id="findAllFeeds" resultType="feed">
+        SELECT
+            B.board_id,
+            B.account,
+            U.nickname,
+            D.profile_image,
+            B.category_id,
+            B.content,
+            B.view_count,
+            B.created_at,
+            B.updated_at
+        FROM tbl_board B
+        JOIN tbl_user U
+            ON B.account = U.account
+        LEFT JOIN tbl_user_detail D
+            ON U.account = D.account
+        WHERE B.status = 'A'
+            AND B.category_id = 2
+            AND (U.nickname LIKE CONCAT('%', #{s.keyword}, '%')
+            OR B.content  LIKE CONCAT('%', #{s.keyword}, '%'))
+<!--        <include refid="search" />-->
+        <include refid="sort"/>
+        LIMIT #{s.pageStart}, #{s.amount}
+    </select>
+
+    <select id="findAllByAccount" resultType="feed">
+        SELECT
+        board_id,
+        account,
+        category_id,
+        content,
+        view_count,
+        created_at,
+        updated_at
+        FROM tbl_board
+        WHERE status = 'A'
+        AND category_id = 2
+        AND account = #{account}
+        ORDER BY created_at DESC
+        LIMIT #{s.pageStart}, #{s.amount}
+    </select>
+
+    <select id="findFeedById" resultType="com.travel.project.dto.request.FeedFindOneDto">
+        SELECT
+            B.board_id,
+            B.account,
+            U.nickname,
+            D.profile_image,
+            B.category_id,
+            B.content,
+            B.view_count,
+            B.created_at,
+            B.updated_at
+        FROM tbl_board B
+        JOIN tbl_user U
+            ON B.account = U.account
+        LEFT JOIN tbl_user_detail D
+            ON U.account = D.account
+        WHERE B.status = 'A'
+            AND B.category_id = 2
+            AND B.board_id = #{boardId}
+    </select>
+
+    <insert id="saveFeed">
+        INSERT INTO tbl_board
+        (
+            account,
+            category_id,
+            content
+        )
+        VALUES
+        (
+            #{account},
+            2,
+            #{content}
+        )
+    </insert>
+
+    <update id="modifyFeed">
+        UPDATE tbl_board
+        SET content = #{content}
+        WHERE status = 'A'
+            AND board_id = #{boardId}
+            AND account = #{account}
+    </update>
+
+    <update id="deleteFeed">
+        UPDATE tbl_board
+        SET status = 'D'
+        WHERE status = 'A'
+            AND board_id = #{boardId}
+    </update>
+
+    <update id="upViewCount">
+        UPDATE tbl_board
+        SET view_count = view_count + 1
+        WHERE board_id = #{boardId}
+    </update>
+
+    <select id="sumViewCount" resultType="int">
+        SELECT view_count
+        FROM tbl_board
+        WHERE board_id = #{boardId}
+    </select>
+
+    <select id="getNewBoardId" resultType="int">
+        SELECT board_id
+        FROM tbl_board
+        WHERE board_id = last_insert_id()
+    </select>
+
+    <select id="countFeeds" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_board B
+        JOIN tbl_user U
+        ON B.account = U.account
+        WHERE B.status = 'A'
+        AND B.category_id = 2
+        <include refid="search" />
+        ORDER BY B.board_id DESC
+    </select>
+
+    <select id="getTotalReplies" resultType="int">
+        SELECT
+        COUNT(DISTINCT r.reply_id) + COUNT(nr.nested_reply_id) AS total_comments
+        FROM
+        tbl_reply r
+        LEFT JOIN
+        tbl_nested_reply nr ON r.reply_id = nr.reply_id
+        WHERE
+        r.board_id = #{boardId};
+    </select>
+
+</mapper>

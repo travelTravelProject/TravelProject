@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.project.mapper.NestedReplyMapper">
+
+    <!-- // 대댓글 등록-->
+    <insert id="save">
+        INSERT INTO tbl_nested_reply
+        (reply_text, reply_writer, reply_id, account)
+        VALUES
+        (#{replyText}, #{replyWriter}, #{replyId}, #{account})
+    </insert>
+
+    <!-- // 대댓글 수정-->
+    <update id="modify">
+        UPDATE tbl_nested_reply
+        SET reply_text = #{replyText}
+        WHERE nested_reply_id = #{nestedReplyId}
+    </update>
+    <!-- // 대댓글 삭제-->
+    <delete id="delete">
+        DELETE FROM tbl_nested_reply
+        WHERE nested_reply_id = #{nestedReplyId}
+    </delete>
+
+    <!-- // 특정 댓글에 달린 대댓글 목록 조회-->
+    <select id="findAll" resultType="nestedReply">
+        SELECT R.*, M.profile_image
+        FROM tbl_nested_reply R
+        LEFT OUTER JOIN tbl_user_detail M
+        ON R.account = M.account
+        WHERE R.reply_id = #{replyId}
+        ORDER BY R.reply_id
+    </select>
+
+    <!-- // 총 대댓글 수 조회-->
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_nested_reply
+        WHERE reply_id = #{replyId}
+    </select>
+
+</mapper>

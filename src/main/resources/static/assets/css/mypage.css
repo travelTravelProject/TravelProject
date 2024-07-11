@@ -1,0 +1,316 @@
+/* mypage.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    /*background-color: #f4f4f9;*/
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 50%;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 50px;
+    max-width: 800px;
+}
+
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.profile p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-size: 1em;
+    color: #333;
+}
+
+/*label .deleteProfileImage {*/
+/*    text-align: center;*/
+/*}*/
+
+input, select {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+/*.update-button {*/
+
+    /*background-color: #00aaff;*/
+    background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+/*.update-button:hover {*/
+    background-color: #0056b3;
+}
+
+.profile {
+    /*margin-bottom: 30px;*/
+    text-align: center;
+}
+
+.profile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 30px auto 10px;
+    cursor: pointer;
+}
+
+.profile .thumbnail-box {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 30px auto 10px;
+    cursor: pointer;
+}
+
+
+/*css*/
+
+
+.add-trip {
+    color: #00aaff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-icon span {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin-bottom: 4px;
+}
+
+.trip-card {
+    background-color: #e0f7fa;
+    border-radius: 10px;
+    padding: 0px;
+    text-align: center;
+    margin-bottom: 0px;
+    height: 350px;
+}
+
+.trip-add p {
+    color: #666;
+    font-size: 16px;
+}
+
+.add-trip-btn {
+    background-color: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.trip-info h2 {
+    font-size: 30px;
+    color: #333;
+}
+
+/*.trip-info span {*/
+/*    color: #666;*/
+/*    margin: 5px 0;*/
+/*    font-size: 16px;*/
+/*}*/
+
+/*.trip-info p {*/
+/*    color: #666;*/
+/*    margin: 5px 0;*/
+/*    font-size: 18px;*/
+/*}*/
+/*.trip-stats {*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*    margin: 30px 0;*/
+/*    align-items: end;*/
+/*}*/
+
+.trip-stats-info {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0;
+    align-items: end;
+}
+
+.trip-stats-info div {
+    text-align: center;
+}
+
+.trip-stats-info span {
+    display: block;
+    font-size: 22px;
+    color: #333;
+}
+
+.trip-stats-info p {
+    font-size: 20px;
+}
+
+.trip-dates p {
+    color: #666;
+}
+
+.one-liner-profile {
+    display: block;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    height: 200px;
+}
+
+.profile-box {
+    width: 200px;
+    height: 70px;
+    border-radius: 50%;
+    /*overflow: hidden;*/
+    margin: 10px;
+
+    display: flex;
+    text-align: left;
+}
+
+.profile-box img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    /*margin: 30px auto 10px;*/
+    cursor: pointer;
+}
+
+.profile-nickname {
+    width: 100px;
+    padding-left: 20px;
+}
+
+.profile-nickname p {
+    font-size: 14px;
+    width: 150px;
+}
+
+.profile-nickname h2 {
+    text-align: left;
+    font-size: 22px;
+    width: 200px;
+}
+
+.profile-info {
+    flex: 1;
+    margin-left: 20px;
+    height: 80px;
+}
+
+.profile-info h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.profile-info p {
+    color: #666;
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.profile-stats {
+    text-align: center;
+    height: 50px;
+}
+
+
+.edit-profile-btn {
+    background-color: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.profile-extra {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.mbti-btn {
+    background-color: #fff;
+    color: #00aaff;
+    border: 2px solid #00aaff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+}
+
+.tab p {
+    margin: 0;
+    padding: 10px 0;
+    color: #666;
+}
+

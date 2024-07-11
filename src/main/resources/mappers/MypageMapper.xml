@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.project.mapper.MypageMapper">
+
+    <!-- 동적 SQL 조건 분리 -->
+    <!--    <sql id="search">-->
+    <!--        <if test="type != null and type != ''">-->
+    <!--            <choose>-->
+    <!--                <when test="type == 'title'">-->
+    <!--                    AND title LIKE CONCAT('%', #{keyword}, '%')-->
+    <!--                </when>-->
+    <!--                <when test="type == 'content'">-->
+    <!--                    AND content LIKE CONCAT('%', #{keyword}, '%')-->
+    <!--                </when>-->
+    <!--                <when test="type == 'writer'">-->
+    <!--                    AND writer LIKE CONCAT('%', #{keyword}, '%')-->
+    <!--                </when>-->
+    <!--                <when test="type == 'tc'">-->
+    <!--                    AND (title LIKE CONCAT('%', #{keyword}, '%')-->
+    <!--                    OR content LIKE CONCAT('%', #{keyword}, '%'))-->
+    <!--                </when>-->
+    <!--            </choose>-->
+    <!--        </if>-->
+    <!--    </sql>-->
+
+
+    <select id="findAllByAccount" resultType="com.travel.project.dto.response.AccBoardListDto">
+        SELECT
+        B.board_id AS boardId,
+        B.account,
+        B.category_id AS categoryId,
+        B.title AS shortTitle,
+        B.content AS shortContent,
+        B.writer,
+        B.view_count AS view,
+        B.created_at AS date,
+        B.updated_at AS updatedAt,
+        B.status,
+        B.location,
+        B.start_date AS startDate,
+        B.end_date AS endDate,
+        COUNT(R.reply_id) AS replyCount,
+        U.gender,
+        I.image_path AS imagePath
+        FROM tbl_board B
+
+        LEFT OUTER JOIN tbl_reply R ON B.board_id = R.board_id
+        JOIN tbl_user U ON B.account = U.account
+        LEFT JOIN tbl_board_image I ON B.board_id = I.board_id
+
+        WHERE B.status = 'A'
+        AND B.category_id = '1'
+        AND B.account = #{account}
+        GROUP BY B.board_id
+        ORDER BY B.board_id DESC
+        <!--    LIMIT #{search.pageStart}, #{search.amount}-->
+    </select>
+
+
+</mapper>

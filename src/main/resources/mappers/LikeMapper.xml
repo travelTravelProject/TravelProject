@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.project.mapper.LikeMapper">
+
+    <insert id="insertLike">
+        INSERT INTO tbl_like
+            (account, board_id)
+        VALUES
+            (#{account}, #{boardId})
+    </insert>
+
+    <delete id="deleteLike">
+        DELETE FROM tbl_like
+        WHERE account = #{account}
+            AND board_id = #{boardId}
+    </delete>
+
+    <select id="countLikes" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM tbl_like
+        WHERE board_id = #{boardId}
+    </select>
+
+    <select id="existsLike" resultType="com.travel.project.entity.Like">
+        SELECT
+            like_id,
+            account,
+            board_id,
+            created_at
+        FROM tbl_like
+        WHERE account = #{account}
+            AND board_id = #{boardId}
+    </select>
+
+</mapper>

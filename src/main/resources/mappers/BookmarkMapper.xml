@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.travel.project.mapper.BookmarkMapper">
+
+    <insert id="insertBookmark">
+        INSERT INTO tbl_bookmark
+            (account, board_id)
+        VALUES
+            (#{account}, #{boardId})
+    </insert>
+
+    <delete id="deleteBookmark">
+        DELETE FROM tbl_bookmark
+        WHERE account = #{account}
+            AND board_id = #{boardId}
+    </delete>
+
+    <select id="countBookmarks" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM tbl_bookmark
+        WHERE board_id = #{boardId}
+    </select>
+
+    <select id="existsBookmark" resultType="bookmark">
+        SELECT
+            bookmark_id,
+            account,
+            board_id,
+            created_at
+        FROM tbl_bookmark
+        WHERE account = #{account}
+            AND board_id = #{boardId}
+    </select>
+
+</mapper>

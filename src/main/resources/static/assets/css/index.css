@@ -1,0 +1,580 @@
+
+/* ol, ol li, ul, ul li, 
+p,h1,h2,h3,h4,h5{
+    padding: 0!important;
+    margin: 0!important;
+} */
+
+
+@font-face {
+    font-family: 'MaruBuri';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'MaruBuriSemiBold';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'MaruBuriBold';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'MaruBuriLight';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'MaruBuriExtraLight';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.ttf) format("truetype");
+}
+
+
+
+
+
+
+
+
+
+.section1 {
+    /* background-color: #ddd; */
+}
+.section2 {
+    background: url(../img/bn6.jpg) no-repeat center/cover;
+}
+.section3 {
+    background: url(../img/bn5.jpg) no-repeat center/cover;
+}
+/* .section4 {
+    background: url(../img/bn6.jpg) no-repeat center/cover;
+} */
+
+    
+.carousel-item {
+    width: 100%;
+    height: 100vh;
+}
+
+.carousel-item1{
+    background: url(../img/bn2.jpg) no-repeat center/cover;
+}
+.carousel-item2{
+    background: url(../img/bn14.jpg) no-repeat center/cover;
+}
+.carousel-item3{
+    background: url(../img/bn1.jpg) no-repeat center/cover;
+}
+.carousel-item4{
+    background: url(../img/bn13.jpg) no-repeat center/cover;
+}
+    
+
+
+/*----진짜 프로그레스 css로만 작업한----*/
+.progress {
+    background-color: rgba(255, 255, 255, 0.22);
+      justify-content: flex-start;
+      border-radius: 100px;
+      align-items: center;
+      position: relative;
+      display: flex;
+      height: 2px!important;
+      width: 100%;
+      margin-top: 30px;
+      position: absolute;
+      bottom: 150px;
+      left: 0;
+      z-index: 9;
+  }
+  
+
+  .progress-value {
+  /*  animation: load 4s normal forwards;*/
+    border-radius: 100px;
+    background: #fff ;
+    height: 2px;
+    width: 0;
+  }
+  
+  @keyframes load {
+    0% { width: 0; }
+    100% { width: 100%; }
+  }
+  
+  /*----진짜 프로그레스----*/
+ 
+.main_banner_box p{
+    font-size: 18px;
+    margin-bottom: 70px;
+}
+.main_banner_box h1{
+    font-size: 70px;
+    line-height: 100px;
+    font-weight: 600;
+    font-family: 'MaruBuriExtraLight';
+}
+.carousel-item .container{
+    position: relative;
+    height: 100%;
+    margin-top: -100px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+}
+
+
+    
+
+
+
+    
+.carousel-control-prev2{
+    border: 1px solid #fff ;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    bottom: 200px !important;
+    position: absolute;
+    z-index: 9;
+    background-color: transparent;
+    left: 100px;
+}
+.carousel-control-next2{
+    border: 1px solid #fff ;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    bottom: 200px !important;
+    position: absolute;
+    z-index: 9;
+    background-color: transparent;
+    left: 170px;
+}
+
+
+
+
+
+    
+
+
+
+.section5{
+    background-image: linear-gradient(to top, #e7f0fd 0%, #accbee 100%);
+}
+
+
+
+
+.section3{
+    background-color: #f5ece3;
+}
+.section3 .container{          
+    max-width: 1500px;
+    height: 100%;
+}  
+.line{
+    width: 1px;
+    height: 40px;
+    margin: 30px 0;
+    background-color: #000;
+}
+.text_box{
+    flex-direction: column;
+}
+.feed_box .col-2{
+    width: 320px;
+    border-radius: 20px;
+    border: 1px solid #999;
+    box-shadow: 3px 3px 3px #777;
+    overflow: hidden;
+    text-align: left;
+}
+.feed_box .col-2.down_box{
+    margin-top: 100px;
+}
+.feed_img_box{
+    height: 250px;
+    overflow: hidden;
+    background-color: teal;
+}
+.feed_img_box img{
+    height: 100%!important;
+}
+.feed_like_box{
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+}
+.feed_like_box i{
+    font-size: 18px;
+}
+.feed_text_box{
+    padding: 10px 15px;
+    font-size: 16px;
+}
+    
+
+@keyframes bounce {
+0%, 100% {
+    transform: translateY(0);
+}
+50% {
+    transform: translateY(-10px);
+}
+}
+
+.bounce {
+    animation: bounce 2s infinite;
+}
+@keyframes bounce2 {
+    0%, 100% {
+        transform: translateY(10px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    }
+    
+    .bounce2 {
+        animation: bounce 1.8s infinite;
+    }
+.section4{
+    
+    /* background-image: linear-gradient(to top, #e7f0fd 0%, #accbee 100%); */
+    /* background: url(../img/bn.jpg) no-repeat center/cover;*/
+    /* background: url(../img/bg.jpg) no-repeat center/cover;  */
+    /* background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%); */
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+}  
+
+.left_img_box{
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+} 
+.right_wrap{
+    width: 60%;
+    height: 100%;
+    float: right;
+    /* display: flex; */
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.right_wrap > div{
+    width: 100%;
+}
+.right_wrap h1{
+    margin-top: 200px;
+    margin-bottom: 70px;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    font-size: 30px;
+} 
+.right_wrap p{
+    
+} 
+.t_box{
+    width: 100%;
+}
+.t_box > div{
+    width: 230px;
+    height: 200px;
+    margin-bottom: 30px;
+    background-color: thistle;
+    margin-right: 20px;
+}
+
+
+
+
+
+
+    
+
+
+.slide_m_img{			
+	width: 760px;
+	right: -150px;
+}
+.animated-img{			
+	width: 350px;
+	max-width: 350px;
+	height: 100vh;
+}
+
+/* 움직이는  이미지*/
+.animated-img {
+	position: relative;
+	overflow-x: hidden; 
+	overflow-y: hidden; 
+}
+.animated-img .track {
+	position: absolute;
+	white-space: nowrap;
+	will-change: transform;
+}
+.animated-img .track.track_img_l{
+	animation: track_img_l 15s linear infinite;
+}
+.animated-img .track.track_img_r{
+	animation: track_img_r 25s linear infinite;
+}
+.content_img img{
+	display: block;
+}
+@keyframes track_img_l {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+@keyframes track_img_r {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+/*
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0%); }
+*/
+}
+/*
+@media (hover: hover) and (min-width: 700px){
+.animated-img .content_img {
+	-webkit-transform: translateY(calc(100% - 8rem)); transform: translateY(calc(100% - 8rem));
+	}
+}
+*/
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+    
+
+
+#footer {
+    position: relative;
+    width: 100%;
+    background-color: #302b26;
+    color: #fff;
+}
+#footer .container{
+    padding: 70px 0;
+}
+.footer_info ol li, 
+.footer_info ul, ul li{
+    
+    padding: 0;
+    margin: 0;
+}
+.footer_info ul{
+    padding-bottom: 20px;
+}
+.footer_info ul li{
+    list-style: none;
+    padding-right: 20px;
+}
+.footer_info ul li span{
+    padding-left: 10px;
+    color: #c1c1c1;
+}
+.Copyright{
+    font-size: 12px;
+    color: #c1c1c1;
+}
+.footer_title{
+    font-size: 30px;
+}
+.footer_top{
+    padding-bottom: 35px;
+}
+.scroll-top{
+    width: 200px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
