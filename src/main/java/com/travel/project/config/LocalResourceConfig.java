@@ -13,20 +13,11 @@ public class LocalResourceConfig implements WebMvcConfigurer {
     @Value("${file.upload.root-path}")
     private String rootPath;
 
-    static String uploadPath = System.getProperty("user.dir") + "/src/main/resources/static/assets/upload/";
-    static String imgPath = System.getProperty("user.dir") + "/src/main/resources/static/assets/img/";
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // /uploads/** 요청을 외부 경로로 매핑
         registry
-                .addResourceHandler("/local/**")
-                .addResourceLocations("file:" + rootPath);
-        registry
-                .addResourceHandler("/assets/upload/**")
-                .addResourceLocations("file:" + uploadPath);
-
-        registry
-                .addResourceHandler("/assets/img/**")
-                .addResourceLocations("file:" + imgPath);
+                .addResourceHandler("/uploads/**") // 브라우저에서 접근할 URL 패턴
+                .addResourceLocations("file:" + rootPath + "/"); // 실제 파일 경로
     }
 }
